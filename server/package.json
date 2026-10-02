@@ -1,0 +1,16 @@
+{
+  "name": "brochure-studio-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "PORT=4001 node index.js",
+    "dev": "PORT=4001 node --watch index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "form-data": "^4.0.6",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2"
+  }
+}

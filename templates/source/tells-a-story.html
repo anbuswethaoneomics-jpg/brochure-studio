@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ONEOMICS Tri-Fold Brochure (Design 2 – Cream &amp; Teal)</title>
+<!-- Caladea (headings) + Carlito (body) from Google Fonts; falls back to Cambria/Calibri/Georgia -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&family=Carlito:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF7EF; --white:#fff; --mint:#E7F1F1;
+    --ink:#0B3C49; --teal:#16808F; --teal2:#BFDDE1;
+    --coral:#E2574C; --blue:#0793EB; --green:#33A015;
+    --text:#34454F; --muted:#78878F; --line:#E4DDCF;
+    --serif:'Caladea','Cambria','Georgia',serif;
+    --sans:'Carlito','Calibri','Segoe UI',Helvetica,Arial,sans-serif;
+    --pad:9mm;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0 }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact }
+  body{ font-family:var(--sans); color:var(--text); background:#d9dedf }
+
+  /* ---------- Sheet & panels : A4 landscape 297 x 210 mm ---------- */
+  .sheet{ width:297mm; height:210mm; display:flex; position:relative; overflow:hidden; background:var(--cream);
+          margin:10mm auto; box-shadow:0 4px 24px rgba(11,60,73,.2) }
+  .panel{ position:relative; flex:none; height:210mm; padding:var(--pad) 11mm var(--pad) var(--pad); overflow:hidden }
+  .w97{ width:97mm } .w100{ width:100mm }
+  .mint-bg{ background:var(--mint) }
+  @media print{
+    @page{ size:297mm 210mm; margin:0 }
+    body{ background:none }
+    .sheet{ margin:0; box-shadow:none; break-after:page; page-break-after:always }
+  }
+
+  /* ---------- Shared: kicker / title / rule / footer ---------- */
+  .kicker{ font:700 7.2pt/1.25 var(--sans); letter-spacing:.07em; text-transform:uppercase; color:var(--teal) }
+  .title{ font:700 22pt/1.15 var(--serif); color:var(--ink); margin-top:1.5mm }
+  .title em{ font-style:italic; font-weight:400; color:var(--teal) }
+  .rule{ position:relative; display:block; width:11mm; border-top:1.4pt solid var(--coral); margin:3.4mm 0 6mm }
+  .rule::after{ content:""; position:absolute; left:12.1mm; top:-.9mm; width:1.8mm; height:1.8mm; border-radius:50%; background:var(--coral) }
+  .footer{ position:absolute; left:var(--pad); right:11mm; bottom:5mm; display:flex; justify-content:space-between; align-items:center;
+           font:700 6.5pt var(--sans); color:var(--muted) }
+  .dots{ display:flex; gap:2.4mm }
+  .dots i{ width:2.3mm; height:2.3mm; border-radius:50%; display:block }
+  .dots i:nth-child(1){ background:var(--coral) } .dots i:nth-child(2){ background:var(--blue) } .dots i:nth-child(3){ background:var(--green) }
+  .logo{ display:block; height:auto }
+  p.body{ font:400 9.2pt/12.8pt var(--sans) }
+
+  /* ---------- Outside: flap ---------- */
+  .flap .logo{ width:30mm; margin-top:-1.4mm; margin-bottom:10mm }
+  .flap p.body + p.body{ margin-top:3mm }
+  .stats{ display:flex; gap:2.5mm; margin:5mm 0 7mm }
+  .stat{ flex:1; height:20mm; background:#fff; border:.6pt solid var(--line); border-radius:2.5mm; text-align:center; padding-top:3.4mm }
+  .stat b{ display:block; font:700 19pt/1 var(--serif); color:var(--c) }
+  .stat span{ display:block; margin-top:2.2mm; font:400 7.2pt/8.8pt var(--sans); color:var(--muted) }
+  .mv{ display:flex; gap:3mm; margin-bottom:6mm }
+  .mv .ico{ flex:none; width:13mm; height:13mm }
+  .mv h3{ font:700 12.5pt/1.2 var(--serif); color:var(--ink); margin-bottom:1.2mm }
+  .mv p{ font:400 8.8pt/12pt var(--sans) }
+
+  /* ---------- Outside: back ---------- */
+  .back{ display:flex; flex-direction:column }
+  .mod{ display:flex; gap:0; border-top:.6pt solid var(--line); padding:3mm 0 3mm; min-height:14mm }
+  .mod:last-of-type{ margin-bottom:5mm }
+  .mod .big{ flex:none; width:11mm; font:700 30pt/.9 var(--serif); color:var(--teal2); padding-top:.8mm }
+  .mod h3{ font:700 10.5pt/13pt var(--sans); color:var(--ink); margin-bottom:.8mm }
+  .mod p{ font:400 8.6pt/11.4pt var(--sans) }
+  .talk{ position:relative; flex:1; margin:0 -3mm 5mm; background:var(--mint); border-radius:4mm; padding:4.5mm 5mm }
+  .talk h3{ font:700 14pt/1.15 var(--serif); color:var(--ink) }
+  .talk > p{ font:400 8.6pt/11.4pt var(--sans); color:var(--muted); margin:1mm 0 3.5mm }
+  .contact{ display:grid; grid-template-columns:15mm 1fr; row-gap:2mm; align-items:baseline }
+  .contact dt{ font:700 6.6pt var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--teal) }
+  .contact dd{ font:400 9pt/11.6pt var(--sans); color:var(--text) }
+  .talk .logo{ position:absolute; left:5mm; bottom:5mm; width:30mm }
+
+  /* ---------- Outside: front cover ---------- */
+  .front{ padding:0 }
+  .front .logo{ position:absolute; left:10mm; top:7.8mm; width:52mm }
+  .front .arch{ position:absolute; left:0; top:0; width:100mm; height:210mm }
+  .headline{ position:absolute; left:10mm; right:10mm; top:136mm }
+  .headline h1{ font:700 25pt/1.16 var(--serif); color:var(--ink) }
+  .headline h1 em{ font-style:italic; color:var(--coral) }
+  .headline p{ margin-top:3.4mm; width:92%; font:400 9.4pt/12.8pt var(--sans) }
+  .legend{ position:absolute; left:10mm; bottom:13.6mm; display:flex; gap:7mm; font:700 8.5pt/1 var(--sans); color:var(--ink) }
+  .legend span{ display:flex; align-items:center; gap:1.9mm }
+  .legend i{ width:2mm; height:2mm; border-radius:50%; background:var(--c) }
+
+  /* ---------- Inside: service cards ---------- */
+  .card{ display:flex; gap:0; background:#fff; border:.6pt solid var(--line); border-radius:2.8mm; padding:3.6mm; margin-bottom:2.6mm; min-height:11.5mm }
+  .card .n{ flex:none; width:10mm; font:700 17pt/1 var(--serif); color:var(--c); padding-top:.2mm }
+  .card h3{ font:700 10.8pt/13pt var(--sans); color:var(--ink) }
+  .subs{ margin-top:1.2mm; font:400 8.7pt/11.6pt var(--sans); color:var(--text) }
+  .subs .b{ font-style:normal; color:var(--coral) }
+  .custom{ position:absolute; left:10mm; right:12mm; bottom:16mm; height:27mm; background:var(--mint); border-radius:3.5mm; padding:4.5mm 5mm }
+  .custom h3{ font:700 11.5pt/1.2 var(--serif); color:var(--ink); margin-bottom:1mm }
+  .custom p{ font:400 8.7pt/11.4pt var(--sans) }
+
+  /* ---------- Inside: products ---------- */
+  .grp{ display:flex; align-items:center; gap:1.8mm; height:5mm; margin:2.6mm 0 2.2mm }
+  .grp:first-of-type{ margin-top:0 }
+  .gdot{ flex:none; width:2.4mm; height:2.4mm; border-radius:50%; background:var(--c) }
+  .grp span{ flex:none; font:italic 700 11.5pt/1 var(--serif); color:var(--ink) }
+  .gline{ flex:1; border-top:.7pt solid var(--teal2) }
+  .prod{ display:flex; margin-bottom:1.3mm }
+  .pn{ flex:none; width:7.5mm; font:700 9pt/1.2 var(--serif); color:var(--c); padding-top:.5mm }
+  .prod p{ font:400 8.5pt/11pt var(--sans) }
+  .prod b{ font-size:9.3pt; line-height:11pt; font-weight:700; color:var(--ink) }
+  .foot{ position:absolute; left:var(--pad); right:11mm; bottom:13.2mm; font:italic 6.5pt/1.25 var(--sans); color:var(--muted) }
+</style>
+</head>
+<body>
+
+<!-- ======================= PAGE 1 : OUTSIDE (flap | back | front) ======================= -->
+<section class="sheet outside">
+
+  <!-- Inside flap -->
+  <div class="panel w97 flap">
+    <img class="logo" src="logo.png" alt="ONEOMICS">
+    <div class="kicker">Who we are</div>
+    <h2 class="title">About<br>ONEOMICS</h2>
+    <span class="rule"></span>
+    <p class="body">ONEOMICS Private Limited is a genomics company offering one connected portfolio: <b>sequencing services</b>, <b>sample collection and stabilization products</b>, <b>nucleic-acid extraction and library-prep kits</b>, and <b>bioinformatics software</b>.</p>
+    <div class="stats">
+      <div class="stat" style="--c:var(--teal)"><b>11</b><span>sequencing<br>service lines</span></div>
+      <div class="stat" style="--c:var(--coral)"><b>13</b><span>kits &amp;<br>reagents</span></div>
+      <div class="stat" style="--c:var(--blue)"><b>3</b><span>Lasergene<br>modules</span></div>
+    </div>
+    <div class="mv">
+      <svg class="ico" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="6.5" fill="#E7F1F1"/><g fill="none" stroke="#16808F" stroke-width=".39"><circle cx="6.5" cy="6.5" r="4"/><circle cx="6.5" cy="6.5" r="2"/></g><circle cx="6.5" cy="6.5" r=".7" fill="#16808F"/></svg>
+      <div><h3>Our Mission</h3><p>To make high-quality genomic science accessible through reliable sequencing, robust sample-stabilization products and dependable molecular tools.</p></div>
+    </div>
+    <div class="mv">
+      <svg class="ico" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="6.5" fill="#E7F1F1"/><ellipse cx="6.5" cy="6.5" rx="4.4" ry="2.6" fill="none" stroke="#16808F" stroke-width=".39"/><circle cx="6.5" cy="6.5" r="1.4" fill="#16808F"/></svg>
+      <div><h3>Our Vision</h3><p>To be a trusted partner in genomics, enabling discoveries that advance human health, agriculture and the environment.</p></div>
+    </div>
+    <div class="footer"><span>ONEOMICS</span><span class="dots"><i></i><i></i><i></i></span></div>
+  </div>
+
+  <!-- Back cover -->
+  <div class="panel w100 back">
+    <div class="kicker">Software</div>
+    <h2 class="title">DNASTAR<br>Lasergene</h2>
+    <span class="rule"></span>
+    <p class="body" style="margin-bottom:4mm">The trusted desktop suite for sequence analysis, genome assembly and protein research, available through ONEOMICS.</p>
+    <div class="mod"><span class="big">1</span><div><h3>Molecular Biology Module</h3><p>Sequence viewing, primer design, cloning and DNA/RNA analysis.</p></div></div>
+    <div class="mod"><span class="big">2</span><div><h3>Genomics Module</h3><p>Assembly, alignment and analysis of next-generation sequencing data.</p></div></div>
+    <div class="mod"><span class="big">3</span><div><h3>Proteomics Module</h3><p>Protein sequence analysis, structure prediction and visualization.</p></div></div>
+    <div class="talk">
+      <h3>Let’s talk</h3>
+      <p>Tell us about your project, sample type or software needs.</p>
+      <dl class="contact">
+        <dt>Web</dt><dd>www.[your-website].com</dd>
+        <dt>Email</dt><dd>[info@your-domain.com]</dd>
+        <dt>Phone</dt><dd>[+91 00000 00000]</dd>
+        <dt>Address</dt><dd>[Company address, City, State, PIN]</dd>
+      </dl>
+      <img class="logo" src="logo.png" alt="ONEOMICS">
+    </div>
+    <div class="footer"><span>ONEOMICS</span><span class="dots"><i></i><i></i><i></i></span></div>
+  </div>
+
+  <!-- Front cover -->
+  <div class="panel w100 front">
+    <svg class="arch" viewBox="0 0 100 210" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="arch-clip">
+      <path d="M 11.0 130 L 11.0 77 A 39.0 39.0 0 0 1 89.0 77 L 89.0 130 Z"/>
+    </clipPath>
+  </defs>
+  <path d="M 11.0 130 L 11.0 77 A 39.0 39.0 0 0 1 89.0 77 L 89.0 130 Z" fill="#E7F1F1"/>
+  <g clip-path="url(#arch-clip)">
+    <circle cx="50.0" cy="122" r="22.0" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8"/>
+<circle cx="50.0" cy="122" r="31.0" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8"/>
+<circle cx="50.0" cy="122" r="40.0" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8"/>
+<circle cx="50.0" cy="122" r="49.0" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8"/>
+
+    <line x1="58.15" y1="132.00" x2="41.85" y2="132.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="62.91" y1="129.00" x2="37.09" y2="129.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="65.99" y1="126.00" x2="34.01" y2="126.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="67.00" y1="123.00" x2="33.00" y2="123.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="65.79" y1="120.00" x2="34.21" y2="120.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="62.53" y1="117.00" x2="37.47" y2="117.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="57.65" y1="114.00" x2="42.35" y2="114.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="51.77" y1="111.00" x2="48.23" y2="111.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="45.66" y1="108.00" x2="54.34" y2="108.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="40.11" y1="105.00" x2="59.89" y2="105.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="35.85" y1="102.00" x2="64.15" y2="102.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="33.43" y1="99.00" x2="66.57" y2="99.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="33.16" y1="96.00" x2="66.84" y2="96.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="35.08" y1="93.00" x2="64.92" y2="93.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="38.94" y1="90.00" x2="61.06" y2="90.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="44.24" y1="87.00" x2="55.76" y2="87.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="50.28" y1="84.00" x2="49.72" y2="84.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="56.29" y1="81.00" x2="43.71" y2="81.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="61.48" y1="78.00" x2="38.52" y2="78.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="65.18" y1="75.00" x2="34.82" y2="75.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="66.91" y1="72.00" x2="33.09" y2="72.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="66.44" y1="69.00" x2="33.56" y2="69.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="63.83" y1="66.00" x2="36.17" y2="66.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="59.42" y1="63.00" x2="40.58" y2="63.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="53.79" y1="60.00" x2="46.21" y2="60.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="47.67" y1="57.00" x2="52.33" y2="57.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="41.85" y1="54.00" x2="58.15" y2="54.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="37.09" y1="51.00" x2="62.91" y2="51.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="34.01" y1="48.00" x2="65.99" y2="48.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="33.00" y1="45.00" x2="67.00" y2="45.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="34.21" y1="42.00" x2="65.79" y2="42.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="37.47" y1="39.00" x2="62.53" y2="39.00" stroke="#BFDDE1" stroke-width="0.7"/>
+<line x1="42.35" y1="36.00" x2="57.65" y2="36.00" stroke="#BFDDE1" stroke-width="0.7"/>
+
+    <circle cx="41.85" cy="132.00" r="0.45" fill="#E2574C"/>
+<circle cx="58.15" cy="132.00" r="1.71" fill="#16808F"/>
+<circle cx="39.29" cy="130.50" r="0.52" fill="#E2574C"/>
+<circle cx="60.71" cy="130.50" r="1.64" fill="#16808F"/>
+<circle cx="37.09" cy="129.00" r="0.61" fill="#E2574C"/>
+<circle cx="62.91" cy="129.00" r="1.55" fill="#16808F"/>
+<circle cx="35.31" cy="127.50" r="0.72" fill="#E2574C"/>
+<circle cx="64.69" cy="127.50" r="1.44" fill="#16808F"/>
+<circle cx="34.01" cy="126.00" r="0.84" fill="#E2574C"/>
+<circle cx="65.99" cy="126.00" r="1.32" fill="#16808F"/>
+<circle cx="33.23" cy="124.50" r="0.96" fill="#E2574C"/>
+<circle cx="66.77" cy="124.50" r="1.20" fill="#16808F"/>
+<circle cx="67.00" cy="123.00" r="1.07" fill="#16808F"/>
+<circle cx="33.00" cy="123.00" r="1.09" fill="#E2574C"/>
+<circle cx="66.67" cy="121.50" r="0.94" fill="#16808F"/>
+<circle cx="33.33" cy="121.50" r="1.22" fill="#E2574C"/>
+<circle cx="65.79" cy="120.00" r="0.81" fill="#16808F"/>
+<circle cx="34.21" cy="120.00" r="1.35" fill="#E2574C"/>
+<circle cx="64.40" cy="118.50" r="0.70" fill="#16808F"/>
+<circle cx="35.60" cy="118.50" r="1.46" fill="#E2574C"/>
+<circle cx="62.53" cy="117.00" r="0.59" fill="#16808F"/>
+<circle cx="37.47" cy="117.00" r="1.57" fill="#E2574C"/>
+<circle cx="60.26" cy="115.50" r="0.51" fill="#16808F"/>
+<circle cx="39.74" cy="115.50" r="1.65" fill="#E2574C"/>
+<circle cx="57.65" cy="114.00" r="0.44" fill="#16808F"/>
+<circle cx="42.35" cy="114.00" r="1.72" fill="#E2574C"/>
+<circle cx="54.79" cy="112.50" r="0.39" fill="#16808F"/>
+<circle cx="45.21" cy="112.50" r="1.77" fill="#E2574C"/>
+<circle cx="51.77" cy="111.00" r="0.36" fill="#16808F"/>
+<circle cx="48.23" cy="111.00" r="1.80" fill="#E2574C"/>
+<circle cx="48.69" cy="109.50" r="0.36" fill="#16808F"/>
+<circle cx="51.31" cy="109.50" r="1.80" fill="#E2574C"/>
+<circle cx="45.66" cy="108.00" r="0.38" fill="#16808F"/>
+<circle cx="54.34" cy="108.00" r="1.78" fill="#E2574C"/>
+<circle cx="42.77" cy="106.50" r="0.43" fill="#16808F"/>
+<circle cx="57.23" cy="106.50" r="1.73" fill="#E2574C"/>
+<circle cx="40.11" cy="105.00" r="0.49" fill="#16808F"/>
+<circle cx="59.89" cy="105.00" r="1.67" fill="#E2574C"/>
+<circle cx="37.78" cy="103.50" r="0.58" fill="#16808F"/>
+<circle cx="62.22" cy="103.50" r="1.58" fill="#E2574C"/>
+<circle cx="35.85" cy="102.00" r="0.68" fill="#16808F"/>
+<circle cx="64.15" cy="102.00" r="1.48" fill="#E2574C"/>
+<circle cx="34.38" cy="100.50" r="0.80" fill="#16808F"/>
+<circle cx="65.62" cy="100.50" r="1.36" fill="#E2574C"/>
+<circle cx="33.43" cy="99.00" r="0.92" fill="#16808F"/>
+<circle cx="66.57" cy="99.00" r="1.24" fill="#E2574C"/>
+<circle cx="33.02" cy="97.50" r="1.05" fill="#16808F"/>
+<circle cx="66.98" cy="97.50" r="1.11" fill="#E2574C"/>
+<circle cx="66.84" cy="96.00" r="0.98" fill="#E2574C"/>
+<circle cx="33.16" cy="96.00" r="1.18" fill="#16808F"/>
+<circle cx="66.14" cy="94.50" r="0.85" fill="#E2574C"/>
+<circle cx="33.86" cy="94.50" r="1.31" fill="#16808F"/>
+<circle cx="64.92" cy="93.00" r="0.73" fill="#E2574C"/>
+<circle cx="35.08" cy="93.00" r="1.43" fill="#16808F"/>
+<circle cx="63.21" cy="91.50" r="0.63" fill="#E2574C"/>
+<circle cx="36.79" cy="91.50" r="1.53" fill="#16808F"/>
+<circle cx="61.06" cy="90.00" r="0.53" fill="#E2574C"/>
+<circle cx="38.94" cy="90.00" r="1.63" fill="#16808F"/>
+<circle cx="58.55" cy="88.50" r="0.46" fill="#E2574C"/>
+<circle cx="41.45" cy="88.50" r="1.70" fill="#16808F"/>
+<circle cx="55.76" cy="87.00" r="0.40" fill="#E2574C"/>
+<circle cx="44.24" cy="87.00" r="1.76" fill="#16808F"/>
+<circle cx="52.79" cy="85.50" r="0.37" fill="#E2574C"/>
+<circle cx="47.21" cy="85.50" r="1.79" fill="#16808F"/>
+<circle cx="49.72" cy="84.00" r="0.36" fill="#E2574C"/>
+<circle cx="50.28" cy="84.00" r="1.80" fill="#16808F"/>
+<circle cx="46.66" cy="82.50" r="0.37" fill="#E2574C"/>
+<circle cx="53.34" cy="82.50" r="1.79" fill="#16808F"/>
+<circle cx="43.71" cy="81.00" r="0.41" fill="#E2574C"/>
+<circle cx="56.29" cy="81.00" r="1.75" fill="#16808F"/>
+<circle cx="40.96" cy="79.50" r="0.47" fill="#E2574C"/>
+<circle cx="59.04" cy="79.50" r="1.69" fill="#16808F"/>
+<circle cx="38.52" cy="78.00" r="0.55" fill="#E2574C"/>
+<circle cx="61.48" cy="78.00" r="1.61" fill="#16808F"/>
+<circle cx="36.44" cy="76.50" r="0.65" fill="#E2574C"/>
+<circle cx="63.56" cy="76.50" r="1.51" fill="#16808F"/>
+<circle cx="34.82" cy="75.00" r="0.76" fill="#E2574C"/>
+<circle cx="65.18" cy="75.00" r="1.40" fill="#16808F"/>
+<circle cx="33.69" cy="73.50" r="0.88" fill="#E2574C"/>
+<circle cx="66.31" cy="73.50" r="1.28" fill="#16808F"/>
+<circle cx="33.09" cy="72.00" r="1.01" fill="#E2574C"/>
+<circle cx="66.91" cy="72.00" r="1.15" fill="#16808F"/>
+<circle cx="66.95" cy="70.50" r="1.02" fill="#16808F"/>
+<circle cx="33.05" cy="70.50" r="1.14" fill="#E2574C"/>
+<circle cx="66.44" cy="69.00" r="0.90" fill="#16808F"/>
+<circle cx="33.56" cy="69.00" r="1.26" fill="#E2574C"/>
+<circle cx="65.38" cy="67.50" r="0.77" fill="#16808F"/>
+<circle cx="34.62" cy="67.50" r="1.39" fill="#E2574C"/>
+<circle cx="63.83" cy="66.00" r="0.66" fill="#16808F"/>
+<circle cx="36.17" cy="66.00" r="1.50" fill="#E2574C"/>
+<circle cx="61.82" cy="64.50" r="0.56" fill="#16808F"/>
+<circle cx="38.18" cy="64.50" r="1.60" fill="#E2574C"/>
+<circle cx="59.42" cy="63.00" r="0.48" fill="#16808F"/>
+<circle cx="40.58" cy="63.00" r="1.68" fill="#E2574C"/>
+<circle cx="56.72" cy="61.50" r="0.42" fill="#16808F"/>
+<circle cx="43.28" cy="61.50" r="1.74" fill="#E2574C"/>
+<circle cx="53.79" cy="60.00" r="0.38" fill="#16808F"/>
+<circle cx="46.21" cy="60.00" r="1.78" fill="#E2574C"/>
+<circle cx="50.74" cy="58.50" r="0.36" fill="#16808F"/>
+<circle cx="49.26" cy="58.50" r="1.80" fill="#E2574C"/>
+<circle cx="47.67" cy="57.00" r="0.37" fill="#16808F"/>
+<circle cx="52.33" cy="57.00" r="1.79" fill="#E2574C"/>
+<circle cx="44.67" cy="55.50" r="0.40" fill="#16808F"/>
+<circle cx="55.33" cy="55.50" r="1.76" fill="#E2574C"/>
+<circle cx="41.85" cy="54.00" r="0.45" fill="#16808F"/>
+<circle cx="58.15" cy="54.00" r="1.71" fill="#E2574C"/>
+<circle cx="39.29" cy="52.50" r="0.52" fill="#16808F"/>
+<circle cx="60.71" cy="52.50" r="1.64" fill="#E2574C"/>
+<circle cx="37.09" cy="51.00" r="0.61" fill="#16808F"/>
+<circle cx="62.91" cy="51.00" r="1.55" fill="#E2574C"/>
+<circle cx="35.31" cy="49.50" r="0.72" fill="#16808F"/>
+<circle cx="64.69" cy="49.50" r="1.44" fill="#E2574C"/>
+<circle cx="34.01" cy="48.00" r="0.84" fill="#16808F"/>
+<circle cx="65.99" cy="48.00" r="1.32" fill="#E2574C"/>
+<circle cx="33.23" cy="46.50" r="0.96" fill="#16808F"/>
+<circle cx="66.77" cy="46.50" r="1.20" fill="#E2574C"/>
+<circle cx="67.00" cy="45.00" r="1.07" fill="#E2574C"/>
+<circle cx="33.00" cy="45.00" r="1.09" fill="#16808F"/>
+<circle cx="66.67" cy="43.50" r="0.94" fill="#E2574C"/>
+<circle cx="33.33" cy="43.50" r="1.22" fill="#16808F"/>
+<circle cx="65.79" cy="42.00" r="0.81" fill="#E2574C"/>
+<circle cx="34.21" cy="42.00" r="1.35" fill="#16808F"/>
+<circle cx="64.40" cy="40.50" r="0.70" fill="#E2574C"/>
+<circle cx="35.60" cy="40.50" r="1.46" fill="#16808F"/>
+<circle cx="62.53" cy="39.00" r="0.59" fill="#E2574C"/>
+<circle cx="37.47" cy="39.00" r="1.57" fill="#16808F"/>
+<circle cx="60.26" cy="37.50" r="0.51" fill="#E2574C"/>
+<circle cx="39.74" cy="37.50" r="1.65" fill="#16808F"/>
+<circle cx="57.65" cy="36.00" r="0.44" fill="#E2574C"/>
+<circle cx="42.35" cy="36.00" r="1.72" fill="#16808F"/>
+
+  </g>
+  <path d="M 7.5 130 L 7.5 77 A 42.5 42.5 0 0 1 92.5 77 L 92.5 130" fill="none" stroke="#BFDDE1" stroke-width="0.8"/>
+</svg>
+    <img class="logo" src="logo.png" alt="ONEOMICS">
+    <div class="headline">
+      <h1>Every sample<br><em>tells a story.</em></h1>
+      <p>Sequencing services, sample preservation and extraction kits, and DNASTAR Lasergene software.</p>
+    </div>
+    <div class="legend">
+      <span><i style="--c:var(--coral)"></i>Sequencing</span>
+      <span><i style="--c:var(--blue)"></i>Kits</span>
+      <span><i style="--c:var(--green)"></i>Software</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======================= PAGE 2 : INSIDE (services | services cont. | products) ======================= -->
+<section class="sheet inside">
+
+  <!-- Panel A: Sequencing Services -->
+  <div class="panel w100">
+    <div class="kicker">Next Generation Sequencing</div>
+    <h2 class="title">Sequencing<br>Services</h2>
+    <span class="rule"></span>
+
+    <div class="card" style="--c:var(--coral)">
+      <div class="n">01</div>
+      <div>
+        <h3>Whole Genome Sequencing</h3>
+        <p class="subs">De novo Sequencing <span class="b">•</span> Reference-Based Sequencing <span class="b">•</span> Hi-C Genome Sequencing <span class="b">•</span> Chloroplast Genome Sequencing <span class="b">•</span> Mitochondrial Genome Sequencing</p>
+      </div>
+    </div>
+
+    <div class="card" style="--c:var(--teal)">
+      <div class="n">02</div>
+      <div>
+        <h3>Whole Exome Sequencing</h3>
+      </div>
+    </div>
+
+    <div class="card" style="--c:var(--blue)">
+      <div class="n">03</div>
+      <div>
+        <h3>Epigenetics</h3>
+        <p class="subs">Whole Genome Bisulfite Sequencing <span class="b">•</span> Whole Genome Methylation Sequencing</p>
+      </div>
+    </div>
+
+    <div class="card" style="--c:var(--green)">
+      <div class="n">04</div>
+      <div>
+        <h3>Genotyping By Sequencing</h3>
+      </div>
+    </div>
+
+    <div class="card" style="--c:var(--coral)">
+      <div class="n">05</div>
+      <div>
+        <h3>Metagenome Sequencing</h3>
+        <p class="subs">16S (V3–V4) Metagenome Sequencing <span class="b">•</span> 16S (V1–V9) rRNA Sequencing <span class="b">•</span> ITS Metagenome Sequencing <span class="b">•</span> 18S Metagenome Sequencing <span class="b">•</span> Shotgun Metagenome Sequencing <span class="b">•</span> Custom Amplicon Sequencing <span class="b">•</span> Meta-Barcoding</p>
+      </div>
+    </div>
+
+    <div class="footer"><span>ONEOMICS</span><span class="dots"><i></i><i></i><i></i></span></div>
+  </div>
+
+  <!-- Panel B: Sequencing Services cont. -->
+  <div class="panel w100">
+    <div class="kicker">Next Generation Sequencing</div>
+    <h2 class="title">Sequencing<br>Services <em>(cont.)</em></h2>
+    <span class="rule"></span>
+
+    <div class="card" style="--c:var(--teal)">
+      <div class="n">06</div>
+      <div>
+        <h3>Transcriptome Sequencing</h3>
+        <p class="subs">Whole Transcriptome (mRNA + lncRNA) <span class="b">•</span> mRNA Sequencing <span class="b">•</span> Small RNA Sequencing <span class="b">•</span> Metatranscriptome Sequencing <span class="b">•</span> Dual RNA Sequencing <span class="b">•</span> Single Cell RNA Sequencing <span class="b">•</span> Isoform Sequencing (RNA)</p>
+      </div>
+    </div>
+
+    <div class="card" style="--c:var(--blue)">
+      <div class="n">07</div>
+      <div>
+        <h3>Long Read Sequencing</h3>
+        <p class="subs">PacBio Sequencing <span class="b">•</span> Nanopore Sequencing</p>
+      </div>
+    </div>
+
+    <div class="card" style="--c:var(--green)">
+      <div class="n">08</div>
+      <div>
+        <h3>qRT-PCR Validation</h3>
+      </div>
+    </div>
+
+    <div class="card" style="--c:var(--coral)">
+      <div class="n">09</div>
+      <div>
+        <h3>SSR Marker Validation</h3>
+      </div>
+    </div>
+
+    <div class="card" style="--c:var(--teal)">
+      <div class="n">10</div>
+      <div>
+        <h3>Taurine and Telomere Assay</h3>
+      </div>
+    </div>
+
+    <div class="card" style="--c:var(--blue)">
+      <div class="n">11</div>
+      <div>
+        <h3>ChIP-Sequencing</h3>
+      </div>
+    </div>
+
+    <div class="custom">
+      <h3>Have a custom project?</h3>
+      <p>Share your sample type and research goal and our team will help you choose the right sequencing approach.</p>
+    </div>
+
+    <div class="footer"><span>ONEOMICS</span><span class="dots"><i></i><i></i><i></i></span></div>
+  </div>
+
+  <!-- Panel C: Products -->
+  <div class="panel w97 mint-bg">
+    <div class="kicker">Kits &amp; Reagents</div>
+    <h2 class="title">Our Range<br>of Products</h2>
+    <span class="rule"></span>
+
+    <div class="grp">
+      <i class="gdot" style="--c:var(--coral)"></i>
+      <span>Collect &amp; stabilize</span>
+      <div class="gline"></div>
+    </div>
+
+    <div class="prod">
+      <div class="pn" style="--c:var(--coral)">01</div>
+      <div><b>ONESpit™</b><p>Zero-prep saliva collection; DNA stable 1+ year at room temperature.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--coral)">02</div>
+      <div><b>ONEasy™</b><p>Faecal collection &amp; preservation; room-temperature transport up to 2 years*.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--coral)">03</div>
+      <div><b>NucleoGUARD™</b><p>RNA stabilization buffer.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--coral)">04</div>
+      <div><b>RNAguard™</b><p>Ambient shipping of total RNA.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--coral)">05</div>
+      <div><b>ProteinGUARD™</b><p>Ambient shipping of protein.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--coral)">06</div>
+      <div><b>SoilGUARD™</b><p>Soil stabilization buffer.</p></div>
+    </div>
+
+    <div class="grp">
+      <i class="gdot" style="--c:var(--blue)"></i>
+      <span>Extract</span>
+      <div class="gline"></div>
+    </div>
+
+    <div class="prod">
+      <div class="pn" style="--c:var(--blue)">07</div>
+      <div><b>ONEMag™ Rapid Universal DNA</b><p>Under 30 minutes, from diverse sample types.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--blue)">08</div>
+      <div><b>ONEMag™ Rapid Soil DNA</b><p>Efficient removal of humic acids.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--blue)">09</div>
+      <div><b>ONEMag™ Rapid Plant DNA</b><p>For polysaccharide- and polyphenol-rich tissue.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--blue)">10</div>
+      <div><b>ONEMag™ Rapid Soil RNA</b><p>High-integrity RNA from soil samples.</p></div>
+    </div>
+
+    <div class="grp">
+      <i class="gdot" style="--c:var(--green)"></i>
+      <span>Amplify &amp; sequence</span>
+      <div class="gline"></div>
+    </div>
+
+    <div class="prod">
+      <div class="pn" style="--c:var(--green)">11</div>
+      <div><b>ONENext™ 16S (V3–V4)</b><p>Library prep kit for Illumina.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--green)">12</div>
+      <div><b>ONENext™ 16S (V1–V9)</b><p>Full-length library prep kit for ONT.</p></div>
+    </div>
+    <div class="prod">
+      <div class="pn" style="--c:var(--green)">13</div>
+      <div><b>2X Taq Plus PCR Master Mix</b><p>Ready-to-use, with RED dye for direct gel loading.</p></div>
+    </div>
+
+    <p class="foot">*Under validated storage conditions. Refer to the product datasheet.</p>
+    <div class="footer"><span>ONEOMICS</span><span class="dots"><i></i><i></i><i></i></span></div>
+  </div>
+
+</section>
+
+</body>
+</html>
