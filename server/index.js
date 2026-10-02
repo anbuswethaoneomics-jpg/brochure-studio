@@ -26,7 +26,8 @@ const writeAll = (rows) => {
 };
 
 const app = express();
-app.use(cors());
+const PUBLIC_URL = (process.env.PUBLIC_URL || '').replace(/\/$/, '');
+app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '50mb' }));
 
 // ---------- uploads (disk) ----------
@@ -47,13 +48,13 @@ app.use('/uploads', express.static(UPLOAD_DIR, {
 
 app.post('/api/upload', uploadDisk.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No image received' });
-  res.json({ url: `/uploads/${req.file.filename}`, name: req.file.originalname });
+  res.json({ url: `${PUBLIC_URL}/uploads/${req.file.filename}`, name: req.file.originalname });
 });
 
 app.get('/api/uploads', (_req, res) => {
   const files = fs.readdirSync(UPLOAD_DIR)
     .filter((f) => /\.(png|jpe?g|webp|gif)$/i.test(f))
-    .map((f) => ({ url: `/uploads/${f}`, name: f, mtime: fs.statSync(path.join(UPLOAD_DIR, f)).mtimeMs }))
+    .map((f) => ({ url: `${PUBLIC_URL}/uploads/${f}`, name: f, mtime: fs.statSync(path.join(UPLOAD_DIR, f)).mtimeMs }))
     .sort((a, b) => b.mtime - a.mtime);
   res.json(files);
 });
