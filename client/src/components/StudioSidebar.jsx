@@ -153,62 +153,16 @@ export default function StudioSidebar({ ed, onTemplate, notify, onOpenDesign, on
               </div>
             </div>
 
-            {/* A4 Product Flyers category */}
-            <div className="tpl-section">
-              <div className="tpl-sec-hdr">
-                <h4>A4 Product Flyers</h4>
-                <span className="tpl-sec-badge">
-                  {TEMPLATES.filter((t) => t.category === 'a4-flyer' || t.category === 'flyer').length}
-                </span>
-              </div>
-              <div className="tpl-grid">
-                {TEMPLATES.filter((t) => t.category === 'a4-flyer' || t.category === 'flyer').map((t) => (
-                  <div
-                    key={t.id}
-                    className={`tpl-box ${currentTemplateId === t.id ? 'active' : ''}`}
-                    onClick={() => onTemplate(t)}
-                    title={`Click to choose "${t.name}"`}
-                  >
-                    <div className="tpl-thumb-wrap" style={{ aspectRatio: `${t.w}/${t.h}` }}>
-                      {t.preview ? (
-                        <img src={t.preview} alt={t.name} className="tpl-thumb-img" />
-                      ) : (
-                        <span className="tpl-art" style={{ aspectRatio: `${t.w}/${t.h}` }}>
-                          {t.swatch.map((c, i) => <i key={i} style={{ background: c }} />)}
-                        </span>
-                      )}
-                      <button
-                        type="button"
-                        className="tpl-quick-preview-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setPreviewTpl(t);
-                        }}
-                        title="Enlarge preview"
-                      >
-                        <Ico name="maximize" size={12} />
-                      </button>
-                    </div>
-                    <div className="tpl-info">
-                      <div className="tpl-title">{t.name}</div>
-                      {t.subtitle && <div className="tpl-sub">{t.subtitle}</div>}
-                      <span className="tpl-tag">A4 Flyer</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {/* Other Formats & Posters */}
             <div className="tpl-section">
               <div className="tpl-sec-hdr">
                 <h4>Posters & Social</h4>
                 <span className="tpl-sec-badge">
-                  {TEMPLATES.filter((t) => !(t.category === 'trifold' || t.folds === 3 || t.category === 'a4-flyer' || t.category === 'flyer')).length}
+                  {TEMPLATES.filter((t) => !(t.category === 'trifold' || t.folds === 3)).length}
                 </span>
               </div>
               <div className="tpl-grid">
-                {TEMPLATES.filter((t) => !(t.category === 'trifold' || t.folds === 3 || t.category === 'a4-flyer' || t.category === 'flyer')).map((t) => (
+                {TEMPLATES.filter((t) => !(t.category === 'trifold' || t.folds === 3)).map((t) => (
                   <div
                     key={t.id}
                     className={`tpl-box ${currentTemplateId === t.id ? 'active' : ''}`}

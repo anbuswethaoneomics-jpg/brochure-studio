@@ -138,7 +138,11 @@ app.put('/api/designs/:id', (req, res) => {
   if (!data) return res.status(400).json({ error: 'Design needs at least one page' });
   const rows = readAll();
   const i = rows.findIndex((d) => d.id === req.params.id);
-  if (i < 0) return res.status(404).json({ error: 'Design not found' });
+  if (i < 0) {
+    const row = { id: req.params.id || crypto.randomUUID(), createdAt: Date.now(), updatedAt: Date.now(), ...data };
+    writeAll([...rows, row]);
+    return res.status(201).json({ id: row.id, updatedAt: row.updatedAt });
+  }
   rows[i] = { ...rows[i], ...data, updatedAt: Date.now() };
   writeAll(rows);
   res.json({ id: rows[i].id, updatedAt: rows[i].updatedAt });

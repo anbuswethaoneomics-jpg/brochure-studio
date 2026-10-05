@@ -21,7 +21,7 @@ export default function StudioApp() {
   const ed = useEditor();
   const wsRef = useRef(null);
   const fileInputRef = useRef(null);
-  const [design, setDesign] = useState({ id: null, name: 'Oneomics Trifold Brochure', width: 1123, height: 794, folds: 3 });
+  const [design, setDesign] = useState({ id: null, templateId: 'trifold', name: 'Oneomics Trifold Brochure', width: 1123, height: 794, folds: 3 });
   const [pages, setPages] = useState([null, null]);
   const [pageIdx, setPageIdx] = useState(0);
   const [zoom, setZoomState] = useState(1);
@@ -379,7 +379,7 @@ export default function StudioApp() {
     if (!window.confirm(`Switch to "${t.name}"?\nYour current design and edits will be replaced.`)) {
       return;
     }
-    setDesign((d) => ({ ...d, id: t.id, name: t.name || d.name, width: t.w, height: t.h, folds: t.folds || 0 }));
+    setDesign((d) => ({ ...d, id: null, templateId: t.id, name: t.name || d.name, width: t.w, height: t.h, folds: t.folds || 0 }));
     ed.setSize(t.w, t.h, t.folds || 0);
     const pgs = await ed.applyTemplate(t);
     if (Array.isArray(pgs) && pgs.length) {
@@ -395,7 +395,7 @@ export default function StudioApp() {
     if (i === pageIdx) return;
     const next = currentPages();
     if (!next[i] && i === 1) {
-      const curTemplate = TEMPLATES.find((t) => t.id === design.id || t.name === design.name) || TEMPLATES.find((t) => t.id === 'trifold');
+      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name) || TEMPLATES.find((t) => t.id === 'trifold');
       if (curTemplate?.pages?.[1]) {
         next[i] = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg);
       }
@@ -530,7 +530,7 @@ export default function StudioApp() {
           notify={notify}
           onOpenDesign={openDesign}
           onOpenFile={triggerOpenFile}
-          currentTemplateId={design.id}
+          currentTemplateId={design.templateId || design.id}
         />
         <main className="stage">
           <PropsBar ed={ed} bg={ed.getBackground()} folds={design.folds} />
