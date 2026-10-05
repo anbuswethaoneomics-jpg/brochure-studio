@@ -696,6 +696,75 @@ export function onespitSideFlyer() {
   return s;
 }
 
+// Oneomics Bi-Fold Brochure — A4 Landscape 2 Panels (1123 x 794, folds: 2)
+export function bifoldBrochure() {
+  const s = [];
+
+  // Top green stripe
+  s.push(r(0, 0, 1123, 4, '#1a9e5b'));
+
+  // Left panel (Inside cover / About, x: 0 to 561)
+  s.push(r(40, 40, 480, 2, '#005b76'));
+  s.push(t('ABOUT ONEOMICS', 40, 52, 480, 18, { bold: 1, color: '#004068', font: 'Montserrat' }));
+  s.push(t('Empowering cutting-edge research through advanced sequencing,\ncustom bioinformatics pipelines, and high-quality collection kits.', 40, 80, 480, 12, { color: '#556677', font: 'Figtree', lh: 1.4 }));
+
+  s.push(t('OUR CORE CAPABILITIES', 40, 140, 480, 14, { bold: 1, color: '#005b76', font: 'Montserrat' }));
+
+  const bifoldServices = [
+    { name: 'Whole Exome & Genome Sequencing', desc: 'Clinical-grade depth with comprehensive variant reporting', y: 170 },
+    { name: 'Microbiome & Metagenomics', desc: '16S and shotgun sequencing for human and soil flora', y: 240 },
+    { name: 'Transcriptomics & RNA-Seq', desc: 'Gene expression profiling with low input sample protocols', y: 310 },
+    { name: 'Agricultural Genotyping', desc: 'GBS and marker validation for plant and livestock breeding', y: 380 },
+  ];
+
+  bifoldServices.forEach((srv) => {
+    s.push(r(40, srv.y, 480, 56, '#f3f8fc', { r: 8 }));
+    s.push(r(40, srv.y, 4, 56, '#005b76', { r: 2 }));
+    s.push(t(srv.name, 56, srv.y + 10, 450, 13, { bold: 1, color: '#004068', font: 'Montserrat' }));
+    s.push(t(srv.desc, 56, srv.y + 30, 450, 11, { color: '#556677', font: 'Figtree' }));
+  });
+
+  // Left panel bottom banner
+  s.push(r(40, 470, 480, 240, '#004068', { r: 12 }));
+  s.push(t('SAMPLE COLLECTION ECOSYSTEM', 60, 495, 440, 15, { bold: 1, color: '#ffffff', font: 'Montserrat' }));
+  s.push(t('Discover ONESpit™, ONEasy™, and NucleoGUARD™ kits designed for ambient transport with zero cold-chain dependency.', 60, 525, 440, 12, { color: '#d6efec', font: 'Figtree', lh: 1.4 }));
+  s.push(r(60, 580, 160, 36, '#1a9e5b', { r: 6 }));
+  s.push(t('Explore Kits →', 60, 590, 160, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+
+  s.push(t('Website: www.oneomics.in   |   Email: info@oneomics.in', 40, 740, 480, 11.5, { color: '#556677', font: 'Poppins' }));
+
+  // Right panel (Front Cover, x: 561 to 1123)
+  s.push(r(561, 0, 1, 794, '#e2e8f0')); // Fold line indicator
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 620, y: 50, w: 220 });
+  s.push(t('Precision Genomics | Research Solutions', 620, 115, 440, 12, { bold: 1, color: '#006837', font: 'Montserrat' }));
+
+  s.push({ k: 'image', src: '/assets/dna_helix.png', x: 600, y: 160, w: 120 });
+  s.push(t('DECODING\nLIFE\nEMPOWERING\nTOMORROW', 740, 180, 320, 28, { bold: 1, color: '#004068', font: 'Montserrat', lh: 1.15 }));
+  s.push(t('End-to-end genomics and bioinformatics solutions for precision medicine, agriculture, and life science research.', 620, 320, 440, 13, { color: '#556677', font: 'Figtree', lh: 1.35 }));
+
+  // 4 Domain badges
+  const bDomains = [
+    { icon: 'users', label: 'Human Genomics', x: 620, y: 400 },
+    { icon: 'leaf', label: 'Plant Genetics', x: 850, y: 400 },
+    { icon: 'microscope', label: 'Microbiome', x: 620, y: 490 },
+    { icon: 'flask', label: 'Diagnostics', x: 850, y: 490 },
+  ];
+  bDomains.forEach((d) => {
+    s.push(r(d.x, d.y, 210, 68, '#f3f8fc', { r: 8, stroke: '#d5e3ef', sw: 1 }));
+    s.push(ic(d.icon, d.x + 16, d.y + 16, 32, '#00838f'));
+    s.push(t(d.label, d.x + 60, d.y + 24, 140, 13, { bold: 1, color: '#004068', font: 'Montserrat' }));
+  });
+
+  // Right panel bottom CTA
+  s.push(r(620, 610, 440, 80, '#005b76', { r: 10 }));
+  s.push(t('Ready to begin your project?', 640, 626, 400, 15, { bold: 1, color: '#ffffff', font: 'Montserrat' }));
+  s.push(t('Partner with Oneomics for validated protocols and rapid turnaround.', 640, 652, 400, 11.5, { color: '#d6efec', font: 'Figtree' }));
+
+  s.push(t('www.oneomics.in   ·   +91 00000 00000', 620, 740, 440, 12, { bold: 1, color: '#004068', align: 'center', font: 'Poppins' }));
+
+  return s;
+}
+
 // Real Oneomics Onam Festival Poster
 export function onam() {
   const s = [];
@@ -4675,6 +4744,20 @@ export const TEMPLATES = [
     specs: onespitSideFlyer,
     pages: [onespitSideFlyer],
     swatch: ['#0f1b3d', '#2f6bff', '#c6f432'],
+  },
+  {
+    id: 'bifold-genomics',
+    name: 'Oneomics Bi-Fold Brochure',
+    subtitle: 'Precision Genomics (2 Panels)',
+    category: 'bifold',
+    w: 1123,
+    h: 794,
+    folds: 2,
+    bg: '#ffffff',
+    preview: '/assets/previews/bifold_brochure.png',
+    specs: bifoldBrochure,
+    pages: [bifoldBrochure],
+    swatch: ['#005b76', '#004068', '#1a9e5b'],
   },
   {
     id: 'onam',

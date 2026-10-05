@@ -32,6 +32,8 @@ export default function StudioSidebar({ ed, onTemplate, notify, onOpenDesign, on
   const [previewPage, setPreviewPage] = useState(0);
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [tplFilter, setTplFilter] = useState('all');
+  const [tplSearch, setTplSearch] = useState('');
   const input = useRef(null);
 
   // Gallery state
@@ -95,156 +97,249 @@ export default function StudioSidebar({ ed, onTemplate, notify, onOpenDesign, on
         ))}
       </nav>
       <div className="panel">
-        {tab === 'templates' && (
-          <>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-              <h3 style={{ margin: 0 }}>Templates</h3>
-              <span className="tpl-sec-badge">{TEMPLATES.length} designs</span>
-            </div>
+        {tab === 'templates' && (() => {
+          const trifoldList = TEMPLATES.filter((t) => t.category === 'trifold' || t.folds === 3);
+          const bifoldList = TEMPLATES.filter((t) => t.category === 'bifold' || t.folds === 2);
+          const flyerList = TEMPLATES.filter((t) => t.category === 'a4-flyer' || t.category === 'flyer');
+          const posterList = TEMPLATES.filter(
+            (t) => !(t.category === 'trifold' || t.folds === 3 || t.category === 'bifold' || t.folds === 2 || t.category === 'a4-flyer' || t.category === 'flyer')
+          );
 
-            {/* Tri-fold company brochures category */}
-            <div className="tpl-section">
-              <div className="tpl-sec-hdr">
-                <h4>Tri-fold Brochures</h4>
-                <span className="tpl-sec-badge">
-                  {TEMPLATES.filter((t) => t.category === 'trifold' || t.folds === 3).length}
+          const filterOptions = [
+            { id: 'all', label: 'All', count: TEMPLATES.length },
+            { id: 'trifold', label: 'Tri-fold', count: trifoldList.length },
+            { id: 'bifold', label: 'Bi-fold', count: bifoldList.length },
+            { id: 'flyer', label: 'A4 Flyer', count: flyerList.length },
+            { id: 'poster', label: 'Posters', count: posterList.length },
+          ];
+
+          const filterBySearch = (list) => {
+            if (!tplSearch.trim()) return list;
+            const q = tplSearch.toLowerCase();
+            return list.filter((t) => (t.name || '').toLowerCase().includes(q) || (t.subtitle || '').toLowerCase().includes(q));
+          };
+
+          const filteredTrifold = filterBySearch(trifoldList);
+          const filteredBifold = filterBySearch(bifoldList);
+          const filteredFlyer = filterBySearch(flyerList);
+          const filteredPoster = filterBySearch(posterList);
+
+          const totalVisible =
+            (tplFilter === 'all' || tplFilter === 'trifold' ? filteredTrifold.length : 0) +
+            (tplFilter === 'all' || tplFilter === 'bifold' ? filteredBifold.length : 0) +
+            (tplFilter === 'all' || tplFilter === 'flyer' ? filteredFlyer.length : 0) +
+            (tplFilter === 'all' || tplFilter === 'poster' ? filteredPoster.length : 0);
+
+          const renderCard = (t) => (
+            <div
+              key={t.id}
+              className={`tpl-box ${currentTemplateId === t.id ? 'active' : ''}`}
+              onClick={() => onTemplate(t)}
+              title={`Click to choose "${t.name}"`}
+            >
+              <div className="tpl-thumb-wrap" style={{ aspectRatio: `${t.w}/${t.h}` }}>
+                {t.preview ? (
+                  <img src={t.preview} alt={t.name} className="tpl-thumb-img" />
+                ) : (
+                  <span className="tpl-art" style={{ aspectRatio: `${t.w}/${t.h}` }}>
+                    {t.swatch?.map((c, i) => (
+                      <i key={i} style={{ background: c }} />
+                    ))}
+                  </span>
+                )}
+                {t.folds > 1 && (
+                  <div className="tpl-folds-overlay">
+                    {Array.from({ length: t.folds }).map((_, i) => (
+                      <span key={i} />
+                    ))}
+                  </div>
+                )}
+                <button
+                  type="button"
+                  className="tpl-quick-preview-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPreviewTpl(t);
+                  }}
+                  title="Enlarge preview"
+                >
+                  <Ico name="maximize" size={12} />
+                </button>
+              </div>
+              <div className="tpl-info">
+                <div className="tpl-title">{t.name}</div>
+                {t.subtitle && <div className="tpl-sub">{t.subtitle}</div>}
+                <span className="tpl-tag">
+                  {t.folds === 3 ? 'Tri-fold' : t.folds === 2 ? 'Bi-fold' : t.category === 'a4-flyer' || t.category === 'flyer' ? 'A4 Flyer' : t.category === 'social' ? 'Social' : 'Poster'}
                 </span>
               </div>
-              <div className="tpl-grid">
-                {TEMPLATES.filter((t) => t.category === 'trifold' || t.folds === 3).map((t) => (
-                  <div
-                    key={t.id}
-                    className={`tpl-box ${currentTemplateId === t.id ? 'active' : ''}`}
-                    onClick={() => onTemplate(t)}
-                    title={`Click to choose "${t.name}"`}
-                  >
-                    <div className="tpl-thumb-wrap" style={{ aspectRatio: `${t.w}/${t.h}` }}>
-                      {t.preview ? (
-                        <img src={t.preview} alt={t.name} className="tpl-thumb-img" />
-                      ) : (
-                        <span className="tpl-art" style={{ aspectRatio: `${t.w}/${t.h}` }}>
-                          {t.swatch.map((c, i) => <i key={i} style={{ background: c }} />)}
-                        </span>
-                      )}
-                      {t.folds > 1 && (
-                        <div className="tpl-folds-overlay">
-                          {Array.from({ length: t.folds }).map((_, i) => <span key={i} />)}
-                        </div>
-                      )}
-                      <button
-                        type="button"
-                        className="tpl-quick-preview-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setPreviewTpl(t);
-                        }}
-                        title="Enlarge preview"
-                      >
-                        <Ico name="maximize" size={12} />
-                      </button>
-                    </div>
-                    <div className="tpl-info">
-                      <div className="tpl-title">{t.name}</div>
-                      {t.subtitle && <div className="tpl-sub">{t.subtitle}</div>}
-                      <span className="tpl-tag">Tri-fold</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
+          );
 
-            {/* A4 Product Flyers category */}
-            <div className="tpl-section">
-              <div className="tpl-sec-hdr">
-                <h4>A4 Product Flyers</h4>
-                <span className="tpl-sec-badge">
-                  {TEMPLATES.filter((t) => t.category === 'a4-flyer' || t.category === 'flyer').length}
-                </span>
+          return (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                <h3 style={{ margin: 0 }}>Templates</h3>
+                <span className="tpl-sec-badge">{totalVisible} designs</span>
               </div>
-              <div className="tpl-grid">
-                {TEMPLATES.filter((t) => t.category === 'a4-flyer' || t.category === 'flyer').map((t) => (
-                  <div
-                    key={t.id}
-                    className={`tpl-box ${currentTemplateId === t.id ? 'active' : ''}`}
-                    onClick={() => onTemplate(t)}
-                    title={`Click to choose "${t.name}"`}
-                  >
-                    <div className="tpl-thumb-wrap" style={{ aspectRatio: `${t.w}/${t.h}` }}>
-                      {t.preview ? (
-                        <img src={t.preview} alt={t.name} className="tpl-thumb-img" />
-                      ) : (
-                        <span className="tpl-art" style={{ aspectRatio: `${t.w}/${t.h}` }}>
-                          {t.swatch.map((c, i) => <i key={i} style={{ background: c }} />)}
-                        </span>
-                      )}
-                      <button
-                        type="button"
-                        className="tpl-quick-preview-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setPreviewTpl(t);
-                        }}
-                        title="Enlarge preview"
-                      >
-                        <Ico name="maximize" size={12} />
-                      </button>
-                    </div>
-                    <div className="tpl-info">
-                      <div className="tpl-title">{t.name}</div>
-                      {t.subtitle && <div className="tpl-sub">{t.subtitle}</div>}
-                      <span className="tpl-tag">A4 Flyer</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            {/* Other Formats & Posters */}
-            <div className="tpl-section">
-              <div className="tpl-sec-hdr">
-                <h4>Posters & Social</h4>
-                <span className="tpl-sec-badge">
-                  {TEMPLATES.filter((t) => !(t.category === 'trifold' || t.folds === 3 || t.category === 'a4-flyer' || t.category === 'flyer')).length}
-                </span>
-              </div>
-              <div className="tpl-grid">
-                {TEMPLATES.filter((t) => !(t.category === 'trifold' || t.folds === 3 || t.category === 'a4-flyer' || t.category === 'flyer')).map((t) => (
-                  <div
-                    key={t.id}
-                    className={`tpl-box ${currentTemplateId === t.id ? 'active' : ''}`}
-                    onClick={() => onTemplate(t)}
-                    title={`Click to choose "${t.name}"`}
-                  >
-                    <div className="tpl-thumb-wrap" style={{ aspectRatio: `${t.w}/${t.h}` }}>
-                      {t.preview ? (
-                        <img src={t.preview} alt={t.name} className="tpl-thumb-img" />
-                      ) : (
-                        <span className="tpl-art" style={{ aspectRatio: `${t.w}/${t.h}` }}>
-                          {t.swatch.map((c, i) => <i key={i} style={{ background: c }} />)}
-                        </span>
-                      )}
-                      <button
-                        type="button"
-                        className="tpl-quick-preview-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setPreviewTpl(t);
+              {/* Filter Buttons */}
+              <div
+                className="tpl-filter-bar"
+                style={{
+                  display: 'flex',
+                  gap: 5,
+                  flexWrap: 'wrap',
+                  marginBottom: 10,
+                  paddingBottom: 8,
+                  borderBottom: '1px solid #edf2f7',
+                }}
+              >
+                {filterOptions.map((f) => {
+                  const isActive = tplFilter === f.id;
+                  return (
+                    <button
+                      key={f.id}
+                      type="button"
+                      onClick={() => setTplFilter(f.id)}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 4,
+                        fontSize: 11,
+                        fontWeight: 600,
+                        padding: '4px 9px',
+                        borderRadius: 16,
+                        border: isActive ? '1px solid #005b76' : '1px solid #d5e3ef',
+                        background: isActive ? '#005b76' : '#ffffff',
+                        color: isActive ? '#ffffff' : '#2b3a4f',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      <span>{f.label}</span>
+                      <span
+                        style={{
+                          fontSize: 9.5,
+                          fontWeight: 700,
+                          background: isActive ? 'rgba(255,255,255,0.22)' : '#eef4f8',
+                          color: isActive ? '#ffffff' : '#005b76',
+                          padding: '1px 5px',
+                          borderRadius: 8,
                         }}
-                        title="Enlarge preview"
                       >
-                        <Ico name="maximize" size={12} />
-                      </button>
-                    </div>
-                    <div className="tpl-info">
-                      <div className="tpl-title">{t.name}</div>
-                      {t.subtitle && <div className="tpl-sub">{t.subtitle}</div>}
-                    </div>
-                  </div>
-                ))}
+                        {f.count}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
-            </div>
-          </>
-        )}
+
+              {/* Search box */}
+              <div style={{ position: 'relative', marginBottom: 14 }}>
+                <input
+                  type="text"
+                  placeholder="Filter or search templates…"
+                  value={tplSearch}
+                  onChange={(e) => setTplSearch(e.target.value)}
+                  style={{
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    padding: '6px 26px 6px 9px',
+                    fontSize: 11.5,
+                    border: '1px solid #d5e3ef',
+                    borderRadius: 6,
+                    outline: 'none',
+                    background: '#f8fafc',
+                  }}
+                />
+                {tplSearch && (
+                  <button
+                    type="button"
+                    onClick={() => setTplSearch('')}
+                    style={{
+                      position: 'absolute',
+                      right: 6,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: 12,
+                      color: '#8a94b8',
+                      padding: 0,
+                    }}
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              {totalVisible === 0 ? (
+                <div style={{ textAlign: 'center', padding: '24px 10px', color: 'var(--mute)' }}>
+                  <p style={{ margin: '0 0 6px 0', fontSize: 13, fontWeight: 600 }}>No matching templates</p>
+                  <p style={{ fontSize: 11.5, margin: 0 }}>Try clearing your search or picking another filter.</p>
+                  <button
+                    className="btn small"
+                    style={{ marginTop: 10, fontSize: 11 }}
+                    onClick={() => {
+                      setTplFilter('all');
+                      setTplSearch('');
+                    }}
+                  >
+                    Reset filters
+                  </button>
+                </div>
+              ) : (
+                <>
+                  {/* Tri-fold Brochures */}
+                  {(tplFilter === 'all' || tplFilter === 'trifold') && filteredTrifold.length > 0 && (
+                    <div className="tpl-section">
+                      <div className="tpl-sec-hdr">
+                        <h4>Tri-fold Brochures</h4>
+                        <span className="tpl-sec-badge">{filteredTrifold.length}</span>
+                      </div>
+                      <div className="tpl-grid">{filteredTrifold.map(renderCard)}</div>
+                    </div>
+                  )}
+
+                  {/* Bi-fold Brochures */}
+                  {(tplFilter === 'all' || tplFilter === 'bifold') && filteredBifold.length > 0 && (
+                    <div className="tpl-section">
+                      <div className="tpl-sec-hdr">
+                        <h4>Bi-fold Brochures</h4>
+                        <span className="tpl-sec-badge">{filteredBifold.length}</span>
+                      </div>
+                      <div className="tpl-grid">{filteredBifold.map(renderCard)}</div>
+                    </div>
+                  )}
+
+                  {/* A4 Product Flyers */}
+                  {(tplFilter === 'all' || tplFilter === 'flyer') && filteredFlyer.length > 0 && (
+                    <div className="tpl-section">
+                      <div className="tpl-sec-hdr">
+                        <h4>A4 Product Flyers</h4>
+                        <span className="tpl-sec-badge">{filteredFlyer.length}</span>
+                      </div>
+                      <div className="tpl-grid">{filteredFlyer.map(renderCard)}</div>
+                    </div>
+                  )}
+
+                  {/* Posters & Social */}
+                  {(tplFilter === 'all' || tplFilter === 'poster') && filteredPoster.length > 0 && (
+                    <div className="tpl-section">
+                      <div className="tpl-sec-hdr">
+                        <h4>Posters & Social</h4>
+                        <span className="tpl-sec-badge">{filteredPoster.length}</span>
+                      </div>
+                      <div className="tpl-grid">{filteredPoster.map(renderCard)}</div>
+                    </div>
+                  )}
+                </>
+              )}
+            </>
+          );
+        })()}
 
         {tab === 'text' && (
           <>
