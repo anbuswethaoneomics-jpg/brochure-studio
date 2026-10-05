@@ -52,7 +52,7 @@ function Color({ label, value, onChange }) {
   );
 }
 
-export default function StudioPropsBar({ ed, bg, folds = 3 }) {
+export default function StudioPropsBar({ ed, bg, folds = 3, onShuffle }) {
   const s = ed.sel;
   const [showShuffle, setShowShuffle] = useState(false);
 
@@ -85,10 +85,10 @@ export default function StudioPropsBar({ ed, bg, folds = 3 }) {
               gap: 5,
               cursor: 'pointer',
             }}
-            onClick={() => ed.shufflePanels('rotate', folds)}
-            title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Shuffle columns/elements")}
+            onClick={() => (onShuffle ? onShuffle('rotate') : ed.shufflePanels('rotate', folds))}
+            title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Swap between Page 1 and Page 2")}
           >
-            🔀 {folds > 1 ? 'Shuffle Panels' : 'Shuffle'}
+            🔀 {folds > 1 ? 'Shuffle Panels' : 'Shuffle Pages'}
           </button>
           <button
             className="tb txt"
@@ -177,6 +177,17 @@ export default function StudioPropsBar({ ed, bg, folds = 3 }) {
                 </button>
               ) : (
                 <>
+                  <button
+                    className="menu-item"
+                    style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13, color: '#006837', fontWeight: 600 }}
+                    onClick={() => {
+                      if (onShuffle) onShuffle('swap-pages');
+                      else ed.shufflePanels('rotate', folds);
+                      setShowShuffle(false);
+                    }}
+                  >
+                    📄 Swap Page 1 & Page 2
+                  </button>
                   <button
                     className="menu-item"
                     style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13 }}
@@ -334,10 +345,10 @@ export default function StudioPropsBar({ ed, bg, folds = 3 }) {
           gap: 4,
           cursor: 'pointer',
         }}
-        onClick={() => ed.shufflePanels('rotate', folds)}
-        title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Shuffle layout columns / elements")}
+        onClick={() => (onShuffle ? onShuffle('rotate') : ed.shufflePanels('rotate', folds))}
+        title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Swap between Page 1 and Page 2")}
       >
-        🔀 Shuffle
+        🔀 {folds > 1 ? 'Shuffle' : 'Swap Pages'}
       </button>
     </div>
   );

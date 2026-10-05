@@ -422,6 +422,43 @@ export default function StudioApp() {
     await ed.loadPage(next[i]);
   };
 
+  const shufflePagesOrPanels = async (mode = 'rotate') => {
+    if (design.folds > 1) {
+      ed.shufflePanels(mode, design.folds);
+      return;
+    }
+
+    if (mode !== 'rotate' && mode !== 'swap-pages' && mode !== 'swap-0-1') {
+      ed.shufflePanels(mode, design.folds);
+      return;
+    }
+
+    const next = currentPages();
+    if (next.length < 2) {
+      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
+      if (curTemplate?.pages?.[1]) {
+        const p2 = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg);
+        next.push(p2);
+      } else {
+        next.push(null);
+      }
+    } else if (!next[1] && next.length >= 2) {
+      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
+      if (curTemplate?.pages?.[1]) {
+        next[1] = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg);
+      }
+    }
+
+    // Swap Page 1 and Page 2
+    const temp = next[0];
+    next[0] = next[1];
+    next[1] = temp;
+
+    setPages(next);
+    await ed.loadPage(next[pageIdx]);
+    notify('🔀 Swapped Page 1 and Page 2');
+  };
+
   const exportPNG = () => {
     setMenu(false);
     download(ed.render(2), `${fileName(design.name)}-page-${pageIdx + 1}.png`);
@@ -533,7 +570,7 @@ export default function StudioApp() {
           currentTemplateId={design.templateId || design.id}
         />
         <main className="stage">
-          <PropsBar ed={ed} bg={ed.getBackground()} folds={design.folds} />
+          <PropsBar ed={ed} bg={ed.getBackground()} folds={design.folds} onShuffle={shufflePagesOrPanels} />
           <div
             className={`ws ${panMode || spacePressed ? 'pan-mode' : ''} ${isPanning ? 'panning' : ''}`}
             ref={wsRef}
@@ -604,10 +641,10 @@ export default function StudioApp() {
                 padding: '4px 9px',
                 cursor: 'pointer',
               }}
-              onClick={() => ed.shufflePanels('rotate', design.folds)}
-              title={design.folds >= 3 ? "Shuffle/cycle panels (Panel 1 → Panel 2 → Panel 3)" : (design.folds === 2 ? "Swap Left & Right panels" : "Shuffle columns/elements")}
+              onClick={() => shufflePagesOrPanels('rotate')}
+              title={design.folds > 1 ? "Shuffle panels" : "Swap between Page 1 and Page 2"}
             >
-              🔀 Shuffle
+              🔀 {design.folds > 1 ? 'Shuffle' : 'Swap Pages'}
             </button>
             <button
               className={`icon pan-btn ${panMode || spacePressed ? 'active' : ''}`}
