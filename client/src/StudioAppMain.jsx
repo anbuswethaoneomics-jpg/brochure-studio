@@ -5,7 +5,7 @@ import PropsBar from './components/StudioPropsBar.jsx';
 import Ico from './components/Ico.jsx';
 import { PRESETS } from './presets.js';
 import { loadFonts } from './fonts.js';
-import { TEMPLATES } from './brochureTemplates.js';
+import { TEMPLATES, createEmptyTemplateFromCanvas } from './brochureTemplates.js';
 import { makeImageTextEditable } from './ocrEditable.js';
 import { listDesigns, getDesign, saveDesign, deleteDesign } from './api.js';
 
@@ -394,10 +394,17 @@ export default function StudioApp() {
   const switchPage = async (i) => {
     if (i === pageIdx) return;
     const next = currentPages();
-    if (!next[i] && i === 1) {
+    if (!next[i]) {
       const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
-      if (curTemplate?.pages?.[1]) {
-        next[i] = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg);
+      if (curTemplate) {
+        const targetPageNum = i + 1;
+        if (curTemplate.pages?.[i]) {
+          next[i] = await ed.buildPageFromSpecs(curTemplate.pages[i], curTemplate.bg || '#ffffff');
+        } else if (curTemplate.emptySpecs) {
+          next[i] = await ed.buildPageFromSpecs(() => curTemplate.emptySpecs(targetPageNum), curTemplate.bg || '#ffffff');
+        } else if (next[0]) {
+          next[i] = createEmptyTemplateFromCanvas(next[0], design.width, design.height, targetPageNum);
+        }
       }
     }
     setPages(next);
@@ -428,7 +435,24 @@ export default function StudioApp() {
   };
   const addPage = async (duplicate = false) => {
     const next = currentPages();
-    const ins = duplicate ? next[pageIdx] : null;
+    let ins = null;
+
+    if (duplicate) {
+      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
+      const targetPageNum = next.length + 1;
+
+      if (curTemplate?.emptySpecs) {
+        ins = await ed.buildPageFromSpecs(() => curTemplate.emptySpecs(targetPageNum), curTemplate.bg || '#ffffff');
+      } else if (curTemplate?.pages?.[pageIdx + 1]) {
+        ins = await ed.buildPageFromSpecs(curTemplate.pages[pageIdx + 1], curTemplate.bg || '#ffffff');
+      } else if (curTemplate?.pages?.[1] && pageIdx === 0) {
+        ins = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg || '#ffffff');
+      } else if (next[pageIdx]) {
+        ins = createEmptyTemplateFromCanvas(next[pageIdx], design.width, design.height, targetPageNum);
+      }
+      notify(`📄 Added empty template page (Page ${targetPageNum})`);
+    }
+
     next.splice(pageIdx + 1, 0, ins);
     setPages(next);
     setPageIdx(pageIdx + 1);

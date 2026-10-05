@@ -368,6 +368,45 @@ export function onespitFlyer() {
   return s;
 }
 
+// Oneomics ONESpit™ Product Profile — A4 Flyer Page 2 (Empty Template)
+export function onespitFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const CLR_NAVY = '#004068';
+  const CLR_BLUE = '#00838f';
+  const CLR_GREEN = '#1a9e5b';
+  const CLR_RED = '#d32f2f';
+  const CLR_TEXT = '#556677';
+  const CLR_MUTED = '#667788';
+  const CLR_TINT = '#f3f8fc';
+
+  // Top header: Logo & kicker
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 49, y: 36, w: 151 });
+  s.push(t(`PRODUCT PROFILE · 0${pageNum} / 14`, 450, 48, 295, 12, { color: CLR_MUTED, align: 'right', font: 'Poppins' }));
+  s.push(r(49, 82, 696, 2, '#d5e3ef'));
+
+  // Bottom CTA Section
+  s.push(r(0, 995, 794, 117, CLR_TINT));
+  s.push(t('Interested in ONESpit™?', 49, 1015, 400, 20, { bold: 1, color: CLR_NAVY, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 49, 1048, 380, 12.5, { color: CLR_TEXT, font: 'Poppins' }));
+
+  s.push(t('WEB', 540, 1018, 55, 10, { bold: 1, color: CLR_BLUE, font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 600, 1016, 150, 12.5, { color: CLR_TEXT, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 540, 1042, 55, 10, { bold: 1, color: CLR_BLUE, font: 'Poppins' }));
+  s.push(t('info@oneomics.in', 600, 1040, 150, 12.5, { color: CLR_TEXT, font: 'Poppins' }));
+
+  s.push(t('PHONE', 540, 1066, 55, 10, { bold: 1, color: CLR_BLUE, font: 'Poppins' }));
+  s.push(t('+91 00000 00000', 600, 1064, 150, 12.5, { color: CLR_TEXT, font: 'Poppins' }));
+
+  // Tribar on bottom edge
+  s.push(r(0, 1112, 264.6, 11, CLR_RED));
+  s.push(r(264.6, 1112, 264.6, 11, CLR_BLUE));
+  s.push(r(529.2, 1112, 265, 11, CLR_GREEN));
+
+  return s;
+}
+
 // Oneomics ONESpit™ Modern Teal Flyer — A4 Flyer (794 x 1123)
 export function onespitTealFlyer() {
   const s = [];
@@ -501,6 +540,43 @@ export function onespitTealFlyer() {
   s.push(t('Supports DNA preservation for downstream molecular workflows.', 502, 856, 232, 11.5, { color: '#ffffff', font: 'Poppins', lh: 1.4 }));
 
   // 8. FOOTER CTA & CONTACT (y: 948 to 1123)
+  s.push(r(0, 948, 794, 167, C_MINT));
+  s.push(t('Interested in ONESpit™?', 44, 968, 400, 18, { bold: 1, color: C_TEAL_DARK, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 44, 994, 380, 12, { color: '#4b6a6d', font: 'Poppins', lh: 1.3 }));
+
+  s.push(t('WEB', 540, 970, 52, 9, { bold: 1, color: C_TEAL_LIGHT, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 600, 968, 160, 12, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 540, 994, 52, 9, { bold: 1, color: C_TEAL_LIGHT, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 600, 992, 160, 12, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('PHONE', 540, 1018, 52, 9, { bold: 1, color: C_TEAL_LIGHT, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 600, 1016, 160, 12, { color: C_INK, font: 'Poppins' }));
+
+  // Tricolor stripe at bottom
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
+// Oneomics ONESpit™ Modern Teal Flyer — A4 Flyer Page 2 (Empty Template)
+export function onespitTealFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_TEAL_DARK = '#0b4f55';
+  const C_TEAL_LIGHT = '#12857f';
+  const C_INK = '#1d3b40';
+  const C_MUTED = '#6f8a8d';
+  const C_MINT = '#e8f6f3';
+
+  // 1. TOP HEADER (y: 0 to 64)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 16, w: 150 });
+  s.push(t(`PRODUCT PROFILE · 0${pageNum} / 14`, 490, 26, 260, 10.5, { color: C_MUTED, font: 'Poppins', sp: 80, align: 'right' }));
+  s.push(r(44, 60, 706, 2, '#cfe6e2'));
+
+  // 2. FOOTER CTA & CONTACT (y: 948 to 1123)
   s.push(r(0, 948, 794, 167, C_MINT));
   s.push(t('Interested in ONESpit™?', 44, 968, 400, 18, { bold: 1, color: C_TEAL_DARK, font: 'Poppins' }));
   s.push(t('Contact our team for availability, pricing and technical details.', 44, 994, 380, 12, { color: '#4b6a6d', font: 'Poppins', lh: 1.3 }));
@@ -696,6 +772,46 @@ export function onespitSideFlyer() {
   return s;
 }
 
+// Oneomics ONESpit™ Dark Sidebar Flyer — A4 Flyer Page 2 (Empty Template)
+export function onespitSideFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_NAVY = '#0f1b3d';
+  const C_MIDNIGHT = '#18306b';
+  const C_BLUE = '#2f6bff';
+  const C_LIME = '#c6f432';
+  const C_BG_RIGHT = '#f6f8ff';
+  const C_SUBDUED = '#8a94b8';
+
+  // 1. LEFT SIDEBAR (x: 0 to 268, y: 0 to 1123)
+  s.push(r(0, 0, 268, 1123, C_NAVY, { gradient: [C_NAVY, C_MIDNIGHT], gradAngle: 'v' }));
+
+  // Logo Card (y: 26, w: 216, h: 68)
+  s.push(r(26, 26, 216, 68, '#ffffff', { r: 12 }));
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 42, y: 38, w: 184 });
+
+  // Sidebar Contact Information (Bottom)
+  s.push(r(26, 970, 216, 1, 'rgba(255,255,255,0.2)'));
+  s.push(t('WEB', 26, 990, 50, 9, { bold: 1, color: C_LIME, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 76, 988, 166, 11.5, { color: '#ffffff', font: 'Poppins' }));
+
+  s.push(t('EMAIL', 26, 1016, 50, 9, { bold: 1, color: C_LIME, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 76, 1014, 166, 11.5, { color: '#ffffff', font: 'Poppins' }));
+
+  s.push(t('PHONE', 26, 1042, 50, 9, { bold: 1, color: C_LIME, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 76, 1040, 166, 11.5, { color: '#ffffff', font: 'Poppins' }));
+
+  // 2. RIGHT MAIN AREA (x: 268 to 794)
+  s.push(r(268, 0, 526, 1123, C_BG_RIGHT));
+
+  // Top Tags / Profile Header
+  s.push(r(306, 32, 150, 24, C_BLUE, { r: 12 }));
+  s.push(t('COLLECT & STABILIZE', 306, 37, 150, 9.5, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins', sp: 60 }));
+  s.push(t(`PRODUCT PROFILE · 0${pageNum} / 14`, 530, 36, 226, 10, { color: C_SUBDUED, font: 'Poppins', sp: 80, align: 'right' }));
+
+  return s;
+}
+
 // Oneomics Bi-Fold Brochure — A4 Landscape 2 Panels (1123 x 794, folds: 2)
 export function bifoldBrochure() {
   const s = [];
@@ -763,6 +879,86 @@ export function bifoldBrochure() {
   s.push(t('www.oneomics.in   ·   +91 00000 00000', 620, 740, 440, 12, { bold: 1, color: '#004068', align: 'center', font: 'Poppins' }));
 
   return s;
+}
+
+// Oneomics Bi-Fold Brochure — Page 2 (Empty Template)
+export function bifoldBrochureEmpty(pageNum = 2) {
+  const s = [];
+
+  // Top green stripe
+  s.push(r(0, 0, 1123, 4, '#1a9e5b'));
+
+  // Left panel (x: 0 to 561)
+  s.push(r(40, 40, 480, 2, '#005b76'));
+  s.push(t('ONEOMICS RESEARCH & DIAGNOSTICS', 40, 52, 480, 16, { bold: 1, color: '#004068', font: 'Montserrat' }));
+  s.push(t('Website: www.oneomics.in   |   Email: info@oneomics.in', 40, 740, 480, 11.5, { color: '#556677', font: 'Poppins' }));
+
+  // Divider fold line
+  s.push(r(561, 0, 1, 794, '#e2e8f0'));
+
+  // Right panel (x: 561 to 1123)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 620, y: 50, w: 220 });
+  s.push(r(620, 110, 440, 2, '#1a9e5b'));
+  s.push(t('www.oneomics.in   ·   +91 00000 00000', 620, 740, 440, 12, { bold: 1, color: '#004068', align: 'center', font: 'Poppins' }));
+
+  return s;
+}
+
+// Trifold Brochure — Generic Empty Template
+export function trifoldEmpty(pageNum = 2) {
+  const s = [];
+  // Fold lines
+  s.push(r(374, 0, 1, 794, '#e2e8f0'));
+  s.push(r(748, 0, 1, 794, '#e2e8f0'));
+
+  // Top and bottom branding accents
+  s.push(r(0, 0, 1123, 4, '#00838f'));
+  s.push(r(0, 790, 1123, 4, '#004068'));
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 40, y: 30, w: 160 });
+  s.push(t('www.oneomics.in   ·   info@oneomics.in', 40, 755, 1043, 11, { color: '#556677', align: 'center', font: 'Poppins' }));
+  return s;
+}
+
+// Derive clean empty template layout from any canvas JSON
+export function createEmptyTemplateFromCanvas(pageJson, width = 794, height = 1123, pageNum = 2) {
+  if (!pageJson) return { version: '5.3.0', objects: [], backgroundColor: '#ffffff' };
+
+  const clone = JSON.parse(JSON.stringify(pageJson));
+  const objects = Array.isArray(clone.objects) ? clone.objects : [];
+
+  const keep = objects.filter((o) => {
+    // Keep background shapes, lines, colored stripes, banners, container cards
+    if (o.type === 'rect' || o.type === 'circle' || o.type === 'path' || o.type === 'polygon' || o.type === 'line') {
+      return true;
+    }
+    // Keep brand logos / images
+    if (o.type === 'image') {
+      return true;
+    }
+    // For text, keep only header tags (y < 80) or footer contact info (y > height - 180) or sidebar contact
+    if (o.type === 'textbox' || o.type === 'i-text' || o.type === 'text') {
+      const top = o.top || 0;
+      const left = o.left || 0;
+      const isHeader = top < 80;
+      const isFooter = top > (height - 180);
+      const isSidebarContact = left < width * 0.35 && top > (height - 220);
+      return isHeader || isFooter || isSidebarContact;
+    }
+    return false;
+  });
+
+  // Update page indicators in header text if present
+  keep.forEach((o) => {
+    if ((o.type === 'textbox' || o.type === 'i-text' || o.type === 'text') && typeof o.text === 'string') {
+      o.text = o.text
+        .replace(/01\s*\/\s*14/g, `0${pageNum} / 14`)
+        .replace(/01\s*\/\s*(\d+)/g, `0${pageNum} / $1`)
+        .replace(/Page\s*1/gi, `Page ${pageNum}`);
+    }
+  });
+
+  clone.objects = keep;
+  return clone;
 }
 
 // Real Oneomics Onam Festival Poster
@@ -4714,7 +4910,8 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/onespit_flyer.png',
     specs: onespitFlyer,
-    pages: [onespitFlyer],
+    emptySpecs: onespitFlyerEmpty,
+    pages: [onespitFlyer, onespitFlyerEmpty],
     swatch: [CLR_RED, CLR_BLUE, CLR_GREEN],
   },
   {
@@ -4728,7 +4925,8 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/onespit_teal_flyer.png',
     specs: onespitTealFlyer,
-    pages: [onespitTealFlyer],
+    emptySpecs: onespitTealFlyerEmpty,
+    pages: [onespitTealFlyer, onespitTealFlyerEmpty],
     swatch: ['#0b4f55', '#12857f', '#ffc857'],
   },
   {
@@ -4742,7 +4940,8 @@ export const TEMPLATES = [
     bg: '#f6f8ff',
     preview: '/assets/previews/onespit_side_flyer.png',
     specs: onespitSideFlyer,
-    pages: [onespitSideFlyer],
+    emptySpecs: onespitSideFlyerEmpty,
+    pages: [onespitSideFlyer, onespitSideFlyerEmpty],
     swatch: ['#0f1b3d', '#2f6bff', '#c6f432'],
   },
   {
@@ -4756,7 +4955,8 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/bifold_brochure.png',
     specs: bifoldBrochure,
-    pages: [bifoldBrochure],
+    emptySpecs: bifoldBrochureEmpty,
+    pages: [bifoldBrochure, bifoldBrochureEmpty],
     swatch: ['#005b76', '#004068', '#1a9e5b'],
   },
   {
