@@ -319,6 +319,26 @@ export default function StudioPropsBar({ ed, bg, folds = 3 }) {
       <span className="sep" />
       <Btn icon="copy" label="Duplicate (Ctrl+D)" onClick={ed.duplicate} />
       <Btn icon="trash" label="Delete (Del)" onClick={ed.remove} />
+      <span className="sep" />
+      <button
+        className="tb txt"
+        style={{
+          background: '#f0fdf4',
+          color: '#006837',
+          border: '1px solid #86efac',
+          borderRadius: 6,
+          padding: '4px 9px',
+          fontWeight: 600,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 4,
+          cursor: 'pointer',
+        }}
+        onClick={() => ed.shufflePanels('rotate', folds)}
+        title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Shuffle layout columns / elements")}
+      >
+        🔀 Shuffle
+      </button>
     </div>
   );
 }

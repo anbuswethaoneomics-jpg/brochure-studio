@@ -594,7 +594,20 @@ export default function StudioApp() {
             )}
             <button
               className="btn small"
-              style={{ marginLeft: 6, display: 'inline-flex', alignItems: 'center', gap: 4 }}
+              style={{
+                marginLeft: 6,
+                marginRight: 6,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 5,
+                background: '#f0fdf4',
+                color: '#006837',
+                border: '1px solid #86efac',
+                fontWeight: 600,
+                borderRadius: 6,
+                padding: '4px 9px',
+                cursor: 'pointer',
+              }}
               onClick={() => ed.shufflePanels('rotate', design.folds)}
               title={design.folds >= 3 ? "Shuffle/cycle panels (Panel 1 → Panel 2 → Panel 3)" : (design.folds === 2 ? "Swap Left & Right panels" : "Shuffle columns/elements")}
             >
