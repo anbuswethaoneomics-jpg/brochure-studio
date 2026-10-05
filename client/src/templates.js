@@ -368,6 +368,160 @@ export function onespitFlyer() {
   return s;
 }
 
+// Oneomics ONESpit™ Modern Teal Flyer — A4 Flyer (794 x 1123)
+export function onespitTealFlyer() {
+  const s = [];
+
+  const C_TEAL_DARK = '#0b4f55';
+  const C_TEAL_LIGHT = '#12857f';
+  const C_AMBER = '#ffc857';
+  const C_INK = '#1d3b40';
+  const C_MUTED = '#6f8a8d';
+  const C_MINT = '#e8f6f3';
+  const C_BORDER = '#cfe6e2';
+  const C_CHIP_BORDER = '#bfe0da';
+
+  // 1. TOP HEADER (y: 0 to 64)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 16, w: 150 });
+  s.push(t('PRODUCT PROFILE  ·  01 / 14', 490, 26, 260, 10.5, { color: C_MUTED, font: 'Poppins', sp: 80, align: 'right' }));
+
+  // 2. HERO SECTION (y: 64 to 304, h: 240)
+  s.push(r(0, 64, 794, 240, C_TEAL_DARK, { gradient: [C_TEAL_DARK, C_TEAL_LIGHT] }));
+  s.push(c(560, 20, 140, 'rgba(255,255,255,0.06)'));
+
+  // Pill: COLLECT & STABILIZE
+  s.push(r(44, 88, 160, 22, 'transparent', { r: 11, stroke: C_AMBER, sw: 1.2 }));
+  s.push(t('COLLECT & STABILIZE', 44, 92, 160, 9.5, { bold: 1, color: C_AMBER, align: 'center', font: 'Poppins', sp: 80 }));
+
+  // Headline & Subtitle
+  s.push(t('ONESpit™', 44, 116, 450, 56, { bold: 1, color: '#ffffff', font: 'Poppins', lh: 1 }));
+  s.push(t('Zero-Prep Saliva Collection &\nPreservation Kit', 44, 178, 440, 18, { bold: 1, color: C_AMBER, font: 'Poppins', lh: 1.2 }));
+  s.push(t('Non-invasive saliva collection with zero sample preparation.', 44, 232, 440, 13, { color: '#d6efec', font: 'Poppins' }));
+
+  // Hero Product Illustration (Box & Tube)
+  s.push(r(508, 98, 146, 136, '#ffffff', { r: 10 }));
+  s.push(r(508, 98, 146, 28, C_AMBER, { r: 10 }));
+  s.push(r(508, 116, 146, 10, C_AMBER));
+  s.push(t('ONEOMICS', 508, 105, 146, 10, { bold: 1, color: C_TEAL_DARK, align: 'center', font: 'Poppins', sp: 80 }));
+  s.push(t('ONESpit™', 508, 148, 146, 21, { bold: 1, color: C_TEAL_DARK, align: 'center', font: 'Poppins' }));
+  s.push(r(558, 184, 46, 3, C_TEAL_LIGHT, { r: 1.5 }));
+  // Tricolor strip at box bottom
+  s.push(r(508, 225, 48.6, 9, '#e53935'));
+  s.push(r(556.6, 225, 48.6, 9, '#1e88e5'));
+  s.push(r(605.2, 225, 48.8, 9, '#43a047'));
+
+  // Saliva Collection Tube
+  s.push(r(654, 76, 54, 170, 'rgba(255,255,255,0.92)', { r: 27 }));
+  s.push(r(654, 76, 54, 26, C_AMBER, { r: 10 }));
+  s.push(r(654, 136, 54, 110, '#f6a5ad', { r: 27 }));
+
+  // 3. OVERVIEW SECTION (y: 318 to 415)
+  s.push(r(44, 322, 22, 4, C_AMBER, { r: 2 }));
+  s.push(t('Overview', 75, 316, 300, 16, { bold: 1, color: C_TEAL_DARK, font: 'Poppins' }));
+
+  s.push(c(47, 349, 3, C_TEAL_LIGHT));
+  s.push(t('Non-invasive, zero-prep saliva collection that stabilizes DNA at room temperature for over a year.', 58, 343, 692, 13, { color: C_INK, font: 'Poppins' }));
+
+  s.push(c(47, 374, 3, C_TEAL_LIGHT));
+  s.push(t('Supports convenient self-collection without refrigeration and is suitable for home, clinic or field use.', 58, 368, 692, 13, { color: C_INK, font: 'Poppins' }));
+
+  s.push(c(47, 399, 3, C_TEAL_LIGHT));
+  s.push(t('Designed for molecular applications where simple collection and reliable DNA preservation are important.', 58, 393, 692, 13, { color: C_INK, font: 'Poppins' }));
+
+  // 4. APPLICATIONS CARD (y: 424 to 534)
+  s.push(r(44, 424, 706, 108, C_MINT, { r: 14 }));
+  s.push(r(60, 438, 22, 4, C_AMBER, { r: 2 }));
+  s.push(t('Applications', 91, 433, 200, 15, { bold: 1, color: C_TEAL_DARK, font: 'Poppins' }));
+
+  // Applications Chips Row 1 (y: 462)
+  s.push(r(60, 462, 115, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+  s.push(t('PCR and qPCR', 60, 467, 115, 11.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+
+  s.push(r(183, 462, 245, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+  s.push(t('Next-generation sequencing (NGS)', 183, 467, 245, 11.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+
+  s.push(r(436, 462, 115, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+  s.push(t('SNP analysis', 436, 467, 115, 11.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+
+  // Applications Chips Row 2 (y: 494)
+  s.push(r(60, 494, 160, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+  s.push(t('Methylation analysis', 60, 499, 160, 11.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+
+  s.push(r(228, 494, 290, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+  s.push(t('Oral cancer and early diagnostic research', 228, 499, 290, 11.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+
+  // 5. KEY BENEFITS SECTION (y: 546 to 658)
+  s.push(r(44, 550, 22, 4, C_AMBER, { r: 2 }));
+  s.push(t('Key benefits', 75, 545, 300, 15, { bold: 1, color: C_TEAL_DARK, font: 'Poppins' }));
+
+  const benefits = [
+    { text: 'Zero sample preparation', x: 44, y: 572 },
+    { text: 'Self-collection at home', x: 284, y: 572 },
+    { text: 'Stable for 1+ year at room temp', x: 524, y: 572 },
+    { text: 'Fully non-invasive', x: 44, y: 620 },
+    { text: 'No refrigeration required', x: 284, y: 620 },
+    { text: 'Patent-protected', x: 524, y: 620 },
+  ];
+
+  benefits.forEach((b) => {
+    s.push(r(b.x, b.y, 226, 38, '#ffffff', { r: 10, stroke: C_BORDER, sw: 1 }));
+    s.push(c(b.x + 12, b.y + 8, 11, C_TEAL_LIGHT));
+    s.push(t('✓', b.x + 12, b.y + 11, 22, 11.5, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(b.text, b.x + 40, b.y + 11, 180, 11.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  });
+
+  // 6. SIMPLE WORKFLOW SECTION (y: 672 to 816)
+  s.push(r(44, 676, 22, 4, C_AMBER, { r: 2 }));
+  s.push(t('Simple workflow', 75, 671, 300, 15, { bold: 1, color: C_TEAL_DARK, font: 'Poppins' }));
+
+  const steps = [
+    { num: '01', text: 'Collect saliva using the ONESpit™ collection procedure.' },
+    { num: '02', text: 'Follow the kit instructions for completing collection and stabilization.' },
+    { num: '03', text: 'Secure the sample and maintain recommended storage conditions.' },
+    { num: '04', text: 'Transport without refrigeration when permitted by the validated instructions.' },
+    { num: '05', text: 'Use the preserved sample for downstream DNA extraction and molecular analysis.' },
+  ];
+
+  steps.forEach((st, idx) => {
+    const xPos = 44 + idx * 143;
+    s.push(r(xPos, 698, 134, 126, '#f4fbf9', { r: 10 }));
+    s.push(r(xPos, 698, 134, 4, C_TEAL_LIGHT));
+    s.push(t(st.num, xPos + 10, 710, 114, 19, { bold: 1, color: C_TEAL_LIGHT, font: 'Poppins' }));
+    s.push(t(st.text, xPos + 10, 738, 114, 11, { color: C_INK, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 7. EXPECTED RESULTS / PERFORMANCE (y: 838 to 936)
+  s.push(r(44, 838, 706, 94, C_TEAL_DARK, { r: 14 }));
+  s.push(t('Expected\nresults /\nperformance', 66, 854, 150, 15, { bold: 1, color: C_AMBER, font: 'Poppins', lh: 1.25 }));
+
+  s.push(r(238, 852, 2, 66, C_AMBER));
+  s.push(t('DNA from 8 independent ONESpit™ saliva samples showed consistent, high-quality bands with no visible degradation.', 252, 856, 210, 11.5, { color: '#ffffff', font: 'Poppins', lh: 1.4 }));
+
+  s.push(r(488, 852, 2, 66, C_AMBER));
+  s.push(t('Supports DNA preservation for downstream molecular workflows.', 502, 856, 232, 11.5, { color: '#ffffff', font: 'Poppins', lh: 1.4 }));
+
+  // 8. FOOTER CTA & CONTACT (y: 948 to 1123)
+  s.push(r(0, 948, 794, 167, C_MINT));
+  s.push(t('Interested in ONESpit™?', 44, 968, 400, 18, { bold: 1, color: C_TEAL_DARK, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 44, 994, 380, 12, { color: '#4b6a6d', font: 'Poppins', lh: 1.3 }));
+
+  s.push(t('WEB', 540, 970, 52, 9, { bold: 1, color: C_TEAL_LIGHT, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 600, 968, 160, 12, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 540, 994, 52, 9, { bold: 1, color: C_TEAL_LIGHT, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 600, 992, 160, 12, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('PHONE', 540, 1018, 52, 9, { bold: 1, color: C_TEAL_LIGHT, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 600, 1016, 160, 12, { color: C_INK, font: 'Poppins' }));
+
+  // Tricolor stripe at bottom
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
 // Real Oneomics Onam Festival Poster
 export function onam() {
   const s = [];
@@ -4319,6 +4473,20 @@ export const TEMPLATES = [
     specs: onespitFlyer,
     pages: [onespitFlyer],
     swatch: [CLR_RED, CLR_BLUE, CLR_GREEN],
+  },
+  {
+    id: 'onespit-teal-flyer',
+    name: 'ONESpit™ Modern Teal Flyer',
+    subtitle: 'Zero-Prep Saliva Collection & Preservation',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/onespit_teal_flyer.png',
+    specs: onespitTealFlyer,
+    pages: [onespitTealFlyer],
+    swatch: ['#0b4f55', '#12857f', '#ffc857'],
   },
   {
     id: 'onam',
