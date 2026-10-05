@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ONEOMICS Product One-Pagers (A4)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --red:#E23B32; --blue:#0793EB; --green:#33A015; --navy:#10243E; --text:#2B3A4F; --muted:#6B7A8F; --tint:#F3F8FC; --line:#D5E3EF;
+         --tri:linear-gradient(90deg,var(--red) 0 33.33%,var(--blue) 33.33% 66.66%,var(--green) 66.66% 100%) }
+  *{ box-sizing:border-box; margin:0; padding:0 }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact }
+  body{ font-family:'Poppins','Segoe UI',Helvetica,Arial,sans-serif; color:var(--text); background:#dde4ea }
+  .page{ position:relative; width:794px; height:1123px; margin:10px auto; padding:42px 49px 0; overflow:hidden; background:#fff; box-shadow:0 4px 24px rgba(16,36,62,.18) }
+  .kicker{ font-size:8.8pt; font-weight:500; letter-spacing:.15em; text-transform:uppercase; color:var(--muted) }
+  .tribar{ display:block; width:60px; height:4.5px; background:var(--tri); margin:13px 0 11px }
+  h2{ font-size:14pt; font-weight:700; color:var(--navy); margin-bottom:10px; display:flex; align-items:center; gap:8px }
+  h2::before{ content:""; width:6px; height:16px; border-radius:3px; background:var(--c) }
+  .top{ display:flex; justify-content:space-between; align-items:center; height:42px }
+  .top img{ width:150px; height:auto; display:block }
+  .hero{ position:relative; height:196px; margin-top:19px; border-radius:23px; background:var(--tint); overflow:hidden; padding:34px 0 0 38px }
+  .helix{ position:absolute; right:8px; top:0; width:264px; height:196px; opacity:.5 }
+  .kit{ position:absolute; right:38px; top:15px; width:196px; height:auto }
+  .hero-txt{ position:relative; width:445px }
+  .pill{ display:inline-flex; align-items:center; gap:7px; padding:4px 12px 4px 10px; border-radius:99px; background:#fff; border:1pt solid var(--c);
+         font-size:9pt; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--navy) }
+  .pill i{ width:7px; height:7px; border-radius:50%; background:var(--c) }
+  .hero h1{ font-size:38pt; line-height:1.1; font-weight:700; color:var(--navy); margin-top:10px }
+  .sub{ font-size:14.5pt; font-weight:600; color:var(--c); line-height:1.25; margin-top:3px }
+  .tag{ font-size:11.7pt; line-height:1.45; color:var(--text); width:362px }
+  .main{ position:absolute; left:49px; right:49px; top:327px; bottom:136px; display:flex; flex-direction:column; justify-content:space-between }
+  .rowA{ display:grid; grid-template-columns:1.45fr 1fr; gap:26px }
+  ul{ list-style:none }
+  .dots li{ position:relative; padding-left:15px; font-size:11.7pt; line-height:1.5; margin-bottom:7px }
+  .dots li::before{ content:""; position:absolute; left:1px; top:7px; width:6px; height:6px; border-radius:50%; background:var(--c) }
+  .apps{ background:var(--tint); border-radius:15px; padding:15px 17px }
+  .sq li{ position:relative; padding-left:16px; font-size:11pt; line-height:1.42; margin-bottom:6px }
+  .sq li::before{ content:""; position:absolute; left:0; top:6px; width:6px; height:6px; border-radius:1.5px; background:var(--c) }
+  .ticks{ display:grid; grid-template-columns:1fr 1fr; column-gap:26px }
+  .ticks li{ position:relative; padding:0 0 0 23px; font-size:11.5pt; line-height:1.42; margin-bottom:7px }
+  .ticks li::before{ content:"tick"; position:absolute; left:0; top:0; width:15px; height:15px; border-radius:50%; background:var(--c); color:#fff; font-size:7pt; font-weight:700; display:grid; place-items:center }
+  .steps{ position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:11px }
+  .steps::before{ content:""; position:absolute; left:15px; right:15px; top:15px; height:2px; background:var(--line) }
+  .step b{ position:relative; display:grid; place-items:center; width:30px; height:30px; border-radius:50%; background:var(--c); color:#fff; font-size:10.5pt; margin-bottom:8px }
+  .step p{ font-size:10.2pt; line-height:1.4 }
+  .res{ background:var(--tint); border-radius:15px; padding:15px 19px 9px; border-left:6px solid var(--c) }
+  .res h2::before{ display:none }
+  .cols{ display:grid; gap:6px 26px }
+  .cols.n1{ grid-template-columns:1fr } .cols.n2{ grid-template-columns:1fr 1fr } .cols.n3{ grid-template-columns:1fr 1fr 1fr }
+  .cols li{ position:relative; padding-left:14px; font-size:11pt; line-height:1.42; margin-bottom:5px }
+  .cols li::before{ content:""; position:absolute; left:0; top:6px; width:5px; height:5px; border-radius:50%; background:var(--c) }
+  .gls{ display:grid; grid-template-columns:repeat(3,1fr); gap:15px }
+  .gl{ background:var(--tint); border-radius:15px; padding:19px 15px; text-align:center; border-top:5px solid var(--c) }
+  .gl b{ display:block; font-size:20pt; font-weight:700; color:var(--navy); line-height:1.2 }
+  .gl span{ display:block; margin-top:5px; font-size:10pt; color:var(--muted) }
+  .cc{ display:flex; flex-wrap:wrap; gap:8px }
+  .cc span{ padding:5px 14px; border-radius:99px; background:var(--tint); border:1pt solid var(--line); font-size:10.5pt; font-weight:500; color:var(--navy) }
+  .fn{ position:absolute; left:49px; right:49px; bottom:141px; font-size:8pt; font-style:italic; color:var(--muted) }
+  .cta{ position:absolute; left:0; right:0; bottom:11px; height:105px; background:var(--tint); padding:24px 49px 0; display:flex; justify-content:space-between; gap:30px }
+  .cta h3{ font-size:16.5pt; font-weight:700; color:var(--navy); line-height:1.25 }
+  .cta p{ font-size:10.5pt; line-height:1.5; margin-top:5px; width:300px }
+  .cta dl{ display:grid; grid-template-columns:49px auto; row-gap:7px; font-size:10.5pt; line-height:1.4; align-content:start }
+  .cta dt{ font-size:8pt; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); padding-top:3px }
+  .bar{ position:absolute; left:0; right:0; bottom:0; height:11px; background:var(--tri) }
+</style>
+</head>
+<body>
+
+<section class="page" style="--c:#E23B32" data-slug="ONESpit">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 01 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Collect &amp; Stabilize</span>
+    <h1>ONESpit™</h1>
+    <div class="sub">Zero-Prep Saliva Collection &amp; Preservation Kit</div>
+    <span class="tribar"></span>
+    <div class="tag">Non-invasive saliva collection with zero sample preparation.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>Non-invasive, zero-prep saliva collection that stabilizes DNA at room temperature for over a year.</li>
+    <li>Supports convenient self-collection without refrigeration and is suitable for home, clinic or field use.</li>
+    <li>Designed for molecular applications where simple collection and reliable DNA preservation are important.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>PCR and qPCR</li><li>Next-generation sequencing (NGS)</li><li>SNP analysis</li><li>Methylation analysis</li><li>Oral cancer and early diagnostic research</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key benefits</h2><ul class="ticks">
+  <li>Zero sample preparation</li><li>Self-collection at home</li>
+  <li>Stable for 1+ year at room temperature</li><li>Fully non-invasive</li>
+  <li>No refrigeration required</li><li>Patent-protected</li>
+</ul></div>
+<div class="flow"><h2>Simple workflow</h2><div class="steps">
+  <div class="step"><b>1</b><p>Collect saliva using the ONESpit™ collection procedure.</p></div>
+  <div class="step"><b>2</b><p>Follow the kit instructions for completing collection and stabilization.</p></div>
+  <div class="step"><b>3</b><p>Secure the sample and maintain recommended storage conditions.</p></div>
+  <div class="step"><b>4</b><p>Transport without refrigeration when permitted by the validated instructions.</p></div>
+  <div class="step"><b>5</b><p>Use the preserved sample for downstream DNA extraction and molecular analysis.</p></div>
+</div></div>
+<div class="res"><h2>Expected results / performance</h2><ul class="cols n2">
+  <li>DNA from 8 independent ONESpit™ saliva samples showed consistent, high-quality bands with no visible degradation.</li>
+  <li>Supports DNA preservation for downstream molecular workflows.</li>
+</ul></div>
+</div>
+<div class="cta"><div><h3>Interested in ONESpit™?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#E23B32" data-slug="ONEasy">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 02 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Collect &amp; Stabilize</span>
+    <h1>ONEasy™</h1>
+    <div class="sub">Faecal Collection &amp; Preservation Kit</div>
+    <span class="tribar"></span>
+    <div class="tag">Simple collection. Reliable preservation.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>A user-friendly solution for collecting and stabilizing faecal specimens.</li>
+    <li>Designed for DNA and RNA applications in diagnostic testing, research studies and clinical assessments.</li>
+    <li>Convenient handling for sample collection, storage and transport at room temperature for up to 2 years*.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>Diagnostic testing</li><li>Clinical assessments</li><li>Microbiome and molecular research</li><li>DNA and RNA downstream applications</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key benefits</h2><ul class="ticks">
+  <li>DNA/RNA Shield™ stabilization</li><li>Complete and convenient collection format</li>
+  <li>Designed for at-home sample collection</li><li>Room-temperature handling and transport</li>
+</ul></div>
+<div class="flow"><h2>Simple workflow</h2><div class="steps">
+  <div class="step"><b>1</b><p>Place the FecesCatcher on the toilet seat and keep the collection tube and cap ready.</p></div>
+  <div class="step"><b>2</b><p>Prevent contact with toilet water. Collect a small amount of faeces, approximately pea-sized.</p></div>
+  <div class="step"><b>3</b><p>Transfer the collected sample into the collection tube. Do not spill or ingest the stabilizing solution.</p></div>
+  <div class="step"><b>4</b><p>Close the tube tightly and gently shake for 10 seconds.</p></div>
+  <div class="step"><b>5</b><p>Keep the sealed sample at room temperature (15–25°C) prior to shipment.</p></div>
+</div></div>
+<div class="res"><h2>Expected results / performance</h2><ul class="cols n3">
+  <li>Preserved faecal sample suitable for downstream DNA/RNA workflows</li>
+  <li>Supports consistent sample handling and transport</li>
+  <li>Reduces the need for immediate processing</li>
+</ul></div>
+</div>
+<div class="fn">*Under validated storage conditions. Refer to the product datasheet.</div>
+<div class="cta"><div><h3>Interested in ONEasy™?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#E23B32" data-slug="NucleoGUARD">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 03 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Collect &amp; Stabilize</span>
+    <h1>NucleoGUARD™</h1>
+    <div class="sub">RNA Stabilization Buffer</div>
+    <span class="tribar"></span>
+    <div class="tag">Protect RNA from the moment of collection.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>NucleoGUARD™ is designed to stabilize RNA in biological samples and help preserve sample quality during handling and storage.</li>
+    <li>It reduces the need for immediate processing and supports flexible sample collection, transport and downstream RNA workflows.</li>
+    <li>Ideal for research applications where maintaining RNA integrity is critical for reliable molecular analysis.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>RNA isolation and purification</li><li>Gene expression studies</li><li>RT-qPCR and molecular analysis</li><li>RNA sequencing / transcriptomics</li><li>Tissue and biological sample archiving</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key benefits</h2><ul class="ticks">
+  <li>Helps minimize RNA degradation</li><li>Flexible sample handling and storage</li>
+  <li>Useful for field and laboratory collection</li><li>Supports downstream RNA isolation and analysis</li>
+</ul></div>
+<div class="flow"><h2>Simple workflow</h2><div class="steps">
+  <div class="step"><b>1</b><p>Collect the biological sample using an RNase-free technique.</p></div>
+  <div class="step"><b>2</b><p>Add or immerse the sample in the appropriate volume according to the validated protocol.</p></div>
+  <div class="step"><b>3</b><p>Ensure the sample is fully exposed to the stabilization solution. Close and label the sample.</p></div>
+  <div class="step"><b>4</b><p>Store and transport according to the validated storage conditions.</p></div>
+  <div class="step"><b>5</b><p>Proceed with RNA isolation and assess RNA quantity and integrity.</p></div>
+</div></div>
+<div class="res"><h2>Expected results / performance</h2><ul class="cols n3">
+  <li>Better preservation of RNA integrity</li>
+  <li>More consistent RNA quality for downstream workflows</li>
+  <li>Reduced dependence on immediate sample processing</li>
+</ul></div>
+</div>
+<div class="cta"><div><h3>Interested in NucleoGUARD™?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#E23B32" data-slug="RNAguard">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 04 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Collect &amp; Stabilize</span>
+    <h1>RNAguard™</h1>
+    <div class="sub">Ambient Shipping of Total RNA</div>
+    <span class="tribar"></span>
+    <div class="tag">Preserving RNA Integrity, Anytime, Anywhere.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>RNAguard™ is an RNA stabilization solution designed to preserve RNA integrity during room-temperature transportation and storage.</li>
+    <li>It helps protect RNA from nuclease activity and oxidation, reducing the need for cold-chain shipping.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>RNA-Seq &amp; Transcriptomics</li><li>Gene Expression Studies</li><li>RT-PCR / RT-qPCR</li><li>Molecular Research</li><li>Clinical Research</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key benefits</h2><ul class="ticks">
+  <li>Preserves RNA integrity</li><li>Supports ambient-temperature transportation</li>
+  <li>Protects against nuclease degradation</li><li>Reduces the need for dry ice and cold-chain packaging</li>
+  <li>Simplifies RNA sample transportation</li>
+</ul></div>
+<div class="flow"><h2>Simple workflow</h2><div class="steps">
+  <div class="step"><b>1</b><p>Extract RNA</p></div>
+  <div class="step"><b>2</b><p>Add RNAguard™</p></div>
+  <div class="step"><b>3</b><p>Stabilize</p></div>
+  <div class="step"><b>4</b><p>Transport at ambient temperature</p></div>
+  <div class="step"><b>5</b><p>Downstream analysis</p></div>
+</div></div>
+<div class="res"><h2>Expected result</h2><ul class="cols n1">
+  <li>High-quality RNA suitable for downstream molecular analysis after ambient transportation.</li>
+</ul></div>
+</div>
+<div class="cta"><div><h3>Interested in RNAguard™?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#E23B32" data-slug="ProteinGUARD">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 05 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Collect &amp; Stabilize</span>
+    <h1>ProteinGUARD™</h1>
+    <div class="sub">Ambient Shipping of Protein</div>
+    <span class="tribar"></span>
+    <div class="tag">Ship proteins with less cold-chain dependence.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>ProteinGUARD™ is designed to help stabilize protein products during shipment under ambient conditions.</li>
+    <li>It supports convenient transport of eligible protein formulations while reducing dependence on chilled packaging.</li>
+    <li>Ideal for research proteins, antibodies, standards and controls where product stability has been validated.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>Antibodies and protein reagents</li><li>Ready-to-use standards and controls</li><li>Immunoassay-related protein products</li><li>Research and diagnostic development workflows</li><li>Protein distribution where ambient shipping is validated</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key benefits</h2><ul class="ticks">
+  <li>Supports ambient-temperature shipment of eligible protein products</li><li>Helps maintain protein performance during transport</li>
+  <li>Reduces reliance on ice packs and chilled packaging where validated</li><li>Simplifies logistics for research and testing workflows</li>
+</ul></div>
+<div class="flow"><h2>Simple workflow</h2><div class="steps">
+  <div class="step"><b>1</b><p>Use the validated ProteinGUARD™ formulation procedure.</p></div>
+  <div class="step"><b>2</b><p>Allow the protein to equilibrate as specified in the validated procedure.</p></div>
+  <div class="step"><b>3</b><p>Seal and label the product and use appropriate protective packaging.</p></div>
+  <div class="step"><b>4</b><p>Ship at ambient conditions only for validated products and routes.</p></div>
+  <div class="step"><b>5</b><p>Inspect on arrival and transfer to the specified storage conditions.</p></div>
+</div></div>
+<div class="res"><h2>Expected results / performance</h2><ul class="cols n3">
+  <li>Can reduce reliance on ice packs and temperature-control packaging where validated</li>
+  <li>Supports a more efficient shipping model</li>
+  <li>Maintains product quality when supported by validated stability data</li>
+</ul></div>
+</div>
+<div class="cta"><div><h3>Interested in ProteinGUARD™?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#E23B32" data-slug="SoilGUARD">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 06 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Collect &amp; Stabilize</span>
+    <h1>SoilGUARD™</h1>
+    <div class="sub">Soil Stabilization Buffer</div>
+    <span class="tribar"></span>
+    <div class="tag">Simple soil-matrix preparation for cleaner nucleic-acid workflows.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>SoilGUARD™ is a soil-sample stabilization / inhibitor-management buffer intended to support nucleic-acid workflows from complex soil matrices.</li>
+    <li>Soil contains humic substances and other matrix components that can interfere with downstream enzyme-based assays such as PCR. SoilGUARD™ is designed to help improve sample preparation before nucleic-acid purification and analysis.</li>
+    <li>Use with the validated ONEOMICS workflow to obtain a cleaner sample fraction suitable for downstream molecular applications.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>Soil microbiology</li><li>Microbial community studies</li><li>DNA/RNA extraction workflows</li><li>PCR and qPCR sample preparation</li><li>Metagenomics and microbial ecology</li><li>Sequencing-oriented sample preparation</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key benefits</h2><ul class="ticks">
+  <li>Designed for challenging soil matrices</li><li>Supports reduction of soil-derived inhibitors during sample preparation</li>
+  <li>Helps prepare samples for downstream nucleic-acid purification</li><li>Suitable for molecular biology and environmental research workflows</li>
+  <li>Can support PCR/qPCR and sequencing workflows when validated</li>
+</ul></div>
+<div class="flow"><h2>Simple workflow</h2><div class="steps">
+  <div class="step"><b>1</b><p>Collect the soil sample using the validated sample amount and handling procedure.</p></div>
+  <div class="step"><b>2</b><p>Add SoilGUARD™ according to the approved ONEOMICS protocol and mix thoroughly.</p></div>
+  <div class="step"><b>3</b><p>Separate soil particles or debris as specified by the workflow.</p></div>
+  <div class="step"><b>4</b><p>Proceed with the compatible nucleic-acid purification method.</p></div>
+  <div class="step"><b>5</b><p>Use purified nucleic acid for validated PCR/qPCR or sequencing applications.</p></div>
+</div></div>
+<div class="res"><h2>Performance evaluation</h2><ul class="cols n2">
+  <li>DNA/RNA yield comparison</li><li>Purity assessment such as A260/280 or A260/230</li>
+  <li>PCR/qPCR amplification comparison</li><li>Gel, electropherogram or sequencing QC data</li>
+</ul></div>
+</div>
+<div class="cta"><div><h3>Interested in SoilGUARD™?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#0793EB" data-slug="ONEMag_Universal_DNA">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 07 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Extract</span>
+    <h1>ONEMag™</h1>
+    <div class="sub">Rapid Universal DNA Extraction Kit</div>
+    <span class="tribar"></span>
+    <div class="tag">Magnetic bead-based DNA isolation in under 30 minutes.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>ONEMag™ Rapid Universal DNA Extraction Kit is a magnetic bead-based nucleic acid purification system designed for rapid and efficient isolation of high-quality DNA from a wide range of biological samples.</li>
+    <li>It provides a fast and streamlined extraction workflow, enabling high-yield and high-purity DNA recovery in less than 30 minutes.</li>
+    <li>The purified DNA is suitable for PCR, qPCR and Next-Generation Sequencing (NGS).</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>PCR &amp; qPCR</li><li>Genotyping</li><li>DNA barcoding</li><li>Next-Generation Sequencing (NGS)</li><li>Microbial DNA analysis</li><li>Molecular diagnostics &amp; research</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key features</h2><ul class="ticks">
+  <li>Magnetic bead-based DNA isolation</li><li>Compatible with multiple sample types</li>
+  <li>Rapid extraction in less than 30 minutes</li><li>High-yield, high-purity DNA</li>
+  <li>No hazardous organic solvents</li><li>Compatible with manual and automated workflows</li>
+</ul></div>
+<div class="glance"><h2>At a glance</h2><div class="gls">
+  <div class="gl"><b>&lt; 30 min</b><span>rapid extraction</span></div>
+  <div class="gl"><b>Solvent-free</b><span>no hazardous organic solvents</span></div>
+  <div class="gl"><b>Manual + auto</b><span>compatible workflows</span></div>
+</div></div>
+<div class="chips"><h2>Compatible sample types</h2><div class="cc">
+  <span>Blood</span><span>Serum</span><span>Tissue</span><span>Saliva</span><span>Sputum</span><span>Faecal samples</span><span>Urine</span><span>Swabs</span><span>Bacteria</span><span>Fungi</span>
+</div></div>
+</div>
+<div class="cta"><div><h3>Interested in ONEMag™ Universal DNA?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#0793EB" data-slug="ONEMag_Soil_DNA">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 08 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Extract</span>
+    <h1>ONEMag™</h1>
+    <div class="sub">Rapid Soil DNA Extraction Kit</div>
+    <span class="tribar"></span>
+    <div class="tag">Magnetic bead-based DNA extraction optimized for soil samples.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>ONEMag™ Rapid Soil DNA Extraction Kit is a magnetic bead-based DNA purification system specifically optimized for the rapid and efficient extraction of high-quality genomic DNA from soil samples.</li>
+    <li>The kit is designed to effectively process diverse soil matrices while minimizing the impact of common soil-derived contaminants and PCR inhibitors.</li>
+    <li>Compatible with PCR, qPCR, 16S rRNA sequencing, ITS sequencing, shotgun metagenomics and other microbiome analysis workflows.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>Soil microbiome profiling</li><li>16S rRNA &amp; ITS sequencing</li><li>Shotgun metagenomic sequencing</li><li>Soil microbial diversity studies</li><li>Environmental DNA (eDNA) analysis</li><li>Agricultural and rhizosphere research</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key features</h2><ul class="ticks">
+  <li>Magnetic bead-based DNA extraction optimized for soil samples</li><li>Efficient removal of humic acids and other soil-derived inhibitors</li>
+  <li>Produces high-quality, high-purity DNA</li><li>Rapid and easy extraction workflow</li>
+  <li>Suitable for diverse soil types</li><li>Compatible with manual and automated workflows</li>
+</ul></div>
+<div class="glance"><h2>At a glance</h2><div class="gls">
+  <div class="gl"><b>Humic acid</b><span>and inhibitor removal</span></div>
+  <div class="gl"><b>Solvent-free</b><span>no hazardous organic solvents</span></div>
+  <div class="gl"><b>Manual + auto</b><span>compatible workflows</span></div>
+</div></div>
+</div>
+<div class="cta"><div><h3>Interested in ONEMag™ Soil DNA?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#0793EB" data-slug="ONEMag_Plant_DNA">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 09 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Extract</span>
+    <h1>ONEMag™</h1>
+    <div class="sub">Rapid Plant DNA Extraction Kit</div>
+    <span class="tribar"></span>
+    <div class="tag">Magnetic bead-based DNA purification for plant samples.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>ONEMag™ Rapid Plant DNA Extraction Kit is a magnetic bead-based DNA purification system specifically designed for the rapid and efficient isolation of high-quality genomic DNA from a wide range of plant samples.</li>
+    <li>The kit is optimized to handle challenging plant matrices containing polysaccharides, polyphenols and other compounds that can interfere with DNA purification.</li>
+    <li>Compatible with PCR, qPCR, genotyping, DNA barcoding, plant pathogen detection and Next-Generation Sequencing (NGS).</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>Plant genomics and molecular breeding</li><li>PCR &amp; qPCR</li><li>DNA barcoding</li><li>Genotyping and SNP analysis</li><li>Plant pathogen detection</li><li>Marker-assisted selection</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key features</h2><ul class="ticks">
+  <li>Magnetic bead-based DNA purification</li><li>Optimized for a wide range of plant tissues</li>
+  <li>Efficient removal of polysaccharides, polyphenols and PCR inhibitors</li><li>Delivers high-yield, high-purity genomic DNA</li>
+  <li>Minimizes hazardous chemicals and organic solvent use</li><li>Compatible with manual and automated workflows</li>
+</ul></div>
+<div class="glance"><h2>At a glance</h2><div class="gls">
+  <div class="gl"><b>Polyphenols</b><span>and polysaccharide removal</span></div>
+  <div class="gl"><b>Fewer solvents</b><span>minimizes hazardous organic solvent use</span></div>
+  <div class="gl"><b>Manual + auto</b><span>compatible workflows</span></div>
+</div></div>
+</div>
+<div class="cta"><div><h3>Interested in ONEMag™ Plant DNA?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#0793EB" data-slug="ONEMag_Soil_RNA">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 10 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Extract</span>
+    <h1>ONEMag™</h1>
+    <div class="sub">Rapid Soil RNA Extraction Kit</div>
+    <span class="tribar"></span>
+    <div class="tag">Magnetic bead-based RNA purification for soil samples.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>ONEMag™ Rapid Soil RNA Extraction Kit is a magnetic bead-based RNA purification system specifically designed for the rapid and efficient isolation of high-quality total RNA from diverse soil samples.</li>
+    <li>The kit is optimized to address the challenges associated with soil matrices, including humic substances, polyphenols and other environmental inhibitors.</li>
+    <li>The purified RNA is suitable for RT-PCR, qRT-PCR, RNA sequencing (RNA-Seq), metatranscriptomics and microbial gene expression analysis.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>Soil microbiome and metatranscriptomics</li><li>RNA-Seq</li><li>RT-PCR &amp; qRT-PCR</li><li>Soil microbial gene expression studies</li><li>Functional microbial profiling</li><li>Rhizosphere and plant-microbe interaction studies</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key features</h2><ul class="ticks">
+  <li>Magnetic bead-based RNA purification</li><li>Optimized for diverse soil samples</li>
+  <li>Efficient removal of humic acids, polyphenols and other soil-derived inhibitors</li><li>Delivers high-quality, high-integrity RNA</li>
+  <li>Minimizes hazardous organic solvent use</li><li>Suitable for manual and automated workflows</li>
+</ul></div>
+<div class="glance"><h2>At a glance</h2><div class="gls">
+  <div class="gl"><b>Humic acid</b><span>and inhibitor removal</span></div>
+  <div class="gl"><b>Fewer solvents</b><span>minimizes hazardous organic solvent use</span></div>
+  <div class="gl"><b>Manual + auto</b><span>compatible workflows</span></div>
+</div></div>
+</div>
+<div class="cta"><div><h3>Interested in ONEMag™ Soil RNA?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#0793EB" data-slug="ONEMag_Plant_RNA">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 11 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Extract</span>
+    <h1>ONEMag™</h1>
+    <div class="sub">Rapid Plant RNA Extraction Kit</div>
+    <span class="tribar"></span>
+    <div class="tag">Magnetic bead-based RNA purification for plant tissues.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>ONEMag™ Rapid Plant RNA Extraction Kit is a magnetic bead-based RNA purification system for the rapid and efficient isolation of high-quality total RNA from a wide range of plant tissues.</li>
+    <li>The kit is optimized to overcome common challenges associated with plant samples, including polysaccharides, polyphenols and other secondary metabolites.</li>
+    <li>Suitable for RT-PCR, qRT-PCR, RNA sequencing (RNA-Seq), transcriptome analysis and gene expression studies.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>RNA-Seq &amp; transcriptome analysis</li><li>RT-PCR &amp; qRT-PCR</li><li>Gene expression studies</li><li>Plant functional genomics</li><li>Molecular breeding</li><li>Plant-pathogen interaction studies</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key features</h2><ul class="ticks">
+  <li>Magnetic bead-based RNA purification</li><li>Optimized for a wide range of plant tissues</li>
+  <li>Efficient removal of polysaccharides, polyphenols and plant-derived inhibitors</li><li>Provides high-quality, high-integrity RNA</li>
+  <li>Minimizes hazardous organic solvent use</li><li>Compatible with sensitive downstream molecular applications</li>
+</ul></div>
+<div class="glance"><h2>At a glance</h2><div class="gls">
+  <div class="gl"><b>Polyphenols</b><span>and polysaccharide removal</span></div>
+  <div class="gl"><b>Fewer solvents</b><span>minimizes hazardous organic solvent use</span></div>
+  <div class="gl"><b>Manual + auto</b><span>compatible workflows</span></div>
+</div></div>
+</div>
+<div class="cta"><div><h3>Interested in ONEMag™ Plant RNA?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#33A015" data-slug="ONENext_16S_V3-V4">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 12 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Amplify &amp; Sequence</span>
+    <h1>ONENext™</h1>
+    <div class="sub">16S (V3-V4) Library Prep Kit for Illumina</div>
+    <span class="tribar"></span>
+    <div class="tag">Targeted library prep for the 16S rRNA V3-V4 region.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>ONENext™ 16S (V3-V4) Library Prep Kit for Illumina is a streamlined library preparation solution for targeted amplification and sequencing of the bacterial 16S rRNA gene V3-V4 hypervariable region on Illumina sequencing platforms.</li>
+    <li>The kit enables efficient preparation of sequencing-ready libraries from microbial DNA, supporting standardized and reproducible workflows for microbial community profiling.</li>
+    <li>The resulting libraries are suitable for paired-end Illumina sequencing and downstream analysis of microbial composition and diversity.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>16S rRNA gene sequencing</li><li>Bacterial community profiling</li><li>Microbial diversity analysis</li><li>Microbiome characterization</li><li>Environmental microbiology</li><li>Gut and host-associated microbiome research</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key features</h2><ul class="ticks">
+  <li>Optimized for 16S rRNA V3-V4 region</li><li>Designed for Illumina sequencing platforms</li>
+  <li>Streamlined library preparation workflow</li><li>Supports indexed/multiplexed sequencing</li>
+  <li>Suitable for microbial DNA from diverse sample types</li><li>Compatible with downstream microbial community analysis</li>
+</ul></div>
+<div class="glance"><h2>At a glance</h2><div class="gls">
+  <div class="gl"><b>V3-V4</b><span>16S rRNA region</span></div>
+  <div class="gl"><b>Illumina</b><span>sequencing platforms</span></div>
+  <div class="gl"><b>Multiplexed</b><span>indexed sequencing</span></div>
+</div></div>
+</div>
+<div class="cta"><div><h3>Interested in ONENext™ 16S (V3-V4)?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#33A015" data-slug="ONENext_16S_V1-V9">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 13 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Amplify &amp; Sequence</span>
+    <h1>ONENext™</h1>
+    <div class="sub">16S (V1-V9) Library Prep Kit for ONT</div>
+    <span class="tribar"></span>
+    <div class="tag">Near full-length 16S rRNA library prep for long-read sequencing.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>ONENext™ 16S (V1-V9) Library Prep Kit for ONT is a targeted long-read library preparation solution for amplification and sequencing of the near full-length bacterial 16S rRNA gene spanning the V1-V9 hypervariable regions using Oxford Nanopore Technologies (ONT) platforms.</li>
+    <li>The kit enables preparation of sequencing-ready libraries from microbial DNA while preserving information across the complete 16S rRNA region, supporting improved taxonomic resolution compared with short-region amplicon approaches.</li>
+    <li>Suitable for microbial community profiling and bacterial identification studies.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>Full-length 16S rRNA sequencing</li><li>Bacterial identification and taxonomic profiling</li><li>Microbial diversity and community analysis</li><li>Environmental and soil microbiology</li><li>Gut and host-associated microbiome studies</li><li>Pathogen and microbial surveillance research</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key features</h2><ul class="ticks">
+  <li>Targets the near full-length 16S rRNA V1-V9 region (~1.5 kb)</li><li>Designed for Oxford Nanopore Technologies (ONT) sequencing</li>
+  <li>Long-amplicon approach for enhanced taxonomic resolution</li><li>Streamlined and reproducible library preparation workflow</li>
+  <li>Suitable for diverse microbial DNA samples</li><li>Supports multiplexed sequencing workflows</li>
+</ul></div>
+<div class="glance"><h2>At a glance</h2><div class="gls">
+  <div class="gl"><b>~1.5 kb</b><span>full-length 16S (V1-V9)</span></div>
+  <div class="gl"><b>ONT</b><span>Oxford Nanopore platforms</span></div>
+  <div class="gl"><b>Multiplexed</b><span>sequencing workflows</span></div>
+</div></div>
+</div>
+<div class="cta"><div><h3>Interested in ONENext™ 16S (V1-V9)?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+<section class="page" style="--c:#33A015" data-slug="TaqPlus_PCR">
+<div class="top"><div style="font-size:24pt;font-weight:700;color:#10243E;letter-spacing:-1px">ONE<span style="color:#E23B32">O</span>MICS</div><div class="kicker">Product profile &nbsp;·&nbsp; 14 / 14</div></div>
+<div class="hero">
+  <div class="hero-txt">
+    <span class="pill"><i></i>Amplify &amp; Sequence</span>
+    <h1>2X Taq Plus</h1>
+    <div class="sub">PCR Master Mix (With RED Dye)</div>
+    <span class="tribar"></span>
+    <div class="tag">Ready-to-use PCR master mix with integrated gel-loading dye.</div>
+  </div>
+</div>
+<div class="main">
+<div class="rowA">
+  <div class="ov"><h2>Overview</h2><ul class="dots">
+    <li>2X Taq Plus PCR Master Mix (With RED Dye) is a ready-to-use PCR reagent formulated for reliable and efficient amplification of DNA targets.</li>
+    <li>The optimized master mix contains Taq DNA polymerase, dNTPs, MgCl2 and reaction buffer in a convenient 2X concentration, reducing pipetting steps and minimizing reaction-to-reaction variation.</li>
+    <li>The integrated RED Dye enables direct loading of PCR products onto agarose gels, eliminating the need for an additional loading dye.</li>
+  </ul></div>
+  <div class="apps"><h2>Applications</h2><ul class="sq">
+    <li>Routine PCR amplification</li><li>Genotyping and DNA screening</li><li>Cloning and recombinant DNA workflows</li><li>Colony PCR</li><li>Molecular diagnostics research</li><li>Preparation of PCR products for downstream applications</li>
+  </ul></div>
+</div>
+<div class="ben"><h2>Key features</h2><ul class="ticks">
+  <li>Ready-to-use 2X PCR master mix</li><li>Contains optimized Taq DNA polymerase, dNTPs, MgCl2 and reaction buffer</li>
+  <li>Integrated RED Dye for direct gel loading</li><li>Reduces pipetting steps and experimental variation</li>
+  <li>Reliable and efficient DNA amplification</li><li>Suitable for a broad range of DNA templates</li>
+</ul></div>
+<div class="glance"><h2>At a glance</h2><div class="gls">
+  <div class="gl"><b>2X</b><span>ready-to-use mix</span></div>
+  <div class="gl"><b>RED dye</b><span>direct gel loading</span></div>
+  <div class="gl"><b>Broad</b><span>range of DNA templates</span></div>
+</div></div>
+</div>
+<div class="cta"><div><h3>Interested in 2X Taq Plus?</h3><p>Contact our team for availability, pricing and technical details.</p></div>
+<dl><dt>Web</dt><dd>www.oneomics.in</dd><dt>Email</dt><dd>info@oneomics.in</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+<div class="bar"></div>
+</section>
+
+</body>
+</html>
