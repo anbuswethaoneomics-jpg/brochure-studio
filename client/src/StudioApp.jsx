@@ -399,7 +399,7 @@ export default function StudioApp() {
     if (i === pageIdx) return;
     const next = currentPages();
     if (!next[i] && i === 1) {
-      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name) || TEMPLATES.find((t) => t.id === 'trifold');
+      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
       if (curTemplate?.pages?.[1]) {
         next[i] = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg);
       }
@@ -432,25 +432,10 @@ export default function StudioApp() {
       return;
     }
 
-    if (mode !== 'rotate' && mode !== 'swap-pages' && mode !== 'swap-0-1') {
-      ed.shufflePanels(mode, design.folds);
-      return;
-    }
-
     const next = currentPages();
     if (next.length < 2) {
-      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
-      if (curTemplate?.pages?.[1]) {
-        const p2 = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg);
-        next.push(p2);
-      } else {
-        next.push(null);
-      }
-    } else if (!next[1] && next.length >= 2) {
-      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
-      if (curTemplate?.pages?.[1]) {
-        next[1] = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg);
-      }
+      notify('Add a page first in the bottom to swap pages');
+      return;
     }
 
     // Swap Page 1 and Page 2
@@ -574,7 +559,7 @@ export default function StudioApp() {
           currentTemplateId={design.templateId || design.id}
         />
         <main className="stage">
-          <PropsBar ed={ed} bg={ed.getBackground()} folds={design.folds} onShuffle={shufflePagesOrPanels} />
+          <PropsBar ed={ed} bg={ed.getBackground()} folds={design.folds} pagesCount={pages.length} onShuffle={shufflePagesOrPanels} />
           <div
             className={`ws ${panMode || spacePressed ? 'pan-mode' : ''} ${isPanning ? 'panning' : ''}`}
             ref={wsRef}
@@ -629,27 +614,29 @@ export default function StudioApp() {
                 <input type="checkbox" checked={showFolds} onChange={(e) => setShowFolds(e.target.checked)} /> Fold lines
               </label>
             )}
-            <button
-              className="btn small"
-              style={{
-                marginLeft: 6,
-                marginRight: 6,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 5,
-                background: '#f0fdf4',
-                color: '#006837',
-                border: '1px solid #86efac',
-                fontWeight: 600,
-                borderRadius: 6,
-                padding: '4px 9px',
-                cursor: 'pointer',
-              }}
-              onClick={() => shufflePagesOrPanels('rotate')}
-              title={design.folds > 1 ? "Shuffle panels" : "Swap between Page 1 and Page 2"}
-            >
-              🔀 {design.folds > 1 ? 'Shuffle' : 'Swap Pages'}
-            </button>
+            {(design.folds > 1 || pages.length > 1) && (
+              <button
+                className="btn small"
+                style={{
+                  marginLeft: 6,
+                  marginRight: 6,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  background: '#f0fdf4',
+                  color: '#006837',
+                  border: '1px solid #86efac',
+                  fontWeight: 600,
+                  borderRadius: 6,
+                  padding: '4px 9px',
+                  cursor: 'pointer',
+                }}
+                onClick={() => shufflePagesOrPanels('rotate')}
+                title={design.folds > 1 ? "Shuffle panels" : "Swap between Page 1 and Page 2"}
+              >
+                🔀 {design.folds > 1 ? 'Shuffle' : 'Swap Pages'}
+              </button>
+            )}
             <button
               className={`icon pan-btn ${panMode || spacePressed ? 'active' : ''}`}
               onClick={() => setPanMode((p) => !p)}

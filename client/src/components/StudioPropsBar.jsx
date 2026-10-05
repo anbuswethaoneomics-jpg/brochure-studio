@@ -52,9 +52,10 @@ function Color({ label, value, onChange }) {
   );
 }
 
-export default function StudioPropsBar({ ed, bg, folds = 3, onShuffle }) {
+export default function StudioPropsBar({ ed, bg, folds = 3, pagesCount = 1, onShuffle }) {
   const s = ed.sel;
   const [showShuffle, setShowShuffle] = useState(false);
+  const canShuffle = folds > 1 || pagesCount > 1;
 
   if (!s) {
     return (
@@ -69,27 +70,29 @@ export default function StudioPropsBar({ ed, bg, folds = 3, onShuffle }) {
         >
           + Add Text
         </button>
-        <span className="sep" />
-        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
-          <button
-            className="tb txt"
-            style={{
-              background: '#f0fdf4',
-              color: '#006837',
-              border: '1px solid #86efac',
-              borderRadius: '6px 0 0 6px',
-              padding: '4px 10px',
-              fontWeight: 600,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 5,
-              cursor: 'pointer',
-            }}
-            onClick={() => (onShuffle ? onShuffle('rotate') : ed.shufflePanels('rotate', folds))}
-            title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Swap between Page 1 and Page 2")}
-          >
-            🔀 {folds > 1 ? 'Shuffle Panels' : 'Shuffle Pages'}
-          </button>
+        {canShuffle && (
+          <>
+            <span className="sep" />
+            <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+              <button
+                className="tb txt"
+                style={{
+                  background: '#f0fdf4',
+                  color: '#006837',
+                  border: '1px solid #86efac',
+                  borderRadius: '6px 0 0 6px',
+                  padding: '4px 10px',
+                  fontWeight: 600,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  cursor: 'pointer',
+                }}
+                onClick={() => (onShuffle ? onShuffle('rotate') : ed.shufflePanels('rotate', folds))}
+                title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Swap between Page 1 and Page 2")}
+              >
+                🔀 {folds > 1 ? 'Shuffle Panels' : 'Swap Pages'}
+              </button>
           <button
             className="tb txt"
             style={{
@@ -176,45 +179,34 @@ export default function StudioPropsBar({ ed, bg, folds = 3, onShuffle }) {
                   ↔️ Swap Left & Right Panels (1 ⇄ 2)
                 </button>
               ) : (
+                <button
+                  className="menu-item"
+                  style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13, color: '#006837', fontWeight: 600 }}
+                  onClick={() => {
+                    if (onShuffle) onShuffle('swap-pages');
+                    setShowShuffle(false);
+                  }}
+                >
+                  📄 Swap Page 1 & Page 2
+                </button>
+              )}
+              {folds > 1 && (
                 <>
+                  <div style={{ height: 1, background: '#f1f5f9', margin: '3px 0' }} />
                   <button
                     className="menu-item"
                     style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13, color: '#006837', fontWeight: 600 }}
-                    onClick={() => {
-                      if (onShuffle) onShuffle('swap-pages');
-                      else ed.shufflePanels('rotate', folds);
-                      setShowShuffle(false);
-                    }}
+                    onClick={() => { ed.shufflePanels('shuffle-footers', folds); setShowShuffle(false); }}
                   >
-                    📄 Swap Page 1 & Page 2
-                  </button>
-                  <button
-                    className="menu-item"
-                    style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13 }}
-                    onClick={() => { ed.shufflePanels('rotate', folds); setShowShuffle(false); }}
-                  >
-                    ↔️ Swap Left & Right Columns
-                  </button>
-                  <button
-                    className="menu-item"
-                    style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13 }}
-                    onClick={() => { ed.shufflePanels('swap-top-bottom', folds); setShowShuffle(false); }}
-                  >
-                    ↕️ Swap Top & Bottom Sections
+                    📍 Shuffle Bottom Elements
                   </button>
                 </>
               )}
-              <div style={{ height: 1, background: '#f1f5f9', margin: '3px 0' }} />
-              <button
-                className="menu-item"
-                style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13, color: '#006837', fontWeight: 600 }}
-                onClick={() => { ed.shufflePanels('shuffle-footers', folds); setShowShuffle(false); }}
-              >
-                📍 Shuffle Bottom Elements
-              </button>
             </div>
           )}
         </div>
+      </>
+    )}
         <span className="props-hint" style={{ marginLeft: 8 }}>
           — or double-click anywhere on the canvas to add text
         </span>
@@ -330,26 +322,30 @@ export default function StudioPropsBar({ ed, bg, folds = 3, onShuffle }) {
       <span className="sep" />
       <Btn icon="copy" label="Duplicate (Ctrl+D)" onClick={ed.duplicate} />
       <Btn icon="trash" label="Delete (Del)" onClick={ed.remove} />
-      <span className="sep" />
-      <button
-        className="tb txt"
-        style={{
-          background: '#f0fdf4',
-          color: '#006837',
-          border: '1px solid #86efac',
-          borderRadius: 6,
-          padding: '4px 9px',
-          fontWeight: 600,
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 4,
-          cursor: 'pointer',
-        }}
-        onClick={() => (onShuffle ? onShuffle('rotate') : ed.shufflePanels('rotate', folds))}
-        title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Swap between Page 1 and Page 2")}
-      >
-        🔀 {folds > 1 ? 'Shuffle' : 'Swap Pages'}
-      </button>
+      {canShuffle && (
+        <>
+          <span className="sep" />
+          <button
+            className="tb txt"
+            style={{
+              background: '#f0fdf4',
+              color: '#006837',
+              border: '1px solid #86efac',
+              borderRadius: 6,
+              padding: '4px 9px',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 4,
+              cursor: 'pointer',
+            }}
+            onClick={() => (onShuffle ? onShuffle('rotate') : ed.shufflePanels('rotate', folds))}
+            title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Swap between Page 1 and Page 2")}
+          >
+            🔀 {folds > 1 ? 'Shuffle' : 'Swap Pages'}
+          </button>
+        </>
+      )}
     </div>
   );
 }
