@@ -3,7 +3,6 @@ import {
   Canvas, Textbox, Rect, Circle, Triangle, Line, FabricImage, Group, ActiveSelection,
 } from 'fabric';
 import { buildSpec, makeIcon, makeText } from './objects.js';
-import { safeLoadFromJSON, normalizeCanvasJson } from './utils/canvasJson.js';
 
 const hex = (v) => (typeof v === 'string' && /^#[0-9a-f]{6}$/i.test(v) ? v : '#000000');
 
@@ -81,7 +80,7 @@ export function useEditor() {
     const c = cvs.current;
     busy.current = true;
     c.discardActiveObject();
-    await safeLoadFromJSON(c, json);
+    await c.loadFromJSON(json);
     applyZoom();
     busy.current = false;
     readSel();
@@ -447,7 +446,7 @@ export function useEditor() {
     size.current = { ...size.current, folds: Number(folds) || 0 };
   };
   const setZoom = (z) => { size.current = { ...size.current, z }; applyZoom(); };
-  const getJSON = () => normalizeCanvasJson(cvs.current.toObject());
+  const getJSON = () => cvs.current.toObject();
   const clear = async (bg = '#ffffff') => {
     const c = cvs.current; busy.current = true;
     c.discardActiveObject(); c.clear(); c.backgroundColor = bg;
@@ -468,16 +467,16 @@ export function useEditor() {
     c.backgroundColor = bg;
     const specs = typeof specsFn === 'function' ? specsFn() : specsFn;
     if (specs && Array.isArray(specs.objects)) {
-      await safeLoadFromJSON(c, specs);
+      await c.loadFromJSON(specs);
     } else if (Array.isArray(specs)) {
       for (const s of specs) {
         const o = await buildSpec(s);
         if (o) c.add(o);
       }
     }
-    const pageJson = normalizeCanvasJson(c.toObject(['name', 'selectable', 'evented']));
+    const pageJson = c.toObject(['name', 'selectable', 'evented']);
     c.clear();
-    await safeLoadFromJSON(c, currentJson);
+    await c.loadFromJSON(currentJson);
     return pageJson;
   };
 
@@ -569,7 +568,7 @@ export function useEditor() {
       if (typeof specsFn === 'function') {
         const specs = specsFn();
         if (specs && Array.isArray(specs.objects)) {
-          await safeLoadFromJSON(c, specs);
+          await c.loadFromJSON(specs);
         } else if (Array.isArray(specs)) {
           for (const s of specs) {
             const o = await buildSpec(s);
@@ -577,15 +576,15 @@ export function useEditor() {
           }
         }
       } else if (specsFn && Array.isArray(specsFn.objects)) {
-        await safeLoadFromJSON(c, specsFn);
+        await c.loadFromJSON(specsFn);
       }
-      pagesJson.push(normalizeCanvasJson(c.toObject(['name', 'selectable', 'evented'])));
+      pagesJson.push(c.toObject(['name', 'selectable', 'evented']));
     }
 
     // Restore Page 1 as the active view on the canvas
     if (pagesJson.length > 0) {
       c.clear();
-      await safeLoadFromJSON(c, pagesJson[0]);
+      await c.loadFromJSON(pagesJson[0]);
     }
 
     applyZoom();

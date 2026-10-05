@@ -107,6 +107,7 @@ export default function StudioPropsBar({ ed, bg }) {
           <Btn icon="align-left" label="Align left" on={s.align === 'left'} onClick={() => ed.setProps({ textAlign: 'left' })} />
           <Btn icon="align-center" label="Align center" on={s.align === 'center'} onClick={() => ed.setProps({ textAlign: 'center' })} />
           <Btn icon="align-right" label="Align right" on={s.align === 'right'} onClick={() => ed.setProps({ textAlign: 'right' })} />
+          <Btn icon="align-justify" label="Justify" on={s.align === 'justify'} onClick={() => ed.setProps({ textAlign: 'justify' })} />
           <span className="sep" />
           <Num label="Line" value={Number(s.lh).toFixed(2)} min={0.5} max={4} step={0.05} onChange={(v) => ed.setProps({ lineHeight: v })} />
           <Num label="Space" value={s.sp} min={-100} max={1000} step={10} onChange={(v) => ed.setProps({ charSpacing: v })} />

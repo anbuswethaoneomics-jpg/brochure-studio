@@ -3,7 +3,6 @@ import {
   Canvas, Textbox, Rect, Circle, Triangle, Line, FabricImage, Group, ActiveSelection,
 } from 'fabric';
 import { buildSpec, makeIcon, makeText } from './objects.js';
-import { safeLoadFromJSON, normalizeCanvasJson } from './utils/canvasJson.js';
 
 const hex = (v) => (typeof v === 'string' && /^#[0-9a-f]{6}$/i.test(v) ? v : '#000000');
 
@@ -79,7 +78,7 @@ export function useEditor() {
     const c = cvs.current;
     busy.current = true;
     c.discardActiveObject();
-    await safeLoadFromJSON(c, json);
+    await c.loadFromJSON(json);
     applyZoom();
     busy.current = false;
     readSel();
@@ -252,7 +251,7 @@ export function useEditor() {
   // ---------- pages, size, zoom ----------
   const setSize = (w, h) => { size.current = { ...size.current, w, h }; applyZoom(); };
   const setZoom = (z) => { size.current = { ...size.current, z }; applyZoom(); };
-  const getJSON = () => normalizeCanvasJson(cvs.current.toObject());
+  const getJSON = () => cvs.current.toObject();
   const clear = async (bg = '#ffffff') => {
     const c = cvs.current; busy.current = true;
     c.discardActiveObject(); c.clear(); c.backgroundColor = bg;
