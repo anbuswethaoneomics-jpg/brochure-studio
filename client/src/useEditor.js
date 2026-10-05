@@ -487,32 +487,47 @@ export function useEditor() {
    */
   const shufflePanels = (mode = 'rotate', folds = 3) => {
     const c = cvs.current;
-    if (!c || folds < 2) return;
+    if (!c) return;
     const { w, h } = size.current;
-    const panelW = w / folds;
+    const numCols = Number(folds) >= 2 ? Number(folds) : 2;
+    const panelW = w / numCols;
     const objs = c.getObjects();
 
     c.discardActiveObject();
 
     if (mode === 'shuffle-footers') {
-      // Rotate only bottom elements (top >= h * 0.70)
+      // Rotate / swap only bottom elements (top >= h * 0.65)
       objs.forEach((o) => {
         if (o.getScaledWidth() >= w * 0.85) return;
-        if (o.top < h * 0.70) return;
+        if (o.top < h * 0.65) return;
         const cx = o.left + o.getScaledWidth() / 2;
-        const col = Math.min(folds - 1, Math.max(0, Math.floor(cx / panelW)));
-        const nextCol = (col + 1) % folds;
+        const col = Math.min(numCols - 1, Math.max(0, Math.floor(cx / panelW)));
+        const nextCol = (col + 1) % numCols;
         const shift = (nextCol - col) * panelW;
         o.set({ left: o.left + shift });
         o.setCoords();
       });
+    } else if (mode === 'swap-vertical' || mode === 'swap-top-bottom') {
+      // For single-page/A4 flyers: swap upper body content and lower body content
+      const minY = h * 0.12;
+      const maxY = h * 0.88;
+      const midY = (minY + maxY) / 2;
+      const shiftDist = (maxY - minY) / 2;
+      objs.forEach((o) => {
+        if (o.getScaledWidth() >= w * 0.90 && o.getScaledHeight() >= h * 0.90) return;
+        const cy = o.top + o.getScaledHeight() / 2;
+        if (cy < minY || cy > maxY) return;
+        const shift = cy < midY ? shiftDist : -shiftDist;
+        o.set({ top: o.top + shift });
+        o.setCoords();
+      });
     } else if (mode === 'rotate') {
-      // 0 -> 1, 1 -> 2, 2 -> 0
+      // 0 -> 1 -> 2 (or 0 <-> 1 for 2 columns / A4)
       objs.forEach((o) => {
         if (o.getScaledWidth() >= w * 0.85) return;
         const cx = o.left + o.getScaledWidth() / 2;
-        const col = Math.min(folds - 1, Math.max(0, Math.floor(cx / panelW)));
-        const nextCol = (col + 1) % folds;
+        const col = Math.min(numCols - 1, Math.max(0, Math.floor(cx / panelW)));
+        const nextCol = (col + 1) % numCols;
         const shift = (nextCol - col) * panelW;
         o.set({ left: o.left + shift });
         o.setCoords();
@@ -522,8 +537,8 @@ export function useEditor() {
       objs.forEach((o) => {
         if (o.getScaledWidth() >= w * 0.85) return;
         const cx = o.left + o.getScaledWidth() / 2;
-        const col = Math.min(folds - 1, Math.max(0, Math.floor(cx / panelW)));
-        const nextCol = (col - 1 + folds) % folds;
+        const col = Math.min(numCols - 1, Math.max(0, Math.floor(cx / panelW)));
+        const nextCol = (col - 1 + numCols) % numCols;
         const shift = (nextCol - col) * panelW;
         o.set({ left: o.left + shift });
         o.setCoords();
@@ -534,7 +549,7 @@ export function useEditor() {
       objs.forEach((o) => {
         if (o.getScaledWidth() >= w * 0.85) return;
         const cx = o.left + o.getScaledWidth() / 2;
-        const col = Math.min(folds - 1, Math.max(0, Math.floor(cx / panelW)));
+        const col = Math.min(numCols - 1, Math.max(0, Math.floor(cx / panelW)));
         if (col === colA) {
           o.set({ left: o.left + (colB - colA) * panelW });
           o.setCoords();

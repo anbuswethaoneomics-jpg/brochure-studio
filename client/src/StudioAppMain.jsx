@@ -584,20 +584,18 @@ export default function StudioApp() {
             </div>
             <div className="grow" />
             {design.folds > 1 && (
-              <>
-                <label className="check">
-                  <input type="checkbox" checked={showFolds} onChange={(e) => setShowFolds(e.target.checked)} /> Fold lines
-                </label>
-                <button
-                  className="btn small"
-                  style={{ marginLeft: 6, display: 'inline-flex', alignItems: 'center', gap: 4 }}
-                  onClick={() => ed.shufflePanels('rotate', design.folds)}
-                  title="Shuffle panels in between (Panel 1 → Panel 2 → Panel 3)"
-                >
-                  🔀 Shuffle
-                </button>
-              </>
+              <label className="check">
+                <input type="checkbox" checked={showFolds} onChange={(e) => setShowFolds(e.target.checked)} /> Fold lines
+              </label>
             )}
+            <button
+              className="btn small"
+              style={{ marginLeft: 6, display: 'inline-flex', alignItems: 'center', gap: 4 }}
+              onClick={() => ed.shufflePanels('rotate', design.folds)}
+              title={design.folds >= 3 ? "Shuffle/cycle panels (Panel 1 → Panel 2 → Panel 3)" : (design.folds === 2 ? "Swap Left & Right panels" : "Shuffle columns/elements")}
+            >
+              🔀 Shuffle
+            </button>
             <button
               className={`icon pan-btn ${panMode || spacePressed ? 'active' : ''}`}
               onClick={() => setPanMode((p) => !p)}

@@ -69,67 +69,67 @@ export default function StudioPropsBar({ ed, bg, folds = 3 }) {
         >
           + Add Text
         </button>
-        {folds > 1 && (
-          <>
-            <span className="sep" />
-            <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
-              <button
-                className="tb txt"
-                style={{
-                  background: '#f0fdf4',
-                  color: '#006837',
-                  border: '1px solid #86efac',
-                  borderRadius: '6px 0 0 6px',
-                  padding: '4px 10px',
-                  fontWeight: 600,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 5,
-                  cursor: 'pointer',
-                }}
-                onClick={() => ed.shufflePanels('rotate', folds)}
-                title="Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)"
-              >
-                🔀 Shuffle Panels
-              </button>
-              <button
-                className="tb txt"
-                style={{
-                  background: '#f0fdf4',
-                  color: '#006837',
-                  border: '1px solid #86efac',
-                  borderLeft: 'none',
-                  borderRadius: '0 6px 6px 0',
-                  padding: '4px 7px',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                }}
-                onClick={() => setShowShuffle((v) => !v)}
-                title="Shuffle options"
-              >
-                ▾
-              </button>
+        <span className="sep" />
+        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+          <button
+            className="tb txt"
+            style={{
+              background: '#f0fdf4',
+              color: '#006837',
+              border: '1px solid #86efac',
+              borderRadius: '6px 0 0 6px',
+              padding: '4px 10px',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 5,
+              cursor: 'pointer',
+            }}
+            onClick={() => ed.shufflePanels('rotate', folds)}
+            title={folds >= 3 ? "Shuffle/Cycle panels (Panel 1 → Panel 2 → Panel 3)" : (folds === 2 ? "Swap Left & Right Panels" : "Shuffle columns/elements")}
+          >
+            🔀 {folds > 1 ? 'Shuffle Panels' : 'Shuffle'}
+          </button>
+          <button
+            className="tb txt"
+            style={{
+              background: '#f0fdf4',
+              color: '#006837',
+              border: '1px solid #86efac',
+              borderLeft: 'none',
+              borderRadius: '0 6px 6px 0',
+              padding: '4px 7px',
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+            onClick={() => setShowShuffle((v) => !v)}
+            title="Shuffle options"
+          >
+            ▾
+          </button>
 
-              {showShuffle && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    marginTop: 6,
-                    zIndex: 200,
-                    minWidth: 210,
-                    background: '#ffffff',
-                    borderRadius: 8,
-                    boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
-                    border: '1px solid #e2e8f0',
-                    padding: 4,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 2,
-                  }}
-                  onMouseLeave={() => setShowShuffle(false)}
-                >
+          {showShuffle && (
+            <div
+              style={{
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                marginTop: 6,
+                zIndex: 200,
+                minWidth: 220,
+                background: '#ffffff',
+                borderRadius: 8,
+                boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+                border: '1px solid #e2e8f0',
+                padding: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+              }}
+              onMouseLeave={() => setShowShuffle(false)}
+            >
+              {folds >= 3 ? (
+                <>
                   <button
                     className="menu-item"
                     style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13 }}
@@ -166,19 +166,44 @@ export default function StudioPropsBar({ ed, bg, folds = 3 }) {
                   >
                     ↔️ Swap Panel 1 & 3
                   </button>
-                  <div style={{ height: 1, background: '#f1f5f9', margin: '3px 0' }} />
+                </>
+              ) : folds === 2 ? (
+                <button
+                  className="menu-item"
+                  style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13 }}
+                  onClick={() => { ed.shufflePanels('swap-0-1', folds); setShowShuffle(false); }}
+                >
+                  ↔️ Swap Left & Right Panels (1 ⇄ 2)
+                </button>
+              ) : (
+                <>
                   <button
                     className="menu-item"
-                    style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13, color: '#006837', fontWeight: 600 }}
-                    onClick={() => { ed.shufflePanels('shuffle-footers', folds); setShowShuffle(false); }}
+                    style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13 }}
+                    onClick={() => { ed.shufflePanels('rotate', folds); setShowShuffle(false); }}
                   >
-                    📍 Shuffle Bottom Elements
+                    ↔️ Swap Left & Right Columns
                   </button>
-                </div>
+                  <button
+                    className="menu-item"
+                    style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13 }}
+                    onClick={() => { ed.shufflePanels('swap-top-bottom', folds); setShowShuffle(false); }}
+                  >
+                    ↕️ Swap Top & Bottom Sections
+                  </button>
+                </>
               )}
+              <div style={{ height: 1, background: '#f1f5f9', margin: '3px 0' }} />
+              <button
+                className="menu-item"
+                style={{ textAlign: 'left', padding: '6px 10px', borderRadius: 4, border: 'none', background: 'none', cursor: 'pointer', fontSize: 13, color: '#006837', fontWeight: 600 }}
+                onClick={() => { ed.shufflePanels('shuffle-footers', folds); setShowShuffle(false); }}
+              >
+                📍 Shuffle Bottom Elements
+              </button>
             </div>
-          </>
-        )}
+          )}
+        </div>
         <span className="props-hint" style={{ marginLeft: 8 }}>
           — or double-click anywhere on the canvas to add text
         </span>
