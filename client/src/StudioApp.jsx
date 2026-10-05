@@ -8,6 +8,7 @@ import { loadFonts } from './fonts.js';
 import { TEMPLATES } from './brochureTemplates.js';
 import { makeImageTextEditable } from './ocrEditable.js';
 import { listDesigns, getDesign, saveDesign, deleteDesign } from './api.js';
+import { normalizeCanvasJson } from './utils/canvasJson.js';
 
 const download = (href, name) => {
   const a = document.createElement('a');
@@ -185,11 +186,12 @@ export default function StudioApp() {
   const openDesign = async (id) => {
     try {
       const d = await getDesign(id);
+      const cleanedPages = (d.pages || []).map((p) => normalizeCanvasJson(p));
       setDesign({ id: d.id, name: d.name, width: d.width, height: d.height, folds: d.folds || 0 });
-      setPages(d.pages);
+      setPages(cleanedPages);
       setPageIdx(0);
       ed.setSize(d.width, d.height);
-      await ed.loadPage(d.pages[0]);
+      await ed.loadPage(cleanedPages[0]);
       ed.setZoom(1);
       setZoomState(1);
       setModal(null);
@@ -229,6 +231,7 @@ export default function StudioApp() {
           if (parsed.pages && Array.isArray(parsed.pages)) {
             const w = parsed.width || 1123;
             const h = parsed.height || 794;
+            const cleanedPages = parsed.pages.map((p) => normalizeCanvasJson(p));
             setDesign({
               id: parsed.id || null,
               name: parsed.name || file.name.replace(/\.json$/i, ''),
@@ -236,10 +239,10 @@ export default function StudioApp() {
               height: h,
               folds: parsed.folds || 0,
             });
-            setPages(parsed.pages);
+            setPages(cleanedPages);
             setPageIdx(0);
             ed.setSize(w, h);
-            await ed.loadPage(parsed.pages[0]);
+            await ed.loadPage(cleanedPages[0]);
             ed.setZoom(1);
             setZoomState(1);
             setModal(null);
@@ -248,11 +251,12 @@ export default function StudioApp() {
           } else if (parsed.objects || parsed.version) {
             const w = parsed.width || design.width;
             const h = parsed.height || design.height;
+            const cleanedPage = normalizeCanvasJson(parsed);
             setDesign((d) => ({ ...d, name: file.name.replace(/\.json$/i, ''), width: w, height: h }));
-            setPages([parsed]);
+            setPages([cleanedPage]);
             setPageIdx(0);
             ed.setSize(w, h);
-            await ed.loadPage(parsed);
+            await ed.loadPage(cleanedPage);
             ed.setZoom(1);
             setZoomState(1);
             setModal(null);
@@ -361,7 +365,7 @@ export default function StudioApp() {
   const save = async () => {
     setBusy(true);
     try {
-      const all = currentPages();
+      const all = currentPages().map((p) => normalizeCanvasJson(p));
       const thumbnail = ed.render(Math.min(1, 240 / design.width), 'jpeg');
       const res = await saveDesign({ ...design, pages: all, thumbnail });
       setDesign((d) => ({ ...d, id: res.id }));

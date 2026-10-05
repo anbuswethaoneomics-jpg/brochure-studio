@@ -103,12 +103,20 @@ app.post('/api/ocr', uploadMemory.single('image'), async (req, res) => {
 const clean = (b) => {
   const int = (v, min, max) => Math.min(max, Math.max(min, Math.round(Number(v) || 0)));
   if (!b || !Array.isArray(b.pages) || !b.pages.length) return null;
+  let pages = b.pages;
+  try {
+    const raw = JSON.stringify(pages);
+    const cleaned = raw
+      .replace(/https?:\/\/[^\/"'\s]+\/assets\//g, '/assets/')
+      .replace(/https?:\/\/localhost:\d+\/uploads\//g, '/uploads/');
+    pages = JSON.parse(cleaned);
+  } catch {}
   return {
     name: String(b.name || 'Untitled design').slice(0, 120),
     width: int(b.width, 50, 10000),
     height: int(b.height, 50, 10000),
     folds: int(b.folds, 0, 6),
-    pages: b.pages,
+    pages,
     thumbnail: typeof b.thumbnail === 'string' && b.thumbnail.startsWith('data:image/') ? b.thumbnail : '',
   };
 };
