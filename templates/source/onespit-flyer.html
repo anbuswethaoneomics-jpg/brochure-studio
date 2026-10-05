@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ONEOMICS ONESpit Product Flyer (A4)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --red:#E23B32; --blue:#0793EB; --green:#33A015; --navy:#10243E; --text:#2B3A4F; --muted:#6B7A8F; --tint:#F3F8FC; --line:#D5E3EF;
+         --tri:linear-gradient(90deg,var(--red) 0 33.33%,var(--blue) 33.33% 66.66%,var(--green) 66.66% 100%) }
+  *{ box-sizing:border-box; margin:0; padding:0 }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact }
+  body{ font-family:'Poppins','Segoe UI',Helvetica,Arial,sans-serif; color:var(--text); background:#dde4ea; margin:0; padding:0 }
+  /* Exact 794 x 1123 px A4 */
+  .page{ position:relative; width:794px; height:1123px; margin:0 auto; padding:42px 49px 0; overflow:hidden; background:#fff; box-shadow:0 4px 24px rgba(16,36,62,.18) }
+
+  .kicker{ font-size:8.8pt; font-weight:500; letter-spacing:.15em; text-transform:uppercase; color:var(--muted) }
+  .tribar{ display:block; width:60px; height:4.5px; background:var(--tri); margin:13px 0 11px }
+  h2{ font-size:14pt; font-weight:700; color:var(--navy); margin-bottom:10px; display:flex; align-items:center; gap:8px }
+  h2::before{ content:""; width:6px; height:16px; border-radius:3px; background:var(--c) }
+  sub{ font-size:.7em; vertical-align:baseline; position:relative; top:.35em }
+
+  .top{ display:flex; justify-content:space-between; align-items:center; height:42px }
+  .top img{ width:151px; height:auto; display:block }
+
+  /* hero */
+  .hero{ position:relative; height:196px; margin-top:19px; border-radius:23px; background:var(--tint); overflow:hidden; padding:34px 0 0 38px }
+  .helix{ position:absolute; right:8px; top:0; width:264px; height:196px; opacity:.5 }
+  .kit{ position:absolute; right:38px; top:15px; width:196px; height:auto }
+  .hero-txt{ position:relative; width:445px }
+  .pill{ display:inline-flex; align-items:center; gap:7px; padding:4px 12px 4px 10px; border-radius:99px; background:#fff; border:1pt solid var(--c);
+         font-size:9pt; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--navy) }
+  .pill i{ width:7px; height:7px; border-radius:50%; background:var(--c) }
+  .hero h1{ font-size:38pt; line-height:1.1; font-weight:700; color:var(--navy); margin-top:10px }
+  .sub{ font-size:14.5pt; font-weight:600; color:var(--c); line-height:1.25; margin-top:3px }
+  .tag{ font-size:11.7pt; line-height:1.45; color:var(--text); width:362px }
+
+  /* body */
+  .main{ position:absolute; left:49px; right:49px; top:328px; bottom:136px; display:flex; flex-direction:column; justify-content:space-between }
+  .rowA{ display:grid; grid-template-columns:1.45fr 1fr; gap:26px }
+  ul{ list-style:none }
+  .dots li{ position:relative; padding-left:15px; font-size:11.7pt; line-height:1.5; margin-bottom:7px }
+  .dots li::before{ content:""; position:absolute; left:1px; top:7px; width:6px; height:6px; border-radius:50%; background:var(--c) }
+  .apps{ background:var(--tint); border-radius:15px; padding:15px 17px }
+  .sq li{ position:relative; padding-left:16px; font-size:11pt; line-height:1.42; margin-bottom:6px }
+  .sq li::before{ content:""; position:absolute; left:0; top:6px; width:6px; height:6px; border-radius:1.5px; background:var(--c) }
+  .ticks{ display:grid; grid-template-columns:1fr 1fr; column-gap:26px }
+  .ticks li{ position:relative; padding:0 0 0 23px; font-size:11.5pt; line-height:1.42; margin-bottom:7px }
+  .ticks li::before{ content:"✓"; position:absolute; left:0; top:0; width:15px; height:15px; border-radius:50%; background:var(--c); color:#fff; font-size:8pt; font-weight:700; display:grid; place-items:center; line-height:15px; text-align:center }
+
+  .steps{ position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:11px }
+  .steps::before{ content:""; position:absolute; left:15px; right:15px; top:15px; height:2px; background:var(--line) }
+  .step{ position:relative }
+  .step b{ position:relative; display:grid; place-items:center; width:30px; height:30px; border-radius:50%; background:var(--c); color:#fff; font-size:10.5pt; margin-bottom:8px }
+  .step p{ font-size:10.2pt; line-height:1.4 }
+  .res{ background:var(--tint); border-radius:15px; padding:15px 19px 9px; border-left:6px solid var(--c) }
+  .res h2::before{ display:none }
+  .cols{ display:grid; gap:6px 26px }
+  .cols.n1{ grid-template-columns:1fr } .cols.n2{ grid-template-columns:1fr 1fr } .cols.n3{ grid-template-columns:1fr 1fr 1fr }
+  .cols li{ position:relative; padding-left:14px; font-size:11pt; line-height:1.42; margin-bottom:5px }
+  .cols li::before{ content:""; position:absolute; left:0; top:6px; width:5px; height:5px; border-radius:50%; background:var(--c) }
+
+  .gls{ display:grid; grid-template-columns:repeat(3,1fr); gap:15px }
+  .gl{ background:var(--tint); border-radius:15px; padding:19px 15px; text-align:center; border-top:5px solid var(--c) }
+  .gl b{ display:block; font-size:20pt; font-weight:700; color:var(--navy); line-height:1.2 }
+  .gl span{ display:block; margin-top:5px; font-size:10pt; color:var(--muted) }
+  .cc{ display:flex; flex-wrap:wrap; gap:8px }
+  .cc span{ padding:5px 14px; border-radius:99px; background:var(--tint); border:1pt solid var(--line); font-size:10.5pt; font-weight:500; color:var(--navy) }
+
+  .fn{ position:absolute; left:49px; right:49px; bottom:141px; font-size:8pt; font-style:italic; color:var(--muted) }
+
+  /* CTA */
+  .cta{ position:absolute; left:0; right:0; bottom:11px; height:105px; background:var(--tint); padding:24px 49px 0; display:flex; justify-content:space-between; gap:30px }
+  .cta h3{ font-size:16.5pt; font-weight:700; color:var(--navy); line-height:1.25 }
+  .cta p{ font-size:10.5pt; line-height:1.5; margin-top:5px; width:300px }
+  .cta dl{ display:grid; grid-template-columns:49px auto; row-gap:7px; font-size:10.5pt; line-height:1.4; align-content:start }
+  .cta dt{ font-size:8pt; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); padding-top:3px }
+  .bar{ position:absolute; left:0; right:0; bottom:0; height:11px; background:var(--tri) }
+</style>
+</head>
+<body>
+<section class="page" style="--c:#E23B32" data-slug="ONESpit">
+<div class="top"><img src="/assets/oneomics_logo.png" alt="ONEOMICS"><div class="kicker">Product profile &nbsp;·&nbsp; 01 / 14</div></div>
+<div class="hero"><svg class="helix" viewBox="0 0 70 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g stroke-width=".32" stroke-opacity=".4"><line x1="36.4" y1="-2.0" x2="35.6" y2="-2.0" stroke="#E23B32"/><line x1="40.2" y1="-0.5" x2="31.8" y2="-0.5" stroke="#0793EB"/><line x1="43.7" y1="1.0" x2="28.3" y2="1.0" stroke="#33A015"/><line x1="46.6" y1="2.5" x2="25.4" y2="2.5" stroke="#E23B32"/><line x1="48.7" y1="4.0" x2="23.3" y2="4.0" stroke="#0793EB"/><line x1="49.8" y1="5.5" x2="22.2" y2="5.5" stroke="#33A015"/><line x1="49.9" y1="7.0" x2="22.1" y2="7.0" stroke="#E23B32"/><line x1="48.9" y1="8.5" x2="23.1" y2="8.5" stroke="#0793EB"/><line x1="46.9" y1="10.0" x2="25.1" y2="10.0" stroke="#33A015"/><line x1="44.1" y1="11.5" x2="27.9" y2="11.5" stroke="#E23B32"/><line x1="40.7" y1="13.0" x2="31.3" y2="13.0" stroke="#0793EB"/><line x1="36.9" y1="14.5" x2="35.1" y2="14.5" stroke="#33A015"/><line x1="33.0" y1="16.0" x2="39.0" y2="16.0" stroke="#E23B32"/><line x1="29.4" y1="17.5" x2="42.6" y2="17.5" stroke="#0793EB"/><line x1="26.3" y1="19.0" x2="45.7" y2="19.0" stroke="#33A015"/><line x1="23.9" y1="20.5" x2="48.1" y2="20.5" stroke="#E23B32"/><line x1="22.4" y1="22.0" x2="49.6" y2="22.0" stroke="#0793EB"/><line x1="22.0" y1="23.5" x2="50.0" y2="23.5" stroke="#33A015"/><line x1="22.7" y1="25.0" x2="49.3" y2="25.0" stroke="#E23B32"/><line x1="24.3" y1="26.5" x2="47.7" y2="26.5" stroke="#0793EB"/><line x1="26.9" y1="28.0" x2="45.1" y2="28.0" stroke="#33A015"/><line x1="30.1" y1="29.5" x2="41.9" y2="29.5" stroke="#E23B32"/><line x1="33.8" y1="31.0" x2="38.2" y2="31.0" stroke="#0793EB"/><line x1="37.7" y1="32.5" x2="34.3" y2="32.5" stroke="#33A015"/><line x1="41.5" y1="34.0" x2="30.5" y2="34.0" stroke="#E23B32"/><line x1="44.8" y1="35.5" x2="27.2" y2="35.5" stroke="#0793EB"/><line x1="47.4" y1="37.0" x2="24.6" y2="37.0" stroke="#33A015"/><line x1="49.2" y1="38.5" x2="22.8" y2="38.5" stroke="#E23B32"/><line x1="50.0" y1="40.0" x2="22.0" y2="40.0" stroke="#0793EB"/><line x1="49.7" y1="41.5" x2="22.3" y2="41.5" stroke="#33A015"/><line x1="48.3" y1="43.0" x2="23.7" y2="43.0" stroke="#E23B32"/><line x1="46.1" y1="44.5" x2="25.9" y2="44.5" stroke="#0793EB"/><line x1="43.0" y1="46.0" x2="29.0" y2="46.0" stroke="#33A015"/><line x1="39.4" y1="47.5" x2="32.6" y2="47.5" stroke="#E23B32"/><line x1="35.6" y1="49.0" x2="36.4" y2="49.0" stroke="#0793EB"/><line x1="31.8" y1="50.5" x2="40.2" y2="50.5" stroke="#33A015"/><line x1="28.3" y1="52.0" x2="43.7" y2="52.0" stroke="#E23B32"/><line x1="25.4" y1="53.5" x2="46.6" y2="53.5" stroke="#0793EB"/><line x1="23.3" y1="55.0" x2="48.7" y2="55.0" stroke="#33A015"/><line x1="22.2" y1="56.5" x2="49.8" y2="56.5" stroke="#E23B32"/><line x1="22.1" y1="58.0" x2="49.9" y2="58.0" stroke="#0793EB"/></g><g fill="none" stroke-width=".7" stroke-linecap="round"><polyline points="36.4,-2.0 37.7,-1.5 39.0,-1.0 40.2,-0.5 41.5,0.0 42.6,0.5 43.7,1.0 44.8,1.5 45.7,2.0 46.6,2.5 47.4,3.0 48.1,3.5 48.7,4.0 49.2,4.5 49.6,5.0 49.8,5.5 50.0,6.0 50.0,6.5 49.9,7.0 49.7,7.5 49.3,8.0 48.9,8.5 48.3,9.0 47.7,9.5 46.9,10.0 46.1,10.5 45.1,11.0 44.1,11.5 43.0,12.0 41.9,12.5 40.7,13.0 39.4,13.5 38.2,14.0 36.9,14.5 35.6,15.0 34.3,15.5 33.0,16.0 31.8,16.5 30.5,17.0 29.4,17.5 28.3,18.0 27.2,18.5 26.3,19.0 25.4,19.5 24.6,20.0 23.9,20.5 23.3,21.0 22.8,21.5 22.4,22.0 22.2,22.5 22.0,23.0 22.0,23.5 22.1,24.0 22.3,24.5 22.7,25.0 23.1,25.5 23.7,26.0 24.3,26.5 25.1,27.0 25.9,27.5 26.9,28.0 27.9,28.5 29.0,29.0 30.1,29.5 31.3,30.0 32.6,30.5 33.8,31.0 35.1,31.5 36.4,32.0 37.7,32.5 39.0,33.0 40.2,33.5 41.5,34.0 42.6,34.5 43.7,35.0 44.8,35.5 45.7,36.0 46.6,36.5 47.4,37.0 48.1,37.5 48.7,38.0 49.2,38.5 49.6,39.0 49.8,39.5 50.0,40.0 50.0,40.5 49.9,41.0 49.7,41.5 49.3,42.0 48.9,42.5 48.3,43.0 47.7,43.5 46.9,44.0 46.1,44.5 45.1,45.0 44.1,45.5 43.0,46.0 41.9,46.5 40.7,47.0 39.4,47.5 38.2,48.0 36.9,48.5 35.6,49.0 34.3,49.5 33.0,50.0 31.8,50.5 30.5,51.0 29.4,51.5 28.3,52.0 27.2,52.5 26.3,53.0 25.4,53.5 24.6,54.0 23.9,54.5 23.3,55.0 22.8,55.5 22.4,56.0 22.2,56.5 22.0,57.0 22.0,57.5 22.1,58.0" stroke="#0793EB"/><polyline points="35.6,-2.0 34.3,-1.5 33.0,-1.0 31.8,-0.5 30.5,0.0 29.4,0.5 28.3,1.0 27.2,1.5 26.3,2.0 25.4,2.5 24.6,3.0 23.9,3.5 23.3,4.0 22.8,4.5 22.4,5.0 22.2,5.5 22.0,6.0 22.0,6.5 22.1,7.0 22.3,7.5 22.7,8.0 23.1,8.5 23.7,9.0 24.3,9.5 25.1,10.0 25.9,10.5 26.9,11.0 27.9,11.5 29.0,12.0 30.1,12.5 31.3,13.0 32.6,13.5 33.8,14.0 35.1,14.5 36.4,15.0 37.7,15.5 39.0,16.0 40.2,16.5 41.5,17.0 42.6,17.5 43.7,18.0 44.8,18.5 45.7,19.0 46.6,19.5 47.4,20.0 48.1,20.5 48.7,21.0 49.2,21.5 49.6,22.0 49.8,22.5 50.0,23.0 50.0,23.5 49.9,24.0 49.7,24.5 49.3,25.0 48.9,25.5 48.3,26.0 47.7,26.5 46.9,27.0 46.1,27.5 45.1,28.0 44.1,28.5 43.0,29.0 41.9,29.5 40.7,30.0 39.4,30.5 38.2,31.0 36.9,31.5 35.6,32.0 34.3,32.5 33.0,33.0 31.8,33.5 30.5,34.0 29.4,34.5 28.3,35.0 27.2,35.5 26.3,36.0 25.4,36.5 24.6,37.0 23.9,37.5 23.3,38.0 22.8,38.5 22.4,39.0 22.2,39.5 22.0,40.0 22.0,40.5 22.1,41.0 22.3,41.5 22.7,42.0 23.1,42.5 23.7,43.0 24.3,43.5 25.1,44.0 25.9,44.5 26.9,45.0 27.9,45.5 29.0,46.0 30.1,46.5 31.3,47.0 32.6,47.5 33.8,48.0 35.1,48.5 36.4,49.0 37.7,49.5 39.0,50.0 40.2,50.5 41.5,51.0 42.6,51.5 43.7,52.0 44.8,52.5 45.7,53.0 46.6,53.5 47.4,54.0 48.1,54.5 48.7,55.0 49.2,55.5 49.6,56.0 49.8,56.5 50.0,57.0 50.0,57.5 49.9,58.0" stroke="#33A015"/></g></svg><svg class="kit" viewBox="0 0 92 82" aria-hidden="true">
+      <ellipse cx="46" cy="79" rx="40" ry="2.2" fill="#10243E" opacity=".08"/>
+      <rect x="4" y="18" width="56" height="58" rx="3" fill="#fff" stroke="#D5E3EF" stroke-width=".8"/>
+      <path d="M4 21 Q4 18 7 18 L57 18 Q60 18 60 21 L60 28 L4 28 Z" fill="#E23B32"/>
+      <text x="32" y="25" text-anchor="middle" font-size="4.2" font-weight="600" fill="#fff" letter-spacing=".5">ONEOMICS</text>
+      <text x="32" y="50" text-anchor="middle" font-size="7.6" font-weight="700" fill="#10243E">ONESpit<tspan font-size="3.8" dy="-2.7">™</tspan></text>
+      <rect x="22" y="56" width="20" height="1.2" rx=".6" fill="#E23B32"/>
+      <rect x="4" y="71" width="18.67" height="5" fill="#E23B32"/><rect x="22.67" y="71" width="18.67" height="5" fill="#0793EB"/><path d="M41.33 71 H60 V73 Q60 76 57 76 H41.33 Z" fill="#33A015"/>
+      <rect x="67" y="8" width="17" height="8" rx="1.8" fill="#E23B32"/>
+      <path d="M68.5 16 L68.5 62 Q68.5 74 75.5 74 Q82.5 74 82.5 62 L82.5 16 Z" fill="#fff" stroke="#AFC4D6" stroke-width=".9"/>
+      <path d="M68.5 40 Q72 37.5 75.5 40 T82.5 40 L82.5 62 Q82.5 74 75.5 74 Q68.5 74 68.5 62 Z" fill="#E23B32" opacity=".5"/>
+      <circle cx="73" cy="55" r="1.2" fill="#fff" opacity=".8"/><circle cx="78" cy="62" r=".9" fill="#fff" opacity=".8"/><circle cx="75" cy="47" r=".8" fill="#fff" opacity=".8"/>
+    </svg><div class="hero-txt"><span class="pill"><i></i>Collect &amp; Stabilize</span><h1>ONESpit™</h1><div class="sub">Zero-Prep Saliva Collection &amp; Preservation Kit</div><span class="tribar"></span><div class="tag">Non-invasive saliva collection with zero sample preparation.</div></div></div>
+<div class="main">
+<div class="rowA"><div class="ov"><h2>Overview</h2><ul class="dots"><li>Non-invasive, zero-prep saliva collection that stabilizes DNA at room temperature for over a year.</li><li>Supports convenient self-collection without refrigeration and is suitable for home, clinic or field use.</li><li>Designed for molecular applications where simple collection and reliable DNA preservation are important.</li></ul></div><div class="apps"><h2>Applications</h2><ul class="sq"><li>PCR and qPCR</li><li>Next-generation sequencing (NGS)</li><li>SNP analysis</li><li>Methylation analysis</li><li>Oral cancer and early diagnostic research</li></ul></div></div>
+<div class="ben"><h2>Key benefits</h2><ul class="ticks"><li>Zero sample preparation</li><li>Self-collection at home</li><li>Stable for 1+ year at room temperature</li><li>Fully non-invasive</li><li>No refrigeration required</li><li>Patent-protected</li></ul></div>
+<div class="flow"><h2>Simple workflow</h2><div class="steps"><div class="step"><b>1</b><p>Collect saliva using the ONESpit™ collection procedure.</p></div><div class="step"><b>2</b><p>Follow the kit instructions for completing collection and stabilization.</p></div><div class="step"><b>3</b><p>Secure the sample and maintain recommended storage conditions.</p></div><div class="step"><b>4</b><p>Transport without refrigeration when permitted by the validated instructions.</p></div><div class="step"><b>5</b><p>Use the preserved sample for downstream DNA extraction and molecular analysis.</p></div></div></div>
+<div class="res"><h2>Expected results / performance</h2><ul class="cols n2"><li>DNA from 8 independent ONESpit™ saliva samples showed consistent, high-quality bands with no visible degradation.</li><li>Supports DNA preservation for downstream molecular workflows.</li></ul></div>
+</div>
+<div class="cta"><div><h3>Interested in ONESpit™?</h3><p>Contact our team for availability, pricing and technical details.</p></div><dl><dt>Web</dt><dd>www.[your-website].com</dd><dt>Email</dt><dd>[info@your-domain.com]</dd><dt>Phone</dt><dd>[+91 00000 00000]</dd></dl></div>
+<div class="bar"></div></section>
+</body>
+</html>
