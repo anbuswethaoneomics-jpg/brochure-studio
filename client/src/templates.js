@@ -2155,41 +2155,8 @@ export function sequencingServicesFlyer() {
   s.push(t('11', 580, 108, 130, 46, { bold: 1, color: C_INDIGO, align: 'right', font: 'Lora' }));
   s.push(t('SERVICE LINES', 580, 156, 130, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 60 }));
 
-  // Chromatogram Peaks Baseline at bottom of hero
-  // Wave peaks decoration: base line at y: 326
-  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
-
-  // Chromatogram bases (A, C, G, T)
-  const chromBases = [
-    { base: 'C', c: C_BLUE, x: 74 },
-    { base: 'C', c: C_BLUE, x: 104 },
-    { base: 'C', c: C_BLUE, x: 134 },
-    { base: 'G', c: C_AMBER, x: 164 },
-    { base: 'C', c: C_BLUE, x: 194 },
-    { base: 'T', c: C_RED, x: 224 },
-    { base: 'T', c: C_RED, x: 254 },
-    { base: 'A', c: C_GREEN, x: 284 },
-    { base: 'A', c: C_GREEN, x: 314 },
-    { base: 'T', c: C_RED, x: 344 },
-    { base: 'C', c: C_BLUE, x: 374 },
-    { base: 'A', c: C_GREEN, x: 404 },
-    { base: 'C', c: C_BLUE, x: 434 },
-    { base: 'G', c: C_AMBER, x: 464 },
-    { base: 'T', c: C_RED, x: 494 },
-    { base: 'T', c: C_RED, x: 524 },
-    { base: 'C', c: C_BLUE, x: 554 },
-    { base: 'A', c: C_GREEN, x: 584 },
-    { base: 'G', c: C_AMBER, x: 614 },
-    { base: 'A', c: C_GREEN, x: 644 },
-    { base: 'T', c: C_RED, x: 674 },
-    { base: 'C', c: C_BLUE, x: 704 },
-  ];
-  chromBases.forEach((b) => {
-    // Peak curve/polygon approximation: a rounded pill peak
-    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
-    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
-    s.push(t(b.base, b.x - 10, 331, 20, 11, { bold: 1, color: b.c, align: 'center', font: 'Courier New' }));
-  });
+  // Exact Chromatogram Wave Peaks across bottom of hero
+  s.push({ k: 'image', src: '/assets/chromatogram.png', x: 49, y: 260, w: 696, h: 91 });
 
   // 3. MAIN SECTION: "What we sequence" (y: 382)
   s.push(t('What we sequence', 49, 382, 360, 20, { bold: 1, color: C_INK, font: 'Lora' }));
@@ -2381,37 +2348,17 @@ export function sequencingServicesFlyerEmpty(pageNum = 2) {
   // 2. HERO CARD
   s.push(r(49, 79, 696, 272, '#ffffff', { r: 22, stroke: C_LINE, sw: 1 }));
 
-  // Chromatogram Peaks Baseline at bottom of hero
-  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
+  // Exact Chromatogram Wave Peaks across bottom of hero
+  s.push({ k: 'image', src: '/assets/chromatogram.png', x: 49, y: 260, w: 696, h: 91 });
 
-  const chromBases = [
-    { base: 'C', c: C_BLUE, x: 74 },
-    { base: 'C', c: C_BLUE, x: 104 },
-    { base: 'C', c: C_BLUE, x: 134 },
-    { base: 'G', c: C_AMBER, x: 164 },
-    { base: 'C', c: C_BLUE, x: 194 },
-    { base: 'T', c: C_RED, x: 224 },
-    { base: 'T', c: C_RED, x: 254 },
-    { base: 'A', c: C_GREEN, x: 284 },
-    { base: 'A', c: C_GREEN, x: 314 },
-    { base: 'T', c: C_RED, x: 344 },
-    { base: 'C', c: C_BLUE, x: 374 },
-    { base: 'A', c: C_GREEN, x: 404 },
-    { base: 'C', c: C_BLUE, x: 434 },
-    { base: 'G', c: C_AMBER, x: 464 },
-    { base: 'T', c: C_RED, x: 494 },
-    { base: 'T', c: C_RED, x: 524 },
-    { base: 'C', c: C_BLUE, x: 554 },
-    { base: 'A', c: C_GREEN, x: 584 },
-    { base: 'G', c: C_AMBER, x: 614 },
-    { base: 'A', c: C_GREEN, x: 644 },
-    { base: 'T', c: C_RED, x: 674 },
-    { base: 'C', c: C_BLUE, x: 704 },
-  ];
-  chromBases.forEach((b) => {
-    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
-    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
-  });
+  // Hero Placeholders
+  s.push(r(86, 108, 180, 14, P_IND, { r: 4 }));
+  s.push(r(86, 130, 260, 24, P_IND, { r: 4 }));
+  s.push(r(86, 164, 300, 24, P_IND, { r: 4 }));
+  s.push(r(86, 198, 240, 24, P_IND, { r: 4 }));
+  s.push(r(86, 240, 360, 14, P_IND, { r: 4 }));
+  s.push(r(665, 108, 45, 42, P_IND, { r: 6 }));
+  s.push(r(630, 156, 80, 12, P_IND, { r: 4 }));
 
   // 3. MAIN SECTION: Cards
 
@@ -2544,7 +2491,7 @@ export function soilMicrobiomeFlyer() {
   s.push(t('Complete molecular solutions for soil microbiome and metagenomics research, from sample stabilization to analysis.', 49, 218, 400, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
 
   // Globe Vector Illustration on Right
-  s.push({ k: 'image', src: '/assets/soil_globe.png', x: 533, y: 92, w: 212, h: 212 });
+  s.push({ k: 'image', src: '/assets/soil_globe.png', x: 533, y: 88, w: 212, h: 212 });
 
   // 3. WORKFLOW STEPS (Vertical rail with cards)
   // Continuous vertical rail line behind the step circles
@@ -2709,7 +2656,7 @@ export function soilMicrobiomeFlyerEmpty(pageNum = 2) {
   s.push(r(49, 230, 300, 14, P_FOREST, { r: 4 }));
 
   // Globe Vector Illustration on Right
-  s.push({ k: 'image', src: '/assets/soil_globe.png', x: 533, y: 92, w: 212, h: 212 });
+  s.push({ k: 'image', src: '/assets/soil_globe.png', x: 533, y: 88, w: 212, h: 212 });
 
   // 3. WORKFLOW STEPS
   s.push(r(66, 320, 3, 310, C_LINE));
