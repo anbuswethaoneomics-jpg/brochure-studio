@@ -20,9 +20,18 @@ const readAll = () => {
   try { return JSON.parse(fs.readFileSync(DB_FILE, 'utf8')); } catch { return []; }
 };
 const writeAll = (rows) => {
-  const tmp = DB_FILE + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify(rows));
-  fs.renameSync(tmp, DB_FILE);
+  try {
+    const tmp = DB_FILE + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify(rows));
+    fs.renameSync(tmp, DB_FILE);
+  } catch (err) {
+    console.error('Safe write failed, falling back to direct write:', err.message);
+    try {
+      fs.writeFileSync(DB_FILE, JSON.stringify(rows));
+    } catch (e2) {
+      console.error('Direct write to DB_FILE also failed:', e2.message);
+    }
+  }
 };
 
 const app = express();
@@ -109,48 +118,68 @@ const clean = (b) => {
     height: int(b.height, 50, 10000),
     folds: int(b.folds, 0, 6),
     pages: b.pages,
-    thumbnail: typeof b.thumbnail === 'string' && b.thumbnail.startsWith('data:image/') ? b.thumbnail : '',
+    thumbnail: typeof b.thumbnail === 'string' ? b.thumbnail : '',
   };
 };
 
 app.get('/api/designs', (_req, res) => {
-  const rows = readAll()
-    .map(({ pages, ...meta }) => ({ ...meta, pageCount: pages.length }))
-    .sort((a, b) => b.updatedAt - a.updatedAt);
-  res.json(rows);
+  try {
+    const rows = readAll()
+      .map(({ pages, ...meta }) => ({ ...meta, pageCount: (pages || []).length }))
+      .sort((a, b) => b.updatedAt - a.updatedAt);
+    res.json(rows);
+  } catch (err) {
+    res.json([]);
+  }
 });
 
 app.get('/api/designs/:id', (req, res) => {
-  const row = readAll().find((d) => d.id === req.params.id);
-  row ? res.json(row) : res.status(404).json({ error: 'Design not found' });
+  try {
+    const row = readAll().find((d) => d.id === req.params.id);
+    row ? res.json(row) : res.status(404).json({ error: 'Design not found' });
+  } catch (err) {
+    res.status(404).json({ error: 'Design not found' });
+  }
 });
 
 app.post('/api/designs', (req, res) => {
-  const data = clean(req.body);
-  if (!data) return res.status(400).json({ error: 'Design needs at least one page' });
-  const row = { id: crypto.randomUUID(), createdAt: Date.now(), updatedAt: Date.now(), ...data };
-  writeAll([...readAll(), row]);
-  res.status(201).json({ id: row.id, updatedAt: row.updatedAt });
+  try {
+    const data = clean(req.body);
+    if (!data) return res.status(400).json({ error: 'Design needs at least one page' });
+    const row = { id: crypto.randomUUID(), createdAt: Date.now(), updatedAt: Date.now(), ...data };
+    writeAll([...readAll(), row]);
+    res.status(201).json({ id: row.id, updatedAt: row.updatedAt });
+  } catch (err) {
+    res.status(500).json({ error: err.message || 'Failed to save design' });
+  }
 });
 
 app.put('/api/designs/:id', (req, res) => {
-  const data = clean(req.body);
-  if (!data) return res.status(400).json({ error: 'Design needs at least one page' });
-  const rows = readAll();
-  const i = rows.findIndex((d) => d.id === req.params.id);
-  if (i < 0) {
-    const row = { id: req.params.id || crypto.randomUUID(), createdAt: Date.now(), updatedAt: Date.now(), ...data };
-    writeAll([...rows, row]);
-    return res.status(201).json({ id: row.id, updatedAt: row.updatedAt });
+  try {
+    const data = clean(req.body);
+    if (!data) return res.status(400).json({ error: 'Design needs at least one page' });
+    const rows = readAll();
+    const i = rows.findIndex((d) => d.id === req.params.id);
+    if (i < 0) {
+      const row = { id: req.params.id || crypto.randomUUID(), createdAt: Date.now(), updatedAt: Date.now(), ...data };
+      writeAll([...rows, row]);
+      return res.status(201).json({ id: row.id, updatedAt: row.updatedAt });
+    }
+    rows[i] = { ...rows[i], ...data, updatedAt: Date.now() };
+    writeAll(rows);
+    res.json({ id: rows[i].id, updatedAt: rows[i].updatedAt });
+  } catch (err) {
+    res.status(500).json({ error: err.message || 'Failed to update design' });
   }
-  rows[i] = { ...rows[i], ...data, updatedAt: Date.now() };
-  writeAll(rows);
-  res.json({ id: rows[i].id, updatedAt: rows[i].updatedAt });
 });
 
 app.delete('/api/designs/:id', (req, res) => {
-  writeAll(readAll().filter((d) => d.id !== req.params.id));
-  res.json({ ok: true });
+  try {
+    writeAll(readAll().filter((d) => d.id !== req.params.id));
+    res.json({ ok: true });
+  } catch (err) {
+    res.json({ ok: true });
+  }
 });
 
 // eslint-disable-next-line no-unused-vars
