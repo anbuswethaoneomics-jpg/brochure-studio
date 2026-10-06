@@ -2155,8 +2155,41 @@ export function sequencingServicesFlyer() {
   s.push(t('11', 580, 108, 130, 46, { bold: 1, color: C_INDIGO, align: 'right', font: 'Lora' }));
   s.push(t('SERVICE LINES', 580, 156, 130, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 60 }));
 
-  // Chromatogram Peaks SVG across bottom of hero
-  s.push({ k: 'image', src: '/assets/chromatogram.svg', x: 49, y: 260, w: 696 });
+  // Chromatogram Peaks Baseline at bottom of hero
+  // Wave peaks decoration: base line at y: 326
+  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
+
+  // Chromatogram bases (A, C, G, T)
+  const chromBases = [
+    { base: 'C', c: C_BLUE, x: 74 },
+    { base: 'C', c: C_BLUE, x: 104 },
+    { base: 'C', c: C_BLUE, x: 134 },
+    { base: 'G', c: C_AMBER, x: 164 },
+    { base: 'C', c: C_BLUE, x: 194 },
+    { base: 'T', c: C_RED, x: 224 },
+    { base: 'T', c: C_RED, x: 254 },
+    { base: 'A', c: C_GREEN, x: 284 },
+    { base: 'A', c: C_GREEN, x: 314 },
+    { base: 'T', c: C_RED, x: 344 },
+    { base: 'C', c: C_BLUE, x: 374 },
+    { base: 'A', c: C_GREEN, x: 404 },
+    { base: 'C', c: C_BLUE, x: 434 },
+    { base: 'G', c: C_AMBER, x: 464 },
+    { base: 'T', c: C_RED, x: 494 },
+    { base: 'T', c: C_RED, x: 524 },
+    { base: 'C', c: C_BLUE, x: 554 },
+    { base: 'A', c: C_GREEN, x: 584 },
+    { base: 'G', c: C_AMBER, x: 614 },
+    { base: 'A', c: C_GREEN, x: 644 },
+    { base: 'T', c: C_RED, x: 674 },
+    { base: 'C', c: C_BLUE, x: 704 },
+  ];
+  chromBases.forEach((b) => {
+    // Peak curve/polygon approximation: a rounded pill peak
+    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
+    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
+    s.push(t(b.base, b.x - 10, 331, 20, 11, { bold: 1, color: b.c, align: 'center', font: 'Courier New' }));
+  });
 
   // 3. MAIN SECTION: "What we sequence" (y: 382)
   s.push(t('What we sequence', 49, 382, 360, 20, { bold: 1, color: C_INK, font: 'Lora' }));
@@ -2348,17 +2381,37 @@ export function sequencingServicesFlyerEmpty(pageNum = 2) {
   // 2. HERO CARD
   s.push(r(49, 79, 696, 272, '#ffffff', { r: 22, stroke: C_LINE, sw: 1 }));
 
-  // Chromatogram Peaks SVG across bottom of hero
-  s.push({ k: 'image', src: '/assets/chromatogram.svg', x: 49, y: 260, w: 696 });
+  // Chromatogram Peaks Baseline at bottom of hero
+  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
 
-  // Hero Placeholders
-  s.push(r(86, 108, 180, 14, P_IND, { r: 4 }));
-  s.push(r(86, 130, 260, 24, P_IND, { r: 4 }));
-  s.push(r(86, 164, 300, 24, P_IND, { r: 4 }));
-  s.push(r(86, 198, 240, 24, P_IND, { r: 4 }));
-  s.push(r(86, 240, 360, 14, P_IND, { r: 4 }));
-  s.push(r(665, 108, 45, 42, P_IND, { r: 6 }));
-  s.push(r(630, 156, 80, 12, P_IND, { r: 4 }));
+  const chromBases = [
+    { base: 'C', c: C_BLUE, x: 74 },
+    { base: 'C', c: C_BLUE, x: 104 },
+    { base: 'C', c: C_BLUE, x: 134 },
+    { base: 'G', c: C_AMBER, x: 164 },
+    { base: 'C', c: C_BLUE, x: 194 },
+    { base: 'T', c: C_RED, x: 224 },
+    { base: 'T', c: C_RED, x: 254 },
+    { base: 'A', c: C_GREEN, x: 284 },
+    { base: 'A', c: C_GREEN, x: 314 },
+    { base: 'T', c: C_RED, x: 344 },
+    { base: 'C', c: C_BLUE, x: 374 },
+    { base: 'A', c: C_GREEN, x: 404 },
+    { base: 'C', c: C_BLUE, x: 434 },
+    { base: 'G', c: C_AMBER, x: 464 },
+    { base: 'T', c: C_RED, x: 494 },
+    { base: 'T', c: C_RED, x: 524 },
+    { base: 'C', c: C_BLUE, x: 554 },
+    { base: 'A', c: C_GREEN, x: 584 },
+    { base: 'G', c: C_AMBER, x: 614 },
+    { base: 'A', c: C_GREEN, x: 644 },
+    { base: 'T', c: C_RED, x: 674 },
+    { base: 'C', c: C_BLUE, x: 704 },
+  ];
+  chromBases.forEach((b) => {
+    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
+    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
+  });
 
   // 3. MAIN SECTION: Cards
 
@@ -2451,6 +2504,291 @@ export function sequencingServicesFlyerEmpty(pageNum = 2) {
   s.push(r(198.5, 1115, 198.5, 8, C_BLUE));
   s.push(r(397, 1115, 198.5, 8, C_AMBER));
   s.push(r(595.5, 1115, 198.5, 8, C_RED));
+
+  return s;
+}
+
+// Oneomics Soil Microbiome Flyer — A4 Flyer (794 x 1123)
+export function soilMicrobiomeFlyer() {
+  const s = [];
+
+  const C_SAND = '#FBF7F0';
+  const C_SAND2 = '#F3EBDD';
+  const C_FOREST = '#2F6B3E';
+  const C_LEAF = '#6FA85C';
+  const C_EARTH = '#A67C52';
+  const C_BLUE = '#0793EB';
+  const C_INK = '#1F2A22';
+  const C_TEXT = '#3C4A40';
+  const C_MUTED = '#7E8A80';
+  const C_LINE = '#E3DACA';
+
+  const P_EARTH = '#F3E6D6';
+  const P_LEAF = '#E4F0DD';
+  const P_FOREST = '#DCEBDD';
+  const P_BLUE = '#DDEEFC';
+
+  // 1. TOP HEADER (Logo left, kicker right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 49, y: 38, w: 158 });
+  s.push(t('SOIL & ENVIRONMENTAL GENOMICS', 480, 44, 265, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 80 }));
+
+  // 2. HERO SECTION
+  // Kicker
+  s.push(t('SOIL MICROBIOME SOLUTIONS', 49, 104, 380, 9.5, { bold: 1, color: C_FOREST, font: 'Poppins', sp: 80 }));
+
+  // Main Headline
+  s.push(t('From soil to', 49, 126, 420, 36, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.1 }));
+  s.push(t('sequence.', 49, 168, 420, 36, { bold: 1, italic: 1, color: C_FOREST, font: 'Lora', lh: 1.1 }));
+
+  // Subtitle
+  s.push(t('Complete molecular solutions for soil microbiome and metagenomics research, from sample stabilization to analysis.', 49, 218, 400, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  // Globe Vector Illustration on Right
+  s.push({ k: 'image', src: '/assets/soil_globe.svg', x: 533, y: 88, w: 212, h: 212 });
+
+  // 3. WORKFLOW STEPS (Vertical rail with cards)
+  // Continuous vertical rail line behind the step circles
+  s.push(r(66, 320, 3, 310, C_LINE));
+
+  // STEP 1: STABILIZE (Earth #A67C52)
+  s.push(c(46, 306, 21, C_EARTH, { stroke: C_SAND, sw: 4 }));
+  s.push(t('1', 46, 313, 42, 14, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+
+  s.push(r(102, 302, 643, 76, '#ffffff', { r: 12, stroke: C_LINE, sw: 1 }));
+  s.push(r(102, 302, 5, 76, C_EARTH, { r: 2 }));
+  s.push(t('STABILIZE', 118, 312, 80, 8.5, { bold: 1, color: C_EARTH, font: 'Poppins', sp: 70 }));
+  s.push(r(186, 309, 86, 17, P_EARTH, { r: 8.5 }));
+  s.push(t('SoilGUARD™', 186, 312, 86, 8.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+  s.push(t('Soil stabilization / inhibitor-management buffer for nucleic-acid workflows from complex soil matrices.', 118, 331, 615, 9.5, { color: C_TEXT, font: 'Poppins' }));
+  const step1Chips = [
+    { text: 'Reduces soil-derived inhibitors', x: 118, w: 162 },
+    { text: 'Prepares samples for purification', x: 286, w: 172 },
+    { text: 'PCR/qPCR & sequencing workflows when validated', x: 464, w: 260 },
+  ];
+  step1Chips.forEach((cp) => {
+    s.push(r(cp.x, 351, cp.w, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+    s.push(t(cp.text, cp.x, 354, cp.w, 8, { color: C_TEXT, align: 'center', font: 'Poppins' }));
+  });
+
+  // STEP 2: EXTRACT (Leaf #6FA85C)
+  s.push(c(46, 396, 21, C_LEAF, { stroke: C_SAND, sw: 4 }));
+  s.push(t('2', 46, 403, 42, 14, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+
+  s.push(r(102, 392, 643, 76, '#ffffff', { r: 12, stroke: C_LINE, sw: 1 }));
+  s.push(r(102, 392, 5, 76, C_LEAF, { r: 2 }));
+  s.push(t('EXTRACT', 118, 402, 70, 8.5, { bold: 1, color: C_LEAF, font: 'Poppins', sp: 70 }));
+  s.push(r(176, 399, 138, 17, P_LEAF, { r: 8.5 }));
+  s.push(t('ONEMag™ Rapid Soil DNA', 176, 402, 138, 8.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+  s.push(r(320, 399, 138, 17, P_LEAF, { r: 8.5 }));
+  s.push(t('ONEMag™ Rapid Soil RNA', 320, 402, 138, 8.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+  s.push(t('Magnetic bead-based purification of high-quality DNA or RNA from diverse soil samples.', 118, 421, 615, 9.5, { color: C_TEXT, font: 'Poppins' }));
+  const step2Chips = [
+    { text: 'Efficient removal of humic acids', x: 118, w: 160 },
+    { text: 'Rapid and easy workflow', x: 284, w: 132 },
+    { text: 'Manual and automated workflows', x: 422, w: 172 },
+    { text: 'Minimizes hazardous organic solvents', x: 600, w: 138 },
+  ];
+  step2Chips.forEach((cp) => {
+    s.push(r(cp.x, 441, cp.w, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+    s.push(t(cp.text, cp.x, 444, cp.w, 8, { color: C_TEXT, align: 'center', font: 'Poppins' }));
+  });
+
+  // STEP 3: BUILD LIBRARIES (Forest #2F6B3E)
+  s.push(c(46, 486, 21, C_FOREST, { stroke: C_SAND, sw: 4 }));
+  s.push(t('3', 46, 493, 42, 14, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+
+  s.push(r(102, 482, 643, 76, '#ffffff', { r: 12, stroke: C_LINE, sw: 1 }));
+  s.push(r(102, 482, 5, 76, C_FOREST, { r: 2 }));
+  s.push(t('BUILD LIBRARIES', 118, 492, 110, 8.5, { bold: 1, color: C_FOREST, font: 'Poppins', sp: 70 }));
+  s.push(r(218, 489, 168, 17, P_FOREST, { r: 8.5 }));
+  s.push(t('ONENext™ 16S (V3–V4) · Illumina', 218, 492, 168, 8.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+  s.push(r(392, 489, 150, 17, P_FOREST, { r: 8.5 }));
+  s.push(t('ONENext™ 16S (V1–V9) · ONT', 392, 492, 150, 8.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+  s.push(t('Targeted 16S rRNA library prep for short-read Illumina or near full-length long-read ONT sequencing.', 118, 511, 615, 9.5, { color: C_TEXT, font: 'Poppins' }));
+  const step3Chips = [
+    { text: 'Indexed / multiplexed sequencing', x: 118, w: 168 },
+    { text: 'Soil and rhizosphere microbiome studies', x: 292, w: 200 },
+    { text: '~1.5 kb full-length option', x: 498, w: 130 },
+  ];
+  step3Chips.forEach((cp) => {
+    s.push(r(cp.x, 531, cp.w, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+    s.push(t(cp.text, cp.x, 534, cp.w, 8, { color: C_TEXT, align: 'center', font: 'Poppins' }));
+  });
+
+  // STEP 4: SEQUENCE & ANALYZE (Blue #0793EB)
+  s.push(c(46, 576, 21, C_BLUE, { stroke: C_SAND, sw: 4 }));
+  s.push(t('4', 46, 583, 42, 14, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+
+  s.push(r(102, 572, 643, 96, '#ffffff', { r: 12, stroke: C_LINE, sw: 1 }));
+  s.push(r(102, 572, 5, 96, C_BLUE, { r: 2 }));
+  s.push(t('SEQUENCE & ANALYZE', 118, 582, 126, 8.5, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 70 }));
+  s.push(r(246, 579, 120, 17, P_BLUE, { r: 8.5 }));
+  s.push(t('Sequencing services', 246, 582, 120, 8.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+  s.push(r(372, 579, 122, 17, P_BLUE, { r: 8.5 }));
+  s.push(t('DNASTAR Lasergene', 372, 582, 122, 8.5, { bold: 1, color: C_INK, align: 'center', font: 'Poppins' }));
+  s.push(t('From amplicons to whole metagenomes and transcripts, with desktop software for genomics analysis.', 118, 601, 615, 9.5, { color: C_TEXT, font: 'Poppins' }));
+  const step4Chips = [
+    { text: '16S (V3–V4)', x: 118, y: 621, w: 76 },
+    { text: '16S (V1–V9)', x: 198, y: 621, w: 76 },
+    { text: 'ITS', x: 278, y: 621, w: 40 },
+    { text: '18S', x: 322, y: 621, w: 40 },
+    { text: 'Shotgun Metagenome', x: 366, y: 621, w: 128 },
+    { text: 'Metatranscriptome', x: 498, y: 621, w: 110 },
+    { text: 'Custom Amplicon', x: 612, y: 621, w: 104 },
+    { text: 'Meta-Barcoding', x: 118, y: 643, w: 96 },
+  ];
+  step4Chips.forEach((cp) => {
+    s.push(r(cp.x, cp.y, cp.w, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+    s.push(t(cp.text, cp.x, cp.y + 3, cp.w, 8, { color: C_TEXT, align: 'center', font: 'Poppins' }));
+  });
+
+  // 4. BUILT FOR (Applications)
+  s.push(t('BUILT FOR', 49, 706, 200, 9.5, { bold: 1, color: C_FOREST, font: 'Poppins', sp: 80 }));
+
+  const appPills = [
+    { text: 'Soil microbiome profiling', x: 49, y: 726, w: 165 },
+    { text: 'Soil health and fertility assessment', x: 220, y: 726, w: 205 },
+    { text: 'Rhizosphere and plant–microbe research', x: 431, y: 726, w: 226 },
+    { text: 'Environmental DNA (eDNA) analysis', x: 49, y: 754, w: 202 },
+    { text: 'Soil microbial gene expression', x: 257, y: 754, w: 185 },
+  ];
+  appPills.forEach((p) => {
+    s.push(r(p.x, p.y, p.w, 22, C_SAND2, { r: 11 }));
+    s.push(c(p.x + 8, p.y + 7, 4, C_LEAF));
+    s.push(t(p.text, p.x + 20, p.y + 4, p.w - 24, 8.8, { color: C_INK, font: 'Poppins' }));
+  });
+
+  // 5. BOTTOM STRATA ART
+  s.push({ k: 'image', src: '/assets/soil_strata.svg', x: 0, y: 911, w: 794, h: 212 });
+
+  // 6. CTA BANNER CARD
+  s.push(r(49, 950, 696, 118, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+
+  s.push(t('Planning a soil microbiome study?', 75, 966, 380, 16.5, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('Tell us about your soil samples and research goals and our team will recommend the right workflow.', 75, 994, 360, 10, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  s.push(t('WEB', 540, 968, 50, 8.5, { bold: 1, color: C_FOREST, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 594, 967, 140, 10.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 540, 994, 50, 8.5, { bold: 1, color: C_FOREST, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 594, 993, 140, 10.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('PHONE', 540, 1020, 50, 8.5, { bold: 1, color: C_FOREST, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 594, 1019, 140, 10.5, { color: C_TEXT, font: 'Poppins' }));
+
+  return s;
+}
+
+// Oneomics Soil Microbiome Flyer — A4 Flyer Page 2 (Empty Template)
+export function soilMicrobiomeFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_SAND = '#FBF7F0';
+  const C_SAND2 = '#F3EBDD';
+  const C_FOREST = '#2F6B3E';
+  const C_LEAF = '#6FA85C';
+  const C_EARTH = '#A67C52';
+  const C_BLUE = '#0793EB';
+  const C_LINE = '#E3DACA';
+
+  const P_EARTH = '#F3E6D6';
+  const P_LEAF = '#E4F0DD';
+  const P_FOREST = '#DCEBDD';
+  const P_BLUE = '#DDEEFC';
+
+  // 1. TOP HEADER (Logo left, kicker right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 49, y: 38, w: 158 });
+  s.push(r(580, 44, 165, 18, P_FOREST, { r: 6 }));
+
+  // 2. HERO SECTION
+  // Hero Placeholders
+  s.push(r(49, 104, 160, 14, P_FOREST, { r: 4 }));
+  s.push(r(49, 126, 260, 28, P_FOREST, { r: 4 }));
+  s.push(r(49, 162, 220, 28, P_FOREST, { r: 4 }));
+  s.push(r(49, 210, 360, 14, P_FOREST, { r: 4 }));
+  s.push(r(49, 230, 300, 14, P_FOREST, { r: 4 }));
+
+  // Globe Vector Illustration on Right
+  s.push({ k: 'image', src: '/assets/soil_globe.svg', x: 533, y: 88, w: 212, h: 212 });
+
+  // 3. WORKFLOW STEPS
+  s.push(r(66, 320, 3, 310, C_LINE));
+
+  // STEP 1
+  s.push(c(46, 306, 21, C_EARTH, { stroke: C_SAND, sw: 4 }));
+  s.push(r(102, 302, 643, 76, '#ffffff', { r: 12, stroke: C_LINE, sw: 1 }));
+  s.push(r(102, 302, 5, 76, C_EARTH, { r: 2 }));
+  s.push(r(118, 312, 60, 12, P_EARTH, { r: 4 }));
+  s.push(r(186, 309, 86, 17, P_EARTH, { r: 8.5 }));
+  s.push(r(118, 332, 420, 12, P_EARTH, { r: 4 }));
+  s.push(r(118, 351, 162, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(286, 351, 172, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(464, 351, 220, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+
+  // STEP 2
+  s.push(c(46, 396, 21, C_LEAF, { stroke: C_SAND, sw: 4 }));
+  s.push(r(102, 392, 643, 76, '#ffffff', { r: 12, stroke: C_LINE, sw: 1 }));
+  s.push(r(102, 392, 5, 76, C_LEAF, { r: 2 }));
+  s.push(r(118, 402, 60, 12, P_LEAF, { r: 4 }));
+  s.push(r(184, 399, 130, 17, P_LEAF, { r: 8.5 }));
+  s.push(r(322, 399, 130, 17, P_LEAF, { r: 8.5 }));
+  s.push(r(118, 422, 440, 12, P_LEAF, { r: 4 }));
+  s.push(r(118, 441, 150, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(276, 441, 130, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(414, 441, 160, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+
+  // STEP 3
+  s.push(c(46, 486, 21, C_FOREST, { stroke: C_SAND, sw: 4 }));
+  s.push(r(102, 482, 643, 76, '#ffffff', { r: 12, stroke: C_LINE, sw: 1 }));
+  s.push(r(102, 482, 5, 76, C_FOREST, { r: 2 }));
+  s.push(r(118, 492, 80, 12, P_FOREST, { r: 4 }));
+  s.push(r(206, 489, 150, 17, P_FOREST, { r: 8.5 }));
+  s.push(r(364, 489, 140, 17, P_FOREST, { r: 8.5 }));
+  s.push(r(118, 512, 460, 12, P_FOREST, { r: 4 }));
+  s.push(r(118, 531, 160, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(286, 531, 180, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(474, 531, 130, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+
+  // STEP 4
+  s.push(c(46, 576, 21, C_BLUE, { stroke: C_SAND, sw: 4 }));
+  s.push(r(102, 572, 643, 96, '#ffffff', { r: 12, stroke: C_LINE, sw: 1 }));
+  s.push(r(102, 572, 5, 96, C_BLUE, { r: 2 }));
+  s.push(r(118, 582, 100, 12, P_BLUE, { r: 4 }));
+  s.push(r(226, 579, 120, 17, P_BLUE, { r: 8.5 }));
+  s.push(r(354, 579, 120, 17, P_BLUE, { r: 8.5 }));
+  s.push(r(118, 602, 480, 12, P_BLUE, { r: 4 }));
+  s.push(r(118, 621, 76, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(202, 621, 76, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(286, 621, 50, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(344, 621, 50, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(402, 621, 120, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+  s.push(r(530, 621, 110, 17, '#ffffff', { r: 8.5, stroke: C_LINE, sw: 1 }));
+
+  // 4. BUILT FOR (Applications)
+  s.push(r(49, 706, 80, 12, P_FOREST, { r: 4 }));
+  const appPillsEmpty = [
+    { x: 49, y: 726, w: 165 },
+    { x: 220, y: 726, w: 205 },
+    { x: 431, y: 726, w: 226 },
+    { x: 49, y: 754, w: 202 },
+    { x: 257, y: 754, w: 185 },
+  ];
+  appPillsEmpty.forEach((p) => {
+    s.push(r(p.x, p.y, p.w, 22, C_SAND2, { r: 11 }));
+    s.push(c(p.x + 8, p.y + 7, 4, C_LEAF));
+  });
+
+  // 5. BOTTOM STRATA ART
+  s.push({ k: 'image', src: '/assets/soil_strata.svg', x: 0, y: 911, w: 794, h: 212 });
+
+  // 6. CTA BANNER CARD
+  s.push(r(49, 950, 696, 118, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(75, 968, 240, 18, P_FOREST, { r: 4 }));
+  s.push(r(75, 996, 320, 14, P_FOREST, { r: 4 }));
+  s.push(r(75, 1018, 260, 14, P_FOREST, { r: 4 }));
+  s.push(r(540, 968, 180, 14, P_FOREST, { r: 4 }));
+  s.push(r(540, 994, 180, 14, P_FOREST, { r: 4 }));
+  s.push(r(540, 1020, 180, 14, P_FOREST, { r: 4 }));
 
   return s;
 }
@@ -6660,6 +6998,21 @@ export const TEMPLATES = [
     emptySpecs: sequencingServicesFlyerEmpty,
     pages: [sequencingServicesFlyer, sequencingServicesFlyerEmpty],
     swatch: ['#4448B8', '#0793EB', '#E2574C'],
+  },
+  {
+    id: 'soil-microbiome-flyer',
+    name: 'ONEOMICS Soil Microbiome Flyer',
+    subtitle: 'From Soil to Sequence Workflow',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#FBF7F0',
+    preview: '/assets/previews/soil_microbiome_flyer.png',
+    specs: soilMicrobiomeFlyer,
+    emptySpecs: soilMicrobiomeFlyerEmpty,
+    pages: [soilMicrobiomeFlyer, soilMicrobiomeFlyerEmpty],
+    swatch: ['#2F6B3E', '#6FA85C', '#A67C52'],
   },
   {
     id: 'bifold-genomics',
