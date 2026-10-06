@@ -362,15 +362,24 @@ export default function StudioApp() {
     setBusy(true);
     try {
       const all = currentPages();
-      const thumbnail = ed.render(Math.min(1, 240 / design.width), 'jpeg');
+      let thumbnail = '';
+      try {
+        thumbnail = ed.render(Math.min(1, 240 / design.width), 'jpeg');
+      } catch {
+        try {
+          thumbnail = ed.render(Math.min(1, 240 / design.width), 'png');
+        } catch {}
+      }
       const res = await saveDesign({ ...design, pages: all, thumbnail });
-      setDesign((d) => ({ ...d, id: res.id }));
+      if (res && res.id) {
+        setDesign((d) => ({ ...d, id: res.id }));
+      }
       setPages(all);
       setSaved(true);
       window.dispatchEvent(new CustomEvent('design-saved'));
-      notify('Design saved');
+      notify('Design saved to gallery');
     } catch (e) {
-      notify(`Could not save: ${e.message}`);
+      notify(`Could not save: ${e.message || 'unknown error'}`);
     }
     setBusy(false);
   };

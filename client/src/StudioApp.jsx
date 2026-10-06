@@ -5,10 +5,9 @@ import PropsBar from './components/StudioPropsBar.jsx';
 import Ico from './components/Ico.jsx';
 import { PRESETS } from './presets.js';
 import { loadFonts } from './fonts.js';
-import { TEMPLATES, createEmptyTemplateFromCanvas } from './brochureTemplates.js';
+import { TEMPLATES } from './brochureTemplates.js';
 import { makeImageTextEditable } from './ocrEditable.js';
 import { listDesigns, getDesign, saveDesign, deleteDesign } from './api.js';
-import { normalizeCanvasJson } from './utils/canvasJson.js';
 
 const download = (href, name) => {
   const a = document.createElement('a');
@@ -22,7 +21,7 @@ export default function StudioApp() {
   const ed = useEditor();
   const wsRef = useRef(null);
   const fileInputRef = useRef(null);
-  const [design, setDesign] = useState({ id: null, templateId: 'trifold', name: 'Oneomics Trifold Brochure', width: 1123, height: 794, folds: 3 });
+  const [design, setDesign] = useState({ id: null, name: 'Oneomics Trifold Brochure', width: 1123, height: 794, folds: 3 });
   const [pages, setPages] = useState([null, null]);
   const [pageIdx, setPageIdx] = useState(0);
   const [zoom, setZoomState] = useState(1);
@@ -115,7 +114,7 @@ export default function StudioApp() {
   useEffect(() => {
     let mounted = true;
     const init = async () => {
-      ed.setSize(1123, 794, 3);
+      ed.setSize(1123, 794);
       ed.setZoom(1);
       setZoomState(1);
       const trifoldTemplate = TEMPLATES.find((t) => t.id === 'trifold');
@@ -186,12 +185,11 @@ export default function StudioApp() {
   const openDesign = async (id) => {
     try {
       const d = await getDesign(id);
-      const cleanedPages = (d.pages || []).map((p) => normalizeCanvasJson(p));
       setDesign({ id: d.id, name: d.name, width: d.width, height: d.height, folds: d.folds || 0 });
-      setPages(cleanedPages);
+      setPages(d.pages);
       setPageIdx(0);
       ed.setSize(d.width, d.height);
-      await ed.loadPage(cleanedPages[0]);
+      await ed.loadPage(d.pages[0]);
       ed.setZoom(1);
       setZoomState(1);
       setModal(null);
@@ -205,9 +203,6 @@ export default function StudioApp() {
     const n = filename.toLowerCase();
     if (/onam|festival|kerala|boat/.test(n)) {
       return TEMPLATES.find((t) => t.id === 'onam');
-    }
-    if (/insight|sample.to.insight/.test(n)) {
-      return TEMPLATES.find((t) => t.id === 'trifold-insight');
     }
     if (/trifold|brochure|oneomics|precision|tri.fold/.test(n)) {
       return TEMPLATES.find((t) => t.id === 'trifold');
@@ -231,7 +226,6 @@ export default function StudioApp() {
           if (parsed.pages && Array.isArray(parsed.pages)) {
             const w = parsed.width || 1123;
             const h = parsed.height || 794;
-            const cleanedPages = parsed.pages.map((p) => normalizeCanvasJson(p));
             setDesign({
               id: parsed.id || null,
               name: parsed.name || file.name.replace(/\.json$/i, ''),
@@ -239,10 +233,10 @@ export default function StudioApp() {
               height: h,
               folds: parsed.folds || 0,
             });
-            setPages(cleanedPages);
+            setPages(parsed.pages);
             setPageIdx(0);
             ed.setSize(w, h);
-            await ed.loadPage(cleanedPages[0]);
+            await ed.loadPage(parsed.pages[0]);
             ed.setZoom(1);
             setZoomState(1);
             setModal(null);
@@ -251,12 +245,11 @@ export default function StudioApp() {
           } else if (parsed.objects || parsed.version) {
             const w = parsed.width || design.width;
             const h = parsed.height || design.height;
-            const cleanedPage = normalizeCanvasJson(parsed);
             setDesign((d) => ({ ...d, name: file.name.replace(/\.json$/i, ''), width: w, height: h }));
-            setPages([cleanedPage]);
+            setPages([parsed]);
             setPageIdx(0);
             ed.setSize(w, h);
-            await ed.loadPage(cleanedPage);
+            await ed.loadPage(parsed);
             ed.setZoom(1);
             setZoomState(1);
             setModal(null);
@@ -365,26 +358,32 @@ export default function StudioApp() {
   const save = async () => {
     setBusy(true);
     try {
-      const all = currentPages().map((p) => normalizeCanvasJson(p));
-      const thumbnail = ed.render(Math.min(1, 240 / design.width), 'jpeg');
+      const all = currentPages();
+      let thumbnail = '';
+      try {
+        thumbnail = ed.render(Math.min(1, 240 / design.width), 'jpeg');
+      } catch {
+        try {
+          thumbnail = ed.render(Math.min(1, 240 / design.width), 'png');
+        } catch {}
+      }
       const res = await saveDesign({ ...design, pages: all, thumbnail });
-      setDesign((d) => ({ ...d, id: res.id }));
+      if (res && res.id) {
+        setDesign((d) => ({ ...d, id: res.id }));
+      }
       setPages(all);
       setSaved(true);
       window.dispatchEvent(new CustomEvent('design-saved'));
-      notify('Design saved');
+      notify('Design saved to gallery');
     } catch (e) {
-      notify(`Could not save: ${e.message}`);
+      notify(`Could not save: ${e.message || 'unknown error'}`);
     }
     setBusy(false);
   };
 
   const applyTemplate = async (t) => {
-    if (!window.confirm(`Switch to "${t.name}"?\nYour current design and edits will be replaced.`)) {
-      return;
-    }
-    setDesign((d) => ({ ...d, id: null, templateId: t.id, name: t.name || d.name, width: t.w, height: t.h, folds: t.folds || 0 }));
-    ed.setSize(t.w, t.h, t.folds || 0);
+    if (!ed.isEmpty() && !window.confirm('Replace the current design with this template?')) return;
+    setDesign((d) => ({ ...d, name: t.name || d.name, width: t.w, height: t.h, folds: t.folds || 0 }));
     const pgs = await ed.applyTemplate(t);
     if (Array.isArray(pgs) && pgs.length) {
       setPages(pgs);
@@ -398,17 +397,10 @@ export default function StudioApp() {
   const switchPage = async (i) => {
     if (i === pageIdx) return;
     const next = currentPages();
-    if (!next[i]) {
-      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
-      if (curTemplate) {
-        const targetPageNum = i + 1;
-        if (curTemplate.pages?.[i]) {
-          next[i] = await ed.buildPageFromSpecs(curTemplate.pages[i], curTemplate.bg || '#ffffff');
-        } else if (curTemplate.emptySpecs) {
-          next[i] = await ed.buildPageFromSpecs(() => curTemplate.emptySpecs(targetPageNum), curTemplate.bg || '#ffffff');
-        } else if (next[0]) {
-          next[i] = createEmptyTemplateFromCanvas(next[0], design.width, design.height, targetPageNum);
-        }
+    if (!next[i] && i === 1) {
+      const trifoldTemplate = TEMPLATES.find((t) => t.id === 'trifold');
+      if (trifoldTemplate?.pages?.[1]) {
+        next[i] = await ed.buildPageFromSpecs(trifoldTemplate.pages[1], trifoldTemplate.bg);
       }
     }
     setPages(next);
@@ -417,24 +409,7 @@ export default function StudioApp() {
   };
   const addPage = async (duplicate = false) => {
     const next = currentPages();
-    let ins = null;
-
-    if (duplicate) {
-      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
-      const targetPageNum = next.length + 1;
-
-      if (curTemplate?.emptySpecs) {
-        ins = await ed.buildPageFromSpecs(() => curTemplate.emptySpecs(targetPageNum), curTemplate.bg || '#ffffff');
-      } else if (curTemplate?.pages?.[pageIdx + 1]) {
-        ins = await ed.buildPageFromSpecs(curTemplate.pages[pageIdx + 1], curTemplate.bg || '#ffffff');
-      } else if (curTemplate?.pages?.[1] && pageIdx === 0) {
-        ins = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg || '#ffffff');
-      } else if (next[pageIdx]) {
-        ins = createEmptyTemplateFromCanvas(next[pageIdx], design.width, design.height, targetPageNum);
-      }
-      notify(`📄 Added empty template page (Page ${targetPageNum})`);
-    }
-
+    const ins = duplicate ? next[pageIdx] : null;
     next.splice(pageIdx + 1, 0, ins);
     setPages(next);
     setPageIdx(pageIdx + 1);
@@ -448,28 +423,6 @@ export default function StudioApp() {
     setPages(next);
     setPageIdx(i);
     await ed.loadPage(next[i]);
-  };
-
-  const shufflePagesOrPanels = async (mode = 'rotate') => {
-    if (design.folds > 1) {
-      ed.shufflePanels(mode, design.folds);
-      return;
-    }
-
-    const next = currentPages();
-    if (next.length < 2) {
-      notify('Add a page first in the bottom to swap pages');
-      return;
-    }
-
-    // Swap Page 1 and Page 2
-    const temp = next[0];
-    next[0] = next[1];
-    next[1] = temp;
-
-    setPages(next);
-    await ed.loadPage(next[pageIdx]);
-    notify('🔀 Swapped Page 1 and Page 2');
   };
 
   const exportPNG = () => {
@@ -559,31 +512,15 @@ export default function StudioApp() {
               <button role="menuitem" onClick={exportJSON}>
                 Design file (.json)
               </button>
-              <button
-                role="menuitem"
-                onClick={() => {
-                  setMenu(false);
-                  window.open('/brochure-insight.html', '_blank');
-                }}
-              >
-                Clean HTML Print View
-              </button>
             </div>
           )}
         </div>
       </header>
 
       <div className="body">
-        <Sidebar
-          ed={ed}
-          onTemplate={applyTemplate}
-          notify={notify}
-          onOpenDesign={openDesign}
-          onOpenFile={triggerOpenFile}
-          currentTemplateId={design.templateId || design.id}
-        />
+        <Sidebar ed={ed} onTemplate={applyTemplate} notify={notify} onOpenDesign={openDesign} onOpenFile={triggerOpenFile} />
         <main className="stage">
-          <PropsBar ed={ed} bg={ed.getBackground()} folds={design.folds} pagesCount={pages.length} onShuffle={shufflePagesOrPanels} />
+          <PropsBar ed={ed} bg={ed.getBackground()} folds={design.folds} />
           <div
             className={`ws ${panMode || spacePressed ? 'pan-mode' : ''} ${isPanning ? 'panning' : ''}`}
             ref={wsRef}
@@ -634,32 +571,19 @@ export default function StudioApp() {
             </div>
             <div className="grow" />
             {design.folds > 1 && (
-              <label className="check">
-                <input type="checkbox" checked={showFolds} onChange={(e) => setShowFolds(e.target.checked)} /> Fold lines
-              </label>
-            )}
-            {(design.folds > 1 || pages.length > 1) && (
-              <button
-                className="btn small"
-                style={{
-                  marginLeft: 6,
-                  marginRight: 6,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 5,
-                  background: '#f0fdf4',
-                  color: '#006837',
-                  border: '1px solid #86efac',
-                  fontWeight: 600,
-                  borderRadius: 6,
-                  padding: '4px 9px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => shufflePagesOrPanels('rotate')}
-                title={design.folds > 1 ? "Shuffle panels" : "Swap between Page 1 and Page 2"}
-              >
-                🔀 {design.folds > 1 ? 'Shuffle' : 'Swap Pages'}
-              </button>
+              <>
+                <label className="check">
+                  <input type="checkbox" checked={showFolds} onChange={(e) => setShowFolds(e.target.checked)} /> Fold lines
+                </label>
+                <button
+                  className="btn small"
+                  style={{ marginLeft: 6, display: 'inline-flex', alignItems: 'center', gap: 4 }}
+                  onClick={() => ed.shufflePanels('rotate', design.folds)}
+                  title="Shuffle panels in between (Panel 1 → Panel 2 → Panel 3)"
+                >
+                  🔀 Shuffle
+                </button>
+              </>
             )}
             <button
               className={`icon pan-btn ${panMode || spacePressed ? 'active' : ''}`}

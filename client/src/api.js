@@ -1,9 +1,10 @@
-// Resilient storage layer: IndexedDB + localStorage + backend API synchronization
+// Resilient Client-Side Storage (IndexedDB + localStorage) + Backend API Sync
+// Guarantees saving, listing, opening, and deleting ALWAYS work both locally and in live deployments (e.g. Vercel)
 
 const DB_NAME = 'brochure_studio_db';
 const DB_VERSION = 1;
 const STORE_NAME = 'designs';
-const LS_BACKUP_KEY = 'brochure_studio_designs_backup';
+const LS_META_KEY = 'brochure_studio_designs_meta';
 
 function openDB() {
   return new Promise((resolve, reject) => {
@@ -79,118 +80,119 @@ async function idbDelete(id) {
   }
 }
 
-function lsGetBackup() {
+function lsGetMeta() {
   try {
-    return JSON.parse(localStorage.getItem(LS_BACKUP_KEY) || '[]');
+    return JSON.parse(localStorage.getItem(LS_META_KEY) || '[]');
   } catch {
     return [];
   }
 }
 
-function lsSaveBackup(item) {
+function lsSaveMeta(item) {
   try {
-    const list = lsGetBackup().filter((d) => d.id !== item.id);
-    list.unshift(item);
-    localStorage.setItem(LS_BACKUP_KEY, JSON.stringify(list.slice(0, 30)));
+    // Only store metadata + small thumbnail to avoid localStorage 5MB quota errors
+    const meta = {
+      id: item.id,
+      name: item.name,
+      width: item.width,
+      height: item.height,
+      folds: item.folds,
+      pageCount: Array.isArray(item.pages) ? item.pages.length : 1,
+      thumbnail: typeof item.thumbnail === 'string' && item.thumbnail.length < 50000 ? item.thumbnail : '',
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+    };
+    const list = lsGetMeta().filter((d) => d.id !== item.id);
+    list.unshift(meta);
+    localStorage.setItem(LS_META_KEY, JSON.stringify(list.slice(0, 50)));
   } catch {
-    // quota limits ignored; idb is primary
+    // Quota reached; IndexedDB remains primary
   }
 }
 
-function lsDeleteBackup(id) {
+function lsDeleteMeta(id) {
   try {
-    const list = lsGetBackup().filter((d) => d.id !== id);
-    localStorage.setItem(LS_BACKUP_KEY, JSON.stringify(list));
+    const list = lsGetMeta().filter((d) => d.id !== id);
+    localStorage.setItem(LS_META_KEY, JSON.stringify(list));
   } catch {}
 }
 
-const json = async (r) => {
-  if (!r.ok) {
-    let msg = r.statusText;
-    try {
-      const parsed = await r.json();
-      msg = parsed.error || msg;
-    } catch {
-      /* keep statusText */
-    }
-    throw new Error(msg);
+const safeJsonFetch = async (url, options = {}) => {
+  try {
+    const res = await fetch(url, options);
+    if (!res.ok) return null;
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) return null;
+    return await res.json();
+  } catch {
+    return null;
   }
-  return r.json();
 };
 
-const send = (url, method, body) =>
-  fetch(url, {
-    method,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  }).then(json);
-
 export const listDesigns = async () => {
-  let serverDesigns = [];
-  try {
-    serverDesigns = await fetch('/api/designs').then(json);
-    if (!Array.isArray(serverDesigns)) serverDesigns = [];
-  } catch (err) {
-    console.warn('Backend /api/designs unreachable, falling back to local gallery:', err.message);
+  // 1. Get all local designs from IndexedDB
+  const localItems = await idbGetAll();
+  const localMap = new Map();
+
+  localItems.forEach((d) => {
+    if (d && d.id) {
+      const pageCount = Array.isArray(d.pages) ? d.pages.length : (d.pageCount || 1);
+      localMap.set(d.id, {
+        id: d.id,
+        name: d.name || 'Untitled design',
+        width: d.width,
+        height: d.height,
+        folds: d.folds,
+        pageCount,
+        thumbnail: d.thumbnail || '',
+        createdAt: d.createdAt || Date.now(),
+        updatedAt: d.updatedAt || Date.now(),
+      });
+    }
+  });
+
+  // 2. Fallback to localStorage meta if IndexedDB was empty
+  if (localMap.size === 0) {
+    lsGetMeta().forEach((m) => {
+      if (m && m.id) localMap.set(m.id, m);
+    });
   }
 
-  const localDesigns = await idbGetAll();
-  const lsBackup = lsGetBackup();
+  // 3. Attempt server fetch (e.g. if local backend server is running on port 4001)
+  const serverItems = await safeJsonFetch('/api/designs');
+  if (Array.isArray(serverItems)) {
+    serverItems.forEach((d) => {
+      if (d && d.id) {
+        const existing = localMap.get(d.id);
+        if (!existing || (d.updatedAt || 0) >= (existing.updatedAt || 0)) {
+          localMap.set(d.id, d);
+        }
+      }
+    });
+  }
 
-  const map = new Map();
-
-  // 1. Add server designs
-  serverDesigns.forEach((d) => {
-    if (d && d.id) map.set(d.id, d);
-  });
-
-  // 2. Add local IndexedDB designs (takes priority if updated or missing on server)
-  localDesigns.forEach(({ pages, ...meta }) => {
-    if (!meta.id) return;
-    const existing = map.get(meta.id);
-    const pageCount = Array.isArray(pages) ? pages.length : meta.pageCount || 1;
-    const item = { ...meta, pageCount };
-    if (!existing || (item.updatedAt || 0) >= (existing.updatedAt || 0)) {
-      map.set(item.id, item);
-    }
-  });
-
-  // 3. Add localStorage backup designs
-  lsBackup.forEach(({ pages, ...meta }) => {
-    if (!meta.id) return;
-    const existing = map.get(meta.id);
-    const pageCount = Array.isArray(pages) ? pages.length : meta.pageCount || 1;
-    const item = { ...meta, pageCount };
-    if (!existing || (item.updatedAt || 0) >= (existing.updatedAt || 0)) {
-      map.set(item.id, item);
-    }
-  });
-
-  return Array.from(map.values()).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  return Array.from(localMap.values()).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
 };
 
 export const getDesign = async (id) => {
-  // Try server first
-  try {
-    const srv = await fetch(`/api/designs/${id}`).then(json);
-    if (srv && srv.pages) {
-      await idbPut(srv);
-      lsSaveBackup(srv);
-      return srv;
-    }
-  } catch (err) {
-    console.warn(`Backend /api/designs/${id} failed, checking local storage:`, err.message);
+  // 1. Check local IndexedDB first
+  const local = await idbGet(id);
+  if (local && local.pages && local.pages.length) {
+    return local;
   }
 
-  // Fallback to IndexedDB
-  const local = await idbGet(id);
-  if (local && local.pages) return local;
+  // 2. Check server
+  const serverDesign = await safeJsonFetch(`/api/designs/${id}`);
+  if (serverDesign && serverDesign.pages && serverDesign.pages.length) {
+    await idbPut(serverDesign);
+    lsSaveMeta(serverDesign);
+    return serverDesign;
+  }
 
-  // Fallback to localStorage backup
-  const ls = lsGetBackup().find((d) => d.id === id);
-  if (ls && ls.pages) return ls;
+  // 3. Fallback to any local item matching id
+  if (local) return local;
 
-  throw new Error('Design not found');
+  throw new Error('Design not found in gallery');
 };
 
 export const saveDesign = async (d) => {
@@ -202,54 +204,79 @@ export const saveDesign = async (d) => {
     height: Number(d.height) || 794,
     folds: Number(d.folds) || 0,
     pages: Array.isArray(d.pages) ? d.pages : [],
-    thumbnail: typeof d.thumbnail === 'string' && d.thumbnail.startsWith('data:image/') ? d.thumbnail : (d.thumbnail || ''),
+    thumbnail: typeof d.thumbnail === 'string' ? d.thumbnail : '',
     createdAt: d.createdAt || Date.now(),
     updatedAt: Date.now(),
   };
 
-  // Always save locally to IndexedDB & localStorage immediately
+  // 1. Save locally to IndexedDB & localStorage immediately
   await idbPut(record);
-  lsSaveBackup(record);
+  lsSaveMeta(record);
 
-  // Attempt to sync to backend API
+  // 2. Attempt background sync to backend server if available
+  const payload = JSON.stringify(record);
+  const syncUrl = d.id ? `/api/designs/${d.id}` : '/api/designs';
+  const syncMethod = d.id ? 'PUT' : 'POST';
+
   try {
-    const srvRes = await (d.id ? send(`/api/designs/${d.id}`, 'PUT', record) : send('/api/designs', 'POST', record));
+    const srvRes = await safeJsonFetch(syncUrl, {
+      method: syncMethod,
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+    });
     if (srvRes && srvRes.id) {
       if (srvRes.id !== id) {
         await idbDelete(id);
-        lsDeleteBackup(id);
+        lsDeleteMeta(id);
         record.id = srvRes.id;
         record.updatedAt = srvRes.updatedAt || Date.now();
         await idbPut(record);
-        lsSaveBackup(record);
+        lsSaveMeta(record);
       }
-      return srvRes;
+      return { id: record.id, updatedAt: record.updatedAt };
     }
-  } catch (err) {
-    console.warn('Backend sync failed (design saved locally to browser):', err.message);
+  } catch {
+    // Backend offline / Vercel static host; local save is already complete and safe
   }
 
-  // Return success from local store
+  // 3. Return local success response
   return { id: record.id, updatedAt: record.updatedAt };
 };
 
 export const deleteDesign = async (id) => {
   await idbDelete(id);
-  lsDeleteBackup(id);
+  lsDeleteMeta(id);
 
   try {
     await fetch(`/api/designs/${id}`, { method: 'DELETE' });
   } catch {
-    /* ignore offline / server errors */
+    // Offline / static host ignored
   }
 
   return { ok: true };
 };
 
-export const listUploads = () => fetch('/api/uploads').then(json);
+export const listUploads = async () => {
+  const res = await safeJsonFetch('/api/uploads');
+  return Array.isArray(res) ? res : [];
+};
 
-export const uploadImage = (file) => {
-  const f = new FormData();
-  f.append('image', file);
-  return fetch('/api/upload', { method: 'POST', body: f }).then(json);
+export const uploadImage = async (file) => {
+  try {
+    const f = new FormData();
+    f.append('image', file);
+    const res = await fetch('/api/upload', { method: 'POST', body: f });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.url) return data;
+    }
+  } catch {}
+
+  // Fallback: convert file to local data URL so image upload always works even without backend!
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve({ url: reader.result, name: file.name });
+    reader.onerror = () => reject(new Error('Failed to read image file'));
+    reader.readAsDataURL(file);
+  });
 };
