@@ -1,10 +1,12 @@
-// Resilient Client-Side Storage (IndexedDB + localStorage) + Backend API Sync
-// Guarantees saving, listing, opening, and deleting ALWAYS work both locally and in live deployments (e.g. Vercel)
+/**
+ * Brochure Studio API client with resilient IndexedDB + LocalStorage fallback
+ * Ensures full permanent saving and gallery access in both local and static live environments (e.g. Vercel).
+ */
 
-const DB_NAME = 'brochure_studio_db';
+const DB_NAME = 'BrochureStudioDB';
 const DB_VERSION = 1;
 const STORE_NAME = 'designs';
-const LS_META_KEY = 'brochure_studio_designs_meta';
+const LS_META_KEY = 'brochure_designs_meta';
 
 function openDB() {
   return new Promise((resolve, reject) => {

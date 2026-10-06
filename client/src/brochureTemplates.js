@@ -782,6 +782,8 @@ export function onespitSideFlyerEmpty(pageNum = 2) {
   const C_LIME = '#c6f432';
   const C_BG_RIGHT = '#f6f8ff';
   const C_SUBDUED = '#8a94b8';
+  const C_CARD_BORDER = '#dbe3fb';
+  const C_LINE = '#cdd8fa';
 
   // 1. LEFT SIDEBAR (x: 0 to 268, y: 0 to 1123)
   s.push(r(0, 0, 268, 1123, C_NAVY, { gradient: [C_NAVY, C_MIDNIGHT], gradAngle: 'v' }));
@@ -789,6 +791,31 @@ export function onespitSideFlyerEmpty(pageNum = 2) {
   // Logo Card (y: 26, w: 216, h: 68)
   s.push(r(26, 26, 216, 68, '#ffffff', { r: 12 }));
   s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 42, y: 38, w: 184 });
+
+  // Art / Product Illustration (y: 110 to 330)
+  s.push(c(38, 116, 96, 'rgba(75,120,255,0.28)'));
+
+  // Product Box
+  s.push(r(28, 156, 136, 140, '#ffffff', { r: 10 }));
+  s.push(r(28, 156, 136, 26, C_BLUE, { r: 10 }));
+  s.push(r(28, 172, 136, 10, C_BLUE));
+  s.push(r(73, 234, 46, 3, C_LIME, { r: 1.5 }));
+  // Tricolor stripe at box bottom
+  s.push(r(28, 287, 45.3, 9, '#e53935'));
+  s.push(r(73.3, 287, 45.3, 9, '#1e88e5'));
+  s.push(r(118.6, 287, 45.4, 9, '#43a047'));
+
+  // Saliva Collection Tube
+  s.push(r(172, 124, 52, 184, 'rgba(255,255,255,0.92)', { r: 26 }));
+  s.push(r(172, 124, 52, 26, C_LIME, { r: 10 }));
+  s.push(r(172, 186, 52, 122, '#ff8fa3', { r: 26 }));
+
+  // 6 Checklist items / badges
+  for (let idx = 0; idx < 6; idx++) {
+    const yPos = 366 + idx * 28;
+    s.push(c(26, yPos + 2, 8, C_LIME));
+    s.push(t('✓', 26, yPos + 3, 16, 10, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  }
 
   // Sidebar Contact Information (Bottom)
   s.push(r(26, 970, 216, 1, 'rgba(255,255,255,0.2)'));
@@ -808,6 +835,58 @@ export function onespitSideFlyerEmpty(pageNum = 2) {
   s.push(r(306, 32, 150, 24, C_BLUE, { r: 12 }));
   s.push(t('COLLECT & STABILIZE', 306, 37, 150, 9.5, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins', sp: 60 }));
   s.push(t(`PRODUCT PROFILE · 0${pageNum} / 14`, 530, 36, 226, 10, { color: C_SUBDUED, font: 'Poppins', sp: 80, align: 'right' }));
+
+  // SECTION 1: OVERVIEW (indicator bar + 3 bullet dots)
+  s.push(r(306, 214, 8, 18, C_LIME, { r: 3 }));
+  s.push(r(315, 214, 3, 18, C_BLUE, { r: 1.5 }));
+  s.push(c(309, 247, 3, C_BLUE));
+  s.push(c(309, 281, 3, C_BLUE));
+  s.push(c(309, 319, 3, C_BLUE));
+
+  // SECTION 2: APPLICATIONS (indicator bar + 5 card containers with number badges)
+  s.push(r(306, 368, 8, 18, C_LIME, { r: 3 }));
+  s.push(r(315, 368, 3, 18, C_BLUE, { r: 1.5 }));
+
+  // Card 1
+  s.push(r(306, 396, 218, 42, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(r(314, 405, 24, 24, '#e8eeff', { r: 6 }));
+
+  // Card 2
+  s.push(r(538, 396, 218, 42, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(r(546, 405, 24, 24, '#e8eeff', { r: 6 }));
+
+  // Card 3
+  s.push(r(306, 448, 218, 42, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(r(314, 457, 24, 24, '#e8eeff', { r: 6 }));
+
+  // Card 4
+  s.push(r(538, 448, 218, 42, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(r(546, 457, 24, 24, '#e8eeff', { r: 6 }));
+
+  // Card 5
+  s.push(r(306, 500, 260, 42, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(r(314, 509, 24, 24, '#e8eeff', { r: 6 }));
+
+  // SECTION 3: SIMPLE WORKFLOW (indicator bar + timeline line + 5 step circles)
+  s.push(r(306, 568, 8, 18, C_LIME, { r: 3 }));
+  s.push(r(315, 568, 3, 18, C_BLUE, { r: 1.5 }));
+  s.push(r(316, 600, 2, 134, C_LINE));
+  s.push(c(307, 597, 10, C_BLUE));
+  s.push(c(307, 629, 10, C_BLUE));
+  s.push(c(307, 661, 10, C_BLUE));
+  s.push(c(307, 693, 10, C_BLUE));
+  s.push(c(307, 725, 10, C_BLUE));
+
+  // SECTION 4: EXPECTED RESULTS / PERFORMANCE (navy container card)
+  s.push(r(306, 770, 450, 106, C_NAVY, { r: 14 }));
+
+  // SECTION 5: CTA BANNER (lime container card)
+  s.push(r(306, 920, 450, 68, C_LIME, { r: 12 }));
+
+  // BOTTOM TRICOLOR BAR
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
 
   return s;
 }

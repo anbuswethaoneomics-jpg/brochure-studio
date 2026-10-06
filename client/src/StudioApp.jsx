@@ -359,24 +359,15 @@ export default function StudioApp() {
     setBusy(true);
     try {
       const all = currentPages();
-      let thumbnail = '';
-      try {
-        thumbnail = ed.render(Math.min(1, 240 / design.width), 'jpeg');
-      } catch {
-        try {
-          thumbnail = ed.render(Math.min(1, 240 / design.width), 'png');
-        } catch {}
-      }
+      const thumbnail = ed.render(Math.min(1, 240 / design.width), 'jpeg');
       const res = await saveDesign({ ...design, pages: all, thumbnail });
-      if (res && res.id) {
-        setDesign((d) => ({ ...d, id: res.id }));
-      }
+      setDesign((d) => ({ ...d, id: res.id }));
       setPages(all);
       setSaved(true);
       window.dispatchEvent(new CustomEvent('design-saved'));
-      notify('Design saved to gallery');
+      notify('Design saved');
     } catch (e) {
-      notify(`Could not save: ${e.message || 'unknown error'}`);
+      notify(`Could not save: ${e.message}`);
     }
     setBusy(false);
   };
@@ -397,10 +388,15 @@ export default function StudioApp() {
   const switchPage = async (i) => {
     if (i === pageIdx) return;
     const next = currentPages();
-    if (!next[i] && i === 1) {
-      const trifoldTemplate = TEMPLATES.find((t) => t.id === 'trifold');
-      if (trifoldTemplate?.pages?.[1]) {
-        next[i] = await ed.buildPageFromSpecs(trifoldTemplate.pages[1], trifoldTemplate.bg);
+    if (!next[i]) {
+      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
+      if (curTemplate) {
+        const targetPageNum = i + 1;
+        if (curTemplate.pages?.[i]) {
+          next[i] = await ed.buildPageFromSpecs(curTemplate.pages[i], curTemplate.bg || '#ffffff');
+        } else if (curTemplate.emptySpecs) {
+          next[i] = await ed.buildPageFromSpecs(() => curTemplate.emptySpecs(targetPageNum), curTemplate.bg || '#ffffff');
+        }
       }
     }
     setPages(next);
@@ -409,7 +405,20 @@ export default function StudioApp() {
   };
   const addPage = async (duplicate = false) => {
     const next = currentPages();
-    const ins = duplicate ? next[pageIdx] : null;
+    let ins = null;
+    if (duplicate) {
+      const curTemplate = TEMPLATES.find((t) => t.id === (design.templateId || design.id) || t.name === design.name);
+      const targetPageNum = next.length + 1;
+      if (curTemplate?.emptySpecs) {
+        ins = await ed.buildPageFromSpecs(() => curTemplate.emptySpecs(targetPageNum), curTemplate.bg || '#ffffff');
+      } else if (curTemplate?.pages?.[pageIdx + 1]) {
+        ins = await ed.buildPageFromSpecs(curTemplate.pages[pageIdx + 1], curTemplate.bg || '#ffffff');
+      } else if (curTemplate?.pages?.[1] && pageIdx === 0) {
+        ins = await ed.buildPageFromSpecs(curTemplate.pages[1], curTemplate.bg || '#ffffff');
+      } else {
+        ins = next[pageIdx];
+      }
+    }
     next.splice(pageIdx + 1, 0, ins);
     setPages(next);
     setPageIdx(pageIdx + 1);
