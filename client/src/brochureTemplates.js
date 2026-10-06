@@ -641,16 +641,88 @@ export function onespitTealFlyerEmpty(pageNum = 2) {
 
   const C_TEAL_DARK = '#0b4f55';
   const C_TEAL_LIGHT = '#12857f';
+  const C_AMBER = '#ffc857';
   const C_INK = '#1d3b40';
   const C_MUTED = '#6f8a8d';
   const C_MINT = '#e8f6f3';
+  const C_BORDER = '#cfe6e2';
+  const C_CHIP_BORDER = '#bfe0da';
 
   // 1. TOP HEADER (y: 0 to 64)
   s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 16, w: 150 });
-  s.push(t(`PRODUCT PROFILE · 0${pageNum} / 14`, 490, 26, 260, 10.5, { color: C_MUTED, font: 'Poppins', sp: 80, align: 'right' }));
-  s.push(r(44, 60, 706, 2, '#cfe6e2'));
+  s.push(t(`PRODUCT PROFILE  ·  0${pageNum} / 14`, 490, 26, 260, 10.5, { color: C_MUTED, font: 'Poppins', sp: 80, align: 'right' }));
 
-  // 2. FOOTER CTA & CONTACT (y: 948 to 1123)
+  // 2. HERO SECTION (y: 64 to 304, h: 240)
+  s.push(r(0, 64, 794, 240, C_TEAL_DARK, { gradient: [C_TEAL_DARK, C_TEAL_LIGHT] }));
+  s.push(c(560, 20, 140, 'rgba(255,255,255,0.06)'));
+
+  // Pill: COLLECT & STABILIZE
+  s.push(r(44, 88, 160, 22, 'transparent', { r: 11, stroke: C_AMBER, sw: 1.2 }));
+
+  // Hero Product Illustration (Box & Tube)
+  s.push(r(508, 98, 146, 136, '#ffffff', { r: 10 }));
+  s.push(r(508, 98, 146, 28, C_AMBER, { r: 10 }));
+  s.push(r(508, 116, 146, 10, C_AMBER));
+  s.push(r(558, 184, 46, 3, C_TEAL_LIGHT, { r: 1.5 }));
+  // Tricolor strip at box bottom
+  s.push(r(508, 225, 48.6, 9, '#e53935'));
+  s.push(r(556.6, 225, 48.6, 9, '#1e88e5'));
+  s.push(r(605.2, 225, 48.8, 9, '#43a047'));
+
+  // Saliva Collection Tube
+  s.push(r(654, 76, 54, 170, 'rgba(255,255,255,0.92)', { r: 27 }));
+  s.push(r(654, 76, 54, 26, C_AMBER, { r: 10 }));
+  s.push(r(654, 136, 54, 110, '#f6a5ad', { r: 27 }));
+
+  // 3. OVERVIEW SECTION (y: 318 to 415)
+  s.push(r(44, 322, 22, 4, C_AMBER, { r: 2 }));
+  s.push(c(47, 349, 3, C_TEAL_LIGHT));
+  s.push(c(47, 374, 3, C_TEAL_LIGHT));
+  s.push(c(47, 399, 3, C_TEAL_LIGHT));
+
+  // 4. APPLICATIONS CARD (y: 424 to 534)
+  s.push(r(44, 424, 706, 108, C_MINT, { r: 14 }));
+  s.push(r(60, 438, 22, 4, C_AMBER, { r: 2 }));
+
+  // Applications Chips Row 1 (y: 462)
+  s.push(r(60, 462, 115, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+  s.push(r(183, 462, 245, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+  s.push(r(436, 462, 115, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+
+  // Applications Chips Row 2 (y: 494)
+  s.push(r(60, 494, 160, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+  s.push(r(228, 494, 290, 26, '#ffffff', { r: 13, stroke: C_CHIP_BORDER, sw: 1 }));
+
+  // 5. KEY BENEFITS SECTION (y: 546 to 658)
+  s.push(r(44, 550, 22, 4, C_AMBER, { r: 2 }));
+  const benefitCards = [
+    { x: 44, y: 572 },
+    { x: 284, y: 572 },
+    { x: 524, y: 572 },
+    { x: 44, y: 620 },
+    { x: 284, y: 620 },
+    { x: 524, y: 620 },
+  ];
+  benefitCards.forEach((b) => {
+    s.push(r(b.x, b.y, 226, 38, '#ffffff', { r: 10, stroke: C_BORDER, sw: 1 }));
+    s.push(c(b.x + 12, b.y + 8, 11, C_TEAL_LIGHT));
+    s.push(t('✓', b.x + 12, b.y + 11, 22, 11.5, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+  });
+
+  // 6. SIMPLE WORKFLOW SECTION (y: 672 to 816)
+  s.push(r(44, 676, 22, 4, C_AMBER, { r: 2 }));
+  for (let idx = 0; idx < 5; idx++) {
+    const xPos = 44 + idx * 143;
+    s.push(r(xPos, 698, 134, 126, '#f4fbf9', { r: 10 }));
+    s.push(r(xPos, 698, 134, 4, C_TEAL_LIGHT));
+  }
+
+  // 7. EXPECTED RESULTS / PERFORMANCE (y: 838 to 936)
+  s.push(r(44, 838, 706, 94, C_TEAL_DARK, { r: 14 }));
+  s.push(r(238, 852, 2, 66, C_AMBER));
+  s.push(r(488, 852, 2, 66, C_AMBER));
+
+  // 8. FOOTER CTA & CONTACT (y: 948 to 1123)
   s.push(r(0, 948, 794, 167, C_MINT));
   s.push(t('Interested in ONESpit™?', 44, 968, 400, 18, { bold: 1, color: C_TEAL_DARK, font: 'Poppins' }));
   s.push(t('Contact our team for availability, pricing and technical details.', 44, 994, 380, 12, { color: '#4b6a6d', font: 'Poppins', lh: 1.3 }));
