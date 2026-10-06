@@ -40,13 +40,14 @@ export default function StudioSidebar({ ed, onTemplate, notify, onOpenDesign, on
   const [designs, setDesigns] = useState([]);
   const [loadingDesigns, setLoadingDesigns] = useState(false);
 
-  const refreshUploads = () => listUploads().then(setFiles).catch((err) => notify(`Could not load images: ${err.message}`));
+  const refreshUploads = () => listUploads().then(setFiles).catch((err) => console.warn('refreshUploads error:', err));
   useEffect(() => { if (tab === 'uploads') refreshUploads(); }, [tab]);
 
   const handleDeleteUpload = async (fileItem, e) => {
     e.stopPropagation();
     if (!window.confirm(`Delete "${fileItem.name || 'this image'}"?`)) return;
     try {
+      setFiles((prev) => prev.filter((p) => (p.id || p.url) !== (fileItem.id || fileItem.url)));
       await deleteUpload(fileItem);
       notify('Image deleted');
       refreshUploads();
@@ -89,10 +90,17 @@ export default function StudioSidebar({ ed, onTemplate, notify, onOpenDesign, on
   const onFiles = async (list) => {
     setLoading(true);
     try {
+      const addedItems = [];
       for (const f of Array.from(list)) {
         const item = await uploadImage(f);
+        addedItems.push(item);
         await ed.addImage(item.dataUrl || item.url);
       }
+      setFiles((prev) => {
+        const existingKeys = new Set(prev.map((p) => p.id || p.url));
+        const newOnes = addedItems.filter((i) => !existingKeys.has(i.id || i.url));
+        return [...newOnes, ...prev];
+      });
       refreshUploads();
     } catch (e) { notify(e.message); }
     setLoading(false);
