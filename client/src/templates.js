@@ -1220,6 +1220,7 @@ export function onespitSunsetFlyer() {
 
 // Oneomics ONESpit™ Sunset Edition Flyer — A4 Flyer Page 2 (Empty Template)
 // Oneomics ONESpit™ Sunset Edition Flyer — A4 Flyer Page 2 (Empty Template)
+// Oneomics ONESpit™ Sunset Edition Flyer — A4 Flyer Page 2 (Empty Template)
 export function onespitSunsetFlyerEmpty(pageNum = 2) {
   const s = [];
 
@@ -1233,11 +1234,11 @@ export function onespitSunsetFlyerEmpty(pageNum = 2) {
 
   // 1. TOP HEADER (Logo left, badge right empty container)
   s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 18, w: 148 });
-  s.push(r(574, 18, 176, 26, '#ffffff', { r: 13, stroke: '#d9cffc', sw: 1 }));
+  s.push(r(560, 18, 190, 24, '#ffffff', { r: 12, stroke: '#d9cffc', sw: 1 }));
 
   // 2. HERO SECTION
   // Pill empty placeholder
-  s.push(r(44, 60, 156, 24, C_PEACH_LIGHT, { r: 12 }));
+  s.push(r(44, 64, 150, 23, C_PEACH_LIGHT, { r: 12 }));
 
   // Arch Container (x: 500, y: 58, w: 250, h: 240)
   s.push(r(500, 58, 250, 240, '#ffd0b8', { r: 125, gradient: ['#ffe3d1', '#ffd0b8'], gradAngle: 'v' }));
@@ -1258,24 +1259,24 @@ export function onespitSunsetFlyerEmpty(pageNum = 2) {
   s.push(r(650, 106, 48, 22, C_INDIGO, { r: 10 }));
   s.push(r(650, 164, 48, 100, '#ff9fb0', { r: 24 }));
 
-  // 3. STATS ROW (3 empty white cards)
-  s.push(r(44, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
-  s.push(r(284, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
-  s.push(r(524, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  // 3. STATS ROW (3 empty white cards, min-height 52)
+  s.push(r(44, 290, 226, 52, '#ffffff', { r: 12, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(r(284, 290, 226, 52, '#ffffff', { r: 12, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(r(524, 290, 226, 52, '#ffffff', { r: 12, stroke: C_CARD_BORDER, sw: 1 }));
 
   // 4. OVERVIEW (LEFT) & APPLICATIONS (RIGHT)
   // Overview orange indicator dot + 3 bullet dots
-  s.push(c(50, 411, 5, C_ORANGE));
-  s.push(c(48, 439, 3, C_PURPLE_BADGE));
-  s.push(c(48, 481, 3, C_PURPLE_BADGE));
-  s.push(c(48, 523, 3, C_PURPLE_BADGE));
+  s.push(c(50, 362, 5, C_ORANGE));
+  s.push(c(48, 386, 3, C_PURPLE_BADGE));
+  s.push(c(48, 428, 3, C_PURPLE_BADGE));
+  s.push(c(48, 470, 3, C_PURPLE_BADGE));
 
   // Applications Card (Right)
-  s.push(r(432, 401, 318, 172, '#ffffff', { r: 14, stroke: C_PURPLE_BORDER, sw: 1 }));
-  s.push(c(452, 423, 5, C_ORANGE));
+  s.push(r(432, 350, 318, 162, '#ffffff', { r: 14, stroke: C_PURPLE_BORDER, sw: 1 }));
+  s.push(c(452, 372, 5, C_ORANGE));
 
   // 5 diamond bullet dots and dashed divider lines
-  const appPositions = [447, 470, 493, 516, 539];
+  const appPositions = [395, 419, 443, 467, 491];
   appPositions.forEach((yPos, idx) => {
     s.push(t('◆', 450, yPos + 1, 10, 8, { color: C_ORANGE }));
     if (idx < 4) {
@@ -1284,33 +1285,33 @@ export function onespitSunsetFlyerEmpty(pageNum = 2) {
   });
 
   // 5. KEY BENEFITS (Header dot + 6 light purple pill badge containers)
-  s.push(c(50, 607, 5, C_ORANGE));
+  s.push(c(50, 528, 5, C_ORANGE));
 
   // Benefits Row 1
-  s.push(r(44, 627, 194, 28, C_PURPLE_LIGHT, { r: 14 }));
-  s.push(r(246, 627, 180, 28, C_PURPLE_LIGHT, { r: 14 }));
-  s.push(r(434, 627, 298, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(44, 546, 150, 27, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(200, 546, 130, 27, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(336, 546, 200, 27, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(542, 546, 130, 27, C_PURPLE_LIGHT, { r: 14 }));
 
   // Benefits Row 2
-  s.push(r(44, 663, 152, 28, C_PURPLE_LIGHT, { r: 14 }));
-  s.push(r(204, 663, 204, 28, C_PURPLE_LIGHT, { r: 14 }));
-  s.push(r(416, 663, 146, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(44, 580, 150, 27, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(200, 580, 120, 27, C_PURPLE_LIGHT, { r: 14 }));
 
   // 6. SIMPLE WORKFLOW (Header dot + 5 step cards with orange badge + chevrons)
-  s.push(c(50, 719, 5, C_ORANGE));
+  s.push(c(50, 626, 5, C_ORANGE));
   for (let idx = 0; idx < 5; idx++) {
     const xPos = 44 + idx * 143;
-    s.push(r(xPos, 739, 134, 98, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
-    s.push(r(xPos + 10, 749, 24, 24, C_ORANGE, { r: 6 }));
+    s.push(r(xPos, 646, 134, 118, '#ffffff', { r: 12, stroke: C_CARD_BORDER, sw: 1 }));
+    s.push(r(xPos + 10, 656, 26, 26, C_ORANGE, { r: 8 }));
     if (idx < 4) {
-      s.push(t('›', xPos + 137, 777, 10, 16, { bold: 1, color: C_PURPLE_BADGE, align: 'center' }));
+      s.push(t('›', xPos + 137, 666, 10, 18, { bold: 1, color: C_PURPLE_BADGE, align: 'center' }));
     }
   }
 
   // 7. EXPECTED RESULTS / PERFORMANCE (Light purple container with left indigo bar & dot)
-  s.push(r(44, 853, 706, 76, C_PURPLE_LIGHT, { r: 10 }));
-  s.push(r(44, 853, 6, 76, C_INDIGO, { r: 3 }));
-  s.push(c(74, 871, 5, C_ORANGE));
+  s.push(r(44, 782, 706, 78, C_PURPLE_LIGHT, { r: 10 }));
+  s.push(r(44, 782, 6, 78, C_INDIGO, { r: 3 }));
+  s.push(c(74, 800, 5, C_ORANGE));
 
   // 8. FOOTER BANNER
   s.push(r(0, 947, 794, 168, C_PEACH_LIGHT));
