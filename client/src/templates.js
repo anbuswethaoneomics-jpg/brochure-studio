@@ -2107,407 +2107,6 @@ export function proteinguardFlyerEmpty(pageNum = 2) {
   return s;
 }
 
-// Oneomics Sequencing Services Flyer — A4 Flyer (794 x 1123)
-export function sequencingServicesFlyer() {
-  const s = [];
-
-  const C_INDIGO = '#4448B8';
-  const C_CORAL = '#E2574C';
-  const C_TEAL = '#16808F';
-  const C_AMBER = '#F2A33A';
-  const C_BLUE = '#0793EB';
-  const C_GREEN = '#33A015';
-  const C_RED = '#E23B32';
-
-  const C_INK = '#1D2142';
-  const C_TEXT = '#41465F';
-  const C_MUTED = '#8286A0';
-  const C_BG = '#F7F6FD';
-  const C_LAV = '#ECEAF9';
-  const C_LINE = '#DAD8EE';
-
-  // Pale card / chip fills
-  const P_IND = '#E6E6F8';
-  const P_RED = '#FDE6E3';
-  const P_TEAL = '#DDEFF1';
-  const P_AMB = '#FDEFD6';
-  const P_BLUE = '#DDEEFC';
-
-  // 1. TOP HEADER (Logo left, kicker right)
-  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 49, y: 38, w: 158 });
-  s.push(t('SEQUENCING SERVICES', 520, 46, 225, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 90 }));
-
-  // 2. HERO CARD (x: 49, y: 79, w: 696, h: 272, r: 22)
-  s.push(r(49, 79, 696, 272, '#ffffff', { r: 22, stroke: C_LINE, sw: 1 }));
-
-  // Hero Kicker
-  s.push(t('NEXT GENERATION SEQUENCING', 86, 108, 360, 9.5, { bold: 1, color: C_INDIGO, font: 'Poppins', sp: 80 }));
-
-  // Hero Headings
-  s.push(t('Genomes.', 86, 128, 420, 34, { bold: 1, color: C_INK, font: 'Lora', lh: 1.14 }));
-  s.push(t('Transcriptomes.', 86, 166, 420, 34, { bold: 1, color: C_INK, font: 'Lora', lh: 1.14 }));
-  s.push(t('Metagenomes.', 86, 204, 420, 34, { bold: 1, italic: 1, color: C_INDIGO, font: 'Lora', lh: 1.14 }));
-
-  // Hero Description
-  s.push(t('From whole genomes to single cells, ONEOMICS delivers a complete range of sequencing and validation services.', 86, 250, 360, 11.5, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
-
-  // Big Stat on Right
-  s.push(t('11', 580, 108, 130, 46, { bold: 1, color: C_INDIGO, align: 'right', font: 'Lora' }));
-  s.push(t('SERVICE LINES', 580, 156, 130, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 60 }));
-
-  // Chromatogram Peaks Baseline at bottom of hero
-  // Wave peaks decoration: base line at y: 326
-  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
-
-  // Chromatogram bases (A, C, G, T)
-  const chromBases = [
-    { base: 'C', c: C_BLUE, x: 74 },
-    { base: 'C', c: C_BLUE, x: 104 },
-    { base: 'C', c: C_BLUE, x: 134 },
-    { base: 'G', c: C_AMBER, x: 164 },
-    { base: 'C', c: C_BLUE, x: 194 },
-    { base: 'T', c: C_RED, x: 224 },
-    { base: 'T', c: C_RED, x: 254 },
-    { base: 'A', c: C_GREEN, x: 284 },
-    { base: 'A', c: C_GREEN, x: 314 },
-    { base: 'T', c: C_RED, x: 344 },
-    { base: 'C', c: C_BLUE, x: 374 },
-    { base: 'A', c: C_GREEN, x: 404 },
-    { base: 'C', c: C_BLUE, x: 434 },
-    { base: 'G', c: C_AMBER, x: 464 },
-    { base: 'T', c: C_RED, x: 494 },
-    { base: 'T', c: C_RED, x: 524 },
-    { base: 'C', c: C_BLUE, x: 554 },
-    { base: 'A', c: C_GREEN, x: 584 },
-    { base: 'G', c: C_AMBER, x: 614 },
-    { base: 'A', c: C_GREEN, x: 644 },
-    { base: 'T', c: C_RED, x: 674 },
-    { base: 'C', c: C_BLUE, x: 704 },
-  ];
-  chromBases.forEach((b) => {
-    // Peak curve/polygon approximation: a rounded pill peak
-    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
-    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
-    s.push(t(b.base, b.x - 10, 331, 20, 11, { bold: 1, color: b.c, align: 'center', font: 'Courier New' }));
-  });
-
-  // 3. MAIN SECTION: "What we sequence" (y: 382)
-  s.push(t('What we sequence', 49, 382, 360, 20, { bold: 1, color: C_INK, font: 'Lora' }));
-
-  // COLUMN 1 (x: 49, w: 220)
-  // Card 01: Whole Genome Sequencing
-  s.push(r(49, 412, 220, 142, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(62, 424, 26, 26, C_INDIGO, { r: 13 }));
-  s.push(t('01', 62, 430, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('Whole Genome\nSequencing', 96, 421, 160, 12.5, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.25 }));
-
-  const c1Chips = ['De novo', 'Reference-Based', 'Hi-C Genome', 'Chloroplast Genome', 'Mitochondrial Genome'];
-  let c1ChipsPos = [
-    { text: 'De novo', x: 62, y: 462, w: 60 },
-    { text: 'Reference-Based', x: 126, y: 462, w: 104 },
-    { text: 'Hi-C Genome', x: 62, y: 486, w: 84 },
-    { text: 'Chloroplast Genome', x: 62, y: 508, w: 114 },
-    { text: 'Mitochondrial Genome', x: 62, y: 528, w: 124 },
-  ];
-  c1ChipsPos.forEach((cp) => {
-    s.push(r(cp.x, cp.y, cp.w, 18, P_IND, { r: 9 }));
-    s.push(t(cp.text, cp.x, cp.y + 3, cp.w, 9, { color: C_INK, align: 'center', font: 'Poppins' }));
-  });
-
-  // Card 02: Whole Exome Sequencing
-  s.push(r(49, 564, 220, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(62, 574, 26, 26, C_CORAL, { r: 13 }));
-  s.push(t('02', 62, 580, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('Whole Exome Sequencing', 96, 578, 160, 12, { bold: 1, color: C_INK, font: 'Poppins' }));
-
-  // Card 03: Epigenetics
-  s.push(r(49, 622, 220, 94, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(62, 632, 26, 26, C_TEAL, { r: 13 }));
-  s.push(t('03', 62, 638, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('Epigenetics', 96, 636, 160, 12.5, { bold: 1, color: C_INK, font: 'Poppins' }));
-
-  s.push(r(62, 666, 172, 18, P_TEAL, { r: 9 }));
-  s.push(t('Whole Genome Bisulfite Sequencing', 62, 669, 172, 8.5, { color: C_INK, align: 'center', font: 'Poppins' }));
-  s.push(r(62, 688, 184, 22, P_TEAL, { r: 9 }));
-  s.push(t('Whole Genome Methylation\nSequencing', 62, 690, 184, 8.5, { color: C_INK, align: 'center', font: 'Poppins', lh: 1.2 }));
-
-  // Card 04: Genotyping By Sequencing
-  s.push(r(49, 726, 220, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(62, 736, 26, 26, C_AMBER, { r: 13 }));
-  s.push(t('04', 62, 742, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('Genotyping By\nSequencing', 96, 733, 160, 12, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.25 }));
-
-  // COLUMN 2 (x: 283, w: 228)
-  // Card 05: Metagenome Sequencing
-  s.push(r(283, 412, 228, 142, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(296, 424, 26, 26, C_BLUE, { r: 13 }));
-  s.push(t('05', 296, 430, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('Metagenome Sequencing', 330, 428, 170, 12.5, { bold: 1, color: C_INK, font: 'Poppins' }));
-
-  let c2ChipsPos = [
-    { text: '16S (V3–V4)', x: 296, y: 462, w: 72 },
-    { text: '16S (V1–V9) rRNA', x: 372, y: 462, w: 98 },
-    { text: 'ITS', x: 296, y: 486, w: 34 },
-    { text: '18S', x: 334, y: 486, w: 34 },
-    { text: 'Shotgun', x: 372, y: 486, w: 56 },
-    { text: 'Custom Amplicon', x: 296, y: 508, w: 98 },
-    { text: 'Meta-Barcoding', x: 296, y: 528, w: 88 },
-  ];
-  c2ChipsPos.forEach((cp) => {
-    s.push(r(cp.x, cp.y, cp.w, 18, P_BLUE, { r: 9 }));
-    s.push(t(cp.text, cp.x, cp.y + 3, cp.w, 9, { color: C_INK, align: 'center', font: 'Poppins' }));
-  });
-
-  // Card 07: Long Read Sequencing
-  s.push(r(283, 564, 228, 76, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(296, 574, 26, 26, C_CORAL, { r: 13 }));
-  s.push(t('07', 296, 580, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('Long Read Sequencing', 330, 578, 170, 12.5, { bold: 1, color: C_INK, font: 'Poppins' }));
-
-  s.push(r(296, 608, 48, 18, P_RED, { r: 9 }));
-  s.push(t('PacBio', 296, 611, 48, 9, { color: C_INK, align: 'center', font: 'Poppins' }));
-  s.push(r(348, 608, 62, 18, P_RED, { r: 9 }));
-  s.push(t('Nanopore', 348, 611, 62, 9, { color: C_INK, align: 'center', font: 'Poppins' }));
-
-  // Card 11: ChIP-Sequencing
-  s.push(r(283, 650, 228, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(296, 660, 26, 26, C_INDIGO, { r: 13 }));
-  s.push(t('11', 296, 666, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('ChIP-Sequencing', 330, 664, 170, 12.5, { bold: 1, color: C_INK, font: 'Poppins' }));
-
-  // COLUMN 3 (x: 521, w: 224)
-  // Card 06: Transcriptome Sequencing
-  s.push(r(521, 412, 224, 154, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(534, 424, 26, 26, C_INDIGO, { r: 13 }));
-  s.push(t('06', 534, 430, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('Transcriptome\nSequencing', 568, 421, 160, 12.5, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.25 }));
-
-  let c3ChipsPos = [
-    { text: 'Whole Transcriptome (mRNA + lncRNA)', x: 534, y: 462, w: 196 },
-    { text: 'mRNA', x: 534, y: 486, w: 46 },
-    { text: 'Small RNA', x: 584, y: 486, w: 66 },
-    { text: 'Metatranscriptome', x: 534, y: 508, w: 104 },
-    { text: 'Dual RNA', x: 642, y: 508, w: 60 },
-    { text: 'Single Cell RNA', x: 534, y: 528, w: 86 },
-    { text: 'Isoform (RNA)', x: 624, y: 528, w: 76 },
-  ];
-  c3ChipsPos.forEach((cp) => {
-    s.push(r(cp.x, cp.y, cp.w, 18, P_IND, { r: 9 }));
-    s.push(t(cp.text, cp.x, cp.y + 3, cp.w, 9, { color: C_INK, align: 'center', font: 'Poppins' }));
-  });
-
-  // Card 08: qRT-PCR Validation
-  s.push(r(521, 576, 224, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(534, 586, 26, 26, C_TEAL, { r: 13 }));
-  s.push(t('08', 534, 592, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('qRT-PCR Validation', 568, 590, 160, 12, { bold: 1, color: C_INK, font: 'Poppins' }));
-
-  // Card 09: SSR Marker Validation
-  s.push(r(521, 634, 224, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(534, 644, 26, 26, C_AMBER, { r: 13 }));
-  s.push(t('09', 534, 650, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('SSR Marker Validation', 568, 648, 160, 12, { bold: 1, color: C_INK, font: 'Poppins' }));
-
-  // Card 10: Taurine and Telomere Assay
-  s.push(r(521, 692, 224, 52, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(534, 702, 26, 26, C_BLUE, { r: 13 }));
-  s.push(t('10', 534, 708, 26, 10, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-  s.push(t('Taurine and Telomere\nAssay', 568, 699, 160, 12, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.25 }));
-
-  // 4. KITS SECTION (y: 792)
-  s.push(t('START WITH THE RIGHT SAMPLE KIT', 49, 792, 400, 9.5, { bold: 1, color: C_INDIGO, font: 'Poppins', sp: 80 }));
-
-  const kits = [
-    { name: 'ONESpit™', desc: 'Zero-prep saliva collection', x: 49 },
-    { name: 'ONEasy™', desc: 'Faecal collection &\npreservation', x: 228 },
-    { name: 'NucleoGUARD™', desc: 'RNA stabilization buffer', x: 407 },
-    { name: 'SoilGUARD™', desc: 'Soil stabilization buffer', x: 586 },
-  ];
-  kits.forEach((k) => {
-    s.push(r(k.x, 814, 166, 64, C_LAV, { r: 12 }));
-    s.push(t(k.name, k.x + 14, 824, 138, 12, { bold: 1, color: C_INK, font: 'Poppins' }));
-    s.push(t(k.desc, k.x + 14, 844, 138, 9.5, { color: C_TEXT, font: 'Poppins', lh: 1.3 }));
-  });
-
-  // 5. CTA FOOTER BANNER (y: 894 to 1115)
-  s.push(r(0, 894, 794, 221, '#ffffff'));
-  s.push(r(0, 894, 794, 1, C_LINE));
-
-  s.push(t('Plan your sequencing project', 49, 918, 420, 19, { bold: 1, color: C_INK, font: 'Lora' }));
-  s.push(t('Share your sample type and research goal and our team will help you choose the right sequencing approach.', 49, 946, 380, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
-
-  s.push(t('WEB', 560, 920, 50, 9, { bold: 1, color: C_INDIGO, font: 'Poppins', sp: 80 }));
-  s.push(t('www.[your-website].com', 612, 919, 140, 11.5, { color: C_TEXT, font: 'Poppins' }));
-
-  s.push(t('EMAIL', 560, 944, 50, 9, { bold: 1, color: C_INDIGO, font: 'Poppins', sp: 80 }));
-  s.push(t('[info@your-domain.com]', 612, 943, 140, 11.5, { color: C_TEXT, font: 'Poppins' }));
-
-  s.push(t('PHONE', 560, 968, 50, 9, { bold: 1, color: C_INDIGO, font: 'Poppins', sp: 80 }));
-  s.push(t('[+91 00000 00000]', 612, 967, 140, 11.5, { color: C_TEXT, font: 'Poppins' }));
-
-  // BOTTOM MULTI-COLOR BAR: 25% Green, 25% Blue, 25% Amber, 25% Red
-  s.push(r(0, 1115, 198.5, 8, C_GREEN));
-  s.push(r(198.5, 1115, 198.5, 8, C_BLUE));
-  s.push(r(397, 1115, 198.5, 8, C_AMBER));
-  s.push(r(595.5, 1115, 198.5, 8, C_RED));
-
-  return s;
-}
-
-// Oneomics Sequencing Services Flyer — A4 Flyer Page 2 (Empty Template)
-export function sequencingServicesFlyerEmpty(pageNum = 2) {
-  const s = [];
-
-  const C_INDIGO = '#4448B8';
-  const C_CORAL = '#E2574C';
-  const C_TEAL = '#16808F';
-  const C_AMBER = '#F2A33A';
-  const C_BLUE = '#0793EB';
-  const C_GREEN = '#33A015';
-  const C_RED = '#E23B32';
-
-  const C_LAV = '#ECEAF9';
-  const C_LINE = '#DAD8EE';
-
-  const P_IND = '#E6E6F8';
-  const P_RED = '#FDE6E3';
-  const P_TEAL = '#DDEFF1';
-  const P_BLUE = '#DDEEFC';
-
-  // 1. TOP HEADER (Logo left, kicker right)
-  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 49, y: 38, w: 158 });
-  s.push(r(574, 44, 170, 20, 'transparent', { stroke: 'transparent' }));
-
-  // 2. HERO CARD
-  s.push(r(49, 79, 696, 272, '#ffffff', { r: 22, stroke: C_LINE, sw: 1 }));
-
-  // Chromatogram Peaks Baseline at bottom of hero
-  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
-
-  const chromBases = [
-    { base: 'C', c: C_BLUE, x: 74 },
-    { base: 'C', c: C_BLUE, x: 104 },
-    { base: 'C', c: C_BLUE, x: 134 },
-    { base: 'G', c: C_AMBER, x: 164 },
-    { base: 'C', c: C_BLUE, x: 194 },
-    { base: 'T', c: C_RED, x: 224 },
-    { base: 'T', c: C_RED, x: 254 },
-    { base: 'A', c: C_GREEN, x: 284 },
-    { base: 'A', c: C_GREEN, x: 314 },
-    { base: 'T', c: C_RED, x: 344 },
-    { base: 'C', c: C_BLUE, x: 374 },
-    { base: 'A', c: C_GREEN, x: 404 },
-    { base: 'C', c: C_BLUE, x: 434 },
-    { base: 'G', c: C_AMBER, x: 464 },
-    { base: 'T', c: C_RED, x: 494 },
-    { base: 'T', c: C_RED, x: 524 },
-    { base: 'C', c: C_BLUE, x: 554 },
-    { base: 'A', c: C_GREEN, x: 584 },
-    { base: 'G', c: C_AMBER, x: 614 },
-    { base: 'A', c: C_GREEN, x: 644 },
-    { base: 'T', c: C_RED, x: 674 },
-    { base: 'C', c: C_BLUE, x: 704 },
-  ];
-  chromBases.forEach((b) => {
-    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
-    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
-  });
-
-  // 3. MAIN SECTION: Cards
-
-  // COLUMN 1
-  s.push(r(49, 412, 220, 142, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(62, 424, 26, 26, C_INDIGO, { r: 13 }));
-  let c1ChipsPos = [
-    { x: 62, y: 462, w: 60 },
-    { x: 126, y: 462, w: 104 },
-    { x: 62, y: 486, w: 84 },
-    { x: 62, y: 508, w: 114 },
-    { x: 62, y: 528, w: 124 },
-  ];
-  c1ChipsPos.forEach((cp) => {
-    s.push(r(cp.x, cp.y, cp.w, 18, P_IND, { r: 9 }));
-  });
-
-  s.push(r(49, 564, 220, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(62, 574, 26, 26, C_CORAL, { r: 13 }));
-
-  s.push(r(49, 622, 220, 94, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(62, 632, 26, 26, C_TEAL, { r: 13 }));
-  s.push(r(62, 666, 172, 18, P_TEAL, { r: 9 }));
-  s.push(r(62, 688, 184, 22, P_TEAL, { r: 9 }));
-
-  s.push(r(49, 726, 220, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(62, 736, 26, 26, C_AMBER, { r: 13 }));
-
-  // COLUMN 2
-  s.push(r(283, 412, 228, 142, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(296, 424, 26, 26, C_BLUE, { r: 13 }));
-  let c2ChipsPos = [
-    { x: 296, y: 462, w: 72 },
-    { x: 372, y: 462, w: 98 },
-    { x: 296, y: 486, w: 34 },
-    { x: 334, y: 486, w: 34 },
-    { x: 372, y: 486, w: 56 },
-    { x: 296, y: 508, w: 98 },
-    { x: 296, y: 528, w: 88 },
-  ];
-  c2ChipsPos.forEach((cp) => {
-    s.push(r(cp.x, cp.y, cp.w, 18, P_BLUE, { r: 9 }));
-  });
-
-  s.push(r(283, 564, 228, 76, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(296, 574, 26, 26, C_CORAL, { r: 13 }));
-  s.push(r(296, 608, 48, 18, P_RED, { r: 9 }));
-  s.push(r(348, 608, 62, 18, P_RED, { r: 9 }));
-
-  s.push(r(283, 650, 228, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(296, 660, 26, 26, C_INDIGO, { r: 13 }));
-
-  // COLUMN 3
-  s.push(r(521, 412, 224, 154, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(534, 424, 26, 26, C_INDIGO, { r: 13 }));
-  let c3ChipsPos = [
-    { x: 534, y: 462, w: 196 },
-    { x: 534, y: 486, w: 46 },
-    { x: 584, y: 486, w: 66 },
-    { x: 534, y: 508, w: 104 },
-    { x: 642, y: 508, w: 60 },
-    { x: 534, y: 528, w: 86 },
-    { x: 624, y: 528, w: 76 },
-  ];
-  c3ChipsPos.forEach((cp) => {
-    s.push(r(cp.x, cp.y, cp.w, 18, P_IND, { r: 9 }));
-  });
-
-  s.push(r(521, 576, 224, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(534, 586, 26, 26, C_TEAL, { r: 13 }));
-
-  s.push(r(521, 634, 224, 48, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(534, 644, 26, 26, C_AMBER, { r: 13 }));
-
-  s.push(r(521, 692, 224, 52, '#ffffff', { r: 13, stroke: C_LINE, sw: 1 }));
-  s.push(r(534, 702, 26, 26, C_BLUE, { r: 13 }));
-
-  // 4. KITS SECTION
-  const kitsX = [49, 228, 407, 586];
-  kitsX.forEach((xPos) => {
-    s.push(r(xPos, 814, 166, 64, C_LAV, { r: 12 }));
-  });
-
-  // 5. CTA FOOTER BANNER
-  s.push(r(0, 894, 794, 221, '#ffffff'));
-  s.push(r(0, 894, 794, 1, C_LINE));
-
-  // BOTTOM MULTI-COLOR BAR
-  s.push(r(0, 1115, 198.5, 8, C_GREEN));
-  s.push(r(198.5, 1115, 198.5, 8, C_BLUE));
-  s.push(r(397, 1115, 198.5, 8, C_AMBER));
-  s.push(r(595.5, 1115, 198.5, 8, C_RED));
-
-  return s;
-}
-
 // Oneomics Soil Microbiome Flyer — A4 Flyer (794 x 1123)
 export function soilMicrobiomeFlyer() {
   const s = [];
@@ -3088,57 +2687,57 @@ export function onemagDnaFlyer() {
 
   // Hero Pill: Extract
   s.push(r(86, 120, 80, 20, '#ffffff', { r: 10, stroke: C_BLUE, sw: 1 }));
-  s.push(c(95, 127, 3, C_BLUE));
-  s.push(t('EXTRACT', 105, 124, 55, 8, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 50 }));
+  s.push(c(97, 130, 3, C_BLUE));
+  s.push(t('EXTRACT', 106, 124, 52, 8, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 50 }));
 
   // Hero Headline
-  s.push(t('ONEMag™', 86, 148, 380, 48, { bold: 1, color: C_NAVY, font: 'Poppins', lh: 1.05 }));
+  s.push(t('ONEMag™', 86, 150, 380, 48, { bold: 1, color: C_NAVY, font: 'Poppins', lh: 1.05 }));
 
   // Hero Subtitle
-  s.push(t('Rapid Universal DNA Extraction Kit', 86, 208, 380, 15.5, { bold: 1, color: C_BLUE, font: 'Poppins' }));
+  s.push(t('Rapid Universal DNA Extraction Kit', 86, 212, 380, 15.5, { bold: 1, color: C_BLUE, font: 'Poppins' }));
 
   // Hero Tag
-  s.push(t('Magnetic bead-based DNA isolation in under 30 minutes.', 86, 236, 360, 11, { color: C_TEXT, font: 'Poppins', lh: 1.5 }));
+  s.push(t('Magnetic bead-based DNA isolation in under 30 minutes.', 86, 242, 360, 11, { color: C_TEXT, font: 'Poppins', lh: 1.5 }));
 
   // Hero Art (Test tube with magnetic beads and magnet)
   s.push({ k: 'image', src: '/assets/onemag_tube_magnet.png', x: 480, y: 104, w: 265, h: 221 });
 
   // 3. STATS CARDS (3 Columns)
   // Card 1: < 30 min (Blue)
-  s.push(r(49, 364, 221, 72, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
-  s.push(r(49, 364, 221, 5, C_BLUE, { r: 2.5 }));
-  s.push(t('< 30 min', 49, 378, 221, 21, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
-  s.push(t('rapid extraction', 49, 410, 221, 9.5, { color: C_MUTED, align: 'center', font: 'Poppins' }));
+  s.push(r(49, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 368, 221, 5, C_BLUE, { r: 2.5 }));
+  s.push(t('< 30 min', 49, 382, 221, 21, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  s.push(t('rapid extraction', 49, 412, 221, 9.5, { color: C_MUTED, align: 'center', font: 'Poppins' }));
 
   // Card 2: Solvent-free (Green)
-  s.push(r(286, 364, 221, 72, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
-  s.push(r(286, 364, 221, 5, C_GREEN, { r: 2.5 }));
-  s.push(t('Solvent-free', 286, 378, 221, 21, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
-  s.push(t('no hazardous organic solvents', 286, 410, 221, 9.5, { color: C_MUTED, align: 'center', font: 'Poppins' }));
+  s.push(r(286, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(286, 368, 221, 5, C_GREEN, { r: 2.5 }));
+  s.push(t('Solvent-free', 286, 382, 221, 21, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  s.push(t('no hazardous organic solvents', 286, 412, 221, 9.5, { color: C_MUTED, align: 'center', font: 'Poppins' }));
 
   // Card 3: Manual + auto (Red)
-  s.push(r(524, 364, 221, 72, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
-  s.push(r(524, 364, 221, 5, C_RED, { r: 2.5 }));
-  s.push(t('Manual + auto', 524, 378, 221, 21, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
-  s.push(t('including high-throughput', 524, 410, 221, 9.5, { color: C_MUTED, align: 'center', font: 'Poppins' }));
+  s.push(r(524, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(524, 368, 221, 5, C_RED, { r: 2.5 }));
+  s.push(t('Manual + auto', 524, 382, 221, 21, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  s.push(t('including high-throughput', 524, 412, 221, 9.5, { color: C_MUTED, align: 'center', font: 'Poppins' }));
 
   // 4. OVERVIEW SECTION
-  s.push(r(49, 460, 6, 17, C_BLUE, { r: 3 }));
-  s.push(t('Overview', 63, 458, 300, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(r(49, 464, 6, 17, C_BLUE, { r: 3 }));
+  s.push(t('Overview', 63, 462, 300, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
 
-  s.push(c(51, 492, 3, C_BLUE));
-  s.push(t('Magnetic bead-based DNA purification for rapid and efficient DNA extraction from diverse biological samples.', 66, 485, 679, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+  s.push(c(52, 497, 3, C_BLUE));
+  s.push(t('Magnetic bead-based DNA purification for rapid and efficient DNA extraction from diverse biological samples.', 66, 490, 679, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
 
-  s.push(c(51, 517, 3, C_BLUE));
-  s.push(t('Delivers high-yield, high-purity DNA in less than 30 minutes without hazardous organic solvents.', 66, 510, 679, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+  s.push(c(52, 523, 3, C_BLUE));
+  s.push(t('Delivers high-yield, high-purity DNA in less than 30 minutes without hazardous organic solvents.', 66, 516, 679, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
 
-  s.push(c(51, 542, 3, C_BLUE));
-  s.push(t('Suitable for manual and automated workflows, including routine research and high-throughput applications.', 66, 535, 679, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+  s.push(c(52, 549, 3, C_BLUE));
+  s.push(t('Suitable for manual and automated workflows, including routine research and high-throughput applications.', 66, 542, 679, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
 
   // 5. TWO-COLUMN: KEY FEATURES + APPLICATIONS
   // Column 1: Key Features
-  s.push(r(49, 576, 6, 17, C_BLUE, { r: 3 }));
-  s.push(t('Key Features', 63, 574, 300, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(r(49, 584, 6, 17, C_BLUE, { r: 3 }));
+  s.push(t('Key Features', 63, 582, 300, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
 
   const features = [
     'Magnetic bead-based DNA isolation',
@@ -3149,16 +2748,16 @@ export function onemagDnaFlyer() {
     'Compatible with manual and automated workflows',
   ];
   features.forEach((feat, i) => {
-    const y = 602 + i * 26;
-    s.push(c(49, y + 2, 8, C_BLUE));
-    s.push(t('✓', 49, y + 2, 16, 9.5, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
-    s.push(t(feat, 76, y, 340, 10.5, { color: C_TEXT, font: 'Poppins' }));
+    const y = 610 + i * 26;
+    s.push(c(51, y + 4, 8, C_BLUE));
+    s.push(t('✓', 43, y - 1, 16, 8.5, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(feat, 66, y, 350, 10.5, { color: C_TEXT, font: 'Poppins' }));
   });
 
   // Column 2: Applications (Card)
-  s.push(r(440, 570, 305, 196, C_ICE, { r: 15 }));
-  s.push(r(458, 588, 6, 17, C_BLUE, { r: 3 }));
-  s.push(t('Applications', 472, 586, 250, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(r(440, 580, 305, 194, C_ICE, { r: 15 }));
+  s.push(r(458, 598, 6, 17, C_BLUE, { r: 3 }));
+  s.push(t('Applications', 472, 596, 250, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
 
   const apps = [
     { text: 'PCR & qPCR', color: C_RED },
@@ -3169,33 +2768,33 @@ export function onemagDnaFlyer() {
     { text: 'Molecular diagnostics & research', color: C_GREEN },
   ];
   apps.forEach((app, i) => {
-    const y = 614 + i * 23;
+    const y = 626 + i * 24;
     s.push(r(458, y + 4, 7, 7, app.color, { r: 2 }));
     s.push(t(app.text, 474, y, 255, 10.5, { color: C_TEXT, font: 'Poppins' }));
   });
 
   // 6. COMPATIBLE SAMPLE TYPES
-  s.push(r(49, 788, 6, 17, C_BLUE, { r: 3 }));
-  s.push(t('Compatible sample types', 63, 786, 350, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(r(49, 796, 6, 17, C_BLUE, { r: 3 }));
+  s.push(t('Compatible sample types', 63, 794, 350, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
 
   const sampleChipsRow1 = [
     { text: 'Blood', x: 49, w: 58 },
-    { text: 'Serum', x: 113, w: 60 },
-    { text: 'Tissue', x: 179, w: 60 },
-    { text: 'Saliva', x: 245, w: 56 },
-    { text: 'Sputum', x: 307, w: 68 },
-    { text: 'Faecal samples', x: 381, w: 110 },
-    { text: 'Urine', x: 497, w: 54 },
-    { text: 'Swabs', x: 557, w: 62 },
-    { text: 'Bacteria', x: 625, w: 72 },
+    { text: 'Serum', x: 115, w: 60 },
+    { text: 'Tissue', x: 183, w: 60 },
+    { text: 'Saliva', x: 251, w: 56 },
+    { text: 'Sputum', x: 315, w: 68 },
+    { text: 'Faecal samples', x: 391, w: 110 },
+    { text: 'Urine', x: 509, w: 54 },
+    { text: 'Swabs', x: 571, w: 62 },
+    { text: 'Bacteria', x: 641, w: 72 },
   ];
   sampleChipsRow1.forEach((cp) => {
-    s.push(r(cp.x, 816, cp.w, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
-    s.push(t(cp.text, cp.x, 820, cp.w, 9.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+    s.push(r(cp.x, 824, cp.w, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
+    s.push(t(cp.text, cp.x, 828, cp.w, 9.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
   });
   // Row 2: Fungi
-  s.push(r(49, 846, 56, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
-  s.push(t('Fungi', 49, 850, 56, 9.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  s.push(r(49, 852, 56, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
+  s.push(t('Fungi', 49, 856, 56, 9.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
 
   // 7. CTA FOOTER BANNER
   s.push(r(0, 894, 794, 218, C_ICE));
@@ -3241,84 +2840,76 @@ export function onemagDnaFlyerEmpty(pageNum = 2) {
 
   // Hero Placeholders
   s.push(r(86, 120, 80, 20, '#ffffff', { r: 10 }));
-  s.push(r(86, 148, 260, 40, C_ICE2, { r: 6 }));
-  s.push(r(86, 208, 320, 20, C_ICE2, { r: 4 }));
-  s.push(r(86, 236, 340, 14, C_ICE2, { r: 4 }));
+  s.push(r(86, 150, 260, 40, C_ICE2, { r: 6 }));
+  s.push(r(86, 212, 320, 20, C_ICE2, { r: 4 }));
+  s.push(r(86, 242, 340, 14, C_ICE2, { r: 4 }));
 
   // Hero Art
   s.push({ k: 'image', src: '/assets/onemag_tube_magnet.png', x: 480, y: 104, w: 265, h: 221 });
 
   // 3. STATS CARDS
-  s.push(r(49, 364, 221, 72, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
-  s.push(r(49, 364, 221, 5, C_BLUE, { r: 2.5 }));
-  s.push(r(90, 380, 139, 22, C_ICE, { r: 4 }));
-  s.push(r(80, 408, 159, 12, C_ICE, { r: 4 }));
+  s.push(r(49, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 368, 221, 5, C_BLUE, { r: 2.5 }));
+  s.push(r(90, 384, 139, 22, C_ICE, { r: 4 }));
+  s.push(r(80, 412, 159, 12, C_ICE, { r: 4 }));
 
-  s.push(r(286, 364, 221, 72, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
-  s.push(r(286, 364, 221, 5, C_GREEN, { r: 2.5 }));
-  s.push(r(327, 380, 139, 22, C_ICE, { r: 4 }));
-  s.push(r(307, 408, 179, 12, C_ICE, { r: 4 }));
+  s.push(r(286, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(286, 368, 221, 5, C_GREEN, { r: 2.5 }));
+  s.push(r(327, 384, 139, 22, C_ICE, { r: 4 }));
+  s.push(r(307, 412, 179, 12, C_ICE, { r: 4 }));
 
-  s.push(r(524, 364, 221, 72, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
-  s.push(r(524, 364, 221, 5, C_RED, { r: 2.5 }));
-  s.push(r(565, 380, 139, 22, C_ICE, { r: 4 }));
-  s.push(r(545, 408, 179, 12, C_ICE, { r: 4 }));
+  s.push(r(524, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(524, 368, 221, 5, C_RED, { r: 2.5 }));
+  s.push(r(565, 384, 139, 22, C_ICE, { r: 4 }));
+  s.push(r(545, 412, 179, 12, C_ICE, { r: 4 }));
 
   // 4. OVERVIEW SECTION
-  s.push(r(49, 460, 6, 17, C_BLUE, { r: 3 }));
-  s.push(r(63, 460, 120, 17, C_ICE2, { r: 4 }));
+  s.push(r(49, 464, 6, 17, C_BLUE, { r: 3 }));
+  s.push(r(63, 464, 120, 17, C_ICE2, { r: 4 }));
 
-  s.push(c(51, 492, 3, C_BLUE));
-  s.push(r(66, 487, 679, 12, C_ICE, { r: 4 }));
+  s.push(c(52, 497, 3, C_BLUE));
+  s.push(r(66, 492, 679, 12, C_ICE, { r: 4 }));
 
-  s.push(c(51, 517, 3, C_BLUE));
-  s.push(r(66, 512, 679, 12, C_ICE, { r: 4 }));
+  s.push(c(52, 523, 3, C_BLUE));
+  s.push(r(66, 518, 679, 12, C_ICE, { r: 4 }));
 
-  s.push(c(51, 542, 3, C_BLUE));
-  s.push(r(66, 537, 679, 12, C_ICE, { r: 4 }));
+  s.push(c(52, 549, 3, C_BLUE));
+  s.push(r(66, 544, 679, 12, C_ICE, { r: 4 }));
 
   // 5. TWO-COLUMN: KEY FEATURES + APPLICATIONS
   // Column 1: Key Features
-  s.push(r(49, 576, 6, 17, C_BLUE, { r: 3 }));
-  s.push(r(63, 576, 140, 17, C_ICE2, { r: 4 }));
+  s.push(r(49, 584, 6, 17, C_BLUE, { r: 3 }));
+  s.push(r(63, 584, 140, 17, C_ICE2, { r: 4 }));
 
   for (let i = 0; i < 6; i++) {
-    const y = 602 + i * 26;
-    s.push(c(49, y + 2, 8, C_BLUE));
-    s.push(r(76, y + 2, 280, 12, C_ICE, { r: 4 }));
+    const y = 610 + i * 26;
+    s.push(c(51, y + 4, 8, C_BLUE));
+    s.push(r(66, y + 2, 280, 12, C_ICE, { r: 4 }));
   }
 
   // Column 2: Applications (Card)
-  s.push(r(440, 570, 305, 196, C_ICE, { r: 15 }));
-  s.push(r(458, 588, 6, 17, C_BLUE, { r: 3 }));
-  s.push(r(472, 588, 120, 17, C_ICE2, { r: 4 }));
+  s.push(r(440, 580, 305, 194, C_ICE, { r: 15 }));
+  s.push(r(458, 598, 6, 17, C_BLUE, { r: 3 }));
+  s.push(r(472, 598, 120, 17, C_ICE2, { r: 4 }));
 
   const dotColors = [C_RED, C_BLUE, C_GREEN, C_RED, C_BLUE, C_GREEN];
   for (let i = 0; i < 6; i++) {
-    const y = 614 + i * 23;
+    const y = 626 + i * 24;
     s.push(r(458, y + 4, 7, 7, dotColors[i], { r: 2 }));
     s.push(r(474, y + 2, 220, 12, '#ffffff', { r: 4 }));
   }
 
   // 6. COMPATIBLE SAMPLE TYPES
-  s.push(r(49, 788, 6, 17, C_BLUE, { r: 3 }));
-  s.push(r(63, 788, 220, 17, C_ICE2, { r: 4 }));
+  s.push(r(49, 796, 6, 17, C_BLUE, { r: 3 }));
+  s.push(r(63, 796, 220, 17, C_ICE2, { r: 4 }));
 
-  const sampleChipsRow1 = [
-    { x: 49, w: 58 },
-    { x: 113, w: 60 },
-    { x: 179, w: 60 },
-    { x: 245, w: 56 },
-    { x: 307, w: 68 },
-    { x: 381, w: 110 },
-    { x: 497, w: 54 },
-    { x: 557, w: 62 },
-    { x: 625, w: 72 },
-  ];
-  sampleChipsRow1.forEach((cp) => {
-    s.push(r(cp.x, 816, cp.w, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
+  const widthsRow1 = [58, 60, 60, 56, 68, 110, 54, 62, 72];
+  let curX = 49;
+  widthsRow1.forEach((w) => {
+    s.push(r(curX, 824, w, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
+    curX += w + 6;
   });
-  s.push(r(49, 846, 56, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 852, 56, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
 
   // 7. CTA FOOTER BANNER
   s.push(r(0, 894, 794, 218, C_ICE));
@@ -7527,21 +7118,6 @@ export const TEMPLATES = [
     emptySpecs: proteinguardFlyerEmpty,
     pages: [proteinguardFlyer, proteinguardFlyerEmpty],
     swatch: ['#ffc21a', '#22262e', '#8cc5f5'],
-  },
-  {
-    id: 'sequencing-services-flyer',
-    name: 'ONEOMICS Sequencing Services Flyer',
-    subtitle: 'Next-Generation Sequencing Portfolio',
-    category: 'a4-flyer',
-    w: 794,
-    h: 1123,
-    folds: 0,
-    bg: '#F7F6FD',
-    preview: '/assets/previews/sequencing_services_flyer.png',
-    specs: sequencingServicesFlyer,
-    emptySpecs: sequencingServicesFlyerEmpty,
-    pages: [sequencingServicesFlyer, sequencingServicesFlyerEmpty],
-    swatch: ['#4448B8', '#0793EB', '#E2574C'],
   },
   {
     id: 'soil-microbiome-flyer',
