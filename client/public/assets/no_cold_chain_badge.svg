@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="badge" viewBox="0 0 100 100" width="400" height="400" aria-hidden="true">
+  <circle cx="50" cy="50" r="49" fill="#fff" stroke="#CFE4F3" stroke-width="1"/>
+  <circle cx="50" cy="50" r="42" fill="#EAF5FC"/>
+  <g stroke="#0793EB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".9">
+    <g transform="rotate(0 50 50)"><line x1="50" y1="14" x2="50" y2="86"/><polyline points="43,22 50,29 57,22"/><polyline points="43,78 50,71 57,78"/><polyline points="45,34 50,39 55,34"/><polyline points="45,66 50,61 55,66"/></g>
+    <g transform="rotate(60 50 50)"><line x1="50" y1="14" x2="50" y2="86"/><polyline points="43,22 50,29 57,22"/><polyline points="43,78 50,71 57,78"/><polyline points="45,34 50,39 55,34"/><polyline points="45,66 50,61 55,66"/></g>
+    <g transform="rotate(120 50 50)"><line x1="50" y1="14" x2="50" y2="86"/><polyline points="43,22 50,29 57,22"/><polyline points="43,78 50,71 57,78"/><polyline points="45,34 50,39 55,34"/><polyline points="45,66 50,61 55,66"/></g>
+  </g>
+  <circle cx="50" cy="50" r="3.4" fill="#fff" stroke="#0793EB" stroke-width="1.6"/>
+  <line x1="19" y1="81" x2="81" y2="19" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+  <line x1="19" y1="81" x2="81" y2="19" stroke="#E2574C" stroke-width="4.2" stroke-linecap="round"/>
+</svg>

@@ -2155,8 +2155,41 @@ export function sequencingServicesFlyer() {
   s.push(t('11', 580, 108, 130, 46, { bold: 1, color: C_INDIGO, align: 'right', font: 'Lora' }));
   s.push(t('SERVICE LINES', 580, 156, 130, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 60 }));
 
-  // Exact Chromatogram Wave Peaks across bottom of hero
-  s.push({ k: 'image', src: '/assets/chromatogram.png', x: 49, y: 260, w: 696, h: 91 });
+  // Chromatogram Peaks Baseline at bottom of hero
+  // Wave peaks decoration: base line at y: 326
+  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
+
+  // Chromatogram bases (A, C, G, T)
+  const chromBases = [
+    { base: 'C', c: C_BLUE, x: 74 },
+    { base: 'C', c: C_BLUE, x: 104 },
+    { base: 'C', c: C_BLUE, x: 134 },
+    { base: 'G', c: C_AMBER, x: 164 },
+    { base: 'C', c: C_BLUE, x: 194 },
+    { base: 'T', c: C_RED, x: 224 },
+    { base: 'T', c: C_RED, x: 254 },
+    { base: 'A', c: C_GREEN, x: 284 },
+    { base: 'A', c: C_GREEN, x: 314 },
+    { base: 'T', c: C_RED, x: 344 },
+    { base: 'C', c: C_BLUE, x: 374 },
+    { base: 'A', c: C_GREEN, x: 404 },
+    { base: 'C', c: C_BLUE, x: 434 },
+    { base: 'G', c: C_AMBER, x: 464 },
+    { base: 'T', c: C_RED, x: 494 },
+    { base: 'T', c: C_RED, x: 524 },
+    { base: 'C', c: C_BLUE, x: 554 },
+    { base: 'A', c: C_GREEN, x: 584 },
+    { base: 'G', c: C_AMBER, x: 614 },
+    { base: 'A', c: C_GREEN, x: 644 },
+    { base: 'T', c: C_RED, x: 674 },
+    { base: 'C', c: C_BLUE, x: 704 },
+  ];
+  chromBases.forEach((b) => {
+    // Peak curve/polygon approximation: a rounded pill peak
+    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
+    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
+    s.push(t(b.base, b.x - 10, 331, 20, 11, { bold: 1, color: b.c, align: 'center', font: 'Courier New' }));
+  });
 
   // 3. MAIN SECTION: "What we sequence" (y: 382)
   s.push(t('What we sequence', 49, 382, 360, 20, { bold: 1, color: C_INK, font: 'Lora' }));
@@ -2348,17 +2381,37 @@ export function sequencingServicesFlyerEmpty(pageNum = 2) {
   // 2. HERO CARD
   s.push(r(49, 79, 696, 272, '#ffffff', { r: 22, stroke: C_LINE, sw: 1 }));
 
-  // Exact Chromatogram Wave Peaks across bottom of hero
-  s.push({ k: 'image', src: '/assets/chromatogram.png', x: 49, y: 260, w: 696, h: 91 });
+  // Chromatogram Peaks Baseline at bottom of hero
+  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
 
-  // Hero Placeholders
-  s.push(r(86, 108, 180, 14, P_IND, { r: 4 }));
-  s.push(r(86, 130, 260, 24, P_IND, { r: 4 }));
-  s.push(r(86, 164, 300, 24, P_IND, { r: 4 }));
-  s.push(r(86, 198, 240, 24, P_IND, { r: 4 }));
-  s.push(r(86, 240, 360, 14, P_IND, { r: 4 }));
-  s.push(r(665, 108, 45, 42, P_IND, { r: 6 }));
-  s.push(r(630, 156, 80, 12, P_IND, { r: 4 }));
+  const chromBases = [
+    { base: 'C', c: C_BLUE, x: 74 },
+    { base: 'C', c: C_BLUE, x: 104 },
+    { base: 'C', c: C_BLUE, x: 134 },
+    { base: 'G', c: C_AMBER, x: 164 },
+    { base: 'C', c: C_BLUE, x: 194 },
+    { base: 'T', c: C_RED, x: 224 },
+    { base: 'T', c: C_RED, x: 254 },
+    { base: 'A', c: C_GREEN, x: 284 },
+    { base: 'A', c: C_GREEN, x: 314 },
+    { base: 'T', c: C_RED, x: 344 },
+    { base: 'C', c: C_BLUE, x: 374 },
+    { base: 'A', c: C_GREEN, x: 404 },
+    { base: 'C', c: C_BLUE, x: 434 },
+    { base: 'G', c: C_AMBER, x: 464 },
+    { base: 'T', c: C_RED, x: 494 },
+    { base: 'T', c: C_RED, x: 524 },
+    { base: 'C', c: C_BLUE, x: 554 },
+    { base: 'A', c: C_GREEN, x: 584 },
+    { base: 'G', c: C_AMBER, x: 614 },
+    { base: 'A', c: C_GREEN, x: 644 },
+    { base: 'T', c: C_RED, x: 674 },
+    { base: 'C', c: C_BLUE, x: 704 },
+  ];
+  chromBases.forEach((b) => {
+    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
+    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
+  });
 
   // 3. MAIN SECTION: Cards
 
@@ -2491,7 +2544,7 @@ export function soilMicrobiomeFlyer() {
   s.push(t('Complete molecular solutions for soil microbiome and metagenomics research, from sample stabilization to analysis.', 49, 218, 400, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
 
   // Globe Vector Illustration on Right
-  s.push({ k: 'image', src: '/assets/soil_globe.png', x: 533, y: 88, w: 212, h: 212 });
+  s.push({ k: 'image', src: '/assets/soil_globe.svg', x: 533, y: 88, w: 212, h: 212 });
 
   // 3. WORKFLOW STEPS (Vertical rail with cards)
   // Continuous vertical rail line behind the step circles
@@ -2656,7 +2709,7 @@ export function soilMicrobiomeFlyerEmpty(pageNum = 2) {
   s.push(r(49, 230, 300, 14, P_FOREST, { r: 4 }));
 
   // Globe Vector Illustration on Right
-  s.push({ k: 'image', src: '/assets/soil_globe.png', x: 533, y: 88, w: 212, h: 212 });
+  s.push({ k: 'image', src: '/assets/soil_globe.svg', x: 533, y: 88, w: 212, h: 212 });
 
   // 3. WORKFLOW STEPS
   s.push(r(66, 320, 3, 310, C_LINE));
@@ -2736,6 +2789,277 @@ export function soilMicrobiomeFlyerEmpty(pageNum = 2) {
   s.push(r(540, 968, 180, 14, P_FOREST, { r: 4 }));
   s.push(r(540, 994, 180, 14, P_FOREST, { r: 4 }));
   s.push(r(540, 1020, 180, 14, P_FOREST, { r: 4 }));
+
+  return s;
+}
+
+// Oneomics Room-Temperature Kits Flyer — A4 Flyer (794 x 1123)
+export function roomTempKitsFlyer() {
+  const s = [];
+
+  const C_NAVY = '#10243E';
+  const C_SKY = '#0793EB';
+  const C_ICE = '#EAF5FC';
+  const C_ICE2 = '#DDEEFC';
+  const C_CORAL = '#E2574C';
+  const C_GREEN = '#33A015';
+  const C_TEXT = '#2B3A4F';
+  const C_MUTED = '#6B7A8F';
+  const C_LINE = '#D5E3EF';
+
+  // 1. TOP HEADER (Logo left, kicker right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 49, y: 38, w: 158 });
+  s.push(t('SAMPLE COLLECTION & STABILIZATION', 450, 44, 295, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 80 }));
+
+  // 2. HERO SECTION
+  // Kicker
+  s.push(t('LESS COLD CHAIN', 49, 104, 380, 9.5, { bold: 1, color: C_SKY, font: 'Poppins', sp: 80 }));
+
+  // Headline
+  s.push(t('Ship at', 49, 126, 420, 36, { color: C_NAVY, font: 'Poppins', lh: 1.12 }));
+  s.push(t('room temperature.', 49, 168, 420, 36, { bold: 1, color: C_SKY, font: 'Poppins', lh: 1.12 }));
+
+  // Subtitle
+  s.push(t('Collection and preservation kits and stabilization buffers designed for room-temperature handling, storage and transport.', 49, 218, 390, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  // Hero Badge on Right (No Cold Chain Snowflake Badge)
+  s.push({ k: 'image', src: '/assets/no_cold_chain_badge.png', x: 567, y: 88, w: 178, h: 178 });
+
+  // 3. PRODUCT BANDS (5 Horizontal Cards)
+  // BAND 1: ONESpit (Coral)
+  s.push(r(49, 296, 696, 68, '#ffffff', { r: 15, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 296, 151, 68, C_ICE2, { r: 15 }));
+  s.push(r(180, 296, 20, 68, C_ICE2));
+  s.push(r(49, 360, 151, 4, C_CORAL));
+  s.push(t('1+ year', 57, 308, 135, 18.5, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('DNA stable at room temperature', 57, 334, 135, 8.5, { color: C_MUTED, font: 'Poppins', lh: 1.25 }));
+
+  s.push(t('ONESpit™', 214, 306, 85, 13, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Zero-Prep Saliva Collection & Preservation Kit', 298, 309, 350, 8.5, { bold: 1, color: C_CORAL, font: 'Poppins' }));
+  s.push(t('Non-invasive saliva self-collection without refrigeration, suitable for home, clinic or field use.', 214, 326, 515, 9, { color: C_TEXT, font: 'Poppins' }));
+  const b1Chips = [
+    { text: 'Zero sample preparation', x: 214, w: 125 },
+    { text: 'Fully non-invasive', x: 344, w: 100 },
+    { text: 'No refrigeration required', x: 449, w: 135 },
+    { text: 'Patent-protected', x: 589, w: 98 },
+  ];
+  b1Chips.forEach((cp) => {
+    s.push(r(cp.x, 344, cp.w, 16, C_ICE, { r: 8 }));
+    s.push(t(cp.text, cp.x, 346, cp.w, 7.8, { color: C_NAVY, align: 'center', font: 'Poppins' }));
+  });
+
+  // BAND 2: ONEasy (Coral)
+  s.push(r(49, 374, 696, 68, '#ffffff', { r: 15, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 374, 151, 68, C_ICE2, { r: 15 }));
+  s.push(r(180, 374, 20, 68, C_ICE2));
+  s.push(r(49, 438, 151, 4, C_CORAL));
+  s.push(t('2 years*', 57, 386, 135, 18.5, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('room-temperature storage and transport', 57, 412, 135, 8.5, { color: C_MUTED, font: 'Poppins', lh: 1.25 }));
+
+  s.push(t('ONEasy™', 214, 384, 85, 13, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Faecal Collection & Preservation Kit', 298, 387, 350, 8.5, { bold: 1, color: C_CORAL, font: 'Poppins' }));
+  s.push(t('A user-friendly kit for collecting and stabilizing faecal specimens for DNA and RNA applications.', 214, 404, 515, 9, { color: C_TEXT, font: 'Poppins' }));
+  const b2Chips = [
+    { text: 'DNA/RNA Shield™ stabilization', x: 214, w: 165 },
+    { text: 'Designed for at-home collection', x: 384, w: 150 },
+    { text: 'Room-temperature handling', x: 539, w: 145 },
+  ];
+  b2Chips.forEach((cp) => {
+    s.push(r(cp.x, 422, cp.w, 16, C_ICE, { r: 8 }));
+    s.push(t(cp.text, cp.x, 424, cp.w, 7.8, { color: C_NAVY, align: 'center', font: 'Poppins' }));
+  });
+
+  // BAND 3: NucleoGUARD (Blue)
+  s.push(r(49, 452, 696, 68, '#ffffff', { r: 15, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 452, 151, 68, C_ICE2, { r: 15 }));
+  s.push(r(180, 452, 20, 68, C_ICE2));
+  s.push(r(49, 516, 151, 4, C_SKY));
+  s.push(t('RNA', 57, 464, 135, 18.5, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('protected from the moment of collection', 57, 490, 135, 8.5, { color: C_MUTED, font: 'Poppins', lh: 1.25 }));
+
+  s.push(t('NucleoGUARD™', 214, 462, 126, 13, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('RNA Stabilization Buffer', 344, 465, 300, 8.5, { bold: 1, color: C_SKY, font: 'Poppins' }));
+  s.push(t('Stabilizes RNA in biological samples and reduces the need for immediate processing.', 214, 482, 515, 9, { color: C_TEXT, font: 'Poppins' }));
+  const b3Chips = [
+    { text: 'Helps minimize RNA degradation', x: 214, w: 165 },
+    { text: 'Field and laboratory collection', x: 384, w: 145 },
+    { text: 'RNA-Seq and RT-qPCR ready', x: 534, w: 145 },
+  ];
+  b3Chips.forEach((cp) => {
+    s.push(r(cp.x, 500, cp.w, 16, C_ICE, { r: 8 }));
+    s.push(t(cp.text, cp.x, 502, cp.w, 7.8, { color: C_NAVY, align: 'center', font: 'Poppins' }));
+  });
+
+  // BAND 4: RNAguard (Blue)
+  s.push(r(49, 530, 696, 68, '#ffffff', { r: 15, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 530, 151, 68, C_ICE2, { r: 15 }));
+  s.push(r(180, 530, 20, 68, C_ICE2));
+  s.push(r(49, 594, 151, 4, C_SKY));
+  s.push(t('Ambient', 57, 542, 135, 18.5, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('shipping of total RNA', 57, 568, 135, 8.5, { color: C_MUTED, font: 'Poppins', lh: 1.25 }));
+
+  s.push(t('RNAguard™', 214, 540, 100, 13, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Ambient Shipping of Total RNA', 318, 543, 300, 8.5, { bold: 1, color: C_SKY, font: 'Poppins' }));
+  s.push(t('Preserves RNA integrity during room-temperature transportation and protects against nuclease activity and oxidation.', 214, 560, 515, 9, { color: C_TEXT, font: 'Poppins' }));
+  const b4Chips = [
+    { text: 'Reduces need for dry ice', x: 214, w: 135 },
+    { text: 'Simplifies RNA transportation', x: 354, w: 150 },
+    { text: 'Protects against nuclease degradation', x: 509, w: 185 },
+  ];
+  b4Chips.forEach((cp) => {
+    s.push(r(cp.x, 578, cp.w, 16, C_ICE, { r: 8 }));
+    s.push(t(cp.text, cp.x, 580, cp.w, 7.8, { color: C_NAVY, align: 'center', font: 'Poppins' }));
+  });
+
+  // BAND 5: ProteinGUARD (Green)
+  s.push(r(49, 608, 696, 68, '#ffffff', { r: 15, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 608, 151, 68, C_ICE2, { r: 15 }));
+  s.push(r(180, 608, 20, 68, C_ICE2));
+  s.push(r(49, 672, 151, 4, C_GREEN));
+  s.push(t('Ambient', 57, 620, 135, 18.5, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('shipping of protein', 57, 646, 135, 8.5, { color: C_MUTED, font: 'Poppins', lh: 1.25 }));
+
+  s.push(t('ProteinGUARD™', 214, 618, 120, 13, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Ambient Shipping of Protein', 340, 621, 300, 8.5, { bold: 1, color: C_GREEN, font: 'Poppins' }));
+  s.push(t('Helps stabilize eligible protein products during shipment, reducing dependence on chilled packaging.', 214, 638, 515, 9, { color: C_TEXT, font: 'Poppins' }));
+  const b5Chips = [
+    { text: 'Antibodies, standards and controls', x: 214, w: 180 },
+    { text: 'Reduces reliance on ice packs where validated', x: 399, w: 220 },
+    { text: 'Simplifies logistics', x: 624, w: 100 },
+  ];
+  b5Chips.forEach((cp) => {
+    s.push(r(cp.x, 656, cp.w, 16, C_ICE, { r: 8 }));
+    s.push(t(cp.text, cp.x, 658, cp.w, 7.8, { color: C_NAVY, align: 'center', font: 'Poppins' }));
+  });
+
+  // 4. WHY STRIP (3 Columns)
+  // Col 1
+  s.push(r(49, 698, 216, 3, C_NAVY));
+  s.push(t('Less cold-chain packaging', 49, 708, 216, 11, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Reduce reliance on ice packs, dry ice and chilled packaging where validated.', 49, 726, 216, 9.5, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  // Col 2
+  s.push(r(289, 698, 216, 3, C_SKY));
+  s.push(t('Collect anywhere', 289, 708, 216, 11, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Self-collection at home, in the clinic or in the field, without refrigeration.', 289, 726, 216, 9.5, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  // Col 3
+  s.push(r(529, 698, 216, 3, C_CORAL));
+  s.push(t('Simpler logistics', 529, 708, 216, 11, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Room-temperature handling that simplifies logistics for research and testing workflows.', 529, 726, 216, 9.5, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  // Footnote
+  s.push(t('*Under validated storage conditions. Refer to the product datasheet.', 49, 772, 696, 7.5, { italic: 1, color: C_MUTED, font: 'Poppins' }));
+
+  // 5. CTA FOOTER BANNER
+  s.push(r(0, 888, 794, 224, C_ICE));
+
+  s.push(t('Talk to us about your sample logistics', 49, 914, 460, 18, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details on the right kit for your samples.', 49, 942, 420, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  s.push(t('WEB', 560, 914, 50, 8.5, { bold: 1, color: C_SKY, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 612, 913, 140, 11.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 560, 938, 50, 8.5, { bold: 1, color: C_SKY, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 612, 937, 140, 11.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('PHONE', 560, 962, 50, 8.5, { bold: 1, color: C_SKY, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 612, 961, 140, 11.5, { color: C_TEXT, font: 'Poppins' }));
+
+  // Bottom tricolor bar
+  s.push(r(0, 1112, 264.6, 11, C_CORAL));
+  s.push(r(264.6, 1112, 264.6, 11, C_SKY));
+  s.push(r(529.2, 1112, 264.8, 11, C_GREEN));
+
+  return s;
+}
+
+// Oneomics Room-Temperature Kits Flyer — A4 Flyer Page 2 (Empty Template)
+export function roomTempKitsFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_NAVY = '#10243E';
+  const C_SKY = '#0793EB';
+  const C_ICE = '#EAF5FC';
+  const C_ICE2 = '#DDEEFC';
+  const C_CORAL = '#E2574C';
+  const C_GREEN = '#33A015';
+  const C_LINE = '#D5E3EF';
+
+  // 1. TOP HEADER (Logo left, kicker right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 49, y: 38, w: 158 });
+  s.push(r(540, 44, 205, 18, C_ICE2, { r: 6 }));
+
+  // 2. HERO SECTION
+  // Hero Placeholders
+  s.push(r(49, 104, 140, 14, C_ICE2, { r: 4 }));
+  s.push(r(49, 126, 260, 28, C_ICE2, { r: 4 }));
+  s.push(r(49, 162, 340, 28, C_ICE2, { r: 4 }));
+  s.push(r(49, 210, 390, 14, C_ICE2, { r: 4 }));
+  s.push(r(49, 230, 320, 14, C_ICE2, { r: 4 }));
+
+  // Hero Badge on Right
+  s.push({ k: 'image', src: '/assets/no_cold_chain_badge.png', x: 567, y: 88, w: 178, h: 178 });
+
+  // 3. PRODUCT BANDS (5 Horizontal Cards)
+  const bands = [
+    { y: 296, bar: C_CORAL },
+    { y: 374, bar: C_CORAL },
+    { y: 452, bar: C_SKY },
+    { y: 530, bar: C_SKY },
+    { y: 608, bar: C_GREEN },
+  ];
+  bands.forEach((b) => {
+    s.push(r(49, b.y, 696, 68, '#ffffff', { r: 15, stroke: C_LINE, sw: 1 }));
+    s.push(r(49, b.y, 151, 68, C_ICE2, { r: 15 }));
+    s.push(r(180, b.y, 20, 68, C_ICE2));
+    s.push(r(49, b.y + 64, 151, 4, b.bar));
+    // Placeholders
+    s.push(r(57, b.y + 12, 80, 16, '#ffffff', { r: 4 }));
+    s.push(r(57, b.y + 36, 110, 10, '#ffffff', { r: 4 }));
+
+    s.push(r(214, b.y + 10, 90, 16, C_ICE, { r: 4 }));
+    s.push(r(314, b.y + 12, 180, 12, C_ICE, { r: 4 }));
+    s.push(r(214, b.y + 30, 480, 10, C_ICE, { r: 4 }));
+
+    s.push(r(214, b.y + 48, 110, 14, C_ICE, { r: 7 }));
+    s.push(r(334, b.y + 48, 110, 14, C_ICE, { r: 7 }));
+    s.push(r(454, b.y + 48, 110, 14, C_ICE, { r: 7 }));
+  });
+
+  // 4. WHY STRIP
+  s.push(r(49, 698, 216, 3, C_NAVY));
+  s.push(r(49, 708, 140, 14, C_ICE2, { r: 4 }));
+  s.push(r(49, 728, 200, 12, C_ICE, { r: 4 }));
+  s.push(r(49, 744, 180, 12, C_ICE, { r: 4 }));
+
+  s.push(r(289, 698, 216, 3, C_SKY));
+  s.push(r(289, 708, 120, 14, C_ICE2, { r: 4 }));
+  s.push(r(289, 728, 200, 12, C_ICE, { r: 4 }));
+  s.push(r(289, 744, 180, 12, C_ICE, { r: 4 }));
+
+  s.push(r(529, 698, 216, 3, C_CORAL));
+  s.push(r(529, 708, 130, 14, C_ICE2, { r: 4 }));
+  s.push(r(529, 728, 200, 12, C_ICE, { r: 4 }));
+  s.push(r(529, 744, 180, 12, C_ICE, { r: 4 }));
+
+  // Footnote placeholder
+  s.push(r(49, 772, 280, 10, C_ICE2, { r: 4 }));
+
+  // 5. CTA FOOTER BANNER
+  s.push(r(0, 888, 794, 224, C_ICE));
+  s.push(r(49, 914, 280, 20, '#ffffff', { r: 4 }));
+  s.push(r(49, 942, 380, 14, '#ffffff', { r: 4 }));
+  s.push(r(49, 962, 320, 14, '#ffffff', { r: 4 }));
+
+  s.push(r(560, 914, 180, 14, '#ffffff', { r: 4 }));
+  s.push(r(560, 938, 180, 14, '#ffffff', { r: 4 }));
+  s.push(r(560, 962, 180, 14, '#ffffff', { r: 4 }));
+
+  // Bottom tricolor bar
+  s.push(r(0, 1112, 264.6, 11, C_CORAL));
+  s.push(r(264.6, 1112, 264.6, 11, C_SKY));
+  s.push(r(529.2, 1112, 264.8, 11, C_GREEN));
 
   return s;
 }
@@ -6960,6 +7284,21 @@ export const TEMPLATES = [
     emptySpecs: soilMicrobiomeFlyerEmpty,
     pages: [soilMicrobiomeFlyer, soilMicrobiomeFlyerEmpty],
     swatch: ['#2F6B3E', '#6FA85C', '#A67C52'],
+  },
+  {
+    id: 'room-temp-kits-flyer',
+    name: 'ONEOMICS Room-Temperature Kits Flyer',
+    subtitle: 'Sample Collection & Stabilization',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#F6FBFE',
+    preview: '/assets/previews/room_temp_kits_flyer.png',
+    specs: roomTempKitsFlyer,
+    emptySpecs: roomTempKitsFlyerEmpty,
+    pages: [roomTempKitsFlyer, roomTempKitsFlyerEmpty],
+    swatch: ['#0793EB', '#E2574C', '#33A015'],
   },
   {
     id: 'bifold-genomics',
