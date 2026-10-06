@@ -1219,32 +1219,31 @@ export function onespitSunsetFlyer() {
 }
 
 // Oneomics ONESpit™ Sunset Edition Flyer — A4 Flyer Page 2 (Empty Template)
+// Oneomics ONESpit™ Sunset Edition Flyer — A4 Flyer Page 2 (Empty Template)
 export function onespitSunsetFlyerEmpty(pageNum = 2) {
   const s = [];
 
   const C_INDIGO = '#3a1fd1';
   const C_ORANGE = '#ff6a35';
-  const C_ORANGE_DARK = '#e0592a';
   const C_PEACH_LIGHT = '#ffe9dc';
   const C_PURPLE_LIGHT = '#efeaff';
   const C_PURPLE_BORDER = '#e6dcf9';
   const C_PURPLE_BADGE = '#7c6bd6';
   const C_CARD_BORDER = '#eee3d8';
 
-  // 1. TOP HEADER (Logo left, badge right)
+  // 1. TOP HEADER (Logo left, badge right empty container)
   s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 18, w: 148 });
   s.push(r(574, 18, 176, 26, '#ffffff', { r: 13, stroke: '#d9cffc', sw: 1 }));
-  s.push(t(`PRODUCT PROFILE · 0${pageNum} / 14`, 574, 25, 176, 9.5, { color: C_PURPLE_BADGE, align: 'center', font: 'Poppins', sp: 80 }));
 
   // 2. HERO SECTION
+  // Pill empty placeholder
   s.push(r(44, 60, 156, 24, C_PEACH_LIGHT, { r: 12 }));
-  s.push(t('COLLECT & STABILIZE', 44, 65, 156, 9.5, { bold: 1, color: C_ORANGE_DARK, align: 'center', font: 'Poppins', sp: 70 }));
 
   // Arch Container (x: 500, y: 58, w: 250, h: 240)
   s.push(r(500, 58, 250, 240, '#ffd0b8', { r: 125, gradient: ['#ffe3d1', '#ffd0b8'], gradAngle: 'v' }));
   s.push(c(460, 238, 100, 'rgba(255,255,255,0.4)'));
 
-  // 3D Product Box
+  // 3D Product Box (Blank outline/box with header band, orange line & tricolor base)
   s.push(r(534, 134, 120, 130, '#ffffff', { r: 10 }));
   s.push(r(534, 134, 120, 24, C_INDIGO, { r: 10 }));
   s.push(r(534, 146, 120, 12, C_INDIGO));
@@ -1254,43 +1253,61 @@ export function onespitSunsetFlyerEmpty(pageNum = 2) {
   s.push(r(574, 256, 40, 8, '#1e88e5'));
   s.push(r(614, 256, 40, 8, '#43a047'));
 
-  // Saliva Collection Tube
+  // Saliva Collection Tube (Tube with cap and liquid)
   s.push(r(650, 106, 48, 158, 'rgba(255,255,255,0.95)', { r: 24 }));
   s.push(r(650, 106, 48, 22, C_INDIGO, { r: 10 }));
   s.push(r(650, 164, 48, 100, '#ff9fb0', { r: 24 }));
 
-  // 3. STATS ROW
+  // 3. STATS ROW (3 empty white cards)
   s.push(r(44, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
   s.push(r(284, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
   s.push(r(524, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
 
-  // 4. OVERVIEW & APPLICATIONS
+  // 4. OVERVIEW (LEFT) & APPLICATIONS (RIGHT)
+  // Overview orange indicator dot + 3 bullet dots
   s.push(c(50, 411, 5, C_ORANGE));
   s.push(c(48, 439, 3, C_PURPLE_BADGE));
   s.push(c(48, 481, 3, C_PURPLE_BADGE));
   s.push(c(48, 523, 3, C_PURPLE_BADGE));
 
+  // Applications Card (Right)
   s.push(r(432, 401, 318, 172, '#ffffff', { r: 14, stroke: C_PURPLE_BORDER, sw: 1 }));
   s.push(c(452, 423, 5, C_ORANGE));
 
-  // 5. KEY BENEFITS
+  // 5 diamond bullet dots and dashed divider lines
+  const appPositions = [447, 470, 493, 516, 539];
+  appPositions.forEach((yPos, idx) => {
+    s.push(t('◆', 450, yPos + 1, 10, 8, { color: C_ORANGE }));
+    if (idx < 4) {
+      s.push(r(450, yPos + 19, 280, 1, '#f6f1fd'));
+    }
+  });
+
+  // 5. KEY BENEFITS (Header dot + 6 light purple pill badge containers)
   s.push(c(50, 607, 5, C_ORANGE));
+
+  // Benefits Row 1
   s.push(r(44, 627, 194, 28, C_PURPLE_LIGHT, { r: 14 }));
   s.push(r(246, 627, 180, 28, C_PURPLE_LIGHT, { r: 14 }));
   s.push(r(434, 627, 298, 28, C_PURPLE_LIGHT, { r: 14 }));
+
+  // Benefits Row 2
   s.push(r(44, 663, 152, 28, C_PURPLE_LIGHT, { r: 14 }));
   s.push(r(204, 663, 204, 28, C_PURPLE_LIGHT, { r: 14 }));
   s.push(r(416, 663, 146, 28, C_PURPLE_LIGHT, { r: 14 }));
 
-  // 6. SIMPLE WORKFLOW
+  // 6. SIMPLE WORKFLOW (Header dot + 5 step cards with orange badge + chevrons)
   s.push(c(50, 719, 5, C_ORANGE));
   for (let idx = 0; idx < 5; idx++) {
     const xPos = 44 + idx * 143;
     s.push(r(xPos, 739, 134, 98, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
     s.push(r(xPos + 10, 749, 24, 24, C_ORANGE, { r: 6 }));
+    if (idx < 4) {
+      s.push(t('›', xPos + 137, 777, 10, 16, { bold: 1, color: C_PURPLE_BADGE, align: 'center' }));
+    }
   }
 
-  // 7. EXPECTED RESULTS / PERFORMANCE
+  // 7. EXPECTED RESULTS / PERFORMANCE (Light purple container with left indigo bar & dot)
   s.push(r(44, 853, 706, 76, C_PURPLE_LIGHT, { r: 10 }));
   s.push(r(44, 853, 6, 76, C_INDIGO, { r: 3 }));
   s.push(c(74, 871, 5, C_ORANGE));
