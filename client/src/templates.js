@@ -2544,7 +2544,7 @@ export function soilMicrobiomeFlyer() {
   s.push(t('Complete molecular solutions for soil microbiome and metagenomics research, from sample stabilization to analysis.', 49, 218, 400, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
 
   // Globe Vector Illustration on Right
-  s.push({ k: 'image', src: '/assets/soil_globe.svg', x: 533, y: 88, w: 212, h: 212 });
+  s.push({ k: 'image', src: '/assets/soil_globe.png', x: 533, y: 92, w: 212, h: 212 });
 
   // 3. WORKFLOW STEPS (Vertical rail with cards)
   // Continuous vertical rail line behind the step circles
@@ -2709,7 +2709,7 @@ export function soilMicrobiomeFlyerEmpty(pageNum = 2) {
   s.push(r(49, 230, 300, 14, P_FOREST, { r: 4 }));
 
   // Globe Vector Illustration on Right
-  s.push({ k: 'image', src: '/assets/soil_globe.svg', x: 533, y: 88, w: 212, h: 212 });
+  s.push({ k: 'image', src: '/assets/soil_globe.png', x: 533, y: 92, w: 212, h: 212 });
 
   // 3. WORKFLOW STEPS
   s.push(r(66, 320, 3, 310, C_LINE));
