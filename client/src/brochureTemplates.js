@@ -1324,6 +1324,281 @@ export function onespitSunsetFlyerEmpty(pageNum = 2) {
   return s;
 }
 
+// Oneomics ONEasy™ Flyer — A4 Flyer (794 x 1123)
+export function oneasyFlyer() {
+  const s = [];
+
+  const C_WINE = '#3b1030';
+  const C_BERRY = '#a8215a';
+  const C_GOLD = '#f4b942';
+  const C_PINK_BG = '#fffafb';
+  const C_PINK_TINT = '#fdeaf1';
+  const C_PINK_BORDER = '#f3d3e1';
+  const C_PINK_LINE = '#e9a4c0';
+  const C_PINK_LEAD = '#ffd9e8';
+  const C_MUTED = '#9a7388';
+
+  // 1. TOP HEADER (Logo left, badge right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 20, w: 148 });
+  s.push(t('PRODUCT PROFILE · 02 / 14', 550, 26, 200, 10, { color: C_MUTED, align: 'right', font: 'Poppins', sp: 90 }));
+
+  // 2. HERO SECTION (x: 44, y: 70, w: 706, h: 262, r: 28)
+  s.push(r(44, 70, 706, 262, C_WINE, { r: 28, gradient: ['#3b1030', '#a8215a'], gradAngle: 120 }));
+
+  // Pill
+  s.push(r(80, 100, 150, 24, 'transparent', { r: 12, stroke: C_GOLD, sw: 1 }));
+  s.push(t('COLLECT & PRESERVE', 80, 105, 150, 9.5, { bold: 1, color: C_GOLD, align: 'center', font: 'Poppins', sp: 70 }));
+
+  // Hero Headline & Subtitle & Lead
+  s.push(t('ONEasy™', 80, 134, 380, 58, { bold: 1, color: '#ffffff', font: 'Poppins', lh: 1 }));
+  s.push(t('Faecal Collection & Preservation Kit', 80, 198, 360, 18, { bold: 1, color: C_GOLD, font: 'Poppins', lh: 1.25 }));
+  s.push(t('Simple collection. Reliable preservation.', 80, 230, 360, 13.5, { italic: 1, color: C_PINK_LEAD, font: 'Poppins' }));
+
+  // Hero Illustration elements
+  // Circle halo (right: 38px inside hero -> x: 44 + 706 - 38 - 212 = 500, y: 70 + 26 = 96)
+  s.push(c(606, 202, 106, 'rgba(255,255,255,0.14)'));
+
+  // 3D Product Box (right: 140 -> x: 44 + 706 - 140 - 120 = 490, top: 80 -> y: 70 + 80 = 150)
+  s.push(r(490, 150, 120, 126, '#ffffff', { r: 10 }));
+  s.push(r(490, 150, 120, 24, C_GOLD, { r: 10 }));
+  s.push(r(490, 162, 120, 12, C_GOLD));
+  s.push(t('ONEOMICS', 490, 156, 120, 9, { bold: 1, color: C_WINE, align: 'center', font: 'Poppins', sp: 80 }));
+  s.push(t('ONEasy™', 490, 198, 120, 19, { bold: 1, color: C_BERRY, align: 'center', font: 'Poppins' }));
+  s.push(r(531, 226, 38, 3, C_WINE, { r: 1.5 }));
+  // Tricolor stripe at box bottom
+  s.push(r(490, 268, 40, 8, '#e53935'));
+  s.push(r(530, 268, 40, 8, '#1e88e5'));
+  s.push(r(570, 268, 40, 8, '#43a047'));
+
+  // Saliva/Faecal Tube (right: 92 -> x: 44 + 706 - 92 - 46 = 612, top: 48 -> y: 70 + 48 = 118)
+  s.push(r(612, 118, 46, 158, 'rgba(255,255,255,0.95)', { r: 23 }));
+  s.push(r(612, 118, 46, 22, C_GOLD, { r: 10 }));
+  s.push(r(612, 180, 46, 96, '#e9a4c0', { r: 23 }));
+
+  // Gold Badge (right: 236 -> x: 44 + 706 - 236 - 92 = 422, bottom: 22 -> y: 70 + 262 - 22 - 92 = 218)
+  s.push(c(468, 264, 46, C_GOLD));
+  s.push(t('UP TO', 422, 233, 92, 8, { bold: 1, color: C_WINE, align: 'center', font: 'Poppins', sp: 50 }));
+  s.push(t('2 yrs', 422, 245, 92, 22, { bold: 1, color: C_WINE, align: 'center', font: 'Poppins' }));
+  s.push(t('ROOM TEMP*', 422, 273, 92, 7.5, { bold: 1, color: C_WINE, align: 'center', font: 'Poppins', sp: 50 }));
+
+  // 3. OVERVIEW SECTION (y: 348)
+  s.push(r(44, 354, 22, 4, C_GOLD, { r: 2 }));
+  s.push(t('OVERVIEW', 75, 348, 300, 14, { bold: 1, color: C_BERRY, font: 'Poppins', sp: 40 }));
+
+  // 3 Columns with left pink borders
+  const overviewCols = [
+    'A user-friendly solution for collecting and stabilizing faecal specimens.',
+    'Designed for DNA and RNA applications in diagnostic testing, research studies and clinical assessments.',
+    'Convenient handling for sample collection, storage and transport at room temperature for up to 2 years*.',
+  ];
+  overviewCols.forEach((txt, idx) => {
+    const xPos = 44 + idx * 240;
+    s.push(r(xPos, 372, 3, 58, C_PINK_LINE, { r: 1.5 }));
+    s.push(t(txt, xPos + 12, 372, 216, 12, { color: C_WINE, font: 'Poppins', lh: 1.4 }));
+  });
+
+  // 4. KEY BENEFITS SECTION (y: 450)
+  s.push(r(44, 456, 22, 4, C_GOLD, { r: 2 }));
+  s.push(t('KEY BENEFITS', 75, 450, 300, 14, { bold: 1, color: C_BERRY, font: 'Poppins', sp: 40 }));
+
+  const keyBenefits = [
+    { text: 'DNA/RNA Shield™ stabilization', x: 44, y: 474 },
+    { text: 'Complete and convenient collection format', x: 402, y: 474 },
+    { text: 'Designed for at-home sample collection', x: 44, y: 536 },
+    { text: 'Room-temperature handling and transport', x: 402, y: 536 },
+  ];
+  keyBenefits.forEach((kb) => {
+    s.push(r(kb.x, kb.y, 348, 52, '#ffffff', { r: 12, stroke: C_PINK_BORDER, sw: 1 }));
+    s.push(c(kb.x + 28, kb.y + 26, 14, C_BERRY));
+    s.push(t('✓', kb.x + 14, kb.y + 19, 28, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(kb.text, kb.x + 54, kb.y + 18, 280, 12.5, { bold: 1, color: C_WINE, font: 'Poppins' }));
+  });
+
+  // 5. APPLICATIONS SECTION (y: 606)
+  s.push(r(44, 612, 22, 4, C_GOLD, { r: 2 }));
+  s.push(t('APPLICATIONS', 75, 606, 300, 14, { bold: 1, color: C_BERRY, font: 'Poppins', sp: 40 }));
+
+  const apps = [
+    { text: 'Diagnostic testing', w: 140, x: 44 },
+    { text: 'Clinical assessments', w: 154, x: 192 },
+    { text: 'Microbiome and molecular research', w: 248, x: 354 },
+    { text: 'DNA and RNA downstream applications', w: 256, x: 44, y: 668 },
+  ];
+  apps.forEach((ap) => {
+    const yPos = ap.y || 632;
+    s.push(r(ap.x, yPos, ap.w, 28, C_PINK_TINT, { r: 14 }));
+    s.push(t(ap.text, ap.x, yPos + 6, ap.w, 11.5, { bold: 1, color: C_BERRY, align: 'center', font: 'Poppins' }));
+  });
+
+  // 6. SIMPLE WORKFLOW SECTION (y: 714)
+  s.push(r(44, 720, 22, 4, C_GOLD, { r: 2 }));
+  s.push(t('SIMPLE WORKFLOW', 75, 714, 300, 14, { bold: 1, color: C_BERRY, font: 'Poppins', sp: 40 }));
+
+  const wfSteps = [
+    'Place the FecesCatcher on the toilet seat and keep the collection tube and cap ready.',
+    'Prevent contact with toilet water. Collect a small amount of faeces, approximately pea-sized.',
+    'Transfer the collected sample into the collection tube. Do not spill or ingest the stabilizing solution.',
+    'Close the tube tightly and gently shake for 10 seconds.',
+    'Keep the sealed sample at room temperature (15–25°C) prior to shipment.',
+  ];
+  wfSteps.forEach((txt, idx) => {
+    const xPos = 44 + idx * 143;
+    s.push(r(xPos, 748, 134, 102, '#ffffff', { r: 12, stroke: C_PINK_BORDER, sw: 1 }));
+    s.push(c(xPos + 22, 748, 12, C_GOLD));
+    s.push(t(String(idx + 1), xPos + 10, 741, 24, 11, { bold: 1, color: C_WINE, align: 'center', font: 'Poppins' }));
+    s.push(t(txt, xPos + 10, 764, 114, 9.8, { color: C_WINE, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 7. EXPECTED RESULTS / PERFORMANCE (y: 868)
+  s.push(r(44, 874, 22, 4, C_GOLD, { r: 2 }));
+  s.push(t('EXPECTED RESULTS / PERFORMANCE', 75, 868, 400, 14, { bold: 1, color: C_BERRY, font: 'Poppins', sp: 40 }));
+
+  const expResults = [
+    'Preserved faecal sample suitable for downstream DNA/RNA workflows',
+    'Supports consistent sample handling and transport',
+    'Reduces the need for immediate processing',
+  ];
+  expResults.forEach((txt, idx) => {
+    const xPos = 44 + idx * 240;
+    s.push(r(xPos, 896, 226, 56, C_PINK_TINT, { r: 12 }));
+    s.push(c(xPos + 20, 914, 9, C_BERRY));
+    s.push(t('✓', xPos + 11, 908, 18, 9, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(txt, xPos + 36, 905, 180, 10.8, { bold: 1, color: C_WINE, font: 'Poppins', lh: 1.3 }));
+  });
+
+  // 8. FOOTER BANNER (y: 970 to 1115)
+  s.push(r(0, 970, 794, 145, C_WINE));
+  s.push(t('Interested in ONEasy™ ?', 44, 988, 400, 19, { bold: 1, color: C_GOLD, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical\ndetails.', 44, 1016, 400, 12, { color: '#e8c9d9', font: 'Poppins', lh: 1.4 }));
+
+  s.push(t('WEB', 550, 988, 60, 10, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 615, 987, 140, 11.5, { color: '#ffffff', font: 'Poppins' }));
+
+  s.push(t('EMAIL', 550, 1014, 60, 10, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 615, 1013, 140, 11.5, { color: '#ffffff', font: 'Poppins' }));
+
+  s.push(t('PHONE', 550, 1040, 60, 10, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 615, 1039, 140, 11.5, { color: '#ffffff', font: 'Poppins' }));
+
+  // BOTTOM TRICOLOR BAR
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
+// Oneomics ONEasy™ Flyer — A4 Flyer Page 2 (Empty Template)
+export function oneasyFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_WINE = '#3b1030';
+  const C_BERRY = '#a8215a';
+  const C_GOLD = '#f4b942';
+  const C_PINK_TINT = '#fdeaf1';
+  const C_PINK_BORDER = '#f3d3e1';
+  const C_PINK_LINE = '#e9a4c0';
+  const C_MUTED = '#9a7388';
+
+  // 1. TOP HEADER (Logo left, badge right empty container)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 20, w: 148 });
+  s.push(r(580, 20, 170, 22, 'transparent', { stroke: 'transparent' }));
+
+  // 2. HERO SECTION (x: 44, y: 70, w: 706, h: 262, r: 28)
+  s.push(r(44, 70, 706, 262, C_WINE, { r: 28, gradient: ['#3b1030', '#a8215a'], gradAngle: 120 }));
+
+  // Pill empty container
+  s.push(r(80, 100, 150, 22, 'transparent', { r: 12, stroke: C_GOLD, sw: 1 }));
+
+  // Hero Illustration elements
+  s.push(c(606, 202, 106, 'rgba(255,255,255,0.14)'));
+
+  // 3D Product Box
+  s.push(r(490, 150, 120, 126, '#ffffff', { r: 10 }));
+  s.push(r(490, 150, 120, 24, C_GOLD, { r: 10 }));
+  s.push(r(490, 162, 120, 12, C_GOLD));
+  s.push(r(531, 226, 38, 3, C_WINE, { r: 1.5 }));
+  // Tricolor stripe at box bottom
+  s.push(r(490, 268, 40, 8, '#e53935'));
+  s.push(r(530, 268, 40, 8, '#1e88e5'));
+  s.push(r(570, 268, 40, 8, '#43a047'));
+
+  // Faecal Tube
+  s.push(r(612, 118, 46, 158, 'rgba(255,255,255,0.95)', { r: 23 }));
+  s.push(r(612, 118, 46, 22, C_GOLD, { r: 10 }));
+  s.push(r(612, 180, 46, 96, '#e9a4c0', { r: 23 }));
+
+  // Gold Badge
+  s.push(c(468, 264, 46, C_GOLD));
+
+  // 3. OVERVIEW SECTION (y: 348)
+  s.push(r(44, 354, 22, 4, C_GOLD, { r: 2 }));
+
+  // 3 Columns with left pink borders
+  for (let idx = 0; idx < 3; idx++) {
+    const xPos = 44 + idx * 240;
+    s.push(r(xPos, 372, 3, 72, C_PINK_LINE, { r: 1.5 }));
+  }
+
+  // 4. KEY BENEFITS SECTION (y: 450)
+  s.push(r(44, 456, 22, 4, C_GOLD, { r: 2 }));
+
+  const keyBenefitsPos = [
+    { x: 44, y: 474 },
+    { x: 402, y: 474 },
+    { x: 44, y: 536 },
+    { x: 402, y: 536 },
+  ];
+  keyBenefitsPos.forEach((kb) => {
+    s.push(r(kb.x, kb.y, 348, 52, '#ffffff', { r: 12, stroke: C_PINK_BORDER, sw: 1 }));
+    s.push(c(kb.x + 28, kb.y + 26, 14, C_BERRY));
+    s.push(t('✓', kb.x + 14, kb.y + 19, 28, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+  });
+
+  // 5. APPLICATIONS SECTION (y: 606)
+  s.push(r(44, 612, 22, 4, C_GOLD, { r: 2 }));
+
+  const appsPos = [
+    { w: 140, x: 44 },
+    { w: 150, x: 192 },
+    { w: 240, x: 350 },
+    { w: 240, x: 44, y: 646 },
+  ];
+  appsPos.forEach((ap) => {
+    const yPos = ap.y || 618;
+    s.push(r(ap.x, yPos, ap.w, 28, C_PINK_TINT, { r: 14 }));
+  });
+
+  // 6. SIMPLE WORKFLOW SECTION (y: 694)
+  s.push(r(44, 698, 22, 4, C_GOLD, { r: 2 }));
+
+  for (let idx = 0; idx < 5; idx++) {
+    const xPos = 44 + idx * 143;
+    s.push(r(xPos, 724, 134, 118, '#ffffff', { r: 12, stroke: C_PINK_BORDER, sw: 1 }));
+    s.push(c(xPos + 22, 724, 12, C_GOLD));
+  }
+
+  // 7. EXPECTED RESULTS / PERFORMANCE (y: 864)
+  s.push(r(44, 870, 22, 4, C_GOLD, { r: 2 }));
+
+  for (let idx = 0; idx < 3; idx++) {
+    const xPos = 44 + idx * 240;
+    s.push(r(xPos, 892, 226, 58, C_PINK_TINT, { r: 12 }));
+    s.push(c(xPos + 20, 910, 9, C_BERRY));
+    s.push(t('✓', xPos + 11, 904, 18, 9, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+  }
+
+  // 8. FOOTER BANNER
+  s.push(r(0, 970, 794, 145, C_WINE));
+
+  // BOTTOM TRICOLOR BAR
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
 export function bifoldBrochure() {
   const s = [];
 
@@ -5469,6 +5744,21 @@ export const TEMPLATES = [
     emptySpecs: onespitSunsetFlyerEmpty,
     pages: [onespitSunsetFlyer, onespitSunsetFlyerEmpty],
     swatch: ['#3a1fd1', '#ff6a35', '#ffe9dc'],
+  },
+  {
+    id: 'oneasy-flyer',
+    name: 'ONEasy™ Flyer',
+    subtitle: 'Faecal Collection & Preservation Kit',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#fffafb',
+    preview: '/assets/previews/oneasy_flyer.png',
+    specs: oneasyFlyer,
+    emptySpecs: oneasyFlyerEmpty,
+    pages: [oneasyFlyer, oneasyFlyerEmpty],
+    swatch: ['#3b1030', '#a8215a', '#f4b942'],
   },
   {
     id: 'bifold-genomics',
