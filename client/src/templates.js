@@ -2155,8 +2155,41 @@ export function sequencingServicesFlyer() {
   s.push(t('11', 580, 108, 130, 46, { bold: 1, color: C_INDIGO, align: 'right', font: 'Lora' }));
   s.push(t('SERVICE LINES', 580, 156, 130, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 60 }));
 
-  // Exact Chromatogram Wave Peaks across bottom of hero
-  s.push({ k: 'image', src: '/assets/chromatogram.png', x: 49, y: 260, w: 696, h: 91 });
+  // Chromatogram Peaks Baseline at bottom of hero
+  // Wave peaks decoration: base line at y: 326
+  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
+
+  // Chromatogram bases (A, C, G, T)
+  const chromBases = [
+    { base: 'C', c: C_BLUE, x: 74 },
+    { base: 'C', c: C_BLUE, x: 104 },
+    { base: 'C', c: C_BLUE, x: 134 },
+    { base: 'G', c: C_AMBER, x: 164 },
+    { base: 'C', c: C_BLUE, x: 194 },
+    { base: 'T', c: C_RED, x: 224 },
+    { base: 'T', c: C_RED, x: 254 },
+    { base: 'A', c: C_GREEN, x: 284 },
+    { base: 'A', c: C_GREEN, x: 314 },
+    { base: 'T', c: C_RED, x: 344 },
+    { base: 'C', c: C_BLUE, x: 374 },
+    { base: 'A', c: C_GREEN, x: 404 },
+    { base: 'C', c: C_BLUE, x: 434 },
+    { base: 'G', c: C_AMBER, x: 464 },
+    { base: 'T', c: C_RED, x: 494 },
+    { base: 'T', c: C_RED, x: 524 },
+    { base: 'C', c: C_BLUE, x: 554 },
+    { base: 'A', c: C_GREEN, x: 584 },
+    { base: 'G', c: C_AMBER, x: 614 },
+    { base: 'A', c: C_GREEN, x: 644 },
+    { base: 'T', c: C_RED, x: 674 },
+    { base: 'C', c: C_BLUE, x: 704 },
+  ];
+  chromBases.forEach((b) => {
+    // Peak curve/polygon approximation: a rounded pill peak
+    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
+    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
+    s.push(t(b.base, b.x - 10, 331, 20, 11, { bold: 1, color: b.c, align: 'center', font: 'Courier New' }));
+  });
 
   // 3. MAIN SECTION: "What we sequence" (y: 382)
   s.push(t('What we sequence', 49, 382, 360, 20, { bold: 1, color: C_INK, font: 'Lora' }));
@@ -2348,8 +2381,37 @@ export function sequencingServicesFlyerEmpty(pageNum = 2) {
   // 2. HERO CARD
   s.push(r(49, 79, 696, 272, '#ffffff', { r: 22, stroke: C_LINE, sw: 1 }));
 
-  // Exact Chromatogram Wave Peaks across bottom of hero
-  s.push({ k: 'image', src: '/assets/chromatogram.png', x: 49, y: 260, w: 696, h: 91 });
+  // Chromatogram Peaks Baseline at bottom of hero
+  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
+
+  const chromBases = [
+    { base: 'C', c: C_BLUE, x: 74 },
+    { base: 'C', c: C_BLUE, x: 104 },
+    { base: 'C', c: C_BLUE, x: 134 },
+    { base: 'G', c: C_AMBER, x: 164 },
+    { base: 'C', c: C_BLUE, x: 194 },
+    { base: 'T', c: C_RED, x: 224 },
+    { base: 'T', c: C_RED, x: 254 },
+    { base: 'A', c: C_GREEN, x: 284 },
+    { base: 'A', c: C_GREEN, x: 314 },
+    { base: 'T', c: C_RED, x: 344 },
+    { base: 'C', c: C_BLUE, x: 374 },
+    { base: 'A', c: C_GREEN, x: 404 },
+    { base: 'C', c: C_BLUE, x: 434 },
+    { base: 'G', c: C_AMBER, x: 464 },
+    { base: 'T', c: C_RED, x: 494 },
+    { base: 'T', c: C_RED, x: 524 },
+    { base: 'C', c: C_BLUE, x: 554 },
+    { base: 'A', c: C_GREEN, x: 584 },
+    { base: 'G', c: C_AMBER, x: 614 },
+    { base: 'A', c: C_GREEN, x: 644 },
+    { base: 'T', c: C_RED, x: 674 },
+    { base: 'C', c: C_BLUE, x: 704 },
+  ];
+  chromBases.forEach((b) => {
+    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
+    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
+  });
 
   // 3. MAIN SECTION: Cards
 
@@ -2997,6 +3059,271 @@ export function roomTempKitsFlyerEmpty(pageNum = 2) {
   // Bottom tricolor bar
   s.push(r(0, 1112, 264.6, 11, C_CORAL));
   s.push(r(264.6, 1112, 264.6, 11, C_SKY));
+  s.push(r(529.2, 1112, 264.8, 11, C_GREEN));
+
+  return s;
+}
+
+// ONEMag Rapid Universal DNA Extraction Kit — A4 Flyer (794 x 1123)
+export function onemagDnaFlyer() {
+  const s = [];
+
+  const C_NAVY = '#10243E';
+  const C_BLUE = '#0793EB';
+  const C_TEAL = '#16808F';
+  const C_RED = '#E23B32';
+  const C_GREEN = '#33A015';
+  const C_TEXT = '#2B3A4F';
+  const C_MUTED = '#6B7A8F';
+  const C_ICE = '#EEF5FC';
+  const C_ICE2 = '#DDEEFC';
+  const C_LINE = '#D5E3EF';
+
+  // 1. TOP HEADER (Logo left, kicker right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 49, y: 38, w: 158 });
+  s.push(t('NUCLEIC ACID EXTRACTION', 450, 44, 295, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 80 }));
+
+  // 2. HERO CARD (Dotted bead texture background, headline & art)
+  s.push(r(49, 94, 696, 250, C_ICE, { r: 22 }));
+
+  // Hero Pill: Extract
+  s.push(r(86, 120, 80, 20, '#ffffff', { r: 10, stroke: C_BLUE, sw: 1 }));
+  s.push(c(97, 130, 3, C_BLUE));
+  s.push(t('EXTRACT', 106, 124, 52, 8, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 50 }));
+
+  // Hero Headline
+  s.push(t('ONEMag™', 86, 150, 380, 48, { bold: 1, color: C_NAVY, font: 'Poppins', lh: 1.05 }));
+
+  // Hero Subtitle
+  s.push(t('Rapid Universal DNA Extraction Kit', 86, 212, 380, 15.5, { bold: 1, color: C_BLUE, font: 'Poppins' }));
+
+  // Hero Tag
+  s.push(t('Magnetic bead-based DNA isolation in under 30 minutes.', 86, 242, 360, 11, { color: C_TEXT, font: 'Poppins', lh: 1.5 }));
+
+  // Hero Art (Test tube with magnetic beads and magnet)
+  s.push({ k: 'image', src: '/assets/onemag_tube_magnet.png', x: 480, y: 104, w: 265, h: 221 });
+
+  // 3. STATS CARDS (3 Columns)
+  // Card 1: < 30 min (Blue)
+  s.push(r(49, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 368, 221, 5, C_BLUE, { r: 2.5 }));
+  s.push(t('< 30 min', 49, 382, 221, 21, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  s.push(t('rapid extraction', 49, 412, 221, 9.5, { color: C_MUTED, align: 'center', font: 'Poppins' }));
+
+  // Card 2: Solvent-free (Green)
+  s.push(r(286, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(286, 368, 221, 5, C_GREEN, { r: 2.5 }));
+  s.push(t('Solvent-free', 286, 382, 221, 21, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  s.push(t('no hazardous organic solvents', 286, 412, 221, 9.5, { color: C_MUTED, align: 'center', font: 'Poppins' }));
+
+  // Card 3: Manual + auto (Red)
+  s.push(r(524, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(524, 368, 221, 5, C_RED, { r: 2.5 }));
+  s.push(t('Manual + auto', 524, 382, 221, 21, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  s.push(t('including high-throughput', 524, 412, 221, 9.5, { color: C_MUTED, align: 'center', font: 'Poppins' }));
+
+  // 4. OVERVIEW SECTION
+  s.push(r(49, 464, 6, 17, C_BLUE, { r: 3 }));
+  s.push(t('Overview', 63, 462, 300, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  s.push(c(52, 497, 3, C_BLUE));
+  s.push(t('Magnetic bead-based DNA purification for rapid and efficient DNA extraction from diverse biological samples.', 66, 490, 679, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  s.push(c(52, 523, 3, C_BLUE));
+  s.push(t('Delivers high-yield, high-purity DNA in less than 30 minutes without hazardous organic solvents.', 66, 516, 679, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  s.push(c(52, 549, 3, C_BLUE));
+  s.push(t('Suitable for manual and automated workflows, including routine research and high-throughput applications.', 66, 542, 679, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  // 5. TWO-COLUMN: KEY FEATURES + APPLICATIONS
+  // Column 1: Key Features
+  s.push(r(49, 584, 6, 17, C_BLUE, { r: 3 }));
+  s.push(t('Key Features', 63, 582, 300, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  const features = [
+    'Magnetic bead-based DNA isolation',
+    'Compatible with multiple sample types',
+    'Rapid extraction in less than 30 minutes',
+    'High-yield, high-purity DNA',
+    'No hazardous organic solvents',
+    'Compatible with manual and automated workflows',
+  ];
+  features.forEach((feat, i) => {
+    const y = 610 + i * 26;
+    s.push(c(51, y + 4, 8, C_BLUE));
+    s.push(t('✓', 43, y - 1, 16, 8.5, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(feat, 66, y, 350, 10.5, { color: C_TEXT, font: 'Poppins' }));
+  });
+
+  // Column 2: Applications (Card)
+  s.push(r(440, 580, 305, 194, C_ICE, { r: 15 }));
+  s.push(r(458, 598, 6, 17, C_BLUE, { r: 3 }));
+  s.push(t('Applications', 472, 596, 250, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  const apps = [
+    { text: 'PCR & qPCR', color: C_RED },
+    { text: 'Genotyping', color: C_BLUE },
+    { text: 'DNA barcoding', color: C_GREEN },
+    { text: 'Next-Generation Sequencing (NGS)', color: C_RED },
+    { text: 'Microbial DNA analysis', color: C_BLUE },
+    { text: 'Molecular diagnostics & research', color: C_GREEN },
+  ];
+  apps.forEach((app, i) => {
+    const y = 626 + i * 24;
+    s.push(r(458, y + 4, 7, 7, app.color, { r: 2 }));
+    s.push(t(app.text, 474, y, 255, 10.5, { color: C_TEXT, font: 'Poppins' }));
+  });
+
+  // 6. COMPATIBLE SAMPLE TYPES
+  s.push(r(49, 796, 6, 17, C_BLUE, { r: 3 }));
+  s.push(t('Compatible sample types', 63, 794, 350, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  const sampleChipsRow1 = [
+    { text: 'Blood', x: 49, w: 58 },
+    { text: 'Serum', x: 115, w: 60 },
+    { text: 'Tissue', x: 183, w: 60 },
+    { text: 'Saliva', x: 251, w: 56 },
+    { text: 'Sputum', x: 315, w: 68 },
+    { text: 'Faecal samples', x: 391, w: 110 },
+    { text: 'Urine', x: 509, w: 54 },
+    { text: 'Swabs', x: 571, w: 62 },
+    { text: 'Bacteria', x: 641, w: 72 },
+  ];
+  sampleChipsRow1.forEach((cp) => {
+    s.push(r(cp.x, 824, cp.w, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
+    s.push(t(cp.text, cp.x, 828, cp.w, 9.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  });
+  // Row 2: Fungi
+  s.push(r(49, 852, 56, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
+  s.push(t('Fungi', 49, 856, 56, 9.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+
+  // 7. CTA FOOTER BANNER
+  s.push(r(0, 894, 794, 218, C_ICE));
+
+  s.push(t('Interested in ONEMag™ Universal DNA Extraction?', 49, 918, 480, 16.5, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 49, 946, 420, 11, { color: C_TEXT, font: 'Poppins', lh: 1.5 }));
+
+  s.push(t('WEB', 560, 918, 50, 8.5, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 612, 917, 140, 11.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 560, 942, 50, 8.5, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 612, 941, 140, 11.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('PHONE', 560, 966, 50, 8.5, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 612, 965, 140, 11.5, { color: C_TEXT, font: 'Poppins' }));
+
+  // Bottom tricolor bar
+  s.push(r(0, 1112, 264.6, 11, C_RED));
+  s.push(r(264.6, 1112, 264.6, 11, C_BLUE));
+  s.push(r(529.2, 1112, 264.8, 11, C_GREEN));
+
+  return s;
+}
+
+// ONEMag Rapid Universal DNA Extraction Kit — A4 Flyer Page 2 (Empty Template)
+export function onemagDnaFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_NAVY = '#10243E';
+  const C_BLUE = '#0793EB';
+  const C_RED = '#E23B32';
+  const C_GREEN = '#33A015';
+  const C_ICE = '#EEF5FC';
+  const C_ICE2 = '#DDEEFC';
+  const C_LINE = '#D5E3EF';
+
+  // 1. TOP HEADER (Logo left, kicker placeholder right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 49, y: 38, w: 158 });
+  s.push(r(540, 44, 205, 18, C_ICE2, { r: 6 }));
+
+  // 2. HERO CARD
+  s.push(r(49, 94, 696, 250, C_ICE, { r: 22 }));
+
+  // Hero Placeholders
+  s.push(r(86, 120, 80, 20, '#ffffff', { r: 10 }));
+  s.push(r(86, 150, 260, 40, C_ICE2, { r: 6 }));
+  s.push(r(86, 212, 320, 20, C_ICE2, { r: 4 }));
+  s.push(r(86, 242, 340, 14, C_ICE2, { r: 4 }));
+
+  // Hero Art
+  s.push({ k: 'image', src: '/assets/onemag_tube_magnet.png', x: 480, y: 104, w: 265, h: 221 });
+
+  // 3. STATS CARDS
+  s.push(r(49, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(49, 368, 221, 5, C_BLUE, { r: 2.5 }));
+  s.push(r(90, 384, 139, 22, C_ICE, { r: 4 }));
+  s.push(r(80, 412, 159, 12, C_ICE, { r: 4 }));
+
+  s.push(r(286, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(286, 368, 221, 5, C_GREEN, { r: 2.5 }));
+  s.push(r(327, 384, 139, 22, C_ICE, { r: 4 }));
+  s.push(r(307, 412, 179, 12, C_ICE, { r: 4 }));
+
+  s.push(r(524, 368, 221, 68, '#ffffff', { r: 14, stroke: C_LINE, sw: 1 }));
+  s.push(r(524, 368, 221, 5, C_RED, { r: 2.5 }));
+  s.push(r(565, 384, 139, 22, C_ICE, { r: 4 }));
+  s.push(r(545, 412, 179, 12, C_ICE, { r: 4 }));
+
+  // 4. OVERVIEW SECTION
+  s.push(r(49, 464, 6, 17, C_BLUE, { r: 3 }));
+  s.push(r(63, 464, 120, 17, C_ICE2, { r: 4 }));
+
+  s.push(c(52, 497, 3, C_BLUE));
+  s.push(r(66, 492, 679, 12, C_ICE, { r: 4 }));
+
+  s.push(c(52, 523, 3, C_BLUE));
+  s.push(r(66, 518, 679, 12, C_ICE, { r: 4 }));
+
+  s.push(c(52, 549, 3, C_BLUE));
+  s.push(r(66, 544, 679, 12, C_ICE, { r: 4 }));
+
+  // 5. TWO-COLUMN: KEY FEATURES + APPLICATIONS
+  // Column 1: Key Features
+  s.push(r(49, 584, 6, 17, C_BLUE, { r: 3 }));
+  s.push(r(63, 584, 140, 17, C_ICE2, { r: 4 }));
+
+  for (let i = 0; i < 6; i++) {
+    const y = 610 + i * 26;
+    s.push(c(51, y + 4, 8, C_BLUE));
+    s.push(r(66, y + 2, 280, 12, C_ICE, { r: 4 }));
+  }
+
+  // Column 2: Applications (Card)
+  s.push(r(440, 580, 305, 194, C_ICE, { r: 15 }));
+  s.push(r(458, 598, 6, 17, C_BLUE, { r: 3 }));
+  s.push(r(472, 598, 120, 17, C_ICE2, { r: 4 }));
+
+  const dotColors = [C_RED, C_BLUE, C_GREEN, C_RED, C_BLUE, C_GREEN];
+  for (let i = 0; i < 6; i++) {
+    const y = 626 + i * 24;
+    s.push(r(458, y + 4, 7, 7, dotColors[i], { r: 2 }));
+    s.push(r(474, y + 2, 220, 12, '#ffffff', { r: 4 }));
+  }
+
+  // 6. COMPATIBLE SAMPLE TYPES
+  s.push(r(49, 796, 6, 17, C_BLUE, { r: 3 }));
+  s.push(r(63, 796, 220, 17, C_ICE2, { r: 4 }));
+
+  const widthsRow1 = [58, 60, 60, 56, 68, 110, 54, 62, 72];
+  let curX = 49;
+  widthsRow1.forEach((w) => {
+    s.push(r(curX, 824, w, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
+    curX += w + 6;
+  });
+  s.push(r(49, 852, 56, 22, C_ICE, { r: 11, stroke: C_LINE, sw: 1 }));
+
+  // 7. CTA FOOTER BANNER
+  s.push(r(0, 894, 794, 218, C_ICE));
+  s.push(r(49, 918, 380, 20, '#ffffff', { r: 4 }));
+  s.push(r(49, 946, 340, 14, '#ffffff', { r: 4 }));
+
+  s.push(r(560, 918, 180, 14, '#ffffff', { r: 4 }));
+  s.push(r(560, 942, 180, 14, '#ffffff', { r: 4 }));
+  s.push(r(560, 966, 180, 14, '#ffffff', { r: 4 }));
+
+  // Bottom tricolor bar
+  s.push(r(0, 1112, 264.6, 11, C_RED));
+  s.push(r(264.6, 1112, 264.6, 11, C_BLUE));
   s.push(r(529.2, 1112, 264.8, 11, C_GREEN));
 
   return s;
@@ -7237,6 +7564,21 @@ export const TEMPLATES = [
     emptySpecs: roomTempKitsFlyerEmpty,
     pages: [roomTempKitsFlyer, roomTempKitsFlyerEmpty],
     swatch: ['#0793EB', '#E2574C', '#33A015'],
+  },
+  {
+    id: 'onemag-dna-flyer',
+    name: 'ONEMag™ Rapid Universal DNA Kit',
+    subtitle: 'Rapid Universal DNA Extraction',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/onemag_dna_flyer.png',
+    specs: onemagDnaFlyer,
+    emptySpecs: onemagDnaFlyerEmpty,
+    pages: [onemagDnaFlyer, onemagDnaFlyerEmpty],
+    swatch: ['#0793EB', '#33A015', '#E23B32'],
   },
   {
     id: 'bifold-genomics',
