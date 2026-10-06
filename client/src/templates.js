@@ -1852,6 +1852,261 @@ export function soilguardFlyerEmpty(pageNum = 2) {
   return s;
 }
 
+// Oneomics ProteinGUARD™ Flyer — A4 Flyer (794 x 1123)
+export function proteinguardFlyer() {
+  const s = [];
+
+  const C_DARK = '#22262e';
+  const C_GOLD = '#ffc21a';
+  const C_GOLD_DARK = '#e6a700';
+  const C_MUTED = '#8a909b';
+  const C_SUB = '#5a606b';
+  const C_GRAY_BG = '#f6f7f9';
+  const C_BORDER_LINE = '#d9dce2';
+
+  // 1. TOP HEADER (Logo left, badge right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 19, w: 148 });
+  s.push(t('PRODUCT PROFILE · 05 / 14', 550, 25, 200, 10, { color: C_MUTED, align: 'right', font: 'Poppins', sp: 90 }));
+
+  // 2. HERO SECTION (x: 44, y: 68, h: 250)
+  // Pill
+  s.push(r(44, 76, 130, 24, C_DARK, { r: 6 }));
+  s.push(t('SHIP & PROTECT', 44, 82, 130, 9.5, { bold: 1, color: C_GOLD, align: 'center', font: 'Poppins', sp: 70 }));
+
+  // Hero Headline & Subtitle & Highlighted Lead
+  s.push(t('ProteinGUARD™', 44, 114, 400, 44, { bold: 1, color: C_DARK, font: 'Poppins', lh: 1.1 }));
+  s.push(t('Ambient Shipping of Protein', 44, 168, 380, 19, { bold: 1, color: C_SUB, font: 'Poppins', lh: 1.25 }));
+
+  // Highlight line & lead text
+  s.push(r(44, 218, 290, 8, '#ffe08a'));
+  s.push(t('Ship proteins with less cold-chain dependence.', 44, 210, 380, 13.5, { color: C_DARK, font: 'Poppins' }));
+
+  // Hero Illustration elements (Gold tile x: 488, y: 68, w: 262, h: 240, r: 30)
+  s.push(r(488, 68, 262, 240, C_GOLD, { r: 30 }));
+  s.push(c(488, 20, 65, 'rgba(255,255,255,0.28)'));
+
+  // Carton box (x: 518, y: 164, w: 150, h: 122, r: 8)
+  s.push(r(518, 164, 150, 122, '#d9a566', { r: 8 }));
+  s.push(r(578, 164, 30, 122, '#f0d9a8'));
+  s.push(r(530, 238, 46, 34, '#ffffff', { r: 3 }));
+  s.push(t('ONEOMICS', 530, 248, 46, 6.5, { bold: 1, color: C_DARK, align: 'center', font: 'Poppins' }));
+
+  // Vial (x: 650, y: 112, w: 46, h: 118)
+  s.push(r(650, 112, 46, 118, 'rgba(255,255,255,0.95)', { r: 22 }));
+  s.push(r(650, 112, 46, 20, C_DARK, { r: 6 }));
+  s.push(r(650, 168, 46, 62, '#8cc5f5', { r: 22 }));
+
+  // Round badge (x: 642, y: 226, w: 92, h: 92)
+  s.push(c(596, 180, 46, C_DARK));
+  s.push(t('AMBIENT', 642, 252, 92, 12.5, { bold: 1, color: C_GOLD, align: 'center', font: 'Poppins', sp: 40 }));
+  s.push(t('SHIPPING', 642, 268, 92, 8, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins', sp: 60 }));
+
+  // 3. STATS / OVERVIEW 3 CARDS ROW (y: 326, gap: 14)
+  const row3 = [
+    { num: '01', text: 'ProteinGUARD™ is designed to help stabilize protein products during shipment under ambient conditions.' },
+    { num: '02', text: 'It supports convenient transport of eligible protein formulations while reducing dependence on chilled packaging.' },
+    { num: '03', text: 'Ideal for research proteins, antibodies, standards and controls where product stability has been validated.' },
+  ];
+  row3.forEach((item, idx) => {
+    const xPos = 44 + idx * 240;
+    s.push(r(xPos, 326, 226, 108, C_GRAY_BG, { r: 12 }));
+    s.push(r(xPos, 326, 226, 4, C_GOLD));
+    s.push(t(item.num, xPos + 14, 336, 198, 20, { bold: 1, color: C_GOLD_DARK, font: 'Poppins' }));
+    s.push(t(item.text, xPos + 14, 364, 198, 11.5, { color: '#2b2f38', font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 4. TWO COLUMNS (y: 452)
+  // Left: Key Benefits
+  s.push(r(44, 452, 8, 18, C_GOLD, { r: 2 }));
+  s.push(t('KEY BENEFITS', 61, 451, 280, 14, { bold: 1, color: C_DARK, font: 'Poppins', sp: 40 }));
+
+  const keyBens = [
+    'Supports ambient-temperature shipment of eligible protein products',
+    'Helps maintain protein performance during transport',
+    'Reduces reliance on ice packs and chilled packaging where validated',
+    'Simplifies logistics for research and testing workflows',
+  ];
+  keyBens.forEach((txt, idx) => {
+    const yPos = 484 + idx * 40;
+    s.push(r(44, yPos, 20, 20, C_GOLD, { r: 5 }));
+    s.push(t('✓', 44, yPos + 3, 20, 11, { bold: 1, color: C_DARK, align: 'center', font: 'Poppins' }));
+    s.push(t(txt, 74, yPos + 2, 280, 11.5, { bold: 1, color: '#2b2f38', font: 'Poppins', lh: 1.3 }));
+  });
+
+  // Right: Applications Card (x: 390, y: 446, w: 360, h: 180)
+  s.push(r(390, 446, 360, 180, C_GRAY_BG, { r: 14 }));
+  s.push(r(406, 460, 8, 18, C_GOLD, { r: 2 }));
+  s.push(t('APPLICATIONS', 423, 459, 280, 14, { bold: 1, color: C_DARK, font: 'Poppins', sp: 40 }));
+
+  const appItems = [
+    'Antibodies and protein reagents',
+    'Ready-to-use standards and controls',
+    'Immunoassay-related protein products',
+    'Research and diagnostic development workflows',
+    'Protein distribution where ambient shipping is validated',
+  ];
+  appItems.forEach((txt, idx) => {
+    const yPos = 490 + idx * 24;
+    s.push(t('◆', 408, yPos + 2, 10, 8, { color: C_GOLD }));
+    s.push(t(txt, 424, yPos, 310, 11.5, { bold: 1, color: '#2b2f38', font: 'Poppins' }));
+    if (idx < 4) {
+      s.push(r(408, yPos + 18, 320, 1, C_BORDER_LINE));
+    }
+  });
+
+  // 5. SIMPLE WORKFLOW SECTION (y: 648)
+  s.push(r(44, 648, 8, 18, C_GOLD, { r: 2 }));
+  s.push(t('SIMPLE WORKFLOW', 61, 647, 280, 14, { bold: 1, color: C_DARK, font: 'Poppins', sp: 40 }));
+
+  s.push(r(44, 676, 706, 3, C_DARK));
+
+  const wfSteps = [
+    { st: 'STEP 01', txt: 'Use the validated ProteinGUARD™ formulation procedure.' },
+    { st: 'STEP 02', txt: 'Allow the protein to equilibrate as specified in the validated procedure.' },
+    { st: 'STEP 03', txt: 'Seal and label the product and use appropriate protective packaging.' },
+    { st: 'STEP 04', txt: 'Ship at ambient conditions only for validated products and routes.' },
+    { st: 'STEP 05', txt: 'Inspect on arrival and transfer to the specified storage conditions.' },
+  ];
+  wfSteps.forEach((st, idx) => {
+    const xPos = 44 + idx * 143;
+    s.push(t(st.st, xPos, 686, 134, 9, { bold: 1, color: C_GOLD_DARK, font: 'Poppins', sp: 50 }));
+    s.push(t(st.txt, xPos, 702, 128, 10.8, { color: '#2b2f38', font: 'Poppins', lh: 1.35 }));
+    if (idx < 4) {
+      s.push(r(xPos + 133, 686, 1, 74, '#e3e5ea'));
+    }
+  });
+
+  // 6. EXPECTED RESULTS / PERFORMANCE (y: 786, w: 706, h: 90)
+  s.push(r(44, 786, 706, 92, C_DARK, { r: 14 }));
+  s.push(r(62, 800, 8, 18, C_GOLD, { r: 2 }));
+  s.push(t('EXPECTED RESULTS / PERFORMANCE', 79, 799, 400, 13, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 40 }));
+
+  const resItems = [
+    'Can reduce reliance on ice packs and temperature-control packaging where validated',
+    'Supports a more efficient shipping model',
+    'Maintains product quality when supported by validated stability data',
+  ];
+  resItems.forEach((txt, idx) => {
+    const xPos = 62 + idx * 230;
+    s.push(c(xPos - 8, 742, 7.5, C_GOLD));
+    s.push(t('✓', xPos, 831, 15, 9, { bold: 1, color: C_DARK, align: 'center', font: 'Poppins' }));
+    s.push(t(txt, xPos + 22, 829, 196, 11, { color: '#ffffff', font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 7. FOOTER BANNER (y: 980 to 1115)
+  s.push(r(0, 980, 794, 135, C_GOLD));
+  s.push(t('Interested in ProteinGUARD™ ?', 44, 1000, 400, 19, { bold: 1, color: C_DARK, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical\ndetails.', 44, 1028, 400, 12, { color: '#2b2f38', font: 'Poppins', lh: 1.4 }));
+
+  s.push(t('WEB', 550, 1000, 60, 10, { bold: 1, color: C_DARK, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 615, 999, 140, 11.5, { color: '#2b2f38', font: 'Poppins' }));
+
+  s.push(t('EMAIL', 550, 1026, 60, 10, { bold: 1, color: C_DARK, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 615, 1025, 140, 11.5, { color: '#2b2f38', font: 'Poppins' }));
+
+  s.push(t('PHONE', 550, 1052, 60, 10, { bold: 1, color: C_DARK, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 615, 1051, 140, 11.5, { color: '#2b2f38', font: 'Poppins' }));
+
+  // BOTTOM TRICOLOR BAR
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
+// Oneomics ProteinGUARD™ Flyer — A4 Flyer Page 2 (Empty Template)
+export function proteinguardFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_DARK = '#22262e';
+  const C_GOLD = '#ffc21a';
+  const C_GRAY_BG = '#f6f7f9';
+  const C_BORDER_LINE = '#d9dce2';
+
+  // 1. TOP HEADER (Logo left, badge right empty container)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 19, w: 148 });
+  s.push(r(574, 20, 170, 20, 'transparent', { stroke: 'transparent' }));
+
+  // 2. HERO SECTION
+  // Pill empty container
+  s.push(r(44, 76, 130, 24, C_DARK, { r: 6 }));
+
+  // Highlight line empty
+  s.push(r(44, 218, 300, 8, '#ffe08a'));
+
+  // Hero Illustration elements
+  s.push(r(488, 68, 262, 240, C_GOLD, { r: 30 }));
+  s.push(c(488, 20, 65, 'rgba(255,255,255,0.28)'));
+
+  // Carton box
+  s.push(r(518, 164, 150, 122, '#d9a566', { r: 8 }));
+  s.push(r(578, 164, 30, 122, '#f0d9a8'));
+  s.push(r(530, 238, 46, 34, '#ffffff', { r: 3 }));
+
+  // Vial
+  s.push(r(650, 112, 46, 118, 'rgba(255,255,255,0.95)', { r: 22 }));
+  s.push(r(650, 112, 46, 20, C_DARK, { r: 6 }));
+  s.push(r(650, 168, 46, 62, '#8cc5f5', { r: 22 }));
+
+  // Round badge
+  s.push(c(596, 180, 46, C_DARK));
+
+  // 3. STATS / OVERVIEW 3 CARDS ROW
+  for (let idx = 0; idx < 3; idx++) {
+    const xPos = 44 + idx * 240;
+    s.push(r(xPos, 326, 226, 108, C_GRAY_BG, { r: 12 }));
+    s.push(r(xPos, 326, 226, 4, C_GOLD));
+  }
+
+  // 4. TWO COLUMNS
+  // Left: Key Benefits indicator & checkboxes
+  s.push(r(44, 452, 8, 18, C_GOLD, { r: 2 }));
+  for (let idx = 0; idx < 4; idx++) {
+    const yPos = 484 + idx * 40;
+    s.push(r(44, yPos, 20, 20, C_GOLD, { r: 5 }));
+    s.push(t('✓', 44, yPos + 3, 20, 11, { bold: 1, color: C_DARK, align: 'center', font: 'Poppins' }));
+  }
+
+  // Right: Applications Card
+  s.push(r(390, 446, 360, 180, C_GRAY_BG, { r: 14 }));
+  s.push(r(406, 460, 8, 18, C_GOLD, { r: 2 }));
+  for (let idx = 0; idx < 5; idx++) {
+    const yPos = 490 + idx * 24;
+    s.push(t('◆', 408, yPos + 2, 10, 8, { color: C_GOLD }));
+    if (idx < 4) {
+      s.push(r(408, yPos + 18, 320, 1, C_BORDER_LINE));
+    }
+  }
+
+  // 5. SIMPLE WORKFLOW SECTION
+  s.push(r(44, 648, 8, 18, C_GOLD, { r: 2 }));
+  s.push(r(44, 676, 706, 3, C_DARK));
+  for (let idx = 0; idx < 4; idx++) {
+    const xPos = 44 + idx * 143;
+    s.push(r(xPos + 133, 686, 1, 74, '#e3e5ea'));
+  }
+
+  // 6. EXPECTED RESULTS / PERFORMANCE
+  s.push(r(44, 786, 706, 92, C_DARK, { r: 14 }));
+  s.push(r(62, 800, 8, 18, C_GOLD, { r: 2 }));
+  for (let idx = 0; idx < 3; idx++) {
+    const xPos = 62 + idx * 230;
+    s.push(c(xPos - 8, 742, 7.5, C_GOLD));
+    s.push(t('✓', xPos, 831, 15, 9, { bold: 1, color: C_DARK, align: 'center', font: 'Poppins' }));
+  }
+
+  // 7. FOOTER BANNER
+  s.push(r(0, 980, 794, 135, C_GOLD));
+
+  // BOTTOM TRICOLOR BAR
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
 export function bifoldBrochure() {
   const s = [];
 
@@ -6027,6 +6282,21 @@ export const TEMPLATES = [
     emptySpecs: soilguardFlyerEmpty,
     pages: [soilguardFlyer, soilguardFlyerEmpty],
     swatch: ['#234a33', '#c8643b', '#e3efe0'],
+  },
+  {
+    id: 'proteinguard-flyer',
+    name: 'ProteinGUARD™ Flyer',
+    subtitle: 'Ambient Shipping of Protein',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/proteinguard_flyer.png',
+    specs: proteinguardFlyer,
+    emptySpecs: proteinguardFlyerEmpty,
+    pages: [proteinguardFlyer, proteinguardFlyerEmpty],
+    swatch: ['#ffc21a', '#22262e', '#8cc5f5'],
   },
   {
     id: 'bifold-genomics',
