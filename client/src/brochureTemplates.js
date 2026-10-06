@@ -1409,8 +1409,8 @@ export function oneasyFlyer() {
   ];
   keyBenefits.forEach((kb) => {
     s.push(r(kb.x, kb.y, 348, 52, '#ffffff', { r: 12, stroke: C_PINK_BORDER, sw: 1 }));
-    s.push(c(kb.x + 28, kb.y + 26, 14, C_BERRY));
-    s.push(t('✓', kb.x + 14, kb.y + 19, 28, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(c(kb.x + 14, kb.y + 12, 14, C_BERRY));
+    s.push(t('✓', kb.x + 14, kb.y + 18, 28, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
     s.push(t(kb.text, kb.x + 54, kb.y + 18, 280, 12.5, { bold: 1, color: C_WINE, font: 'Poppins' }));
   });
 
@@ -1444,8 +1444,8 @@ export function oneasyFlyer() {
   wfSteps.forEach((txt, idx) => {
     const xPos = 44 + idx * 143;
     s.push(r(xPos, 748, 134, 102, '#ffffff', { r: 12, stroke: C_PINK_BORDER, sw: 1 }));
-    s.push(c(xPos + 22, 748, 12, C_GOLD));
-    s.push(t(String(idx + 1), xPos + 10, 741, 24, 11, { bold: 1, color: C_WINE, align: 'center', font: 'Poppins' }));
+    s.push(c(xPos + 10, 736, 12, C_GOLD));
+    s.push(t(String(idx + 1), xPos + 10, 742, 24, 11, { bold: 1, color: C_WINE, align: 'center', font: 'Poppins' }));
     s.push(t(txt, xPos + 10, 764, 114, 9.8, { color: C_WINE, font: 'Poppins', lh: 1.35 }));
   });
 
@@ -1461,8 +1461,8 @@ export function oneasyFlyer() {
   expResults.forEach((txt, idx) => {
     const xPos = 44 + idx * 240;
     s.push(r(xPos, 896, 226, 56, C_PINK_TINT, { r: 12 }));
-    s.push(c(xPos + 20, 914, 9, C_BERRY));
-    s.push(t('✓', xPos + 11, 908, 18, 9, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(c(xPos + 11, 905, 9, C_BERRY));
+    s.push(t('✓', xPos + 11, 907, 18, 9, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
     s.push(t(txt, xPos + 36, 905, 180, 10.8, { bold: 1, color: C_WINE, font: 'Poppins', lh: 1.3 }));
   });
 
@@ -1551,8 +1551,8 @@ export function oneasyFlyerEmpty(pageNum = 2) {
   ];
   keyBenefitsPos.forEach((kb) => {
     s.push(r(kb.x, kb.y, 348, 52, '#ffffff', { r: 12, stroke: C_PINK_BORDER, sw: 1 }));
-    s.push(c(kb.x + 28, kb.y + 26, 14, C_BERRY));
-    s.push(t('✓', kb.x + 14, kb.y + 19, 28, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(c(kb.x + 14, kb.y + 12, 14, C_BERRY));
+    s.push(t('✓', kb.x + 14, kb.y + 18, 28, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
   });
 
   // 5. APPLICATIONS SECTION (y: 606)
@@ -1575,7 +1575,7 @@ export function oneasyFlyerEmpty(pageNum = 2) {
   for (let idx = 0; idx < 5; idx++) {
     const xPos = 44 + idx * 143;
     s.push(r(xPos, 724, 134, 118, '#ffffff', { r: 12, stroke: C_PINK_BORDER, sw: 1 }));
-    s.push(c(xPos + 22, 724, 12, C_GOLD));
+    s.push(c(xPos + 10, 712, 12, C_GOLD));
   }
 
   // 7. EXPECTED RESULTS / PERFORMANCE (y: 864)
@@ -1584,12 +1584,265 @@ export function oneasyFlyerEmpty(pageNum = 2) {
   for (let idx = 0; idx < 3; idx++) {
     const xPos = 44 + idx * 240;
     s.push(r(xPos, 892, 226, 58, C_PINK_TINT, { r: 12 }));
-    s.push(c(xPos + 20, 910, 9, C_BERRY));
-    s.push(t('✓', xPos + 11, 904, 18, 9, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(c(xPos + 11, 901, 9, C_BERRY));
+    s.push(t('✓', xPos + 11, 903, 18, 9, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
   }
 
   // 8. FOOTER BANNER
   s.push(r(0, 970, 794, 145, C_WINE));
+
+  // BOTTOM TRICOLOR BAR
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
+// Oneomics SoilGUARD™ Flyer — A4 Flyer (794 x 1123)
+export function soilguardFlyer() {
+  const s = [];
+
+  const C_DARK_GREEN = '#234a33';
+  const C_FOREST = '#3d6a4a';
+  const C_TERRACOTTA = '#c8643b';
+  const C_LIGHT_MINT = '#e6f0e4';
+  const C_INK = '#2c3a2e';
+  const C_MUTED = '#8a947f';
+  const C_LEAD = '#5b6a5c';
+  const C_SAND = '#f4ecd8';
+  const C_SAND_TEXT = '#7a4a2a';
+  const C_BORDER = '#dfe6d2';
+
+  // 1. TOP HEADER (Logo left, badge right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 18, w: 148 });
+  s.push(t('PRODUCT PROFILE · 06 / 14', 550, 24, 200, 10, { color: C_MUTED, align: 'right', font: 'Poppins', sp: 90 }));
+
+  // 2. HERO SECTION (x: 44, y: 66, w: 706, h: 250, r: 26)
+  s.push(r(44, 66, 706, 250, '#e3efe0', { r: 26, stroke: C_BORDER, sw: 1, gradient: ['#e3efe0', '#f4ecd8'], gradAngle: 120 }));
+
+  // Pill
+  s.push(r(78, 96, 160, 24, C_TERRACOTTA, { r: 12 }));
+  s.push(t('STABILIZE & PREPARE', 78, 101, 160, 9.5, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins', sp: 70 }));
+
+  // Hero Headline & Subtitle & Lead
+  s.push(t('SoilGUARD™', 78, 130, 380, 56, { bold: 1, color: C_DARK_GREEN, font: 'Poppins', lh: 1 }));
+  s.push(t('Soil Stabilization Buffer', 78, 192, 360, 19, { bold: 1, color: C_TERRACOTTA, font: 'Poppins', lh: 1.25 }));
+  s.push(t('Simple soil-matrix preparation for cleaner nucleic-\nacid workflows.', 78, 222, 350, 12.5, { italic: 1, color: C_LEAD, font: 'Poppins', lh: 1.35 }));
+
+  // Hero Illustration elements
+  // White circle disc
+  s.push(c(401, -17, 105, 'rgba(255,255,255,0.7)'));
+
+  // Leaf icon
+  s.push(r(654, 122, 30, 30, '#6fa35a', { r: 15 }));
+
+  // Bottle
+  s.push(r(554, 108, 84, 140, '#ffffff', { r: 16, stroke: '#cfdcc8', sw: 2 }));
+  s.push(r(554, 108, 84, 22, C_TERRACOTTA, { r: 10 }));
+  s.push(r(562, 156, 68, 62, '#e6f0e4', { r: 8 }));
+  s.push(t('ONEOMICS', 562, 166, 68, 9, { bold: 1, color: C_DARK_GREEN, align: 'center', font: 'Poppins' }));
+  s.push(t('SoilGUARD', 562, 180, 68, 10.5, { bold: 1, color: C_TERRACOTTA, align: 'center', font: 'Poppins' }));
+  s.push(r(554, 222, 84, 26, '#bfd8b4', { r: 12 }));
+
+  // Soil layers
+  s.push(r(500, 236, 190, 50, '#7a5230', { r: 12 }));
+  s.push(r(500, 236, 190, 12.5, '#6fa35a', { r: 6 }));
+  s.push(r(500, 248.5, 190, 12.5, '#d1a463'));
+  s.push(r(500, 261, 190, 12.5, '#a7743d'));
+  s.push(r(500, 273.5, 190, 12.5, '#7a5230', { r: 6 }));
+
+  // 3. HORIZONTAL BAND
+  s.push(r(44, 330, 706, 114, C_LIGHT_MINT, { r: 16 }));
+  const bandTexts = [
+    'A soil-sample stabilization / inhibitor-management buffer intended to support nucleic-acid workflows from complex soil matrices.',
+    'Humic substances and other matrix components can interfere with enzyme-based assays such as PCR. SoilGUARD™ helps improve sample preparation before purification and analysis.',
+    'Use with the validated ONEOMICS workflow to obtain a cleaner sample fraction suitable for downstream molecular applications.',
+  ];
+  bandTexts.forEach((txt, idx) => {
+    const xPos = 62 + idx * 230;
+    s.push(r(xPos, 344, 3, 86, C_FOREST, { r: 1.5 }));
+    s.push(t(txt, xPos + 12, 342, 206, 11.2, { color: C_INK, font: 'Poppins', lh: 1.4 }));
+  });
+
+  // 4. TWO COLUMNS LAYOUT
+  // Left: Simple Workflow & Expected Results
+  s.push(r(44, 466, 10, 10, C_TERRACOTTA, { r: 3 }));
+  s.push(t('SIMPLE WORKFLOW', 62, 460, 280, 14, { bold: 1, color: C_DARK_GREEN, font: 'Poppins', sp: 40 }));
+
+  const stSteps = [
+    'Collect the soil sample using the validated sample amount and handling procedure.',
+    'Add SoilGUARD™ according to the approved ONEOMICS protocol and mix thoroughly.',
+    'Separate soil particles or debris as specified by the workflow.',
+    'Proceed with the compatible nucleic-acid purification method.',
+    'Use purified nucleic acid for validated PCR/qPCR or sequencing applications.',
+  ];
+  stSteps.forEach((txt, idx) => {
+    const yPos = 488 + idx * 44;
+    s.push(c(44, yPos - 1, 14, C_FOREST));
+    s.push(t(String(idx + 1), 44, yPos + 7, 28, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(txt, 82, yPos + 3, 276, 11.2, { color: C_INK, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // Expected Results dark green container
+  s.push(r(44, 716, 322, 154, C_DARK_GREEN, { r: 14 }));
+  s.push(r(58, 734, 10, 10, '#f4d9b0', { r: 3 }));
+  s.push(t('EXPECTED RESULTS /\nPERFORMANCE', 74, 728, 270, 12, { bold: 1, color: '#f4d9b0', font: 'Poppins', lh: 1.25 }));
+
+  const expResults = [
+    'DNA/RNA yield comparison',
+    'Purity assessment such as A260/280 or A260/230',
+    'PCR/qPCR amplification comparison',
+    'Gel, electropherogram or sequencing QC data',
+  ];
+  expResults.forEach((txt, idx) => {
+    const yPos = 776 + idx * 22;
+    s.push(t('✓', 58, yPos, 14, 10, { bold: 1, color: '#f4d9b0', font: 'Poppins' }));
+    s.push(t(txt, 74, yPos - 1, 276, 11, { color: '#ffffff', font: 'Poppins' }));
+  });
+
+  // Right Column: Key Benefits & Applications
+  s.push(r(390, 466, 10, 10, C_TERRACOTTA, { r: 3 }));
+  s.push(t('KEY BENEFITS', 408, 460, 280, 14, { bold: 1, color: C_DARK_GREEN, font: 'Poppins', sp: 40 }));
+
+  const keyBens = [
+    'Designed for challenging soil matrices',
+    'Supports reduction of soil-derived inhibitors during sample preparation',
+    'Helps prepare samples for downstream nucleic-acid purification',
+    'Suitable for molecular biology and environmental research workflows',
+    'Can support PCR/qPCR and sequencing workflows when validated',
+  ];
+  keyBens.forEach((txt, idx) => {
+    const yPos = 488 + idx * 46;
+    s.push(r(390, yPos, 360, 38, '#ffffff', { r: 8, stroke: C_BORDER, sw: 1 }));
+    s.push(r(390, yPos, 4, 38, C_FOREST, { r: 2 }));
+    s.push(t(txt, 404, yPos + 10, 340, 11.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  });
+
+  // Applications
+  s.push(r(390, 730, 10, 10, C_TERRACOTTA, { r: 3 }));
+  s.push(t('APPLICATIONS', 408, 724, 280, 14, { bold: 1, color: C_DARK_GREEN, font: 'Poppins', sp: 40 }));
+
+  const appChips = [
+    { text: 'Soil microbiology', w: 124, x: 390, y: 752 },
+    { text: 'Microbial community studies', w: 200, x: 522, y: 752 },
+    { text: 'DNA/RNA extraction workflows', w: 216, x: 390, y: 786 },
+    { text: 'PCR and qPCR sample preparation', w: 236, x: 390, y: 820 },
+    { text: 'Metagenomics and microbial ecology', w: 254, x: 390, y: 854 },
+    { text: 'Sequencing-oriented sample preparation', w: 278, x: 390, y: 888 },
+  ];
+  appChips.forEach((chip) => {
+    s.push(r(chip.x, chip.y, chip.w, 26, C_SAND, { r: 13 }));
+    s.push(t(chip.text, chip.x, chip.y + 5, chip.w, 11, { bold: 1, color: C_SAND_TEXT, align: 'center', font: 'Poppins' }));
+  });
+
+  // 5. FOOTER BANNER
+  s.push(r(0, 980, 794, 135, '#efe6d3'));
+  s.push(t('Interested in SoilGUARD™ ?', 44, 1000, 400, 19, { bold: 1, color: C_DARK_GREEN, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical\ndetails.', 44, 1028, 400, 12, { color: '#6b6a55', font: 'Poppins', lh: 1.4 }));
+
+  s.push(t('WEB', 550, 1000, 60, 10, { bold: 1, color: C_TERRACOTTA, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 615, 999, 140, 11.5, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 550, 1026, 60, 10, { bold: 1, color: C_TERRACOTTA, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 615, 1025, 140, 11.5, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('PHONE', 550, 1052, 60, 10, { bold: 1, color: C_TERRACOTTA, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 615, 1051, 140, 11.5, { color: C_INK, font: 'Poppins' }));
+
+  // BOTTOM TRICOLOR BAR
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
+// Oneomics SoilGUARD™ Flyer — A4 Flyer Page 2 (Empty Template)
+export function soilguardFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_DARK_GREEN = '#234a33';
+  const C_FOREST = '#3d6a4a';
+  const C_TERRACOTTA = '#c8643b';
+  const C_LIGHT_MINT = '#e6f0e4';
+  const C_SAND = '#f4ecd8';
+  const C_BORDER = '#dfe6d2';
+
+  // 1. TOP HEADER (Logo left, badge right empty container)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 18, w: 148 });
+  s.push(r(574, 20, 170, 20, 'transparent', { stroke: 'transparent' }));
+
+  // 2. HERO SECTION
+  s.push(r(44, 66, 706, 250, '#e3efe0', { r: 26, stroke: C_BORDER, sw: 1, gradient: ['#e3efe0', '#f4ecd8'], gradAngle: 120 }));
+
+  // Pill empty container
+  s.push(r(78, 96, 160, 24, C_TERRACOTTA, { r: 12 }));
+
+  // Illustration elements
+  s.push(c(401, -17, 105, 'rgba(255,255,255,0.7)'));
+  s.push(r(654, 122, 30, 30, '#6fa35a', { r: 15 }));
+
+  // Bottle
+  s.push(r(554, 108, 84, 140, '#ffffff', { r: 16, stroke: '#cfdcc8', sw: 2 }));
+  s.push(r(554, 108, 84, 22, C_TERRACOTTA, { r: 10 }));
+  s.push(r(562, 156, 68, 62, '#e6f0e4', { r: 8 }));
+  s.push(r(554, 222, 84, 26, '#bfd8b4', { r: 12 }));
+
+  // Soil layers
+  s.push(r(500, 236, 190, 50, '#7a5230', { r: 12 }));
+  s.push(r(500, 236, 190, 12.5, '#6fa35a', { r: 6 }));
+  s.push(r(500, 248.5, 190, 12.5, '#d1a463'));
+  s.push(r(500, 261, 190, 12.5, '#a7743d'));
+  s.push(r(500, 273.5, 190, 12.5, '#7a5230', { r: 6 }));
+
+  // 3. HORIZONTAL BAND
+  s.push(r(44, 330, 706, 114, C_LIGHT_MINT, { r: 16 }));
+  for (let idx = 0; idx < 3; idx++) {
+    const xPos = 62 + idx * 230;
+    s.push(r(xPos, 344, 3, 86, C_FOREST, { r: 1.5 }));
+  }
+
+  // 4. TWO COLUMNS LAYOUT
+  // Left: Simple Workflow & Expected Results
+  s.push(r(44, 466, 10, 10, C_TERRACOTTA, { r: 3 }));
+  for (let idx = 0; idx < 5; idx++) {
+    const yPos = 488 + idx * 44;
+    s.push(c(44, yPos - 1, 14, C_FOREST));
+  }
+
+  // Expected Results dark green container
+  s.push(r(44, 716, 322, 154, C_DARK_GREEN, { r: 14 }));
+  s.push(r(58, 734, 10, 10, '#f4d9b0', { r: 3 }));
+  for (let idx = 0; idx < 4; idx++) {
+    const yPos = 776 + idx * 22;
+    s.push(t('✓', 58, yPos, 14, 10, { bold: 1, color: '#f4d9b0', font: 'Poppins' }));
+  }
+
+  // Right Column: Key Benefits & Applications
+  s.push(r(390, 466, 10, 10, C_TERRACOTTA, { r: 3 }));
+  for (let idx = 0; idx < 5; idx++) {
+    const yPos = 488 + idx * 46;
+    s.push(r(390, yPos, 360, 38, '#ffffff', { r: 8, stroke: C_BORDER, sw: 1 }));
+    s.push(r(390, yPos, 4, 38, C_FOREST, { r: 2 }));
+  }
+
+  // Applications
+  s.push(r(390, 730, 10, 10, C_TERRACOTTA, { r: 3 }));
+  const appChipsPos = [
+    { w: 110, x: 390, y: 752 },
+    { w: 180, x: 508, y: 752 },
+    { w: 190, x: 390, y: 786 },
+    { w: 210, x: 390, y: 820 },
+    { w: 220, x: 390, y: 854 },
+    { w: 250, x: 390, y: 888 },
+  ];
+  appChipsPos.forEach((chip) => {
+    s.push(r(chip.x, chip.y, chip.w, 26, C_SAND, { r: 13 }));
+  });
+
+  // 5. FOOTER BANNER
+  s.push(r(0, 980, 794, 135, '#efe6d3'));
 
   // BOTTOM TRICOLOR BAR
   s.push(r(0, 1115, 264.6, 8, '#e53935'));
@@ -5759,6 +6012,21 @@ export const TEMPLATES = [
     emptySpecs: oneasyFlyerEmpty,
     pages: [oneasyFlyer, oneasyFlyerEmpty],
     swatch: ['#3b1030', '#a8215a', '#f4b942'],
+  },
+  {
+    id: 'soilguard-flyer',
+    name: 'SoilGUARD™ Flyer',
+    subtitle: 'Soil Stabilization Buffer',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#fbf9f3',
+    preview: '/assets/previews/soilguard_flyer.png',
+    specs: soilguardFlyer,
+    emptySpecs: soilguardFlyerEmpty,
+    pages: [soilguardFlyer, soilguardFlyerEmpty],
+    swatch: ['#234a33', '#c8643b', '#e3efe0'],
   },
   {
     id: 'bifold-genomics',
