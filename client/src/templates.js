@@ -2155,41 +2155,8 @@ export function sequencingServicesFlyer() {
   s.push(t('11', 580, 108, 130, 46, { bold: 1, color: C_INDIGO, align: 'right', font: 'Lora' }));
   s.push(t('SERVICE LINES', 580, 156, 130, 9.5, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 60 }));
 
-  // Chromatogram Peaks Baseline at bottom of hero
-  // Wave peaks decoration: base line at y: 326
-  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
-
-  // Chromatogram bases (A, C, G, T)
-  const chromBases = [
-    { base: 'C', c: C_BLUE, x: 74 },
-    { base: 'C', c: C_BLUE, x: 104 },
-    { base: 'C', c: C_BLUE, x: 134 },
-    { base: 'G', c: C_AMBER, x: 164 },
-    { base: 'C', c: C_BLUE, x: 194 },
-    { base: 'T', c: C_RED, x: 224 },
-    { base: 'T', c: C_RED, x: 254 },
-    { base: 'A', c: C_GREEN, x: 284 },
-    { base: 'A', c: C_GREEN, x: 314 },
-    { base: 'T', c: C_RED, x: 344 },
-    { base: 'C', c: C_BLUE, x: 374 },
-    { base: 'A', c: C_GREEN, x: 404 },
-    { base: 'C', c: C_BLUE, x: 434 },
-    { base: 'G', c: C_AMBER, x: 464 },
-    { base: 'T', c: C_RED, x: 494 },
-    { base: 'T', c: C_RED, x: 524 },
-    { base: 'C', c: C_BLUE, x: 554 },
-    { base: 'A', c: C_GREEN, x: 584 },
-    { base: 'G', c: C_AMBER, x: 614 },
-    { base: 'A', c: C_GREEN, x: 644 },
-    { base: 'T', c: C_RED, x: 674 },
-    { base: 'C', c: C_BLUE, x: 704 },
-  ];
-  chromBases.forEach((b) => {
-    // Peak curve/polygon approximation: a rounded pill peak
-    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
-    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
-    s.push(t(b.base, b.x - 10, 331, 20, 11, { bold: 1, color: b.c, align: 'center', font: 'Courier New' }));
-  });
+  // Exact Chromatogram Wave Peaks across bottom of hero
+  s.push({ k: 'image', src: '/assets/chromatogram.png', x: 49, y: 260, w: 696, h: 91 });
 
   // 3. MAIN SECTION: "What we sequence" (y: 382)
   s.push(t('What we sequence', 49, 382, 360, 20, { bold: 1, color: C_INK, font: 'Lora' }));
@@ -2381,37 +2348,8 @@ export function sequencingServicesFlyerEmpty(pageNum = 2) {
   // 2. HERO CARD
   s.push(r(49, 79, 696, 272, '#ffffff', { r: 22, stroke: C_LINE, sw: 1 }));
 
-  // Chromatogram Peaks Baseline at bottom of hero
-  s.push(r(49, 326, 696, 1.5, '#DAD8EE'));
-
-  const chromBases = [
-    { base: 'C', c: C_BLUE, x: 74 },
-    { base: 'C', c: C_BLUE, x: 104 },
-    { base: 'C', c: C_BLUE, x: 134 },
-    { base: 'G', c: C_AMBER, x: 164 },
-    { base: 'C', c: C_BLUE, x: 194 },
-    { base: 'T', c: C_RED, x: 224 },
-    { base: 'T', c: C_RED, x: 254 },
-    { base: 'A', c: C_GREEN, x: 284 },
-    { base: 'A', c: C_GREEN, x: 314 },
-    { base: 'T', c: C_RED, x: 344 },
-    { base: 'C', c: C_BLUE, x: 374 },
-    { base: 'A', c: C_GREEN, x: 404 },
-    { base: 'C', c: C_BLUE, x: 434 },
-    { base: 'G', c: C_AMBER, x: 464 },
-    { base: 'T', c: C_RED, x: 494 },
-    { base: 'T', c: C_RED, x: 524 },
-    { base: 'C', c: C_BLUE, x: 554 },
-    { base: 'A', c: C_GREEN, x: 584 },
-    { base: 'G', c: C_AMBER, x: 614 },
-    { base: 'A', c: C_GREEN, x: 644 },
-    { base: 'T', c: C_RED, x: 674 },
-    { base: 'C', c: C_BLUE, x: 704 },
-  ];
-  chromBases.forEach((b) => {
-    s.push(r(b.x - 7, 280, 14, 46, b.c, { r: 7, opacity: 0.35 }));
-    s.push(r(b.x - 1, 276, 2, 50, b.c, { opacity: 0.8 }));
-  });
+  // Exact Chromatogram Wave Peaks across bottom of hero
+  s.push({ k: 'image', src: '/assets/chromatogram.png', x: 49, y: 260, w: 696, h: 91 });
 
   // 3. MAIN SECTION: Cards
 
