@@ -4,8 +4,9 @@
  */
 
 const DB_NAME = 'BrochureStudioDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const STORE_NAME = 'designs';
+const STORE_UPLOADS = 'uploads';
 const LS_META_KEY = 'brochure_designs_meta';
 
 function openDB() {
@@ -19,6 +20,10 @@ function openDB() {
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
         store.createIndex('updatedAt', 'updatedAt', { unique: false });
+      }
+      if (!db.objectStoreNames.contains(STORE_UPLOADS)) {
+        const uStore = db.createObjectStore(STORE_UPLOADS, { keyPath: 'id' });
+        uStore.createIndex('createdAt', 'createdAt', { unique: false });
       }
     };
     req.onsuccess = () => resolve(req.result);
@@ -74,6 +79,48 @@ async function idbDelete(id) {
     return new Promise((resolve) => {
       const tx = db.transaction(STORE_NAME, 'readwrite');
       const req = tx.objectStore(STORE_NAME).delete(id);
+      req.onsuccess = () => resolve(true);
+      req.onerror = () => resolve(false);
+    });
+  } catch {
+    return false;
+  }
+}
+
+async function idbGetUploads() {
+  try {
+    const db = await openDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction(STORE_UPLOADS, 'readonly');
+      const req = tx.objectStore(STORE_UPLOADS).getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => resolve([]);
+    });
+  } catch {
+    return [];
+  }
+}
+
+async function idbPutUpload(item) {
+  try {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_UPLOADS, 'readwrite');
+      const req = tx.objectStore(STORE_UPLOADS).put(item);
+      req.onsuccess = () => resolve(item);
+      req.onerror = () => reject(req.error);
+    });
+  } catch {
+    return null;
+  }
+}
+
+async function idbDeleteUpload(id) {
+  try {
+    const db = await openDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction(STORE_UPLOADS, 'readwrite');
+      const req = tx.objectStore(STORE_UPLOADS).delete(id);
       req.onsuccess = () => resolve(true);
       req.onerror = () => resolve(false);
     });
@@ -259,26 +306,115 @@ export const deleteDesign = async (id) => {
 };
 
 export const listUploads = async () => {
-  const res = await safeJsonFetch('/api/uploads');
-  return Array.isArray(res) ? res : [];
+  // 1. Load from IndexedDB
+  const localUploads = await idbGetUploads();
+  const map = new Map();
+
+  localUploads.forEach((u) => {
+    if (u && (u.id || u.url)) {
+      const key = u.id || u.url;
+      map.set(key, {
+        id: u.id || key,
+        url: u.url || u.dataUrl,
+        dataUrl: u.dataUrl || u.url,
+        name: u.name || 'image',
+        createdAt: u.createdAt || Date.now(),
+      });
+    }
+  });
+
+  // 2. Fetch server uploads if available and merge
+  const serverUploads = await safeJsonFetch('/api/uploads');
+  if (Array.isArray(serverUploads)) {
+    serverUploads.forEach((srv) => {
+      if (srv && srv.url) {
+        let existingKey = null;
+        for (const [k, v] of map.entries()) {
+          if (v.url === srv.url || (v.name && v.name === srv.name)) {
+            existingKey = k;
+            break;
+          }
+        }
+        if (!existingKey) {
+          const srvId = 'srv_' + (srv.name || Math.random().toString(36).slice(2, 8));
+          map.set(srv.url, {
+            id: srvId,
+            url: srv.url,
+            dataUrl: srv.url,
+            name: srv.name || 'image',
+            createdAt: srv.mtime || Date.now(),
+          });
+        }
+      }
+    });
+  }
+
+  return Array.from(map.values()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 };
 
 export const uploadImage = async (file) => {
+  // Read as data URL so it's always immediately usable and can be stored in IndexedDB
+  const dataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('Failed to read image file'));
+    reader.readAsDataURL(file);
+  });
+
+  let serverUrl = null;
   try {
     const f = new FormData();
     f.append('image', file);
     const res = await fetch('/api/upload', { method: 'POST', body: f });
     if (res.ok) {
       const data = await res.json();
-      if (data && data.url) return data;
+      if (data && data.url) serverUrl = data.url;
     }
   } catch {}
 
-  // Fallback: convert file to local data URL so image upload always works even without backend!
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve({ url: reader.result, name: file.name });
-    reader.onerror = () => reject(new Error('Failed to read image file'));
-    reader.readAsDataURL(file);
-  });
+  const uploadId = 'upl_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+  const record = {
+    id: uploadId,
+    url: serverUrl || dataUrl,
+    dataUrl: dataUrl,
+    name: file.name || 'image',
+    createdAt: Date.now(),
+  };
+
+  // Persist permanently in IndexedDB
+  await idbPutUpload(record);
+
+  return record;
+};
+
+export const deleteUpload = async (itemOrId) => {
+  const id = typeof itemOrId === 'object' ? itemOrId?.id : itemOrId;
+  const url = typeof itemOrId === 'object' ? itemOrId?.url : null;
+  const dataUrl = typeof itemOrId === 'object' ? itemOrId?.dataUrl : null;
+
+  // 1. Delete from IndexedDB by id
+  if (id) {
+    await idbDeleteUpload(id);
+  }
+
+  // 2. Also ensure deletion by url / dataUrl if id was different
+  try {
+    const all = await idbGetUploads();
+    for (const u of all) {
+      if ((url && u.url === url) || (dataUrl && u.dataUrl === dataUrl)) {
+        await idbDeleteUpload(u.id);
+      }
+    }
+  } catch {}
+
+  // 3. Delete from backend server if it has a server filename
+  const targetUrl = url || (typeof itemOrId === 'string' ? itemOrId : null);
+  if (targetUrl && targetUrl.startsWith('/uploads/')) {
+    const filename = targetUrl.replace('/uploads/', '');
+    try {
+      await fetch(`/api/uploads/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+    } catch {}
+  }
+
+  return { ok: true };
 };

@@ -64,6 +64,19 @@ app.get('/api/uploads', (_req, res) => {
   res.json(files);
 });
 
+app.delete('/api/uploads/:filename', (req, res) => {
+  try {
+    const filename = path.basename(req.params.filename);
+    const filePath = path.join(UPLOAD_DIR, filename);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ---------- OCR proxy (memory) ----------
 const uploadMemory = multer({
   storage: multer.memoryStorage(),

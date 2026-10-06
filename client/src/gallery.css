@@ -100,3 +100,63 @@
   border-color: #ef4444;
   color: #dc2626;
 }
+
+/* Uploads Tab Images */
+.upload-card {
+  position: relative;
+  border: 1px solid var(--line, #d5dcd9);
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: #ffffff;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.upload-card:hover {
+  border-color: var(--accent-2, #0f8a6d);
+  box-shadow: 0 4px 12px rgba(11, 93, 75, 0.15);
+  transform: translateY(-1px);
+}
+
+.upload-thumb-btn {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: block;
+}
+
+.upload-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.upload-del-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--line, #d5dcd9);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--mute, #5d6c67);
+  z-index: 2;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.upload-del-btn:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #dc2626;
+}
+

@@ -3,7 +3,7 @@ import Ico from './Ico.jsx';
 import { DECOR } from '../icons.js';
 import { iconSvg } from '../icons.js';
 import { TEMPLATES } from '../brochureTemplates.js';
-import { listUploads, uploadImage, listDesigns, deleteDesign } from '../api.js';
+import { listUploads, uploadImage, listDesigns, deleteDesign, deleteUpload } from '../api.js';
 
 const TABS = [
   { id: 'templates', label: 'Templates', icon: 'layout' },
@@ -40,8 +40,20 @@ export default function StudioSidebar({ ed, onTemplate, notify, onOpenDesign, on
   const [designs, setDesigns] = useState([]);
   const [loadingDesigns, setLoadingDesigns] = useState(false);
 
-  const refreshUploads = () => listUploads().then(setFiles).catch(() => notify('Could not reach the server. Is it running on port 4001?'));
+  const refreshUploads = () => listUploads().then(setFiles).catch((err) => notify(`Could not load images: ${err.message}`));
   useEffect(() => { if (tab === 'uploads') refreshUploads(); }, [tab]);
+
+  const handleDeleteUpload = async (fileItem, e) => {
+    e.stopPropagation();
+    if (!window.confirm(`Delete "${fileItem.name || 'this image'}"?`)) return;
+    try {
+      await deleteUpload(fileItem);
+      notify('Image deleted');
+      refreshUploads();
+    } catch (err) {
+      notify(`Could not delete image: ${err.message}`);
+    }
+  };
 
   const refreshDesigns = () => {
     setLoadingDesigns(true);
@@ -78,8 +90,8 @@ export default function StudioSidebar({ ed, onTemplate, notify, onOpenDesign, on
     setLoading(true);
     try {
       for (const f of Array.from(list)) {
-        const { url } = await uploadImage(f);
-        await ed.addImage(url);
+        const item = await uploadImage(f);
+        await ed.addImage(item.dataUrl || item.url);
       }
       refreshUploads();
     } catch (e) { notify(e.message); }
@@ -385,9 +397,25 @@ export default function StudioSidebar({ ed, onTemplate, notify, onOpenDesign, on
             {files.length === 0 && <p className="hint">Uploaded images appear here. PNG, JPG, WEBP or GIF up to 15 MB.</p>}
             <div className="grid2">
               {files.map((f) => (
-                <button key={f.url} className="thumb" onClick={() => ed.addImage(f.url)}>
-                  <img src={f.url} alt="" loading="lazy" />
-                </button>
+                <div key={f.id || f.url} className="upload-card">
+                  <button
+                    type="button"
+                    className="upload-thumb-btn"
+                    onClick={() => ed.addImage(f.dataUrl || f.url)}
+                    title={`Add "${f.name || 'image'}" to canvas`}
+                  >
+                    <img src={f.dataUrl || f.url} alt={f.name || ''} loading="lazy" />
+                  </button>
+                  <button
+                    type="button"
+                    className="upload-del-btn"
+                    onClick={(e) => handleDeleteUpload(f, e)}
+                    title={`Delete "${f.name || 'image'}"`}
+                    aria-label={`Delete "${f.name || 'image'}"`}
+                  >
+                    <Ico name="trash" size={13} />
+                  </button>
+                </div>
               ))}
             </div>
           </>
