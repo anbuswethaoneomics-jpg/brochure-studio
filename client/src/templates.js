@@ -1038,6 +1038,274 @@ export function onespitSideFlyerEmpty(pageNum = 2) {
 }
 
 // Oneomics Bi-Fold Brochure — A4 Landscape 2 Panels (1123 x 794, folds: 2)
+// Oneomics ONESpit™ Sunset Edition Flyer — A4 Flyer (794 x 1123)
+export function onespitSunsetFlyer() {
+  const s = [];
+
+  const C_INDIGO = '#3a1fd1';
+  const C_ORANGE = '#ff6a35';
+  const C_ORANGE_DARK = '#e0592a';
+  const C_PEACH_LIGHT = '#ffe9dc';
+  const C_PURPLE_LIGHT = '#efeaff';
+  const C_PURPLE_BORDER = '#e6dcf9';
+  const C_PURPLE_BADGE = '#7c6bd6';
+  const C_MUTED = '#6b6788';
+  const C_INK = '#2a2547';
+  const C_CARD_BORDER = '#eee3d8';
+
+  // 1. TOP HEADER (Logo left, badge right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 18, w: 148 });
+  s.push(r(574, 18, 176, 26, '#ffffff', { r: 13, stroke: '#d9cffc', sw: 1 }));
+  s.push(t('PRODUCT PROFILE · 01 / 14', 574, 25, 176, 9.5, { color: C_PURPLE_BADGE, align: 'center', font: 'Poppins', sp: 80 }));
+
+  // 2. HERO SECTION (x: 44, y: 56)
+  // Pill
+  s.push(r(44, 60, 156, 24, C_PEACH_LIGHT, { r: 12 }));
+  s.push(t('COLLECT & STABILIZE', 44, 65, 156, 9.5, { bold: 1, color: C_ORANGE_DARK, align: 'center', font: 'Poppins', sp: 70 }));
+
+  // Hero Headline & Subtitle
+  s.push(t('ONESpit™', 44, 94, 430, 58, { bold: 1, color: C_INDIGO, font: 'Poppins', lh: 1 }));
+  s.push(t('Zero-Prep Saliva Collection &\nPreservation Kit', 44, 160, 430, 18.5, { bold: 1, color: C_ORANGE, font: 'Poppins', lh: 1.25 }));
+  s.push(t('Non-invasive saliva collection with zero sample\npreparation.', 44, 212, 430, 13, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+
+  // Arch Container (x: 500, y: 58, w: 250, h: 240)
+  s.push(r(500, 58, 250, 240, '#ffd0b8', { r: 125, gradient: ['#ffe3d1', '#ffd0b8'], gradAngle: 'v' }));
+  s.push(c(460, 238, 100, 'rgba(255,255,255,0.4)'));
+
+  // 3D Product Box (x: 534, y: 134, w: 120, h: 130)
+  s.push(r(534, 134, 120, 130, '#ffffff', { r: 10 }));
+  s.push(r(534, 134, 120, 24, C_INDIGO, { r: 10 }));
+  s.push(r(534, 146, 120, 12, C_INDIGO));
+  s.push(t('ONEOMICS', 534, 140, 120, 9, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins', sp: 80 }));
+  s.push(t('ONESpit™', 534, 184, 120, 19, { bold: 1, color: C_INDIGO, align: 'center', font: 'Poppins' }));
+  s.push(r(575, 212, 38, 3, C_ORANGE, { r: 1.5 }));
+  // Tricolor stripe at box bottom
+  s.push(r(534, 256, 40, 8, '#e53935'));
+  s.push(r(574, 256, 40, 8, '#1e88e5'));
+  s.push(r(614, 256, 40, 8, '#43a047'));
+
+  // Saliva Collection Tube (x: 650, y: 106, w: 48, h: 158)
+  s.push(r(650, 106, 48, 158, 'rgba(255,255,255,0.95)', { r: 24 }));
+  s.push(r(650, 106, 48, 22, C_INDIGO, { r: 10 }));
+  s.push(r(650, 164, 48, 100, '#ff9fb0', { r: 24 }));
+
+  // 3. STATS ROW (y: 324, 3 cards)
+  // Card 1
+  s.push(r(44, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(t('1+ yr', 56, 336, 76, 22, { bold: 1, color: C_INDIGO, font: 'Poppins' }));
+  s.push(t('DNA stable at room\ntemperature', 136, 335, 124, 11, { color: C_MUTED, font: 'Poppins', lh: 1.25 }));
+
+  // Card 2
+  s.push(r(284, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(t('Zero', 296, 336, 76, 22, { bold: 1, color: C_INDIGO, font: 'Poppins' }));
+  s.push(t('sample preparation\nneeded', 372, 335, 128, 11, { color: C_MUTED, font: 'Poppins', lh: 1.25 }));
+
+  // Card 3
+  s.push(r(524, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(t('8', 536, 336, 30, 22, { bold: 1, color: C_INDIGO, font: 'Poppins' }));
+  s.push(t('independent samples with\nconsistent, high-quality bands', 566, 335, 174, 11, { color: C_MUTED, font: 'Poppins', lh: 1.25 }));
+
+  // 4. OVERVIEW (LEFT) & APPLICATIONS (RIGHT)
+  // Overview Header
+  s.push(c(50, 411, 5, C_ORANGE));
+  s.push(t('Overview', 64, 401, 320, 15, { bold: 1, color: C_INDIGO, font: 'Poppins' }));
+
+  // Overview Bullets
+  s.push(c(48, 439, 3, C_PURPLE_BADGE));
+  s.push(t('Non-invasive, zero-prep saliva collection that stabilizes DNA at room temperature for over a year.', 58, 431, 346, 12, { color: C_INK, font: 'Poppins', lh: 1.4 }));
+
+  s.push(c(48, 481, 3, C_PURPLE_BADGE));
+  s.push(t('Supports convenient self-collection without refrigeration and is suitable for home, clinic or field use.', 58, 473, 346, 12, { color: C_INK, font: 'Poppins', lh: 1.4 }));
+
+  s.push(c(48, 523, 3, C_PURPLE_BADGE));
+  s.push(t('Designed for molecular applications where simple collection and reliable DNA preservation are important.', 58, 515, 346, 12, { color: C_INK, font: 'Poppins', lh: 1.4 }));
+
+  // Applications Card (Right)
+  s.push(r(432, 401, 318, 172, '#ffffff', { r: 14, stroke: C_PURPLE_BORDER, sw: 1 }));
+  s.push(c(452, 423, 5, C_ORANGE));
+  s.push(t('Applications', 466, 414, 260, 15, { bold: 1, color: C_INDIGO, font: 'Poppins' }));
+
+  const appItems = [
+    'PCR and qPCR',
+    'Next-generation sequencing (NGS)',
+    'SNP analysis',
+    'Methylation analysis',
+    'Oral cancer and early diagnostic research',
+  ];
+  appItems.forEach((item, idx) => {
+    const yPos = 447 + idx * 23;
+    s.push(t('◆', 450, yPos + 1, 10, 8, { color: C_ORANGE }));
+    s.push(t(item, 466, yPos, 270, 11.5, { bold: idx < 2 ? 1 : 0, color: C_INK, font: 'Poppins' }));
+    if (idx < 4) {
+      s.push(r(450, yPos + 19, 280, 1, '#f6f1fd'));
+    }
+  });
+
+  // 5. KEY BENEFITS (y: 597)
+  s.push(c(50, 607, 5, C_ORANGE));
+  s.push(t('Key benefits', 64, 597, 400, 15, { bold: 1, color: C_INDIGO, font: 'Poppins' }));
+
+  // Benefits Row 1
+  s.push(r(44, 627, 194, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(t('Zero sample preparation', 44, 633, 194, 11, { bold: 1, color: C_INDIGO, align: 'center', font: 'Poppins' }));
+
+  s.push(r(246, 627, 180, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(t('Self-collection at home', 246, 633, 180, 11, { bold: 1, color: C_INDIGO, align: 'center', font: 'Poppins' }));
+
+  s.push(r(434, 627, 298, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(t('Stable for 1+ year at room temperature', 434, 633, 298, 11, { bold: 1, color: C_INDIGO, align: 'center', font: 'Poppins' }));
+
+  // Benefits Row 2
+  s.push(r(44, 663, 152, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(t('Fully non-invasive', 44, 669, 152, 11, { bold: 1, color: C_INDIGO, align: 'center', font: 'Poppins' }));
+
+  s.push(r(204, 663, 204, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(t('No refrigeration required', 204, 669, 204, 11, { bold: 1, color: C_INDIGO, align: 'center', font: 'Poppins' }));
+
+  s.push(r(416, 663, 146, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(t('Patent-protected', 416, 669, 146, 11, { bold: 1, color: C_INDIGO, align: 'center', font: 'Poppins' }));
+
+  // 6. SIMPLE WORKFLOW (y: 709)
+  s.push(c(50, 719, 5, C_ORANGE));
+  s.push(t('Simple workflow', 64, 709, 400, 15, { bold: 1, color: C_INDIGO, font: 'Poppins' }));
+
+  const steps = [
+    { num: '1', desc: 'Collect saliva using the ONESpit™ collection procedure.' },
+    { num: '2', desc: 'Follow the kit instructions for completing collection and stabilization.' },
+    { num: '3', desc: 'Secure the sample and maintain recommended storage conditions.' },
+    { num: '4', desc: 'Transport without refrigeration when permitted by the validated instructions.' },
+    { num: '5', desc: 'Use the preserved sample for downstream DNA extraction and molecular analysis.' },
+  ];
+
+  steps.forEach((st, idx) => {
+    const xPos = 44 + idx * 143;
+    s.push(r(xPos, 739, 134, 98, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+    s.push(r(xPos + 10, 749, 24, 24, C_ORANGE, { r: 6 }));
+    s.push(t(st.num, xPos + 10, 752, 24, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(st.desc, xPos + 10, 781, 114, 9.5, { color: C_INK, font: 'Poppins', lh: 1.3 }));
+
+    if (idx < 4) {
+      s.push(t('›', xPos + 137, 777, 10, 16, { bold: 1, color: C_PURPLE_BADGE, align: 'center' }));
+    }
+  });
+
+  // 7. EXPECTED RESULTS / PERFORMANCE (y: 853)
+  s.push(r(44, 853, 706, 76, C_PURPLE_LIGHT, { r: 10 }));
+  s.push(r(44, 853, 6, 76, C_INDIGO, { r: 3 }));
+  s.push(c(74, 871, 5, C_ORANGE));
+  s.push(t('Expected results / performance', 88, 862, 400, 13.5, { bold: 1, color: C_INDIGO, font: 'Poppins' }));
+  s.push(t('DNA from 8 independent ONESpit™ saliva samples showed consistent, high-quality bands with no visible degradation. Supports DNA preservation for downstream molecular workflows.', 68, 888, 660, 11.5, { color: C_INK, font: 'Poppins', lh: 1.4 }));
+
+  // 8. FOOTER BANNER (y: 947 to 1115)
+  s.push(r(0, 947, 794, 168, C_PEACH_LIGHT));
+  s.push(t('Interested in ONESpit™ ?', 44, 963, 400, 18, { bold: 1, color: C_INDIGO, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical\ndetails.', 44, 991, 400, 12, { color: C_INK, font: 'Poppins', lh: 1.4 }));
+
+  s.push(t('WEB', 550, 963, 60, 10, { bold: 1, color: C_ORANGE_DARK, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 615, 962, 140, 11.5, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 550, 989, 60, 10, { bold: 1, color: C_ORANGE_DARK, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 615, 988, 140, 11.5, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('PHONE', 550, 1015, 60, 10, { bold: 1, color: C_ORANGE_DARK, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 615, 1014, 140, 11.5, { color: C_INK, font: 'Poppins' }));
+
+  // BOTTOM TRICOLOR BAR
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
+// Oneomics ONESpit™ Sunset Edition Flyer — A4 Flyer Page 2 (Empty Template)
+export function onespitSunsetFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_INDIGO = '#3a1fd1';
+  const C_ORANGE = '#ff6a35';
+  const C_ORANGE_DARK = '#e0592a';
+  const C_PEACH_LIGHT = '#ffe9dc';
+  const C_PURPLE_LIGHT = '#efeaff';
+  const C_PURPLE_BORDER = '#e6dcf9';
+  const C_PURPLE_BADGE = '#7c6bd6';
+  const C_CARD_BORDER = '#eee3d8';
+
+  // 1. TOP HEADER (Logo left, badge right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 18, w: 148 });
+  s.push(r(574, 18, 176, 26, '#ffffff', { r: 13, stroke: '#d9cffc', sw: 1 }));
+  s.push(t(`PRODUCT PROFILE · 0${pageNum} / 14`, 574, 25, 176, 9.5, { color: C_PURPLE_BADGE, align: 'center', font: 'Poppins', sp: 80 }));
+
+  // 2. HERO SECTION
+  s.push(r(44, 60, 156, 24, C_PEACH_LIGHT, { r: 12 }));
+  s.push(t('COLLECT & STABILIZE', 44, 65, 156, 9.5, { bold: 1, color: C_ORANGE_DARK, align: 'center', font: 'Poppins', sp: 70 }));
+
+  // Arch Container (x: 500, y: 58, w: 250, h: 240)
+  s.push(r(500, 58, 250, 240, '#ffd0b8', { r: 125, gradient: ['#ffe3d1', '#ffd0b8'], gradAngle: 'v' }));
+  s.push(c(460, 238, 100, 'rgba(255,255,255,0.4)'));
+
+  // 3D Product Box
+  s.push(r(534, 134, 120, 130, '#ffffff', { r: 10 }));
+  s.push(r(534, 134, 120, 24, C_INDIGO, { r: 10 }));
+  s.push(r(534, 146, 120, 12, C_INDIGO));
+  s.push(r(575, 212, 38, 3, C_ORANGE, { r: 1.5 }));
+  // Tricolor stripe at box bottom
+  s.push(r(534, 256, 40, 8, '#e53935'));
+  s.push(r(574, 256, 40, 8, '#1e88e5'));
+  s.push(r(614, 256, 40, 8, '#43a047'));
+
+  // Saliva Collection Tube
+  s.push(r(650, 106, 48, 158, 'rgba(255,255,255,0.95)', { r: 24 }));
+  s.push(r(650, 106, 48, 22, C_INDIGO, { r: 10 }));
+  s.push(r(650, 164, 48, 100, '#ff9fb0', { r: 24 }));
+
+  // 3. STATS ROW
+  s.push(r(44, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(r(284, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(r(524, 324, 226, 56, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+
+  // 4. OVERVIEW & APPLICATIONS
+  s.push(c(50, 411, 5, C_ORANGE));
+  s.push(c(48, 439, 3, C_PURPLE_BADGE));
+  s.push(c(48, 481, 3, C_PURPLE_BADGE));
+  s.push(c(48, 523, 3, C_PURPLE_BADGE));
+
+  s.push(r(432, 401, 318, 172, '#ffffff', { r: 14, stroke: C_PURPLE_BORDER, sw: 1 }));
+  s.push(c(452, 423, 5, C_ORANGE));
+
+  // 5. KEY BENEFITS
+  s.push(c(50, 607, 5, C_ORANGE));
+  s.push(r(44, 627, 194, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(246, 627, 180, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(434, 627, 298, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(44, 663, 152, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(204, 663, 204, 28, C_PURPLE_LIGHT, { r: 14 }));
+  s.push(r(416, 663, 146, 28, C_PURPLE_LIGHT, { r: 14 }));
+
+  // 6. SIMPLE WORKFLOW
+  s.push(c(50, 719, 5, C_ORANGE));
+  for (let idx = 0; idx < 5; idx++) {
+    const xPos = 44 + idx * 143;
+    s.push(r(xPos, 739, 134, 98, '#ffffff', { r: 10, stroke: C_CARD_BORDER, sw: 1 }));
+    s.push(r(xPos + 10, 749, 24, 24, C_ORANGE, { r: 6 }));
+  }
+
+  // 7. EXPECTED RESULTS / PERFORMANCE
+  s.push(r(44, 853, 706, 76, C_PURPLE_LIGHT, { r: 10 }));
+  s.push(r(44, 853, 6, 76, C_INDIGO, { r: 3 }));
+  s.push(c(74, 871, 5, C_ORANGE));
+
+  // 8. FOOTER BANNER
+  s.push(r(0, 947, 794, 168, C_PEACH_LIGHT));
+
+  // BOTTOM TRICOLOR BAR
+  s.push(r(0, 1115, 264.6, 8, '#e53935'));
+  s.push(r(264.6, 1115, 264.6, 8, '#1e88e5'));
+  s.push(r(529.2, 1115, 264.8, 8, '#43a047'));
+
+  return s;
+}
+
 export function bifoldBrochure() {
   const s = [];
 
@@ -5168,6 +5436,21 @@ export const TEMPLATES = [
     emptySpecs: onespitSideFlyerEmpty,
     pages: [onespitSideFlyer, onespitSideFlyerEmpty],
     swatch: ['#0f1b3d', '#2f6bff', '#c6f432'],
+  },
+  {
+    id: 'onespit-sunset-flyer',
+    name: 'ONESpit™ Sunset Edition Flyer',
+    subtitle: 'Zero-Prep Saliva Collection (Sunset Edition)',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#fffaf5',
+    preview: '/assets/previews/onespit_sunset_flyer.png',
+    specs: onespitSunsetFlyer,
+    emptySpecs: onespitSunsetFlyerEmpty,
+    pages: [onespitSunsetFlyer, onespitSunsetFlyerEmpty],
+    swatch: ['#3a1fd1', '#ff6a35', '#ffe9dc'],
   },
   {
     id: 'bifold-genomics',
