@@ -3,17 +3,22 @@
  * Ensures full permanent saving and gallery access in both local and static live environments (e.g. Vercel).
  */
 
-const DB_NAME = 'BrochureStudioDB';
-const DB_VERSION = 1;
+import { TEMPLATES } from './brochureTemplates.js';
+
+const DB_NAMES = ['BrochureStudioDB', 'brochure_studio_db'];
+const PRIMARY_DB_NAME = 'BrochureStudioDB';
 const STORE_NAME = 'designs';
 const LS_META_KEY = 'brochure_designs_meta';
+const LS_FULL_KEY = 'brochure_designs_full';
+const LS_OLD_BACKUP_KEY = 'brochure_studio_designs_backup';
 
-function openDB() {
+function openDBByName(name) {
   return new Promise((resolve, reject) => {
     if (typeof window === 'undefined' || !window.indexedDB) {
       return reject(new Error('IndexedDB not supported'));
     }
-    const req = window.indexedDB.open(DB_NAME, DB_VERSION);
+    // Open without version parameter so it NEVER throws VersionError against existing database versions!
+    const req = window.indexedDB.open(name);
     req.onupgradeneeded = (e) => {
       const db = e.target.result;
       if (!db.objectStoreNames.contains(STORE_NAME)) {
@@ -21,37 +26,78 @@ function openDB() {
         store.createIndex('updatedAt', 'updatedAt', { unique: false });
       }
     };
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error || new Error('Failed to open database'));
+    req.onsuccess = () => {
+      const db = req.result;
+      db.onversionchange = () => { try { db.close(); } catch {} };
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        // Upgrade by 1 if the object store doesn't exist in an older DB schema
+        const nextVer = (db.version || 1) + 1;
+        db.close();
+        const upReq = window.indexedDB.open(name, nextVer);
+        upReq.onupgradeneeded = (e2) => {
+          const db2 = e2.target.result;
+          if (!db2.objectStoreNames.contains(STORE_NAME)) {
+            const store = db2.createObjectStore(STORE_NAME, { keyPath: 'id' });
+            store.createIndex('updatedAt', 'updatedAt', { unique: false });
+          }
+        };
+        upReq.onsuccess = () => {
+          const db2 = upReq.result;
+          db2.onversionchange = () => { try { db2.close(); } catch {} };
+          resolve(db2);
+        };
+        upReq.onerror = () => reject(upReq.error || new Error(`Failed to upgrade ${name}`));
+        upReq.onblocked = () => reject(new Error(`${name} upgrade blocked`));
+      } else {
+        resolve(db);
+      }
+    };
+    req.onerror = () => reject(req.error || new Error(`Failed to open ${name}`));
+    req.onblocked = () => reject(new Error(`${name} blocked`));
   });
 }
 
+function openDB() {
+  return openDBByName(PRIMARY_DB_NAME);
+}
+
 async function idbGet(id) {
-  try {
-    const db = await openDB();
-    return new Promise((resolve) => {
-      const tx = db.transaction(STORE_NAME, 'readonly');
-      const req = tx.objectStore(STORE_NAME).get(id);
-      req.onsuccess = () => resolve(req.result || null);
-      req.onerror = () => resolve(null);
-    });
-  } catch {
-    return null;
+  for (const dbName of DB_NAMES) {
+    try {
+      const db = await openDBByName(dbName);
+      if (!db.objectStoreNames.contains(STORE_NAME)) continue;
+      const res = await new Promise((resolve) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const req = tx.objectStore(STORE_NAME).get(id);
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => resolve(null);
+      });
+      if (res && res.id) return res;
+    } catch {}
   }
+  return null;
 }
 
 async function idbGetAll() {
-  try {
-    const db = await openDB();
-    return new Promise((resolve) => {
-      const tx = db.transaction(STORE_NAME, 'readonly');
-      const req = tx.objectStore(STORE_NAME).getAll();
-      req.onsuccess = () => resolve(req.result || []);
-      req.onerror = () => resolve([]);
-    });
-  } catch {
-    return [];
+  const map = new Map();
+  for (const dbName of DB_NAMES) {
+    try {
+      const db = await openDBByName(dbName);
+      if (!db.objectStoreNames.contains(STORE_NAME)) continue;
+      const list = await new Promise((resolve) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const req = tx.objectStore(STORE_NAME).getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => resolve([]);
+      });
+      if (Array.isArray(list)) {
+        list.forEach((item) => {
+          if (item && item.id) map.set(item.id, item);
+        });
+      }
+    } catch {}
   }
+  return Array.from(map.values());
 }
 
 async function idbPut(item) {
@@ -69,17 +115,19 @@ async function idbPut(item) {
 }
 
 async function idbDelete(id) {
-  try {
-    const db = await openDB();
-    return new Promise((resolve) => {
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const req = tx.objectStore(STORE_NAME).delete(id);
-      req.onsuccess = () => resolve(true);
-      req.onerror = () => resolve(false);
-    });
-  } catch {
-    return false;
+  for (const dbName of DB_NAMES) {
+    try {
+      const db = await openDBByName(dbName);
+      if (!db.objectStoreNames.contains(STORE_NAME)) continue;
+      await new Promise((resolve) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const req = tx.objectStore(STORE_NAME).delete(id);
+        req.onsuccess = () => resolve(true);
+        req.onerror = () => resolve(false);
+      });
+    } catch {}
   }
+  return true;
 }
 
 function lsGetMeta() {
@@ -92,13 +140,13 @@ function lsGetMeta() {
 
 function lsSaveMeta(item) {
   try {
-    // Only store metadata + small thumbnail to avoid localStorage 5MB quota errors
     const meta = {
       id: item.id,
       name: item.name,
       width: item.width,
       height: item.height,
       folds: item.folds,
+      templateId: item.templateId || null,
       pageCount: Array.isArray(item.pages) ? item.pages.length : 1,
       thumbnail: typeof item.thumbnail === 'string' && item.thumbnail.length < 50000 ? item.thumbnail : '',
       createdAt: item.createdAt,
@@ -107,15 +155,54 @@ function lsSaveMeta(item) {
     const list = lsGetMeta().filter((d) => d.id !== item.id);
     list.unshift(meta);
     localStorage.setItem(LS_META_KEY, JSON.stringify(list.slice(0, 50)));
-  } catch {
-    // Quota reached; IndexedDB remains primary
-  }
+  } catch {}
 }
 
 function lsDeleteMeta(id) {
   try {
     const list = lsGetMeta().filter((d) => d.id !== id);
     localStorage.setItem(LS_META_KEY, JSON.stringify(list));
+  } catch {}
+}
+
+function lsGetFullDesigns() {
+  const res = [];
+  try {
+    const l1 = JSON.parse(localStorage.getItem(LS_FULL_KEY) || '[]');
+    if (Array.isArray(l1)) res.push(...l1);
+  } catch {}
+  try {
+    const l2 = JSON.parse(localStorage.getItem(LS_OLD_BACKUP_KEY) || '[]');
+    if (Array.isArray(l2)) res.push(...l2);
+  } catch {}
+  return res;
+}
+
+function lsSaveFullDesign(item) {
+  try {
+    const clone = {
+      id: item.id,
+      name: item.name,
+      width: item.width,
+      height: item.height,
+      folds: item.folds,
+      pages: item.pages,
+      templateId: item.templateId || null,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+    };
+    const list = lsGetFullDesigns().filter((d) => d && d.id !== item.id);
+    list.unshift(clone);
+    localStorage.setItem(LS_FULL_KEY, JSON.stringify(list.slice(0, 20)));
+    localStorage.setItem(LS_OLD_BACKUP_KEY, JSON.stringify(list.slice(0, 20)));
+  } catch {}
+}
+
+function lsDeleteFullDesign(id) {
+  try {
+    const l1 = lsGetFullDesigns().filter((d) => d && d.id !== id);
+    localStorage.setItem(LS_FULL_KEY, JSON.stringify(l1));
+    localStorage.setItem(LS_OLD_BACKUP_KEY, JSON.stringify(l1));
   } catch {}
 }
 
@@ -147,18 +234,33 @@ export const listDesigns = async () => {
         folds: d.folds,
         pageCount,
         thumbnail: d.thumbnail || '',
+        templateId: d.templateId || null,
         createdAt: d.createdAt || Date.now(),
         updatedAt: d.updatedAt || Date.now(),
       });
     }
   });
 
-  // 2. Fallback to localStorage meta if IndexedDB was empty
-  if (localMap.size === 0) {
-    lsGetMeta().forEach((m) => {
-      if (m && m.id) localMap.set(m.id, m);
-    });
-  }
+  // 2. Fallback to localStorage meta & full designs if missing
+  lsGetMeta().forEach((m) => {
+    if (m && m.id && !localMap.has(m.id)) localMap.set(m.id, m);
+  });
+  lsGetFullDesigns().forEach((f) => {
+    if (f && f.id && !localMap.has(f.id)) {
+      localMap.set(f.id, {
+        id: f.id,
+        name: f.name || 'Untitled design',
+        width: f.width,
+        height: f.height,
+        folds: f.folds,
+        pageCount: Array.isArray(f.pages) ? f.pages.length : 1,
+        thumbnail: '',
+        templateId: f.templateId || null,
+        createdAt: f.createdAt || Date.now(),
+        updatedAt: f.updatedAt || Date.now(),
+      });
+    }
+  });
 
   // 3. Attempt server fetch (e.g. if local backend server is running on port 4001)
   const serverItems = await safeJsonFetch('/api/designs');
@@ -177,22 +279,49 @@ export const listDesigns = async () => {
 };
 
 export const getDesign = async (id) => {
-  // 1. Check local IndexedDB first
+  // 1. Check local IndexedDB first (both databases)
   const local = await idbGet(id);
-  if (local && local.pages && local.pages.length) {
+  if (local && Array.isArray(local.pages) && local.pages.length) {
     return local;
   }
 
-  // 2. Check server
+  // 2. Check localStorage full backups
+  const lsFull = lsGetFullDesigns().find((d) => d && (d.id === id || String(d.id) === String(id)));
+  if (lsFull && Array.isArray(lsFull.pages) && lsFull.pages.length) {
+    await idbPut(lsFull);
+    return lsFull;
+  }
+
+  // 3. Check server (if backend is running)
   const serverDesign = await safeJsonFetch(`/api/designs/${id}`);
-  if (serverDesign && serverDesign.pages && serverDesign.pages.length) {
+  if (serverDesign && Array.isArray(serverDesign.pages) && serverDesign.pages.length) {
     await idbPut(serverDesign);
     lsSaveMeta(serverDesign);
+    lsSaveFullDesign(serverDesign);
     return serverDesign;
   }
 
-  // 3. Fallback to any local item matching id
-  if (local) return local;
+  // 4. If local item exists with pages
+  if (local && Array.isArray(local.pages) && local.pages.length) return local;
+
+  // 5. Check if the gallery item matches any template by name or id as ultimate safety net
+  const metaItem = lsGetMeta().find((m) => m && (m.id === id || String(m.id) === String(id)));
+  const designName = metaItem?.name || local?.name;
+  if (designName) {
+    const matchingTpl = TEMPLATES.find((t) => t.name === designName || t.id === id || t.id === metaItem?.templateId);
+    if (matchingTpl) {
+      return {
+        id,
+        name: matchingTpl.name,
+        width: matchingTpl.w,
+        height: matchingTpl.h,
+        folds: matchingTpl.folds || 0,
+        pages: [],
+        templateId: matchingTpl.id,
+        isTemplate: true,
+      };
+    }
+  }
 
   throw new Error('Design not found in gallery');
 };
@@ -207,6 +336,7 @@ export const saveDesign = async (d) => {
     folds: Number(d.folds) || 0,
     pages: Array.isArray(d.pages) ? d.pages : [],
     thumbnail: typeof d.thumbnail === 'string' ? d.thumbnail : '',
+    templateId: d.templateId || null,
     createdAt: d.createdAt || Date.now(),
     updatedAt: Date.now(),
   };
@@ -214,6 +344,7 @@ export const saveDesign = async (d) => {
   // 1. Save locally to IndexedDB & localStorage immediately
   await idbPut(record);
   lsSaveMeta(record);
+  lsSaveFullDesign(record);
 
   // 2. Attempt background sync to backend server if available
   const payload = JSON.stringify(record);
@@ -230,10 +361,12 @@ export const saveDesign = async (d) => {
       if (srvRes.id !== id) {
         await idbDelete(id);
         lsDeleteMeta(id);
+        lsDeleteFullDesign(id);
         record.id = srvRes.id;
         record.updatedAt = srvRes.updatedAt || Date.now();
         await idbPut(record);
         lsSaveMeta(record);
+        lsSaveFullDesign(record);
       }
       return { id: record.id, updatedAt: record.updatedAt };
     }
@@ -248,6 +381,7 @@ export const saveDesign = async (d) => {
 export const deleteDesign = async (id) => {
   await idbDelete(id);
   lsDeleteMeta(id);
+  lsDeleteFullDesign(id);
 
   try {
     await fetch(`/api/designs/${id}`, { method: 'DELETE' });
@@ -341,7 +475,6 @@ function lsGetUploads() {
 function lsSaveUpload(item) {
   try {
     const list = lsGetUploads().filter((u) => u.id !== item.id && u.url !== item.url);
-    // Include dataUrl if within standard localStorage size limits (< 2.5 MB)
     const canFit = typeof item.dataUrl === 'string' && item.dataUrl.length < 2500000;
     list.unshift({
       id: item.id,
@@ -436,7 +569,6 @@ export const listUploads = async () => {
 };
 
 export const uploadImage = async (file) => {
-  // Always read as data URL first so it's guaranteed to work offline, on Vercel, and locally
   const dataUrl = await new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
@@ -464,12 +596,10 @@ export const uploadImage = async (file) => {
     createdAt: Date.now(),
   };
 
-  // 1. Persist to IndexedDB
   try {
     await idbPutUpload(record);
   } catch {}
 
-  // 2. Persist to LocalStorage backup
   try {
     lsSaveUpload(record);
   } catch {}
@@ -482,12 +612,10 @@ export const deleteUpload = async (itemOrId) => {
   const url = typeof itemOrId === 'object' ? itemOrId?.url : (typeof itemOrId === 'string' && itemOrId.startsWith('/') ? itemOrId : null);
   const dataUrl = typeof itemOrId === 'object' ? itemOrId?.dataUrl : null;
 
-  // 1. Delete from IndexedDB by id
   if (id) {
     await idbDeleteUpload(id);
   }
 
-  // 2. Delete from IndexedDB by matching url
   try {
     const all = await idbGetUploads();
     for (const u of all) {
@@ -497,10 +625,8 @@ export const deleteUpload = async (itemOrId) => {
     }
   } catch {}
 
-  // 3. Delete from LocalStorage
   lsDeleteUpload(id, url);
 
-  // 4. Delete from server if running locally
   if (url && url.startsWith('/uploads/')) {
     const filename = url.replace('/uploads/', '');
     try {

@@ -61,10 +61,23 @@ export default function App() {
   const openDesign = async (id) => {
     try {
       const d = await getDesign(id);
-      setDesign({ id: d.id, name: d.name, width: d.width, height: d.height, folds: d.folds || 0 });
-      setPages(d.pages); setPageIdx(0);
-      ed.setSize(d.width, d.height);
-      await ed.loadPage(d.pages[0]);
+      setDesign({ id: d.id, name: d.name, width: d.width, height: d.height, folds: d.folds || 0, templateId: d.templateId || null });
+      if (d.isTemplate && (!d.pages || !d.pages.length)) {
+        const tpl = TEMPLATES.find((t) => t.id === (d.templateId || d.id) || t.name === d.name);
+        if (tpl) {
+          ed.setSize(tpl.w, tpl.h, tpl.folds || 0);
+          const pgs = await ed.applyTemplate(tpl);
+          setPages(pgs || [null]); setPageIdx(0);
+          fit(tpl.w, tpl.h); setModal(null); setSaved(true);
+          return;
+        }
+      }
+      const safePages = Array.isArray(d.pages) && d.pages.length ? d.pages : [null];
+      setPages(safePages); setPageIdx(0);
+      ed.setSize(d.width, d.height, d.folds || 0);
+      if (safePages[0]) {
+        await ed.loadPage(safePages[0]);
+      }
       fit(d.width, d.height); setModal(null); setSaved(true);
     } catch (e) { notify(e.message); }
   };

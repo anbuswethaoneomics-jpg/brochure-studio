@@ -74,11 +74,45 @@ export function useEditor() {
     c.requestRenderAll();
   };
 
+  const sanitizeDesignJson = (json) => {
+    if (!json) return json;
+    try {
+      let str = typeof json === 'string' ? json : JSON.stringify(json);
+      str = str.replace(/https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/assets\//g, '/assets/');
+      str = str.replace(/https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/uploads\//g, '/uploads/');
+      return JSON.parse(str);
+    } catch {
+      return json;
+    }
+  };
+
   const restore = async (json) => {
     const c = cvs.current;
+    if (!c) return;
     busy.current = true;
     c.discardActiveObject();
-    await c.loadFromJSON(json);
+    const cleanJson = sanitizeDesignJson(json);
+    try {
+      await c.loadFromJSON(cleanJson);
+    } catch (err) {
+      console.warn('loadFromJSON warning:', err);
+      try {
+        let str = JSON.stringify(cleanJson);
+        const blank = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+        const match = err?.message?.match(/loading (https?:\/\/[^\s]+)/i);
+        if (match && match[1]) {
+          str = str.split(match[1]).join(blank);
+        } else {
+          str = str.replace(/https?:\/\/[^\s"']+\.(png|jpe?g|webp|svg)/gi, (url) => {
+            if (url.includes('localhost') || url.includes('127.0.0.1')) return blank;
+            return url;
+          });
+        }
+        await c.loadFromJSON(JSON.parse(str));
+      } catch (retryErr) {
+        console.error('loadFromJSON recovery failed:', retryErr);
+      }
+    }
     applyZoom();
     busy.current = false;
     readSel();
