@@ -333,9 +333,41 @@ export function useEditor() {
       else if (k === 'delete' || k === 'backspace') { e.preventDefault(); remove(); }
       else if (o && k.startsWith('arrow')) {
         e.preventDefault();
+        if (e.altKey && (k === 'arrowup' || k === 'arrowdown')) {
+          const grow = k === 'arrowup';
+          const rate = e.shiftKey ? 0.2 : 0.05;
+          const factor = grow ? (1 + rate) : (1 - rate);
+          if (o.type === 'textbox' || o.type === 'i-text') {
+            const curSize = o.fontSize || 16;
+            const delta = grow ? (e.shiftKey ? 4 : 1) : (e.shiftKey ? -4 : -1);
+            o.set({ fontSize: Math.max(6, Math.min(400, curSize + delta)) });
+          } else {
+            const center = o.getCenterPoint ? o.getCenterPoint() : { x: o.left, y: o.top };
+            o.set({ scaleX: Math.max(0.02, (o.scaleX || 1) * factor), scaleY: Math.max(0.02, (o.scaleY || 1) * factor) });
+            if (o.setPositionByOrigin) o.setPositionByOrigin(center, 'center', 'center');
+          }
+          o.setCoords(); c.requestRenderAll(); queue(); readSel();
+          return;
+        }
         const step = e.shiftKey ? 10 : 1;
         const d = { arrowleft: [-step, 0], arrowright: [step, 0], arrowup: [0, -step], arrowdown: [0, step] }[k];
         o.set({ left: o.left + d[0], top: o.top + d[1] }); o.setCoords(); c.requestRenderAll(); queue();
+      }
+      else if (o && (k === ']' || k === '[' || k === '+' || k === '=' || k === '-' || k === '_')) {
+        e.preventDefault();
+        const grow = (k === ']' || k === '+' || k === '=');
+        const rate = e.shiftKey ? 0.2 : 0.05;
+        const factor = grow ? (1 + rate) : (1 - rate);
+        if (o.type === 'textbox' || o.type === 'i-text') {
+          const curSize = o.fontSize || 16;
+          const delta = grow ? (e.shiftKey ? 4 : 1) : (e.shiftKey ? -4 : -1);
+          o.set({ fontSize: Math.max(6, Math.min(400, curSize + delta)) });
+        } else {
+          const center = o.getCenterPoint ? o.getCenterPoint() : { x: o.left, y: o.top };
+          o.set({ scaleX: Math.max(0.02, (o.scaleX || 1) * factor), scaleY: Math.max(0.02, (o.scaleY || 1) * factor) });
+          if (o.setPositionByOrigin) o.setPositionByOrigin(center, 'center', 'center');
+        }
+        o.setCoords(); c.requestRenderAll(); queue(); readSel();
       }
     };
     window.addEventListener('keydown', onKey);
