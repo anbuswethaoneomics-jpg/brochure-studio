@@ -32,13 +32,19 @@ export function useEditor() {
         underline: !!o.underline, align: o.textAlign, lh: o.lineHeight, sp: o.charSpacing,
       });
     }
-    if (o instanceof FabricImage) return setSel({ kind: 'image', ...base });
+    const scaledW = Math.round(o.getScaledWidth ? o.getScaledWidth() : (o.width || 0) * (o.scaleX || 1));
+    const scaledH = Math.round(o.getScaledHeight ? o.getScaledHeight() : (o.height || 0) * (o.scaleY || 1));
+    if (o instanceof FabricImage) return setSel({ kind: 'image', ...base, size: scaledW, width: scaledW, height: scaledH });
     if (o instanceof Group) {
       const first = o.getObjects()[0];
-      return setSel({ kind: 'icon', ...base, fill: hex(first && first.stroke) });
+      return setSel({ kind: 'icon', ...base, fill: hex(first && first.stroke), size: scaledW, width: scaledW, height: scaledH });
     }
     if (o instanceof Line) return setSel({ kind: 'line', ...base, fill: hex(o.stroke), sw: o.strokeWidth });
-    return setSel({ kind: 'shape', ...base, fill: hex(o.fill), stroke: hex(o.stroke), hasStroke: !!o.stroke, sw: o.strokeWidth || 0, r: o.rx || 0, isRect: o instanceof Rect });
+    return setSel({
+      kind: 'shape', ...base, fill: hex(o.fill), stroke: hex(o.stroke), hasStroke: !!o.stroke,
+      sw: o.strokeWidth || 0, r: o.rx || 0, isRect: o instanceof Rect,
+      size: scaledW, width: scaledW, height: scaledH,
+    });
   };
 
   // ---------- history ----------
@@ -53,7 +59,7 @@ export function useEditor() {
     const h = hist.current;
     if (h.stack[h.i] === json) return;
     h.stack = h.stack.slice(0, h.i + 1);
-    h.stack.push(json);
+    h.push ? h.stack.push(json) : h.stack.push(json);
     if (h.stack.length > 60) h.stack.shift();
     h.i = h.stack.length - 1;
     syncFlags();
@@ -64,6 +70,57 @@ export function useEditor() {
     timer.current = setTimeout(snapshot, 200);
   };
   const commit = () => { readSel(); cvs.current.requestRenderAll(); queue(); };
+
+  const changeObjectSize = (delta) => {
+    const c = cvs.current;
+    if (!c) return;
+    const objs = c.getActiveObjects();
+    if (!objs.length) return;
+    objs.forEach((o) => {
+      if (o instanceof Textbox) {
+        const cur = o.fontSize || 16;
+        o.set('fontSize', Math.max(6, Math.min(400, cur + delta)));
+        o.initDimensions();
+      } else {
+        const curW = o.getScaledWidth() || (o.radius ? o.radius * 2 : 10);
+        const nextW = Math.max(2, Math.min(2500, curW + delta));
+        const ratio = nextW / Math.max(0.1, curW);
+        const center = o.getCenterPoint ? o.getCenterPoint() : { x: o.left, y: o.top };
+        o.set({
+          scaleX: Math.max(0.01, (o.scaleX || 1) * ratio),
+          scaleY: Math.max(0.01, (o.scaleY || 1) * ratio),
+        });
+        if (o.setPositionByOrigin) o.setPositionByOrigin(center, 'center', 'center');
+      }
+      o.setCoords();
+    });
+    commit();
+  };
+
+  const setObjectSize = (targetSize) => {
+    const c = cvs.current;
+    if (!c) return;
+    const objs = c.getActiveObjects();
+    if (!objs.length) return;
+    objs.forEach((o) => {
+      if (o instanceof Textbox) {
+        o.set('fontSize', Math.max(6, Math.min(400, Math.round(targetSize))));
+        o.initDimensions();
+      } else {
+        const curW = o.getScaledWidth() || (o.radius ? o.radius * 2 : 10);
+        const nextW = Math.max(2, Math.min(2500, targetSize));
+        const ratio = nextW / Math.max(0.1, curW);
+        const center = o.getCenterPoint ? o.getCenterPoint() : { x: o.left, y: o.top };
+        o.set({
+          scaleX: Math.max(0.01, (o.scaleX || 1) * ratio),
+          scaleY: Math.max(0.01, (o.scaleY || 1) * ratio),
+        });
+        if (o.setPositionByOrigin) o.setPositionByOrigin(center, 'center', 'center');
+      }
+      o.setCoords();
+    });
+    commit();
+  };
   const resetHistory = () => {
     hist.current = { stack: [JSON.stringify(cvs.current.toObject())], i: 0 };
     syncFlags();
@@ -333,41 +390,19 @@ export function useEditor() {
       else if (k === 'delete' || k === 'backspace') { e.preventDefault(); remove(); }
       else if (o && k.startsWith('arrow')) {
         e.preventDefault();
-        if (e.altKey && (k === 'arrowup' || k === 'arrowdown')) {
+        if ((e.altKey || mod) && (k === 'arrowup' || k === 'arrowdown')) {
           const grow = k === 'arrowup';
-          const rate = e.shiftKey ? 0.2 : 0.05;
-          const factor = grow ? (1 + rate) : (1 - rate);
-          if (o.type === 'textbox' || o.type === 'i-text') {
-            const curSize = o.fontSize || 16;
-            const delta = grow ? (e.shiftKey ? 4 : 1) : (e.shiftKey ? -4 : -1);
-            o.set({ fontSize: Math.max(6, Math.min(400, curSize + delta)) });
-          } else {
-            const center = o.getCenterPoint ? o.getCenterPoint() : { x: o.left, y: o.top };
-            o.set({ scaleX: Math.max(0.02, (o.scaleX || 1) * factor), scaleY: Math.max(0.02, (o.scaleY || 1) * factor) });
-            if (o.setPositionByOrigin) o.setPositionByOrigin(center, 'center', 'center');
-          }
-          o.setCoords(); c.requestRenderAll(); queue(); readSel();
+          changeObjectSize(grow ? (e.shiftKey ? 6 : 2) : (e.shiftKey ? -6 : -2));
           return;
         }
         const step = e.shiftKey ? 10 : 1;
         const d = { arrowleft: [-step, 0], arrowright: [step, 0], arrowup: [0, -step], arrowdown: [0, step] }[k];
         o.set({ left: o.left + d[0], top: o.top + d[1] }); o.setCoords(); c.requestRenderAll(); queue();
       }
-      else if (o && (k === ']' || k === '[' || k === '+' || k === '=' || k === '-' || k === '_')) {
+      else if (o && (k === ']' || k === '[' || k === '+' || k === '=' || k === '-' || k === '_' || k === '>' || k === '<' || (mod && (k === '.' || k === ',')))) {
         e.preventDefault();
-        const grow = (k === ']' || k === '+' || k === '=');
-        const rate = e.shiftKey ? 0.2 : 0.05;
-        const factor = grow ? (1 + rate) : (1 - rate);
-        if (o.type === 'textbox' || o.type === 'i-text') {
-          const curSize = o.fontSize || 16;
-          const delta = grow ? (e.shiftKey ? 4 : 1) : (e.shiftKey ? -4 : -1);
-          o.set({ fontSize: Math.max(6, Math.min(400, curSize + delta)) });
-        } else {
-          const center = o.getCenterPoint ? o.getCenterPoint() : { x: o.left, y: o.top };
-          o.set({ scaleX: Math.max(0.02, (o.scaleX || 1) * factor), scaleY: Math.max(0.02, (o.scaleY || 1) * factor) });
-          if (o.setPositionByOrigin) o.setPositionByOrigin(center, 'center', 'center');
-        }
-        o.setCoords(); c.requestRenderAll(); queue(); readSel();
+        const grow = (k === ']' || k === '+' || k === '=' || k === '>' || (mod && k === '.'));
+        changeObjectSize(grow ? (e.shiftKey ? 6 : 2) : (e.shiftKey ? -6 : -2));
       }
     };
     window.addEventListener('keydown', onKey);
@@ -798,6 +833,7 @@ export function useEditor() {
     elRef, sel, ...flags, bgColor,
     undo, redo, addText, addShape, addIcon, addImage,
     setProps, setColor, setStroke, setCorner, toggle, layer, centerOnPage, remove, duplicate,
+    changeObjectSize, setObjectSize,
     setBackground, getBackground, setSize, setFolds, setZoom, getJSON, clear, loadPage, applyTemplate, buildPageFromSpecs, shufflePanels, isEmpty,
     render, renderPages,
     // helpers

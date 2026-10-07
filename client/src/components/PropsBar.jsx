@@ -51,6 +51,45 @@ function Color({ label, value, onChange }) {
   );
 }
 
+function SizeStepper({ value, onChange, onStep, label = "Size" }) {
+  return (
+    <div className="size-stepper" style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+      <span className="props-label">{label}</span>
+      <button
+        type="button"
+        className="tb"
+        style={{ width: 24, height: 24, minWidth: 24, padding: 0, fontWeight: 'bold', fontSize: 13, lineHeight: '22px' }}
+        onClick={() => onStep(-2)}
+        title="Minimize / shrink size (-)"
+        aria-label="Minimize size"
+      >
+        −
+      </button>
+      <input
+        type="number"
+        value={value || 0}
+        min={2}
+        max={2000}
+        style={{ width: 48, textAlign: 'center', padding: '2px 4px', fontSize: 12, borderRadius: 4, border: '1px solid #ccc' }}
+        onChange={(e) => {
+          const v = parseFloat(e.target.value);
+          if (!Number.isNaN(v) && v > 0) onChange(v);
+        }}
+      />
+      <button
+        type="button"
+        className="tb"
+        style={{ width: 24, height: 24, minWidth: 24, padding: 0, fontWeight: 'bold', fontSize: 13, lineHeight: '22px' }}
+        onClick={() => onStep(2)}
+        title="Maximize / enlarge size (+)"
+        aria-label="Maximize size"
+      >
+        +
+      </button>
+    </div>
+  );
+}
+
 export default function StudioPropsBar({ ed, bg }) {
   const s = ed.sel;
 
@@ -117,11 +156,13 @@ export default function StudioPropsBar({ ed, bg }) {
       {/* ── Shape controls ────────────────────────────────── */}
       {s.kind === 'shape' && (
         <>
+          <SizeStepper value={s.size} onChange={ed.setObjectSize} onStep={ed.changeObjectSize} />
+          <span className="sep" />
           <span className="props-label">Fill</span>
           <Color label="Fill color" value={s.fill} onChange={ed.setColor} />
           <span className="props-label">Border</span>
           <Color label="Border color" value={s.stroke} onChange={(v) => ed.setStroke({ stroke: v })} />
-          <Num label="Width" value={s.sw} min={0} max={80} onChange={(v) => ed.setStroke({ strokeWidth: v })} />
+          <Num label="Border Width" value={s.sw} min={0} max={80} onChange={(v) => ed.setStroke({ strokeWidth: v })} />
           {s.isRect && <Num label="Corners" value={Math.round(s.r)} min={0} max={300} onChange={ed.setCorner} />}
         </>
       )}
@@ -129,6 +170,12 @@ export default function StudioPropsBar({ ed, bg }) {
       {/* ── Icon / Line controls ──────────────────────────── */}
       {(s.kind === 'icon' || s.kind === 'line') && (
         <>
+          {s.kind === 'icon' && (
+            <>
+              <SizeStepper value={s.size} onChange={ed.setObjectSize} onStep={ed.changeObjectSize} />
+              <span className="sep" />
+            </>
+          )}
           <span className="props-label">Color</span>
           <Color label="Color" value={s.fill} onChange={ed.setColor} />
           {s.kind === 'line' && (
@@ -141,6 +188,8 @@ export default function StudioPropsBar({ ed, bg }) {
       {s.kind === 'image' && (
         <>
           <span className="props-label">Image</span>
+          <SizeStepper value={s.size} onChange={ed.setObjectSize} onStep={(d) => ed.changeObjectSize(d * 4)} />
+          <span className="sep" />
           <button className="tb txt" onClick={ed.fitImageToPage} title="Stretch this image to fill the canvas">
             Fit to page
           </button>
@@ -154,7 +203,12 @@ export default function StudioPropsBar({ ed, bg }) {
         </>
       )}
 
-      {s.kind === 'multi' && <span className="props-label">Multiple items selected</span>}
+      {s.kind === 'multi' && (
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+          <span className="props-label">Multiple selected</span>
+          <SizeStepper value={s.size} onChange={ed.setObjectSize} onStep={ed.changeObjectSize} />
+        </div>
+      )}
 
       {/* ── General controls ──────────────────────────────── */}
       <span className="sep" />
