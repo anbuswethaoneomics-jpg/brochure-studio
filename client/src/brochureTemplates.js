@@ -3453,6 +3453,151 @@ export function taqPlusFlyerEmpty(pageNum = 2) {
   return s;
 }
 
+// ONEMag™ Rapid Plant DNA Extraction Kit — A4 Flyer (794 x 1123)
+export function onemagPlantDnaFlyer() {
+  const s = [];
+
+  const C_ORANGE = '#d9730d';
+  const C_DARK = '#111111';
+  const C_SUB = '#555555';
+  const C_TEXT = '#262626';
+  const C_MUTED = '#8a8a8a';
+  const C_LINE = '#d9d9d9';
+
+  // 1. TOP HEADER (Logo left, kicker right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 56, y: 40, w: 150 });
+  s.push(t('PRODUCT PROFILE · 09 / 14', 438, 48, 300, 11, { color: C_MUTED, align: 'right', font: 'Poppins', sp: 120 }));
+
+  // 2. TITLE SECTION
+  s.push(t('DNA EXTRACTION', 56, 116, 682, 12, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 120 }));
+  s.push(t('ONEMag™ Rapid Plant\nDNA Extraction Kit', 56, 138, 682, 38, { bold: 1, color: C_DARK, font: 'Poppins', lh: 1.1 }));
+  s.push(t('Magnetic bead-based DNA purification for plant samples', 56, 230, 682, 17.5, { color: C_SUB, font: 'Poppins' }));
+
+  // 3. ROW 1: OVERVIEW
+  s.push(r(56, 276, 682, 1, C_LINE));
+  s.push(t('OVERVIEW', 56, 292, 140, 11.5, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 120 }));
+  s.push(t('A magnetic bead-based DNA purification system designed for the rapid and efficient isolation of high-quality genomic DNA from a wide range of plant samples.', 206, 292, 532, 13, { color: C_TEXT, font: 'Poppins', lh: 1.55 }));
+  s.push(t('The kit is optimized to handle challenging plant matrices containing polysaccharides, polyphenols and other compounds that can interfere with DNA purification and downstream applications.', 206, 356, 532, 13, { color: C_TEXT, font: 'Poppins', lh: 1.55 }));
+  s.push(t('The magnetic bead-based purification eliminates the need for hazardous organic solvents and simplifies DNA processing with minimal manual handling.', 206, 420, 532, 13, { color: C_TEXT, font: 'Poppins', lh: 1.55 }));
+
+  // 4. ROW 2: KEY FEATURES
+  s.push(r(56, 492, 682, 1, C_LINE));
+  s.push(t('KEY FEATURES', 56, 508, 140, 11.5, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 120 }));
+
+  const features = [
+    'Magnetic bead-based DNA purification',
+    'Optimized for a wide range of plant tissues',
+    'Efficient removal of polysaccharides, polyphenols and PCR inhibitors',
+    'Rapid and easy extraction workflow',
+    'Delivers high-yield, high-purity genomic DNA',
+    'Minimizes hazardous chemicals and organic solvent use',
+    'Compatible with manual and automated workflows',
+    'DNA suitable for sensitive downstream applications',
+  ];
+  features.forEach((feat, i) => {
+    const itemY = 508 + i * 23.5;
+    s.push(t('–', 206, itemY, 14, 13, { bold: 1, color: C_ORANGE, font: 'Poppins' }));
+    s.push(t(feat, 222, itemY, 516, 12.8, { color: C_TEXT, font: 'Poppins' }));
+  });
+
+  // 5. ROW 3: APPLICATIONS (Two Columns)
+  s.push(r(56, 712, 682, 1, C_LINE));
+  s.push(t('APPLICATIONS', 56, 728, 140, 11.5, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 120 }));
+
+  const col1 = [
+    'Plant genomics and molecular breeding',
+    'PCR & qPCR',
+    'DNA barcoding',
+    'Genotyping and SNP analysis',
+  ];
+  const col2 = [
+    'Plant pathogen detection',
+    'Genetic diversity studies',
+    'Marker-assisted selection',
+    'Next-Generation Sequencing (NGS)',
+  ];
+  col1.forEach((app, i) => {
+    const itemY = 728 + i * 23.5;
+    s.push(t('–', 206, itemY, 14, 13, { bold: 1, color: C_ORANGE, font: 'Poppins' }));
+    s.push(t(app, 222, itemY, 250, 12.8, { color: C_TEXT, font: 'Poppins' }));
+  });
+  col2.forEach((app, i) => {
+    const itemY = 728 + i * 23.5;
+    s.push(t('–', 486, itemY, 14, 13, { bold: 1, color: C_ORANGE, font: 'Poppins' }));
+    s.push(t(app, 502, itemY, 250, 12.8, { color: C_TEXT, font: 'Poppins' }));
+  });
+
+  // 6. FOOTER
+  s.push(r(56, 892, 682, 1, C_LINE));
+  s.push(t('Interested in ONEMag™ Rapid Plant DNA?', 56, 910, 380, 16, { bold: 1, color: C_DARK, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 56, 936, 380, 12, { color: C_MUTED, font: 'Poppins' }));
+
+  s.push(t('WEB', 480, 912, 56, 11, { color: C_MUTED, font: 'Poppins', sp: 60 }));
+  s.push(t('www.[your-website].com', 540, 912, 198, 12.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 480, 936, 56, 11, { color: C_MUTED, font: 'Poppins', sp: 60 }));
+  s.push(t('[info@your-domain.com]', 540, 936, 198, 12.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('PHONE', 480, 960, 56, 11, { color: C_MUTED, font: 'Poppins', sp: 60 }));
+  s.push(t('[+91 00000 00000]', 540, 960, 198, 12.5, { color: C_TEXT, font: 'Poppins' }));
+
+  return s;
+}
+
+// ONEMag™ Rapid Plant DNA Extraction Kit — A4 Flyer Page 2 (Empty Template)
+export function onemagPlantDnaFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_ORANGE = '#d9730d';
+  const C_DARK = '#111111';
+  const C_MUTED = '#8a8a8a';
+  const C_LINE = '#d9d9d9';
+
+  // 1. TOP HEADER
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 56, y: 40, w: 150 });
+  s.push(r(528, 44, 210, 18, '#f5f5f5', { r: 4 }));
+
+  // 2. TITLE SECTION PLACEHOLDERS
+  s.push(r(56, 116, 160, 16, '#fef5ec', { r: 4 }));
+  s.push(r(56, 138, 480, 38, '#f5f5f5', { r: 6 }));
+  s.push(r(56, 182, 380, 38, '#f5f5f5', { r: 6 }));
+  s.push(r(56, 230, 520, 20, '#f9f9f9', { r: 4 }));
+
+  // 3. ROW 1: OVERVIEW
+  s.push(r(56, 276, 682, 1, C_LINE));
+  s.push(t('OVERVIEW', 56, 292, 140, 11.5, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 120 }));
+  s.push(r(206, 292, 532, 50, '#f9f9f9', { r: 6 }));
+  s.push(r(206, 356, 532, 50, '#f9f9f9', { r: 6 }));
+  s.push(r(206, 420, 532, 50, '#f9f9f9', { r: 6 }));
+
+  // 4. ROW 2: KEY FEATURES
+  s.push(r(56, 492, 682, 1, C_LINE));
+  s.push(t('KEY FEATURES', 56, 508, 140, 11.5, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 120 }));
+  for (let i = 0; i < 8; i++) {
+    const itemY = 508 + i * 23.5;
+    s.push(t('–', 206, itemY, 14, 13, { bold: 1, color: C_ORANGE, font: 'Poppins' }));
+    s.push(r(222, itemY + 2, 460, 14, '#f9f9f9', { r: 4 }));
+  }
+
+  // 5. ROW 3: APPLICATIONS
+  s.push(r(56, 712, 682, 1, C_LINE));
+  s.push(t('APPLICATIONS', 56, 728, 140, 11.5, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 120 }));
+  for (let i = 0; i < 4; i++) {
+    const itemY = 728 + i * 23.5;
+    s.push(t('–', 206, itemY, 14, 13, { bold: 1, color: C_ORANGE, font: 'Poppins' }));
+    s.push(r(222, itemY + 2, 220, 14, '#f9f9f9', { r: 4 }));
+    s.push(t('–', 486, itemY, 14, 13, { bold: 1, color: C_ORANGE, font: 'Poppins' }));
+    s.push(r(502, itemY + 2, 220, 14, '#f9f9f9', { r: 4 }));
+  }
+
+  // 6. FOOTER
+  s.push(r(56, 892, 682, 1, C_LINE));
+  s.push(t('Interested in ONEMag™ Rapid Plant DNA?', 56, 910, 380, 16, { bold: 1, color: C_DARK, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 56, 936, 380, 12, { color: C_MUTED, font: 'Poppins' }));
+
+  return s;
+}
+
 export function bifoldBrochure() {
   const s = [];
 
@@ -7733,6 +7878,21 @@ export const TEMPLATES = [
     emptySpecs: taqPlusFlyerEmpty,
     pages: [taqPlusFlyer, taqPlusFlyerEmpty],
     swatch: ['#c62828', '#111111', '#888888'],
+  },
+  {
+    id: 'onemag-plant-dna-flyer',
+    name: 'ONEMag™ Rapid Plant DNA Flyer',
+    subtitle: 'Magnetic Bead-Based Plant DNA Purification',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/onemag_plant_dna_flyer.png',
+    specs: onemagPlantDnaFlyer,
+    emptySpecs: onemagPlantDnaFlyerEmpty,
+    pages: [onemagPlantDnaFlyer, onemagPlantDnaFlyerEmpty],
+    swatch: ['#d9730d', '#111111', '#555555'],
   },
   {
     id: 'bifold-genomics',
