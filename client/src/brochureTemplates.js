@@ -2928,6 +2928,215 @@ export function onemagDnaFlyerEmpty(pageNum = 2) {
   return s;
 }
 
+// NucleoGUARD™ RNA Stabilization Buffer — A4 Flyer (794 x 1123)
+export function nucleoguardFlyer() {
+  const s = [];
+
+  const C_NAVY = '#0e2a5c';
+  const C_ROYAL = '#1f56d6';
+  const C_CYAN = '#22c3d6';
+  const C_CYAN_LIGHT = '#9fe8f1';
+  const C_LIQUID = '#7fd8e6';
+  const C_ICE = '#dff0fb';
+  const C_ICE_BORDER = '#cfe3f5';
+  const C_CARD_BORDER = '#dbe8f6';
+  const C_TEXT = '#17294d';
+  const C_MUTED = '#7f8fb0';
+  const C_LEAD = '#cfe0ff';
+  const C_FOOT_SUB = '#c3d3ee';
+  const C_CHIP_BG = '#eaf3fd';
+
+  // 1. TOP HEADER (White bar, Logo left, kicker right)
+  s.push(r(0, 0, 794, 70, '#ffffff'));
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 20, w: 148 });
+  s.push(t('PRODUCT PROFILE   ·   03 / 14', 450, 28, 300, 10, { bold: 1, color: C_MUTED, align: 'right', font: 'Poppins', sp: 120 }));
+
+  // 2. ROW 1: HERO & ILLUSTRATION (y: 84, h: 236)
+  // Left: Hero Card (Gradient from #0e2a5c to #1f56d6)
+  s.push(r(44, 84, 440, 236, C_NAVY, { r: 20, gradient: [C_NAVY, C_ROYAL] }));
+
+  // Pill: STABILIZE RNA
+  s.push(r(66, 104, 118, 22, C_CYAN, { r: 11 }));
+  s.push(t('STABILIZE RNA', 66, 108, 118, 9.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins', sp: 100 }));
+
+  // Hero Title: NucleoGUARD™
+  s.push(t('NucleoGUARD™', 66, 136, 396, 42, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+
+  // Hero Subtitle: RNA Stabilization Buffer
+  s.push(t('RNA Stabilization Buffer', 66, 192, 396, 17, { bold: 1, color: C_CYAN_LIGHT, font: 'Poppins' }));
+
+  // Hero Lead
+  s.push(t('Protect RNA from the moment of collection.', 66, 222, 396, 12.5, { italic: 1, color: C_LEAD, font: 'Poppins' }));
+
+  // Right: Illustration Card
+  s.push(r(496, 84, 254, 236, C_ICE, { r: 20, stroke: C_ICE_BORDER, sw: 1 }));
+  // Soft decorative circle
+  s.push(c(520, 190, 75, 'rgba(31, 86, 214, 0.12)'));
+
+  // RNA Wave Path
+  s.push({ k: 'path', d: 'M6 30 C30 -4 52 64 76 30 S122 -4 146 30 192 64 220 30', x: 510, y: 242, stroke: C_ROYAL, sw: 3, opacity: 0.55 });
+  s.push(c(516, 272, 4, C_CYAN));
+  s.push(c(730, 272, 4, C_CYAN));
+
+  // Vial Illustration
+  s.push(r(592, 110, 62, 150, '#ffffff', { r: 24, stroke: '#b9d3ee', sw: 2 }));
+  s.push(r(593, 174, 60, 84, C_LIQUID, { r: 22 }));
+  s.push(r(592, 110, 62, 26, C_ROYAL, { r: 8 }));
+  s.push(r(600, 154, 46, 34, '#ffffff', { r: 4 }));
+  s.push(t('ONEOMICS\nRNA', 600, 160, 46, 7.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins', lh: 1.25 }));
+
+  // 3. ROW 2: OVERVIEW (y: 332, h: 122)
+  s.push(r(44, 332, 706, 122, '#ffffff', { r: 20, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(t('OVERVIEW', 64, 345, 666, 13, { bold: 1, color: C_ROYAL, font: 'Poppins', sp: 60 }));
+
+  // Column 1
+  s.push(r(64, 368, 3, 64, C_CYAN, { r: 2 }));
+  s.push(t('Designed to stabilize RNA in biological samples and help preserve sample quality during handling and storage.', 76, 366, 198, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  // Column 2
+  s.push(r(296, 368, 3, 64, C_CYAN, { r: 2 }));
+  s.push(t('Reduces the need for immediate processing and supports flexible sample collection, transport and downstream RNA workflows.', 308, 366, 198, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  // Column 3
+  s.push(r(528, 368, 3, 64, C_CYAN, { r: 2 }));
+  s.push(t('Ideal for research applications where maintaining RNA integrity is critical for reliable molecular analysis.', 540, 366, 198, 11, { color: C_TEXT, font: 'Poppins', lh: 1.45 }));
+
+  // 4. ROW 3: KEY BENEFITS & APPLICATIONS (y: 466, h: 218)
+  // Left: Key Benefits Card
+  s.push(r(44, 466, 352, 218, C_ROYAL, { r: 20 }));
+  s.push(t('KEY BENEFITS', 66, 482, 308, 13, { bold: 1, color: C_CYAN_LIGHT, font: 'Poppins', sp: 60 }));
+
+  const kbItems = [
+    'Helps minimize RNA degradation',
+    'Flexible sample handling and storage',
+    'Useful for field and laboratory collection',
+    'Supports downstream RNA isolation and analysis',
+  ];
+  kbItems.forEach((item, i) => {
+    const itemY = 510 + i * 38;
+    s.push(c(74, itemY + 8, 8, C_CYAN));
+    s.push(t('✓', 66, itemY + 1, 16, 9.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+    s.push(t(item, 92, itemY + 2, 280, 11.5, { bold: 1, color: '#ffffff', font: 'Poppins', lh: 1.25 }));
+  });
+
+  // Right: Applications Card
+  s.push(r(408, 466, 342, 218, '#ffffff', { r: 20, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(t('APPLICATIONS', 428, 482, 302, 13, { bold: 1, color: C_ROYAL, font: 'Poppins', sp: 60 }));
+
+  const appChips = [
+    { text: 'RNA isolation and purification', w: 220, y: 512 },
+    { text: 'Gene expression studies', w: 195, y: 546 },
+    { text: 'RT-qPCR and molecular analysis', w: 232, y: 580 },
+    { text: 'RNA sequencing / transcriptomics', w: 248, y: 614 },
+    { text: 'Tissue and biological sample archiving', w: 280, y: 648 },
+  ];
+  appChips.forEach((chip) => {
+    s.push(r(428, chip.y, chip.w, 26, C_CHIP_BG, { r: 13 }));
+    s.push(t(chip.text, 428, chip.y + 5, chip.w, 11, { bold: 1, color: C_ROYAL, align: 'center', font: 'Poppins' }));
+  });
+
+  // 5. ROW 4: SIMPLE WORKFLOW (y: 696, h: 152)
+  s.push(r(44, 696, 706, 152, '#ffffff', { r: 20, stroke: C_CARD_BORDER, sw: 1 }));
+  s.push(t('SIMPLE WORKFLOW', 66, 712, 662, 13, { bold: 1, color: C_ROYAL, font: 'Poppins', sp: 60 }));
+
+  // Horizontal connecting line
+  s.push(r(84, 746, 540, 2, '#cfe0f5'));
+
+  const steps = [
+    'Collect the biological sample using an RNase-free technique.',
+    'Add or immerse the sample in the appropriate volume according to the validated protocol.',
+    'Ensure the sample is fully exposed to the stabilization solution. Close and label the sample.',
+    'Store and transport according to the validated storage conditions.',
+    'Proceed with RNA isolation and assess RNA quantity and integrity.',
+  ];
+  steps.forEach((st, i) => {
+    const stepX = 70 + i * 135;
+    s.push(c(stepX + 14, 747, 14, C_CYAN, { stroke: '#ffffff', sw: 3 }));
+    s.push(t(String(i + 1), stepX, 740, 28, 12, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+    s.push(t(st, stepX - 10, 770, 128, 9.8, { color: C_TEXT, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 6. ROW 5: EXPECTED RESULTS / PERFORMANCE (y: 860, h: 98)
+  s.push(r(44, 860, 706, 98, C_ICE, { r: 20, stroke: C_ICE_BORDER, sw: 1 }));
+  s.push(t('EXPECTED RESULTS / PERFORMANCE', 66, 874, 662, 13, { bold: 1, color: C_ROYAL, font: 'Poppins', sp: 60 }));
+
+  const perfItems = [
+    { text: 'Better preservation of RNA integrity', x: 66 },
+    { text: 'More consistent RNA quality for downstream workflows', x: 296 },
+    { text: 'Reduced dependence on immediate sample processing', x: 528 },
+  ];
+  perfItems.forEach((item) => {
+    s.push(c(item.x + 8, 908, 8, C_ROYAL));
+    s.push(t('✓', item.x, 902, 16, 9, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(item.text, item.x + 24, 898, 190, 11, { bold: 1, color: C_TEXT, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 7. ROW 6: FOOTER (y: 1023, h: 92)
+  s.push(r(0, 1023, 794, 92, C_NAVY));
+  s.push(t('Interested in NucleoGUARD™?', 44, 1040, 420, 19, { bold: 1, color: C_CYAN_LIGHT, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 44, 1070, 420, 11.5, { color: C_FOOT_SUB, font: 'Poppins' }));
+
+  // Contact details
+  s.push(t('WEB', 540, 1040, 52, 9, { bold: 1, color: C_CYAN, font: 'Poppins', sp: 80 }));
+  s.push(t('www.[your-website].com', 600, 1038, 170, 11, { color: '#ffffff', font: 'Poppins' }));
+
+  s.push(t('EMAIL', 540, 1060, 52, 9, { bold: 1, color: C_CYAN, font: 'Poppins', sp: 80 }));
+  s.push(t('[info@your-domain.com]', 600, 1058, 170, 11, { color: '#ffffff', font: 'Poppins' }));
+
+  s.push(t('PHONE', 540, 1080, 52, 9, { bold: 1, color: C_CYAN, font: 'Poppins', sp: 80 }));
+  s.push(t('[+91 00000 00000]', 600, 1078, 170, 11, { color: '#ffffff', font: 'Poppins' }));
+
+  // Tri-color stripe at the bottom
+  s.push(r(0, 1115, 265, 8, '#e53935'));
+  s.push(r(265, 1115, 264, 8, '#1e88e5'));
+  s.push(r(529, 1115, 265, 8, '#43a047'));
+
+  return s;
+}
+
+// NucleoGUARD™ RNA Stabilization Buffer — A4 Flyer Page 2 (Empty Template)
+export function nucleoguardFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_NAVY = '#0e2a5c';
+  const C_ROYAL = '#1f56d6';
+  const C_CYAN_LIGHT = '#9fe8f1';
+  const C_ICE = '#dff0fb';
+  const C_ICE_BORDER = '#cfe3f5';
+  const C_CARD_BORDER = '#dbe8f6';
+
+  // 1. TOP HEADER
+  s.push(r(0, 0, 794, 70, '#ffffff'));
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 20, w: 148 });
+  s.push(r(540, 26, 210, 18, C_ICE, { r: 6 }));
+
+  // 2. HERO CARD
+  s.push(r(44, 84, 440, 236, C_NAVY, { r: 20, gradient: [C_NAVY, C_ROYAL] }));
+  s.push(r(496, 84, 254, 236, C_ICE, { r: 20, stroke: C_ICE_BORDER, sw: 1 }));
+
+  // 3. OVERVIEW
+  s.push(r(44, 332, 706, 122, '#ffffff', { r: 20, stroke: C_CARD_BORDER, sw: 1 }));
+
+  // 4. BENEFITS & APPLICATIONS
+  s.push(r(44, 466, 352, 218, C_ROYAL, { r: 20 }));
+  s.push(r(408, 466, 342, 218, '#ffffff', { r: 20, stroke: C_CARD_BORDER, sw: 1 }));
+
+  // 5. WORKFLOW
+  s.push(r(44, 696, 706, 152, '#ffffff', { r: 20, stroke: C_CARD_BORDER, sw: 1 }));
+
+  // 6. EXPECTED RESULTS
+  s.push(r(44, 860, 706, 98, C_ICE, { r: 20, stroke: C_ICE_BORDER, sw: 1 }));
+
+  // 7. FOOTER
+  s.push(r(0, 1023, 794, 92, C_NAVY));
+  s.push(t('Interested in NucleoGUARD™?', 44, 1040, 420, 19, { bold: 1, color: C_CYAN_LIGHT, font: 'Poppins' }));
+  s.push(r(0, 1115, 265, 8, '#e53935'));
+  s.push(r(265, 1115, 264, 8, '#1e88e5'));
+  s.push(r(529, 1115, 265, 8, '#43a047'));
+
+  return s;
+}
+
 export function bifoldBrochure() {
   const s = [];
 
@@ -7163,6 +7372,21 @@ export const TEMPLATES = [
     emptySpecs: onemagDnaFlyerEmpty,
     pages: [onemagDnaFlyer, onemagDnaFlyerEmpty],
     swatch: ['#0793EB', '#33A015', '#E23B32'],
+  },
+  {
+    id: 'nucleoguard-flyer',
+    name: 'NucleoGUARD™ Flyer',
+    subtitle: 'RNA Stabilization Buffer',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#f2f8fd',
+    preview: '/assets/previews/nucleoguard_flyer.png',
+    specs: nucleoguardFlyer,
+    emptySpecs: nucleoguardFlyerEmpty,
+    pages: [nucleoguardFlyer, nucleoguardFlyerEmpty],
+    swatch: ['#0e2a5c', '#1f56d6', '#22c3d6'],
   },
   {
     id: 'bifold-genomics',

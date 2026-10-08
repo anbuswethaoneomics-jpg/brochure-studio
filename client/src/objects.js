@@ -1,4 +1,4 @@
-import { Rect, Circle, Textbox, FabricImage, Group, loadSVGFromString, util, Gradient } from 'fabric';
+import { Rect, Circle, Textbox, FabricImage, Group, loadSVGFromString, util, Gradient, Path } from 'fabric';
 import { iconSvg } from './icons.js';
 
 export async function makeIcon(name, size = 96, color = '#0b5d4b') {
@@ -72,6 +72,17 @@ export async function buildSpec(s) {
         console.warn('Template image failed to load, skipping:', s.src, err);
         return null;
       }
+    }
+    case 'path': {
+      return new Path(s.d, {
+        left: s.x,
+        top: s.y,
+        fill: s.fill || null,
+        stroke: s.stroke || null,
+        strokeWidth: s.sw || 1,
+        opacity: s.opacity ?? 1,
+        strokeLineCap: s.cap || 'round',
+      });
     }
     default:
       return null;
