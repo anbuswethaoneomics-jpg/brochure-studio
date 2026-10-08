@@ -3300,6 +3300,159 @@ export function onenext16sFlyerEmpty(pageNum = 2) {
   return s;
 }
 
+// 2X Taq Plus PCR Master Mix — A4 Flyer (794 x 1123)
+export function taqPlusFlyer() {
+  const s = [];
+
+  const C_RED = '#c62828';
+  const C_DARK = '#111111';
+  const C_TEXT = '#333333';
+  const C_MUTED = '#888888';
+  const C_LINE = '#eeeeee';
+
+  // 1. TOP HEADER (Logo left, kicker right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 60, y: 36, w: 150 });
+  s.push(t('PRODUCT PROFILE · 13 / 14', 434, 44, 300, 11, { color: C_MUTED, align: 'right', font: 'Poppins', sp: 120 }));
+
+  // 2. TITLE SECTION
+  s.push(t('PCR REAGENT', 60, 96, 674, 12, { bold: 1, color: C_RED, font: 'Poppins', sp: 120 }));
+  s.push(t('2X Taq Plus PCR Master Mix', 60, 118, 674, 36, { bold: 1, color: C_DARK, font: 'Poppins' }));
+  s.push(t('With RED Dye', 60, 164, 674, 20, { bold: 1, color: C_RED, font: 'Poppins' }));
+  s.push(r(60, 198, 60, 2, C_RED));
+
+  // 3. OVERVIEW SECTION
+  s.push(t('OVERVIEW', 60, 222, 674, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(t('A ready-to-use PCR reagent formulated for reliable and efficient amplification of DNA targets. The optimized master mix contains Taq DNA polymerase, dNTPs, MgCl₂ and reaction buffer in a convenient 2X concentration, reducing pipetting steps and minimizing reaction-to-reaction variation.', 60, 246, 674, 12.5, { color: C_TEXT, font: 'Poppins', lh: 1.55 }));
+  s.push(t('The integrated RED Dye enables direct loading of PCR products onto agarose gels, eliminating the need for an additional loading dye. The formulation supports consistent amplification across a wide range of DNA templates and is suitable for routine molecular biology and research applications.', 60, 332, 674, 12.5, { color: C_TEXT, font: 'Poppins', lh: 1.55 }));
+
+  // 4. IN EVERY REACTION
+  s.push(t('IN EVERY REACTION', 60, 420, 674, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  
+  const ingredients = ['Taq DNA polymerase', 'dNTPs', 'MgCl₂', 'Reaction buffer', 'RED Dye'];
+  let curX = 60;
+  ingredients.forEach((ing, i) => {
+    const textW = i === 0 ? 164 : i === 1 ? 52 : i === 2 ? 50 : i === 3 ? 124 : 76;
+    s.push(t(ing, curX, 444, textW + 10, 14.5, { bold: 1, color: C_DARK, font: 'Poppins' }));
+    curX += textW + 6;
+    if (i < ingredients.length - 1) {
+      s.push(t('·', curX, 442, 16, 18, { bold: 1, color: C_RED, font: 'Poppins', align: 'center' }));
+      curX += 20;
+    }
+  });
+
+  // 5. KEY FEATURES
+  s.push(t('KEY FEATURES', 60, 484, 674, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  const features = [
+    'Ready-to-use 2X PCR master mix',
+    'Contains optimized Taq DNA polymerase, dNTPs, MgCl₂ and reaction buffer',
+    'Integrated RED Dye for direct gel loading',
+    'Reduces pipetting steps and experimental variation',
+    'Reliable and efficient DNA amplification',
+    'Suitable for a broad range of DNA templates',
+    'Convenient for routine and high-throughput PCR workflows',
+  ];
+  features.forEach((feat, i) => {
+    const y = 508 + i * 26;
+    s.push(t(feat, 60, y, 674, 12.5, { color: C_TEXT, font: 'Poppins' }));
+    s.push(r(60, y + 22, 674, 1, C_LINE));
+  });
+
+  // 6. APPLICATIONS (Two Columns)
+  s.push(t('APPLICATIONS', 60, 706, 674, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  const col1 = [
+    'Routine PCR amplification',
+    'Genotyping and DNA screening',
+    'Cloning and recombinant DNA workflows',
+    'DNA fragment amplification',
+  ];
+  const col2 = [
+    'Colony PCR',
+    'Molecular diagnostics research',
+    'Agarose gel-based PCR analysis',
+    'Preparation of PCR products for downstream applications',
+  ];
+  col1.forEach((app, i) => {
+    const y = 730 + i * 26;
+    s.push(t(app, 60, y, 319, 12.5, { color: C_TEXT, font: 'Poppins' }));
+    s.push(r(60, y + 22, 319, 1, C_LINE));
+  });
+  col2.forEach((app, i) => {
+    const y = 730 + i * 26;
+    s.push(t(app, 415, y, 319, 12.5, { color: C_TEXT, font: 'Poppins' }));
+    s.push(r(415, y + 22, 319, 1, C_LINE));
+  });
+
+  // 7. FOOTER
+  s.push(r(60, 1018, 674, 1, '#dddddd'));
+  s.push(t('Interested in 2X Taq Plus PCR Master Mix?', 60, 1034, 380, 16, { bold: 1, color: C_DARK, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 60, 1060, 380, 12, { color: C_MUTED, font: 'Poppins' }));
+
+  s.push(t('WEB', 500, 1038, 56, 11, { color: C_MUTED, font: 'Poppins', sp: 60 }));
+  s.push(t('www.[your-website].com', 560, 1038, 174, 12.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 500, 1060, 56, 11, { color: C_MUTED, font: 'Poppins', sp: 60 }));
+  s.push(t('[info@your-domain.com]', 560, 1060, 174, 12.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('PHONE', 500, 1082, 56, 11, { color: C_MUTED, font: 'Poppins', sp: 60 }));
+  s.push(t('[+91 00000 00000]', 560, 1082, 174, 12.5, { color: C_TEXT, font: 'Poppins' }));
+
+  return s;
+}
+
+// 2X Taq Plus PCR Master Mix — A4 Flyer Page 2 (Empty Template)
+export function taqPlusFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_RED = '#c62828';
+  const C_DARK = '#111111';
+  const C_MUTED = '#888888';
+  const C_LINE = '#eeeeee';
+
+  // 1. TOP HEADER
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 60, y: 36, w: 150 });
+  s.push(r(524, 40, 210, 18, '#f5f5f5', { r: 4 }));
+
+  // 2. TITLE SECTION PLACEHOLDERS
+  s.push(r(60, 96, 140, 16, '#fdeeee', { r: 4 }));
+  s.push(r(60, 118, 480, 36, '#f5f5f5', { r: 6 }));
+  s.push(r(60, 164, 200, 20, '#fdeeee', { r: 4 }));
+  s.push(r(60, 198, 60, 2, C_RED));
+
+  // 3. OVERVIEW PLACEHOLDERS
+  s.push(t('OVERVIEW', 60, 222, 674, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(60, 246, 674, 66, '#f9f9f9', { r: 6 }));
+  s.push(r(60, 332, 674, 66, '#f9f9f9', { r: 6 }));
+
+  // 4. IN EVERY REACTION
+  s.push(t('IN EVERY REACTION', 60, 420, 674, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(60, 444, 520, 20, '#f5f5f5', { r: 4 }));
+
+  // 5. KEY FEATURES
+  s.push(t('KEY FEATURES', 60, 484, 674, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  for (let i = 0; i < 7; i++) {
+    const y = 508 + i * 26;
+    s.push(r(60, y + 2, 480, 14, '#f9f9f9', { r: 4 }));
+    s.push(r(60, y + 22, 674, 1, C_LINE));
+  }
+
+  // 6. APPLICATIONS
+  s.push(t('APPLICATIONS', 60, 706, 674, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  for (let i = 0; i < 4; i++) {
+    const y = 730 + i * 26;
+    s.push(r(60, y + 2, 260, 14, '#f9f9f9', { r: 4 }));
+    s.push(r(60, y + 22, 319, 1, C_LINE));
+    s.push(r(415, y + 2, 260, 14, '#f9f9f9', { r: 4 }));
+    s.push(r(415, y + 22, 319, 1, C_LINE));
+  }
+
+  // 7. FOOTER
+  s.push(r(60, 1018, 674, 1, '#dddddd'));
+  s.push(t('Interested in 2X Taq Plus PCR Master Mix?', 60, 1034, 380, 16, { bold: 1, color: C_DARK, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 60, 1060, 380, 12, { color: C_MUTED, font: 'Poppins' }));
+
+  return s;
+}
+
 export function bifoldBrochure() {
   const s = [];
 
@@ -7565,6 +7718,21 @@ export const TEMPLATES = [
     emptySpecs: onenext16sFlyerEmpty,
     pages: [onenext16sFlyer, onenext16sFlyerEmpty],
     swatch: ['#0f8a5f', '#111111', '#777777'],
+  },
+  {
+    id: 'taq-plus-flyer',
+    name: '2X Taq Plus Flyer',
+    subtitle: 'PCR Master Mix with RED Dye',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/taq_plus_flyer.png',
+    specs: taqPlusFlyer,
+    emptySpecs: taqPlusFlyerEmpty,
+    pages: [taqPlusFlyer, taqPlusFlyerEmpty],
+    swatch: ['#c62828', '#111111', '#888888'],
   },
   {
     id: 'bifold-genomics',
