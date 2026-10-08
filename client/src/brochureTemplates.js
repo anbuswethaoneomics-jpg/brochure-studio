@@ -3137,6 +3137,169 @@ export function nucleoguardFlyerEmpty(pageNum = 2) {
   return s;
 }
 
+// ONENext™ 16S (V3–V4) Library Prep Kit for Illumina — A4 Flyer (794 x 1123)
+export function onenext16sFlyer() {
+  const s = [];
+
+  const C_GREEN = '#0f8a5f';
+  const C_DARK = '#111111';
+  const C_TEXT = '#333333';
+  const C_MUTED = '#777777';
+  const C_LINE = '#cccccc';
+  const C_ROW_LINE = '#e6e6e6';
+
+  // 1. TOP HEADER (Logo left, kicker right, underline)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 56, y: 36, w: 150 });
+  s.push(t('PRODUCT PROFILE · 11 / 14', 438, 44, 300, 11, { color: C_MUTED, align: 'right', font: 'Poppins', sp: 120 }));
+  s.push(r(56, 80, 682, 1, C_LINE));
+
+  // 2. TITLE SECTION
+  s.push(t('LIBRARY PREPARATION', 56, 106, 682, 12, { bold: 1, color: C_GREEN, font: 'Poppins', sp: 120 }));
+  s.push(t('ONENext™ 16S (V3–V4)\nLibrary Prep Kit for Illumina', 56, 130, 682, 34, { bold: 1, color: C_DARK, font: 'Poppins', lh: 1.15 }));
+  s.push(t('Targeted amplification of the bacterial 16S rRNA V3–V4 region', 56, 218, 682, 16.5, { color: C_GREEN, font: 'Poppins' }));
+
+  // 3. OVERVIEW SECTION
+  s.push(t('OVERVIEW', 56, 260, 682, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(56, 282, 682, 1, C_LINE));
+  s.push(t('A streamlined library preparation solution designed for targeted amplification and sequencing of the bacterial 16S rRNA gene V3–V4 hypervariable region on Illumina sequencing platforms. The kit enables efficient preparation of sequencing-ready libraries from microbial DNA, supporting standardized and reproducible workflows for microbial community profiling.', 56, 296, 682, 12.5, { color: C_TEXT, font: 'Poppins', lh: 1.55 }));
+  s.push(t('The optimized workflow facilitates targeted amplification, adapter/index incorporation and library preparation for multiplexed sequencing. The resulting libraries are suitable for paired-end Illumina sequencing and downstream analysis of microbial composition and diversity.', 56, 386, 682, 12.5, { color: C_TEXT, font: 'Poppins', lh: 1.55 }));
+
+  // 4. AT A GLANCE (Table)
+  s.push(t('AT A GLANCE', 56, 470, 682, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(56, 492, 682, 1, C_LINE));
+
+  const tableRows = [
+    { label: 'Target', val: '16S rRNA gene, V3–V4 hypervariable region', y: 504 },
+    { label: 'Platform', val: 'Illumina sequencing platforms', y: 536 },
+    { label: 'Sequencing format', val: 'Paired-end, indexed / multiplexed', y: 568 },
+    { label: 'Input', val: 'Microbial DNA', y: 600 },
+  ];
+  tableRows.forEach((row) => {
+    s.push(t(row.label, 56, row.y, 160, 12.5, { color: C_MUTED, font: 'Poppins' }));
+    s.push(t(row.val, 226, row.y, 512, 12.5, { color: '#222222', font: 'Poppins' }));
+    s.push(r(56, row.y + 24, 682, 1, C_ROW_LINE));
+  });
+
+  // 5. TWO COLUMNS: KEY FEATURES (Left) & APPLICATIONS (Right)
+  // Left: KEY FEATURES
+  s.push(t('KEY FEATURES', 56, 642, 321, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(56, 664, 321, 1, C_LINE));
+
+  const features = [
+    'Optimized for 16S rRNA V3–V4 region',
+    'Designed for Illumina sequencing platforms',
+    'Streamlined library preparation workflow',
+    'Supports indexed/multiplexed sequencing',
+    'Suitable for microbial DNA from diverse sample types',
+    'Enables reproducible and scalable library preparation',
+    'Compatible with downstream microbial community analysis',
+  ];
+  features.forEach((feat, i) => {
+    const itemY = 676 + i * 27;
+    s.push(c(66, itemY + 8, 3, C_GREEN));
+    s.push(t(feat, 76, itemY, 300, 11.8, { color: C_TEXT, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // Right: APPLICATIONS
+  s.push(t('APPLICATIONS', 417, 642, 321, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(417, 664, 321, 1, C_LINE));
+
+  const applications = [
+    '16S rRNA gene sequencing',
+    'Bacterial community profiling',
+    'Microbial diversity analysis',
+    'Microbiome characterization',
+    'Environmental microbiology',
+    'Soil and rhizosphere microbiome studies',
+    'Gut and other host-associated microbiome research',
+    'Food and agricultural microbiology',
+  ];
+  applications.forEach((app, i) => {
+    const itemY = 676 + i * 25;
+    s.push(c(427, itemY + 8, 3, C_GREEN));
+    s.push(t(app, 437, itemY, 300, 11.8, { color: C_TEXT, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 6. FOOTER (Bottom divider line, CTA left, Contact right)
+  s.push(r(56, 998, 682, 1, C_LINE));
+
+  s.push(t('Interested in ONENext™ 16S (V3–V4)?', 56, 1014, 380, 16, { bold: 1, color: C_DARK, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 56, 1040, 380, 12, { color: C_MUTED, font: 'Poppins' }));
+
+  s.push(t('WEB', 480, 1018, 56, 11, { color: C_MUTED, font: 'Poppins', sp: 60 }));
+  s.push(t('www.[your-website].com', 540, 1018, 198, 12.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('EMAIL', 480, 1042, 56, 11, { color: C_MUTED, font: 'Poppins', sp: 60 }));
+  s.push(t('[info@your-domain.com]', 540, 1042, 198, 12.5, { color: C_TEXT, font: 'Poppins' }));
+
+  s.push(t('PHONE', 480, 1066, 56, 11, { color: C_MUTED, font: 'Poppins', sp: 60 }));
+  s.push(t('[+91 00000 00000]', 540, 1066, 198, 12.5, { color: C_TEXT, font: 'Poppins' }));
+
+  return s;
+}
+
+// ONENext™ 16S (V3–V4) Library Prep Kit for Illumina — A4 Flyer Page 2 (Empty Template)
+export function onenext16sFlyerEmpty(pageNum = 2) {
+  const s = [];
+
+  const C_GREEN = '#0f8a5f';
+  const C_DARK = '#111111';
+  const C_MUTED = '#777777';
+  const C_LINE = '#cccccc';
+  const C_ROW_LINE = '#e6e6e6';
+
+  // 1. TOP HEADER
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 56, y: 36, w: 150 });
+  s.push(r(528, 40, 210, 18, '#f5f5f5', { r: 4 }));
+  s.push(r(56, 80, 682, 1, C_LINE));
+
+  // 2. TITLE SECTION PLACEHOLDERS
+  s.push(r(56, 106, 180, 16, '#f0f9f5', { r: 4 }));
+  s.push(r(56, 130, 480, 34, '#f5f5f5', { r: 6 }));
+  s.push(r(56, 172, 380, 34, '#f5f5f5', { r: 6 }));
+  s.push(r(56, 218, 520, 20, '#f0f9f5', { r: 4 }));
+
+  // 3. OVERVIEW PLACEHOLDERS
+  s.push(t('OVERVIEW', 56, 260, 682, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(56, 282, 682, 1, C_LINE));
+  s.push(r(56, 296, 682, 70, '#f9f9f9', { r: 6 }));
+  s.push(r(56, 386, 682, 50, '#f9f9f9', { r: 6 }));
+
+  // 4. AT A GLANCE (Table)
+  s.push(t('AT A GLANCE', 56, 470, 682, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(56, 492, 682, 1, C_LINE));
+  for (let i = 0; i < 4; i++) {
+    const y = 504 + i * 32;
+    s.push(r(56, y + 2, 140, 16, '#f5f5f5', { r: 4 }));
+    s.push(r(226, y + 2, 320, 16, '#f9f9f9', { r: 4 }));
+    s.push(r(56, y + 24, 682, 1, C_ROW_LINE));
+  }
+
+  // 5. TWO COLUMNS
+  s.push(t('KEY FEATURES', 56, 642, 321, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(56, 664, 321, 1, C_LINE));
+  for (let i = 0; i < 7; i++) {
+    const y = 676 + i * 27;
+    s.push(c(66, y + 8, 3, C_GREEN));
+    s.push(r(76, y + 2, 260, 14, '#f9f9f9', { r: 4 }));
+  }
+
+  s.push(t('APPLICATIONS', 417, 642, 321, 13, { bold: 1, color: C_DARK, font: 'Poppins', sp: 120 }));
+  s.push(r(417, 664, 321, 1, C_LINE));
+  for (let i = 0; i < 8; i++) {
+    const y = 676 + i * 25;
+    s.push(c(427, y + 8, 3, C_GREEN));
+    s.push(r(437, y + 2, 260, 14, '#f9f9f9', { r: 4 }));
+  }
+
+  // 6. FOOTER
+  s.push(r(56, 998, 682, 1, C_LINE));
+  s.push(t('Interested in ONENext™ 16S (V3–V4)?', 56, 1014, 380, 16, { bold: 1, color: C_DARK, font: 'Poppins' }));
+  s.push(t('Contact our team for availability, pricing and technical details.', 56, 1040, 380, 12, { color: C_MUTED, font: 'Poppins' }));
+
+  return s;
+}
+
 export function bifoldBrochure() {
   const s = [];
 
@@ -7387,6 +7550,21 @@ export const TEMPLATES = [
     emptySpecs: nucleoguardFlyerEmpty,
     pages: [nucleoguardFlyer, nucleoguardFlyerEmpty],
     swatch: ['#0e2a5c', '#1f56d6', '#22c3d6'],
+  },
+  {
+    id: 'onenext-16s-flyer',
+    name: 'ONENext™ 16S Flyer',
+    subtitle: '16S (V3–V4) Library Prep Kit for Illumina',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/onenext_16s_flyer.png',
+    specs: onenext16sFlyer,
+    emptySpecs: onenext16sFlyerEmpty,
+    pages: [onenext16sFlyer, onenext16sFlyerEmpty],
+    swatch: ['#0f8a5f', '#111111', '#777777'],
   },
   {
     id: 'bifold-genomics',
