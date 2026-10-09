@@ -14,9 +14,11 @@ export function useEditor() {
   const hist = useRef({ stack: [], i: -1 });
   const size = useRef({ w: 1123, h: 794, z: 1, folds: 3 });
   const guideLinesRef = useRef([]);
+  const openCropRef = useRef(null);
   const [sel, setSel] = useState(null);
   const [flags, setFlags] = useState({ canUndo: false, canRedo: false });
   const [bgColor, setBgColor] = useState('#ffffff');
+  const [cropTarget, setCropTarget] = useState(null);
 
   // ---------- selection -> React state ----------
   const readSel = () => {
@@ -34,7 +36,23 @@ export function useEditor() {
     }
     const scaledW = Math.round(o.getScaledWidth ? o.getScaledWidth() : (o.width || 0) * (o.scaleX || 1));
     const scaledH = Math.round(o.getScaledHeight ? o.getScaledHeight() : (o.height || 0) * (o.scaleY || 1));
-    if (o instanceof FabricImage) return setSel({ kind: 'image', ...base, size: scaledW, width: scaledW, height: scaledH });
+    if (o instanceof FabricImage) {
+      const src = o._originalSrc || o.getSrc?.() || (o._element && o._element.src) || '';
+      return setSel({
+        kind: 'image',
+        ...base,
+        size: scaledW,
+        width: scaledW,
+        height: scaledH,
+        flipX: !!o.flipX,
+        flipY: !!o.flipY,
+        angle: Math.round(o.angle || 0),
+        isCropped: !!o._isCropped,
+        hasOriginal: !!o._originalSrc,
+        cornerRadius: o._cornerRadius || 0,
+        src,
+      });
+    }
     if (o instanceof Group) {
       const first = o.getObjects()[0];
       return setSel({ kind: 'icon', ...base, fill: hex(first && first.stroke), size: scaledW, width: scaledW, height: scaledH });
@@ -209,6 +227,12 @@ export function useEditor() {
     c.on('selection:created', readSel);
     c.on('selection:updated', readSel);
     c.on('selection:cleared', readSel);
+    c.on('mouse:dblclick', (e) => {
+      const target = e.target;
+      if (target instanceof FabricImage && openCropRef.current) {
+        openCropRef.current(target);
+      }
+    });
     resetHistory();
 
     // ---------- Smart Alignment Guidelines & Magnetic Snapping (Canva / Figma style) ----------
@@ -446,6 +470,9 @@ export function useEditor() {
     const img = await FabricImage.fromURL(url, { crossOrigin: 'anonymous' });
     const max = size.current.w * 0.6;
     if (img.width > max) img.scaleToWidth(max);
+    img._originalSrc = url;
+    img._originalWidth = img.width;
+    img._originalHeight = img.height;
     addObj(img);
   };
 
@@ -814,6 +841,158 @@ export function useEditor() {
     snapshot();
   };
 
+  // ---------- Image Editing & Cropping ----------
+  const openCrop = (customObj) => {
+    const c = cvs.current;
+    const o = customObj || (c && c.getActiveObject());
+    if (!(o instanceof FabricImage)) return;
+    const src = o._originalSrc || o.getSrc?.() || (o._element && o._element.src);
+    if (!src) return;
+    setCropTarget({
+      obj: o,
+      src,
+      flipX: !!o.flipX,
+      flipY: !!o.flipY,
+      angle: o.angle || 0,
+    });
+  };
+  openCropRef.current = openCrop;
+
+  const closeCrop = () => {
+    setCropTarget(null);
+  };
+
+  const applyCrop = async (croppedDataUrl, meta = {}) => {
+    const c = cvs.current;
+    if (!c || !cropTarget) return;
+    const active = cropTarget.obj;
+    if (!active || !(active instanceof FabricImage)) {
+      setCropTarget(null);
+      return;
+    }
+
+    const originalSrc = active._originalSrc || active.getSrc?.() || (active._element && active._element.src);
+    const originalW = active._originalWidth || active.width;
+    const originalH = active._originalHeight || active.height;
+
+    const newImg = await FabricImage.fromURL(croppedDataUrl, { crossOrigin: 'anonymous' });
+
+    newImg.set({
+      left: active.left,
+      top: active.top,
+      scaleX: active.scaleX || 1,
+      scaleY: active.scaleY || 1,
+      angle: active.angle || 0,
+      opacity: active.opacity ?? 1,
+      originX: active.originX || 'left',
+      originY: active.originY || 'top',
+      flipX: meta.flipX !== undefined ? meta.flipX : active.flipX,
+      flipY: meta.flipY !== undefined ? meta.flipY : active.flipY,
+    });
+
+    newImg._originalSrc = originalSrc;
+    newImg._originalWidth = originalW;
+    newImg._originalHeight = originalH;
+    newImg._isCropped = true;
+
+    if (active._cornerRadius) {
+      setImageCornerRadius(active._cornerRadius, newImg);
+    }
+
+    c.remove(active);
+    c.add(newImg);
+    c.setActiveObject(newImg);
+    c.requestRenderAll();
+    queue();
+    setCropTarget(null);
+    readSel();
+  };
+
+  const resetImageCrop = async () => {
+    const c = cvs.current;
+    const active = c && c.getActiveObject();
+    if (!(active instanceof FabricImage) || !active._originalSrc) return;
+
+    const origUrl = active._originalSrc;
+    const newImg = await FabricImage.fromURL(origUrl, { crossOrigin: 'anonymous' });
+    newImg.set({
+      left: active.left,
+      top: active.top,
+      scaleX: active.scaleX || 1,
+      scaleY: active.scaleY || 1,
+      angle: active.angle || 0,
+      opacity: active.opacity ?? 1,
+      originX: active.originX || 'left',
+      originY: active.originY || 'top',
+      flipX: active.flipX,
+      flipY: active.flipY,
+    });
+    newImg._originalSrc = origUrl;
+    newImg._isCropped = false;
+
+    c.remove(active);
+    c.add(newImg);
+    c.setActiveObject(newImg);
+    c.requestRenderAll();
+    queue();
+    readSel();
+  };
+
+  const flipImage = (axis = 'x') => {
+    const c = cvs.current;
+    const active = c && c.getActiveObject();
+    if (!active) return;
+    if (axis === 'x') {
+      active.set('flipX', !active.flipX);
+    } else {
+      active.set('flipY', !active.flipY);
+    }
+    active.setCoords();
+    c.requestRenderAll();
+    queue();
+    readSel();
+  };
+
+  const rotateImage = (deg = 90) => {
+    const c = cvs.current;
+    const active = c && c.getActiveObject();
+    if (!active) return;
+    const currentAngle = active.angle || 0;
+    const newAngle = (currentAngle + deg) % 360;
+    active.set('angle', newAngle);
+    active.setCoords();
+    c.requestRenderAll();
+    queue();
+    readSel();
+  };
+
+  const setImageCornerRadius = (r, customObj) => {
+    const c = cvs.current;
+    const active = customObj || (c && c.getActiveObject());
+    if (!(active instanceof FabricImage)) return;
+    const rad = Math.max(0, Number(r) || 0);
+    if (rad === 0) {
+      active.clipPath = null;
+      active._cornerRadius = 0;
+    } else {
+      const rx = rad / (active.scaleX || 1);
+      const ry = rad / (active.scaleY || 1);
+      active.clipPath = new Rect({
+        width: active.width,
+        height: active.height,
+        rx,
+        ry,
+        originX: 'center',
+        originY: 'center',
+      });
+      active._cornerRadius = rad;
+    }
+    active.setCoords();
+    c.requestRenderAll();
+    queue();
+    readSel();
+  };
+
   // ---------- export ----------
   const render = (scale = 1, format = 'png') => {
     const c = cvs.current; const { w, h, z } = size.current;
@@ -843,5 +1022,14 @@ export function useEditor() {
     replaceImage,
     fitImageToPage,
     _snapshot,
+    // image editing
+    cropTarget,
+    openCrop,
+    closeCrop,
+    applyCrop,
+    resetImageCrop,
+    flipImage,
+    rotateImage,
+    setImageCornerRadius,
   };
 }

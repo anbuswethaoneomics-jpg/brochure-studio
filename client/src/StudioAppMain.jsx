@@ -8,6 +8,7 @@ import { loadFonts } from './fonts.js';
 import { TEMPLATES, createEmptyTemplateFromCanvas } from './brochureTemplates.js';
 import { makeImageTextEditable } from './ocrEditable.js';
 import { listDesigns, getDesign, saveDesign, deleteDesign } from './api.js';
+import ImageCropModal from './components/ImageCropModal.jsx';
 
 const download = (href, name) => {
   const a = document.createElement('a');
@@ -710,6 +711,16 @@ export default function StudioApp() {
           onOpenFile={() => fileInputRef.current?.click()}
           onClose={() => setModal(null)}
           notify={notify}
+        />
+      )}
+      {ed.cropTarget && (
+        <ImageCropModal
+          target={ed.cropTarget}
+          onApply={(croppedUrl, meta) => {
+            ed.applyCrop(croppedUrl, meta);
+            notify('✅ Image cropped successfully!');
+          }}
+          onClose={ed.closeCrop}
         />
       )}
       {toast && (

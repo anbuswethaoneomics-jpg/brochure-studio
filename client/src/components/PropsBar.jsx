@@ -184,11 +184,72 @@ export default function StudioPropsBar({ ed, bg }) {
         </>
       )}
 
-      {/* ── Image controls (Clean: no replace/OCR) ────────── */}
+      {/* ── Image controls ─────────────────────────────────── */}
       {s.kind === 'image' && (
         <>
           <span className="props-label">Image</span>
           <SizeStepper value={s.size} onChange={ed.setObjectSize} onStep={(d) => ed.changeObjectSize(d * 4)} />
+          <span className="sep" />
+          <button
+            className="tb txt"
+            style={{
+              background: '#0b5d4b',
+              color: '#ffffff',
+              borderRadius: 6,
+              fontWeight: 600,
+              padding: '3px 10px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 5,
+            }}
+            onClick={ed.openCrop}
+            title="Crop & Edit Image (or double-click image on canvas)"
+          >
+            <Ico name="crop" size={14} /> Crop
+          </button>
+          <button
+            className="tb"
+            onClick={() => ed.flipImage('x')}
+            title="Flip Horizontal"
+            aria-label="Flip Horizontal"
+          >
+            <Ico name="flip-h" size={15} />
+          </button>
+          <button
+            className="tb"
+            onClick={() => ed.flipImage('y')}
+            title="Flip Vertical"
+            aria-label="Flip Vertical"
+          >
+            <Ico name="flip-v" size={15} />
+          </button>
+          <button
+            className="tb"
+            onClick={() => ed.rotateImage(90)}
+            title="Rotate 90° Clockwise"
+            aria-label="Rotate 90°"
+          >
+            <Ico name="rotate" size={15} />
+          </button>
+          <Num
+            label="Corners"
+            value={Math.round(s.cornerRadius || 0)}
+            min={0}
+            max={300}
+            step={2}
+            width={48}
+            onChange={ed.setImageCornerRadius}
+          />
+          {s.isCropped && (
+            <button
+              className="tb txt"
+              style={{ color: '#d9730d', fontWeight: 600 }}
+              onClick={ed.resetImageCrop}
+              title="Revert back to original uncropped image"
+            >
+              Reset Crop
+            </button>
+          )}
           <span className="sep" />
           <button className="tb txt" onClick={ed.fitImageToPage} title="Stretch this image to fill the canvas">
             Fit to page
