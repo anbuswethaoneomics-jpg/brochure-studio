@@ -7695,8 +7695,7 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/onespit_flyer.png',
     specs: onespitFlyer,
-    emptySpecs: onespitFlyerEmpty,
-    pages: [onespitFlyer, onespitFlyerEmpty],
+    pages: [onespitFlyer],
     swatch: [CLR_RED, CLR_BLUE, CLR_GREEN],
   },
   {
@@ -7710,8 +7709,7 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/onespit_teal_flyer.png',
     specs: onespitTealFlyer,
-    emptySpecs: onespitTealFlyerEmpty,
-    pages: [onespitTealFlyer, onespitTealFlyerEmpty],
+    pages: [onespitTealFlyer],
     swatch: ['#0b4f55', '#12857f', '#ffc857'],
   },
   {
@@ -7725,8 +7723,7 @@ export const TEMPLATES = [
     bg: '#f6f8ff',
     preview: '/assets/previews/onespit_side_flyer.png',
     specs: onespitSideFlyer,
-    emptySpecs: onespitSideFlyerEmpty,
-    pages: [onespitSideFlyer, onespitSideFlyerEmpty],
+    pages: [onespitSideFlyer],
     swatch: ['#0f1b3d', '#2f6bff', '#c6f432'],
   },
   {
@@ -7740,8 +7737,7 @@ export const TEMPLATES = [
     bg: '#fffaf5',
     preview: '/assets/previews/onespit_sunset_flyer.png',
     specs: onespitSunsetFlyer,
-    emptySpecs: onespitSunsetFlyerEmpty,
-    pages: [onespitSunsetFlyer, onespitSunsetFlyerEmpty],
+    pages: [onespitSunsetFlyer],
     swatch: ['#3a1fd1', '#ff6a35', '#ffe9dc'],
   },
   {
@@ -7755,8 +7751,7 @@ export const TEMPLATES = [
     bg: '#fffafb',
     preview: '/assets/previews/oneasy_flyer.png',
     specs: oneasyFlyer,
-    emptySpecs: oneasyFlyerEmpty,
-    pages: [oneasyFlyer, oneasyFlyerEmpty],
+    pages: [oneasyFlyer],
     swatch: ['#3b1030', '#a8215a', '#f4b942'],
   },
   {
@@ -7770,8 +7765,7 @@ export const TEMPLATES = [
     bg: '#fbf9f3',
     preview: '/assets/previews/soilguard_flyer.png',
     specs: soilguardFlyer,
-    emptySpecs: soilguardFlyerEmpty,
-    pages: [soilguardFlyer, soilguardFlyerEmpty],
+    pages: [soilguardFlyer],
     swatch: ['#234a33', '#c8643b', '#e3efe0'],
   },
   {
@@ -7785,8 +7779,7 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/proteinguard_flyer.png',
     specs: proteinguardFlyer,
-    emptySpecs: proteinguardFlyerEmpty,
-    pages: [proteinguardFlyer, proteinguardFlyerEmpty],
+    pages: [proteinguardFlyer],
     swatch: ['#ffc21a', '#22262e', '#8cc5f5'],
   },
   {
@@ -7800,8 +7793,7 @@ export const TEMPLATES = [
     bg: '#FBF7F0',
     preview: '/assets/previews/soil_microbiome_flyer.png',
     specs: soilMicrobiomeFlyer,
-    emptySpecs: soilMicrobiomeFlyerEmpty,
-    pages: [soilMicrobiomeFlyer, soilMicrobiomeFlyerEmpty],
+    pages: [soilMicrobiomeFlyer],
     swatch: ['#2F6B3E', '#6FA85C', '#A67C52'],
   },
   {
@@ -7815,8 +7807,7 @@ export const TEMPLATES = [
     bg: '#F6FBFE',
     preview: '/assets/previews/room_temp_kits_flyer.png',
     specs: roomTempKitsFlyer,
-    emptySpecs: roomTempKitsFlyerEmpty,
-    pages: [roomTempKitsFlyer, roomTempKitsFlyerEmpty],
+    pages: [roomTempKitsFlyer],
     swatch: ['#0793EB', '#E2574C', '#33A015'],
   },
   {
@@ -7830,8 +7821,7 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/onemag_dna_flyer.png',
     specs: onemagDnaFlyer,
-    emptySpecs: onemagDnaFlyerEmpty,
-    pages: [onemagDnaFlyer, onemagDnaFlyerEmpty],
+    pages: [onemagDnaFlyer],
     swatch: ['#0793EB', '#33A015', '#E23B32'],
   },
   {
@@ -7845,8 +7835,7 @@ export const TEMPLATES = [
     bg: '#f2f8fd',
     preview: '/assets/previews/nucleoguard_flyer.png',
     specs: nucleoguardFlyer,
-    emptySpecs: nucleoguardFlyerEmpty,
-    pages: [nucleoguardFlyer, nucleoguardFlyerEmpty],
+    pages: [nucleoguardFlyer],
     swatch: ['#0e2a5c', '#1f56d6', '#22c3d6'],
   },
   {
@@ -7860,8 +7849,7 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/onenext_16s_flyer.png',
     specs: onenext16sFlyer,
-    emptySpecs: onenext16sFlyerEmpty,
-    pages: [onenext16sFlyer, onenext16sFlyerEmpty],
+    pages: [onenext16sFlyer],
     swatch: ['#0f8a5f', '#111111', '#777777'],
   },
   {
@@ -7875,8 +7863,7 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/taq_plus_flyer.png',
     specs: taqPlusFlyer,
-    emptySpecs: taqPlusFlyerEmpty,
-    pages: [taqPlusFlyer, taqPlusFlyerEmpty],
+    pages: [taqPlusFlyer],
     swatch: ['#c62828', '#111111', '#888888'],
   },
   {
@@ -7890,8 +7877,7 @@ export const TEMPLATES = [
     bg: '#ffffff',
     preview: '/assets/previews/onemag_plant_dna_flyer.png',
     specs: onemagPlantDnaFlyer,
-    emptySpecs: onemagPlantDnaFlyerEmpty,
-    pages: [onemagPlantDnaFlyer, onemagPlantDnaFlyerEmpty],
+    pages: [onemagPlantDnaFlyer],
     swatch: ['#d9730d', '#111111', '#555555'],
   },
   {
