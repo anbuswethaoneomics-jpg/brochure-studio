@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  Canvas, Textbox, Rect, Circle, Triangle, Line, FabricImage, Group, ActiveSelection,
+  Canvas, Textbox, Rect, Circle, Triangle, Line, FabricImage, Group, ActiveSelection, Gradient,
 } from 'fabric';
 import { buildSpec, makeIcon, makeText } from './objects.js';
+import { toFabricGradient } from './gradientUtils.js';
 
 const hex = (v) => (typeof v === 'string' && /^#[0-9a-f]{6}$/i.test(v) ? v : '#000000');
 
@@ -50,6 +51,7 @@ export function useEditor() {
         isCropped: !!o._isCropped,
         hasOriginal: !!o._originalSrc,
         cornerRadius: o._cornerRadius || 0,
+        isBackground: !!o._isBackground,
         src,
       });
     }
@@ -170,6 +172,9 @@ export function useEditor() {
     busy.current = true;
     c.discardActiveObject();
     const cleanJson = sanitizeDesignJson(json);
+    if (cleanJson && !cleanJson.background && cleanJson.backgroundColor) {
+      cleanJson.background = cleanJson.backgroundColor;
+    }
     try {
       await c.loadFromJSON(cleanJson);
     } catch (err) {
@@ -546,21 +551,30 @@ export function useEditor() {
   const setBackground = (color) => {
     const c = cvs.current;
     if (!c) return;
-    c.backgroundColor = color;
+
+    let targetBg = color;
+    if (color && typeof color === 'object' && !(color instanceof Gradient) && (color.colors || color.colorStops || color.direction || color.isGradient)) {
+      targetBg = toFabricGradient(color, size.current.w, size.current.h);
+    }
+    c.backgroundColor = targetBg;
 
     // Remove any full-size white background panel rects that block the canvas background
-    const blockingPanels = c.getObjects('rect').filter((o) =>
-      o.height >= 600 && o.width >= 300 && (o.fill === '#ffffff' || o.fill === 'white')
-    );
+    const blockingPanels = c.getObjects('rect').filter((o) => {
+      const f = String(o.fill || '').toLowerCase();
+      const isWhite = f === '#ffffff' || f === '#fff' || f === 'white' || f === 'rgb(255, 255, 255)' || f === 'rgb(255,255,255)' || f === 'rgba(255, 255, 255, 1)' || f === 'rgba(255,255,255,1)';
+      const isPanel = (o.height >= 550 && o.width >= 280);
+      const isFullPage = (o.width >= size.current.w - 20 && o.height >= size.current.h - 20);
+      return (isWhite && isPanel) || isFullPage;
+    });
     if (blockingPanels.length > 0) {
       blockingPanels.forEach((p) => c.remove(p));
     }
 
     c.requestRenderAll();
-    setBgColor(color);
+    setBgColor(targetBg);
     queue();
   };
-  const getBackground = () => hex(bgColor || cvs.current?.backgroundColor);
+  const getBackground = () => cvs.current?.backgroundColor || bgColor || '#ffffff';
 
   const setSize = (w, h, folds) => {
     size.current = {
@@ -575,17 +589,29 @@ export function useEditor() {
     size.current = { ...size.current, folds: Number(folds) || 0 };
   };
   const setZoom = (z) => { size.current = { ...size.current, z }; applyZoom(); };
-  const getJSON = () => cvs.current.toObject();
+  const getJSON = () => {
+    const obj = cvs.current.toObject();
+    if (obj && obj.background && !obj.backgroundColor) {
+      obj.backgroundColor = obj.background;
+    }
+    return obj;
+  };
   const clear = async (bg = '#ffffff') => {
     const c = cvs.current; busy.current = true;
-    c.discardActiveObject(); c.clear(); c.backgroundColor = bg;
+    c.discardActiveObject(); c.clear();
+    let clearBg = bg;
+    if (bg && typeof bg === 'object' && !(bg instanceof Gradient) && (bg.colors || bg.direction || bg.isGradient)) {
+      clearBg = toFabricGradient(bg, size.current.w, size.current.h);
+    }
+    c.backgroundColor = clearBg;
     applyZoom(); busy.current = false; resetHistory(); readSel();
-    setBgColor(bg);
+    setBgColor(clearBg);
   };
   const loadPage = async (json) => {
     if (!json) return clear();
     await restore(json); resetHistory();
-    if (json.backgroundColor) setBgColor(hex(json.backgroundColor));
+    const bgVal = cvs.current?.backgroundColor || json.background || json.backgroundColor || '#ffffff';
+    setBgColor(bgVal);
   };
   const buildPageFromSpecs = async (specsFn, bg = '#ffffff') => {
     const c = cvs.current;
@@ -707,7 +733,11 @@ export function useEditor() {
 
     for (let i = 0; i < pageSpecsList.length; i++) {
       c.clear();
-      c.backgroundColor = tpl.bg || '#ffffff';
+      let tplBg = tpl.bg || '#ffffff';
+      if (tplBg && typeof tplBg === 'object' && !(tplBg instanceof Gradient) && (tplBg.colors || tplBg.direction || tplBg.isGradient)) {
+        tplBg = toFabricGradient(tplBg, tpl.w, tpl.h);
+      }
+      c.backgroundColor = tplBg;
       const specsFn = pageSpecsList[i];
       if (typeof specsFn === 'function') {
         const specs = specsFn();
@@ -735,7 +765,7 @@ export function useEditor() {
     busy.current = false;
     resetHistory();
     readSel();
-    setBgColor(tpl.bg || '#ffffff');
+    setBgColor(c.backgroundColor || tpl.bg || '#ffffff');
     return pagesJson;
   };
   const isEmpty = () => cvs.current.getObjects().length === 0;
@@ -817,6 +847,151 @@ export function useEditor() {
     queue();
   };
 
+  /** Helper to safely resolve a Fabric image object even if a React event is passed */
+  const getSelectedImage = (maybeObj) => {
+    const isImg = (obj) =>
+      obj &&
+      typeof obj === 'object' &&
+      !obj.nativeEvent &&
+      !obj._reactName &&
+      !obj.preventDefault &&
+      (obj instanceof FabricImage || obj.type === 'image' || obj.isType?.('image') || typeof obj.getSrc === 'function' || !!obj._element);
+
+    if (isImg(maybeObj)) return maybeObj;
+    const c = cvs.current;
+    if (!c) return null;
+    const active = c.getActiveObject();
+    if (isImg(active)) return active;
+    if (active instanceof ActiveSelection) {
+      const found = active.getObjects().find(isImg);
+      if (found) return found;
+    }
+    const allImgs = c.getObjects().filter(isImg);
+    if (allImgs.length === 1) return allImgs[0];
+    return null;
+  };
+
+  /** Set selected image as the canvas background (cover page & send to back) or detach it */
+  const setImageAsBackground = (maybeObj) => {
+    const c = cvs.current;
+    if (!c) return;
+    const o = getSelectedImage(maybeObj);
+    if (!o) {
+      console.warn('setImageAsBackground: no image selected');
+      return;
+    }
+    const { w, h } = size.current;
+
+    if (o._isBackground) {
+      // Detach from background: restore normal size and controls
+      o._isBackground = false;
+      const defaultW = Math.min(w * 0.45, 420);
+      const ratio = (o.height || 1) / (o.width || 1);
+      o.set({
+        originX: 'center',
+        originY: 'center',
+        left: w / 2,
+        top: h / 2,
+        scaleX: defaultW / (o.width || 1),
+        scaleY: (defaultW * ratio) / (o.height || 1),
+        lockMovementX: false,
+        lockMovementY: false,
+        lockScalingX: false,
+        lockScalingY: false,
+        lockRotation: false,
+        hasControls: true,
+      });
+      o.setCoords();
+      c.bringObjectForward(o);
+      c.setActiveObject(o);
+      c.requestRenderAll();
+      commit();
+      readSel();
+      return;
+    }
+
+    // Cover scale so image fills entire page without stretching/distortion
+    const scale = Math.max(w / (o.width || 1), h / (o.height || 1));
+    o.set({
+      originX: 'center',
+      originY: 'center',
+      left: w / 2,
+      top: h / 2,
+      scaleX: scale,
+      scaleY: scale,
+      lockMovementX: true,
+      lockMovementY: true,
+      lockScalingX: true,
+      lockScalingY: true,
+      lockRotation: true,
+      hasControls: false,
+    });
+    o._isBackground = true;
+    o.setCoords();
+
+    // Send to back so all text, shapes, icons, and logos sit cleanly on top
+    c.sendObjectToBack(o);
+
+    // Remove any solid white or panel background rects that block the image
+    const blockingPanels = c.getObjects('rect').filter((rect) => {
+      if (rect === o) return false;
+      const f = String(rect.fill || '').toLowerCase();
+      const isWhite =
+        f === '#ffffff' ||
+        f === '#fff' ||
+        f === 'white' ||
+        f === 'rgb(255, 255, 255)' ||
+        f === 'rgb(255,255,255)' ||
+        f === 'rgba(255, 255, 255, 1)' ||
+        f === 'rgba(255,255,255,1)';
+      const isPanel = rect.height >= 500 && rect.width >= 250;
+      const isFullPage = rect.width >= w - 30 && rect.height >= h - 30;
+      return (isWhite && isPanel) || isFullPage;
+    });
+    blockingPanels.forEach((p) => c.remove(p));
+
+    c.setActiveObject(o);
+    c.requestRenderAll();
+    commit();
+    readSel();
+  };
+
+  /** Add a text box directly above / on top of the selected image */
+  const addTextOnImage = (maybeObj) => {
+    const c = cvs.current;
+    if (!c) return;
+    const img = getSelectedImage(maybeObj);
+    const { w, h } = size.current;
+    let targetLeft = w / 2;
+    let targetTop = h / 2;
+    if (img && !img._isBackground) {
+      targetLeft = img.left;
+      targetTop = img.top;
+    }
+    const textBox = makeText({
+      t: 'Add heading text',
+      w: Math.min(w * 0.65, 480),
+      size: 34,
+      font: 'Poppins',
+      bold: true,
+      color: '#1a1a1a',
+      align: 'center',
+    });
+    textBox.set({
+      originX: 'center',
+      originY: 'center',
+      left: targetLeft,
+      top: targetTop,
+    });
+    c.add(textBox);
+    c.bringObjectToFront(textBox);
+    c.setActiveObject(textBox);
+    c.requestRenderAll();
+    commit();
+    textBox.enterEditing();
+    textBox.selectAll();
+  };
+
   /** Stretch the selected image to fill the whole page */
   const fitImageToPage = () => {
     const c = cvs.current;
@@ -844,16 +1019,24 @@ export function useEditor() {
   // ---------- Image Editing & Cropping ----------
   const openCrop = (customObj) => {
     const c = cvs.current;
-    const o = customObj || (c && c.getActiveObject());
-    if (!(o instanceof FabricImage)) return;
-    const src = o._originalSrc || o.getSrc?.() || (o._element && o._element.src);
-    if (!src) return;
+    if (!c) return;
+    const o = getSelectedImage(customObj);
+    if (!o) {
+      console.warn('openCrop: no image selected');
+      return;
+    }
+    const src = o._originalSrc || o.getSrc?.() || (o._element && (o._element.src || o._element.currentSrc)) || '';
+    if (!src) {
+      console.warn('openCrop: no src found on image', o);
+      return;
+    }
     setCropTarget({
       obj: o,
       src,
       flipX: !!o.flipX,
       flipY: !!o.flipY,
       angle: o.angle || 0,
+      isBackground: !!o._isBackground,
     });
   };
   openCropRef.current = openCrop;
@@ -866,14 +1049,15 @@ export function useEditor() {
     const c = cvs.current;
     if (!c || !cropTarget) return;
     const active = cropTarget.obj;
-    if (!active || !(active instanceof FabricImage)) {
+    if (!active) {
       setCropTarget(null);
       return;
     }
 
-    const originalSrc = active._originalSrc || active.getSrc?.() || (active._element && active._element.src);
+    const originalSrc = active._originalSrc || active.getSrc?.() || (active._element && (active._element.src || active._element.currentSrc));
     const originalW = active._originalWidth || active.width;
     const originalH = active._originalHeight || active.height;
+    const wasBackground = !!active._isBackground;
 
     const newImg = await FabricImage.fromURL(croppedDataUrl, { crossOrigin: 'anonymous' });
 
@@ -894,6 +1078,18 @@ export function useEditor() {
     newImg._originalWidth = originalW;
     newImg._originalHeight = originalH;
     newImg._isCropped = true;
+    newImg._isBackground = wasBackground;
+
+    if (wasBackground) {
+      newImg.set({
+        lockMovementX: true,
+        lockMovementY: true,
+        lockScalingX: true,
+        lockScalingY: true,
+        lockRotation: true,
+        hasControls: false,
+      });
+    }
 
     if (active._cornerRadius) {
       setImageCornerRadius(active._cornerRadius, newImg);
@@ -901,17 +1097,22 @@ export function useEditor() {
 
     c.remove(active);
     c.add(newImg);
+    if (wasBackground) {
+      c.sendObjectToBack(newImg);
+    }
     c.setActiveObject(newImg);
     c.requestRenderAll();
-    queue();
+    commit();
     setCropTarget(null);
     readSel();
   };
 
   const resetImageCrop = async () => {
     const c = cvs.current;
-    const active = c && c.getActiveObject();
-    if (!(active instanceof FabricImage) || !active._originalSrc) return;
+    if (!c) return;
+    const active = getSelectedImage();
+    if (!active || !active._originalSrc) return;
+    const wasBackground = !!active._isBackground;
 
     const origUrl = active._originalSrc;
     const newImg = await FabricImage.fromURL(origUrl, { crossOrigin: 'anonymous' });
@@ -929,12 +1130,27 @@ export function useEditor() {
     });
     newImg._originalSrc = origUrl;
     newImg._isCropped = false;
+    newImg._isBackground = wasBackground;
+
+    if (wasBackground) {
+      newImg.set({
+        lockMovementX: true,
+        lockMovementY: true,
+        lockScalingX: true,
+        lockScalingY: true,
+        lockRotation: true,
+        hasControls: false,
+      });
+    }
 
     c.remove(active);
     c.add(newImg);
+    if (wasBackground) {
+      c.sendObjectToBack(newImg);
+    }
     c.setActiveObject(newImg);
     c.requestRenderAll();
-    queue();
+    commit();
     readSel();
   };
 
@@ -1021,6 +1237,8 @@ export function useEditor() {
     makeSelectedImageEditable,
     replaceImage,
     fitImageToPage,
+    setImageAsBackground,
+    addTextOnImage,
     _snapshot,
     // image editing
     cropTarget,

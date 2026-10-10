@@ -679,3 +679,4 @@ export default function ImageCropModal({ target, onApply, onClose }) {
     </div>
   );
 }
+

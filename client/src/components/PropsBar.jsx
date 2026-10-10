@@ -1,5 +1,6 @@
 import Ico from './Ico.jsx';
 import { FONTS } from '../fonts.js';
+import PageBackgroundControl from './PageBackgroundControl.jsx';
 
 function Btn({ icon, label, on, onClick, disabled, children }) {
   return (
@@ -97,7 +98,7 @@ export default function StudioPropsBar({ ed, bg }) {
     return (
       <div className="props">
         <span className="props-label">Page background</span>
-        <Color label="Page background" value={bg} onChange={ed.setBackground} />
+        <PageBackgroundControl value={bg} onChange={ed.setBackground} />
         <span className="sep" />
         <button
           className="tb txt"
@@ -202,7 +203,7 @@ export default function StudioPropsBar({ ed, bg }) {
               alignItems: 'center',
               gap: 5,
             }}
-            onClick={ed.openCrop}
+            onClick={() => ed.openCrop()}
             title="Crop & Edit Image (or double-click image on canvas)"
           >
             <Ico name="crop" size={14} /> Crop
@@ -244,22 +245,53 @@ export default function StudioPropsBar({ ed, bg }) {
             <button
               className="tb txt"
               style={{ color: '#d9730d', fontWeight: 600 }}
-              onClick={ed.resetImageCrop}
+              onClick={() => ed.resetImageCrop()}
               title="Revert back to original uncropped image"
             >
               Reset Crop
             </button>
           )}
           <span className="sep" />
-          <button className="tb txt" onClick={ed.fitImageToPage} title="Stretch this image to fill the canvas">
-            Fit to page
+          <button
+            className="tb txt"
+            style={{
+              background: s.isBackground ? '#f1f5f9' : '#005b76',
+              color: s.isBackground ? '#0f172a' : '#ffffff',
+              border: s.isBackground ? '1px solid #cbd5e1' : 'none',
+              borderRadius: 6,
+              padding: '4px 11px',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 5,
+              cursor: 'pointer',
+            }}
+            onClick={() => ed.setImageAsBackground()}
+            title={s.isBackground ? "Detach image from background" : "Set image as canvas background (covers page & sends behind text)"}
+          >
+            {s.isBackground ? '↩ Detach background' : '🖼️ Set as background'}
           </button>
           <button
             className="tb txt"
-            onClick={() => ed.addText({ label: 'Your text here', size: 36, font: 'Poppins', color: '#1a1a1a', bold: true })}
-            title="Add text on top"
+            style={{
+              background: '#f0fdf4',
+              color: '#006837',
+              border: '1px solid #86efac',
+              borderRadius: 6,
+              padding: '4px 11px',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 5,
+              cursor: 'pointer',
+            }}
+            onClick={() => ed.addTextOnImage()}
+            title="Add text directly on top of this image"
           >
-            + Add text on top
+            ✍️ + Add text on top
+          </button>
+          <button className="tb txt" onClick={ed.fitImageToPage} title="Stretch this image to fill the canvas">
+            Fit to page
           </button>
         </>
       )}

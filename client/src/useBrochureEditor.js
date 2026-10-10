@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  Canvas, Textbox, Rect, Circle, Triangle, Line, FabricImage, Group, ActiveSelection,
+  Canvas, Textbox, Rect, Circle, Triangle, Line, FabricImage, Group, ActiveSelection, Gradient,
 } from 'fabric';
 import { buildSpec, makeIcon, makeText } from './objects.js';
+import { toFabricGradient } from './gradientUtils.js';
 
 const hex = (v) => (typeof v === 'string' && /^#[0-9a-f]{6}$/i.test(v) ? v : '#000000');
 
@@ -346,8 +347,161 @@ export function useEditor() {
     c.setActiveObject(clones.length === 1 ? clones[0] : new ActiveSelection(clones, { canvas: c }));
     c.requestRenderAll();
   };
-  const setBackground = (color) => { const c = cvs.current; c.backgroundColor = color; c.requestRenderAll(); queue(); };
-  const getBackground = () => hex(cvs.current?.backgroundColor);
+  const setBackground = (color) => {
+    const c = cvs.current;
+    if (!c) return;
+    let targetBg = color;
+    if (color && typeof color === 'object' && !(color instanceof Gradient) && (color.colors || color.direction || color.isGradient)) {
+      targetBg = toFabricGradient(color, size.current.w, size.current.h);
+    }
+    c.backgroundColor = targetBg;
+    c.requestRenderAll();
+    queue();
+  };
+  const getBackground = () => cvs.current?.backgroundColor || '#ffffff';
+
+  const getSelectedImage = (maybeObj) => {
+    const isImg = (obj) =>
+      obj &&
+      typeof obj === 'object' &&
+      !obj.nativeEvent &&
+      !obj._reactName &&
+      !obj.preventDefault &&
+      (obj instanceof FabricImage || obj.type === 'image' || obj.isType?.('image') || typeof obj.getSrc === 'function' || !!obj._element);
+
+    if (isImg(maybeObj)) return maybeObj;
+    const c = cvs.current;
+    if (!c) return null;
+    const active = c.getActiveObject();
+    if (isImg(active)) return active;
+    if (active instanceof ActiveSelection) {
+      const found = active.getObjects().find(isImg);
+      if (found) return found;
+    }
+    const allImgs = c.getObjects().filter(isImg);
+    if (allImgs.length === 1) return allImgs[0];
+    return null;
+  };
+
+  const setImageAsBackground = (maybeObj) => {
+    const c = cvs.current;
+    if (!c) return;
+    const o = getSelectedImage(maybeObj);
+    if (!o) return;
+    const { w, h } = size.current;
+
+    if (o._isBackground) {
+      o._isBackground = false;
+      const defaultW = Math.min(w * 0.45, 420);
+      const ratio = (o.height || 1) / (o.width || 1);
+      o.set({
+        originX: 'center',
+        originY: 'center',
+        left: w / 2,
+        top: h / 2,
+        scaleX: defaultW / (o.width || 1),
+        scaleY: (defaultW * ratio) / (o.height || 1),
+        lockMovementX: false,
+        lockMovementY: false,
+        lockScalingX: false,
+        lockScalingY: false,
+        lockRotation: false,
+        hasControls: true,
+      });
+      o.setCoords();
+      c.bringObjectForward(o);
+      c.setActiveObject(o);
+      c.requestRenderAll();
+      commit();
+      readSel();
+      return;
+    }
+
+    const scale = Math.max(w / (o.width || 1), h / (o.height || 1));
+    o.set({
+      originX: 'center',
+      originY: 'center',
+      left: w / 2,
+      top: h / 2,
+      scaleX: scale,
+      scaleY: scale,
+      lockMovementX: true,
+      lockMovementY: true,
+      lockScalingX: true,
+      lockScalingY: true,
+      lockRotation: true,
+      hasControls: false,
+    });
+    o._isBackground = true;
+    o.setCoords();
+    c.sendObjectToBack(o);
+
+    const blockingPanels = c.getObjects('rect').filter((rect) => {
+      if (rect === o) return false;
+      const f = String(rect.fill || '').toLowerCase();
+      const isWhite = f === '#ffffff' || f === '#fff' || f === 'white';
+      return isWhite && rect.height >= 500 && rect.width >= 250;
+    });
+    blockingPanels.forEach((p) => c.remove(p));
+
+    c.setActiveObject(o);
+    c.requestRenderAll();
+    commit();
+    readSel();
+  };
+
+  const addTextOnImage = (maybeObj) => {
+    const c = cvs.current;
+    if (!c) return;
+    const img = getSelectedImage(maybeObj);
+    const { w, h } = size.current;
+    let targetLeft = w / 2;
+    let targetTop = h / 2;
+    if (img && !img._isBackground) {
+      targetLeft = img.left;
+      targetTop = img.top;
+    }
+    const textBox = makeText({
+      t: 'Add heading text',
+      w: Math.min(w * 0.65, 480),
+      size: 34,
+      font: 'Poppins',
+      bold: true,
+      color: '#1a1a1a',
+      align: 'center',
+    });
+    textBox.set({
+      originX: 'center',
+      originY: 'center',
+      left: targetLeft,
+      top: targetTop,
+    });
+    c.add(textBox);
+    c.bringObjectToFront(textBox);
+    c.setActiveObject(textBox);
+    c.requestRenderAll();
+    commit();
+    textBox.enterEditing();
+    textBox.selectAll();
+  };
+
+  const fitImageToPage = () => {
+    const c = cvs.current;
+    const o = c.getActiveObject();
+    if (!(o instanceof FabricImage)) return;
+    const { w, h } = size.current;
+    o.set({
+      left: 0,
+      top: 0,
+      originX: 'left',
+      originY: 'top',
+      scaleX: w / o.width,
+      scaleY: h / o.height,
+    });
+    o.setCoords();
+    c.requestRenderAll();
+    queue();
+  };
 
   // ---------- pages, size, zoom ----------
   const setSize = (w, h) => { size.current = { ...size.current, w, h }; applyZoom(); };
@@ -393,6 +547,7 @@ export function useEditor() {
     setProps, setColor, setStroke, setCorner, toggle, layer, centerOnPage, remove, duplicate,
     changeObjectSize, setObjectSize,
     setBackground, getBackground, setSize, setZoom, getJSON, clear, loadPage, applyTemplate, isEmpty,
+    setImageAsBackground, addTextOnImage, fitImageToPage,
     render, renderPages,
   };
 }
