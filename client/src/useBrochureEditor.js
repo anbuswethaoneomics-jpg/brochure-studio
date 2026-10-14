@@ -126,9 +126,20 @@ export function useEditor() {
   };
 
   const applyZoom = () => {
-    const c = cvs.current; const { w, h, z } = size.current;
+    const c = cvs.current; if (!c) return;
+    const { w, h, z } = size.current;
     c.setZoom(z);
     c.setDimensions({ width: w * z, height: h * z });
+    const ctx = c.getContext();
+    if (ctx) {
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+    }
+    const topCtx = c.getTopContext && c.getTopContext();
+    if (topCtx) {
+      topCtx.imageSmoothingEnabled = true;
+      topCtx.imageSmoothingQuality = 'high';
+    }
     c.requestRenderAll();
   };
 
@@ -190,6 +201,15 @@ export function useEditor() {
       width: size.current.w, height: size.current.h, backgroundColor: '#ffffff',
       preserveObjectStacking: true, enableRetinaScaling: true,
     });
+    // High-DPI supersampling: ensures canvas backing store maintains crisp resolution
+    // at any zoom level (80%, 50%, Fit, etc.) preventing any blurriness on any template
+    c.getRetinaScaling = () => {
+      const dpr = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
+      const z = (size.current && size.current.z) ? size.current.z : (c.getZoom() || 1);
+      const base = Math.max(dpr, 2);
+      const zoomBoost = z < 1 ? (1 / z) : 1;
+      return Math.min(Math.max(base * zoomBoost, 2), 4);
+    };
     cvs.current = c;
 
     // Corner-dragging a text box scales it; convert that scale into a real font size.
