@@ -91,7 +91,7 @@ function SizeStepper({ value, onChange, onStep, label = "Size" }) {
   );
 }
 
-export default function StudioPropsBar({ ed, bg }) {
+export default function StudioPropsBar({ ed, bg, folds = 3, pagesCount = 1, onShuffle, zoom = 1, onZoomChange, onFit, onZoomBy }) {
   const s = ed.sel;
 
   if (!s) {
@@ -107,6 +107,94 @@ export default function StudioPropsBar({ ed, bg }) {
         >
           + Add Text
         </button>
+        <span className="sep" />
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            background: '#f1f5f9',
+            padding: '2px 8px',
+            borderRadius: 8,
+            border: '1px solid #cbd5e1',
+          }}
+        >
+          <span style={{ fontSize: 11.5, fontWeight: 700, color: '#334155', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+            Template View:
+          </span>
+          <button
+            type="button"
+            className="tb txt"
+            style={{
+              background: '#005b76',
+              color: '#ffffff',
+              borderRadius: 6,
+              padding: '3px 9px',
+              fontWeight: 600,
+              fontSize: 12,
+              border: 'none',
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+            onClick={() => onFit && onFit()}
+            title="Minimize & Fit entire template to screen so it's fully visible and editable"
+          >
+            Fit / Minimize
+          </button>
+          <button
+            type="button"
+            className="icon"
+            style={{ width: 26, height: 26, background: '#fff', border: '1px solid #cbd5e1', borderRadius: 4 }}
+            onClick={() => onZoomBy && onZoomBy(-0.1)}
+            title="Minimize template (Zoom out)"
+            aria-label="Minimize template"
+          >
+            <Ico name="minus" size={13} />
+          </button>
+          <select
+            value={Math.round((zoom || 1) * 100)}
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val === 'fit') {
+                onFit && onFit();
+              } else {
+                onZoomChange && onZoomChange(+val / 100);
+              }
+            }}
+            style={{
+              fontSize: 12,
+              fontWeight: 600,
+              padding: '2px 6px',
+              borderRadius: 6,
+              border: '1px solid #cbd5e1',
+              background: '#fff',
+              color: '#0f172a',
+              cursor: 'pointer',
+            }}
+            title="Adjust template view percentage"
+          >
+            <option value="fit">Fit to Screen</option>
+            <option value="40">40% (Small)</option>
+            <option value="50">50% (Half)</option>
+            <option value="60">60%</option>
+            <option value="70">70%</option>
+            <option value="80">80%</option>
+            <option value="100">100% (Full Size)</option>
+            <option value="125">125%</option>
+          </select>
+          <button
+            type="button"
+            className="icon"
+            style={{ width: 26, height: 26, background: '#fff', border: '1px solid #cbd5e1', borderRadius: 4 }}
+            onClick={() => onZoomBy && onZoomBy(0.1)}
+            title="Enlarge template (Zoom in)"
+            aria-label="Enlarge template"
+          >
+            <Ico name="plus" size={13} />
+          </button>
+        </div>
         <span className="props-hint" style={{ marginLeft: 8 }}>
           — or double-click anywhere on the canvas to add text
         </span>

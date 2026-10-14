@@ -134,8 +134,7 @@ export default function StudioApp() {
         }
       }
       if (mounted) {
-        ed.setZoom(1);
-        setZoomState(1);
+        setTimeout(() => fit(trifoldTemplate?.w || 1123, trifoldTemplate?.h || 794), 50);
       }
     };
 
@@ -145,25 +144,53 @@ export default function StudioApp() {
     return () => { mounted = false; };
   }, []); // eslint-disable-line
 
-  const fit = (w = design.width, h = design.height, forceFit = false) => {
-    if (!forceFit) {
+  const fit = (w = design.width, h = design.height) => {
+    const el = wsRef.current;
+    if (!el) {
       ed.setZoom(1);
       setZoomState(1);
-      return;
+      return 1;
     }
-    const el = wsRef.current;
-    if (!el) return;
-    const z = Math.min((el.clientWidth - 72) / w, (el.clientHeight - 72) / h, 1);
-    const zz = Math.max(0.1, Math.round(z * 100) / 100);
+    const padX = 64;
+    const padY = 64;
+    const availW = Math.max(160, el.clientWidth - padX);
+    const availH = Math.max(160, el.clientHeight - padY);
+    const z = Math.min(availW / w, availH / h, 1);
+    const zz = Math.max(0.2, Math.round(z * 100) / 100);
     ed.setZoom(zz);
     setZoomState(zz);
+    return zz;
   };
 
-  const zoomBy = (d) => {
-    const z = Math.min(3, Math.max(0.1, Math.round((zoom + d) * 100) / 100));
+  const setZoomLevel = (val) => {
+    const z = Math.min(3, Math.max(0.2, Math.round(val * 100) / 100));
     ed.setZoom(z);
     setZoomState(z);
   };
+
+  const zoomBy = (d) => {
+    const z = Math.min(3, Math.max(0.2, Math.round((zoom + d) * 100) / 100));
+    ed.setZoom(z);
+    setZoomState(z);
+  };
+
+  useEffect(() => {
+    const el = wsRef.current;
+    if (!el) return;
+    const handleWheel = (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.05 : -0.05;
+        setZoomState((prev) => {
+          const next = Math.min(3, Math.max(0.2, Math.round((prev + delta) * 100) / 100));
+          ed.setZoom(next);
+          return next;
+        });
+      }
+    };
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [ed]);
 
   useEffect(() => {
     setSaved(false);
@@ -177,8 +204,7 @@ export default function StudioApp() {
     setPageIdx(0);
     ed.setSize(p.w, p.h);
     await ed.clear('#ffffff');
-    ed.setZoom(1);
-    setZoomState(1);
+    setTimeout(() => fit(p.w, p.h), 40);
     setModal(null);
     setSaved(false);
   };
@@ -188,14 +214,13 @@ export default function StudioApp() {
       const d = await getDesign(id);
       setDesign({ id: d.id, name: d.name, width: d.width, height: d.height, folds: d.folds || 0, templateId: d.templateId || null });
       if (d.isTemplate && (!d.pages || !d.pages.length)) {
-        const tpl = TEMPLATES.find((t) => t.id === (d.templateId || d.id) || t.name === d.name);
+        const tpl = TEMPLATES.find((t) => t.id === (d.templateId || d.id) || t.name === design.name);
         if (tpl) {
           ed.setSize(tpl.w, tpl.h, tpl.folds || 0);
           const pgs = await ed.applyTemplate(tpl);
           setPages(pgs || [null]);
           setPageIdx(0);
-          ed.setZoom(1);
-          setZoomState(1);
+          setTimeout(() => fit(tpl.w, tpl.h), 40);
           setModal(null);
           setSaved(true);
           return;
@@ -208,8 +233,7 @@ export default function StudioApp() {
       if (safePages[0]) {
         await ed.loadPage(safePages[0]);
       }
-      ed.setZoom(1);
-      setZoomState(1);
+      setTimeout(() => fit(d.width, d.height), 40);
       setModal(null);
       setSaved(true);
     } catch (e) {
@@ -404,8 +428,7 @@ export default function StudioApp() {
       setPages(pgs);
       setPageIdx(0);
     }
-    ed.setZoom(1);
-    setZoomState(1);
+    setTimeout(() => fit(t.w, t.h), 40);
     setSaved(false);
   };
 
@@ -597,7 +620,17 @@ export default function StudioApp() {
           currentTemplateId={design.templateId || design.id}
         />
         <main className="stage">
-          <PropsBar ed={ed} bg={ed.getBackground()} folds={design.folds} pagesCount={pages.length} onShuffle={shufflePagesOrPanels} />
+          <PropsBar
+            ed={ed}
+            bg={ed.getBackground()}
+            folds={design.folds}
+            pagesCount={pages.length}
+            onShuffle={shufflePagesOrPanels}
+            zoom={zoom}
+            onZoomChange={setZoomLevel}
+            onFit={() => fit()}
+            onZoomBy={zoomBy}
+          />
           <div
             className={`ws ${panMode || spacePressed ? 'pan-mode' : ''} ${isPanning ? 'panning' : ''}`}
             ref={wsRef}
@@ -683,23 +716,59 @@ export default function StudioApp() {
             >
               <Ico name="hand" size={17} />
             </button>
-            <button className="icon" onClick={() => zoomBy(-0.1)} aria-label="Zoom out">
-              <Ico name="minus" />
-            </button>
-            <span
-              className="zoom"
-              style={{ cursor: 'pointer', userSelect: 'none' }}
-              onClick={() => { ed.setZoom(1); setZoomState(1); }}
-              title="Click to reset to 100%"
-            >
-              {Math.round(zoom * 100)}%
-            </span>
-            <button className="icon" onClick={() => zoomBy(0.1)} aria-label="Zoom in">
-              <Ico name="plus" />
-            </button>
-            <button className="btn small" onClick={() => fit(design.width, design.height, true)} title="Fit brochure to screen">
-              Fit
-            </button>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#f8fafc', padding: '2px 8px', borderRadius: 8, border: '1px solid #cbd5e1' }}>
+              <button
+                className="btn small"
+                style={{
+                  background: '#005b76',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 6,
+                  fontWeight: 600,
+                  padding: '4px 9px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  cursor: 'pointer',
+                }}
+                onClick={() => fit()}
+                title="Minimize / Fit brochure to screen so it's fully visible and editable"
+              >
+                Fit / Minimize
+              </button>
+              <button className="icon" onClick={() => zoomBy(-0.1)} aria-label="Minimize (Zoom out)" title="Minimize template">
+                <Ico name="minus" />
+              </button>
+              <input
+                type="range"
+                min="25"
+                max="150"
+                step="5"
+                value={Math.round(zoom * 100)}
+                onChange={(e) => setZoomLevel(+e.target.value / 100)}
+                style={{ width: 85, cursor: 'pointer', accentColor: '#005b76' }}
+                title={`Adjust template size: ${Math.round(zoom * 100)}%`}
+              />
+              <span
+                className="zoom"
+                style={{ cursor: 'pointer', userSelect: 'none', fontWeight: 600, minWidth: 42, textAlign: 'center', fontSize: 13 }}
+                onClick={() => setZoomLevel(1)}
+                title="Click to reset to 100%"
+              >
+                {Math.round(zoom * 100)}%
+              </span>
+              <button className="icon" onClick={() => zoomBy(0.1)} aria-label="Enlarge (Zoom in)" title="Enlarge template">
+                <Ico name="plus" />
+              </button>
+              <button
+                className="btn small"
+                style={{ background: '#fff', border: '1px solid #cbd5e1', borderRadius: 6, fontWeight: 500 }}
+                onClick={() => setZoomLevel(1)}
+                title="Reset to 100% Actual size"
+              >
+                100%
+              </button>
+            </div>
           </footer>
         </main>
       </div>

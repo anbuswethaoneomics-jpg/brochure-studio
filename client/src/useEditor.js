@@ -236,6 +236,9 @@ export function useEditor() {
       const target = e.target;
       if (target instanceof FabricImage && openCropRef.current) {
         openCropRef.current(target);
+      } else if (!target) {
+        const p = c.getScenePoint ? c.getScenePoint(e.e) : (c.getPointer ? c.getPointer(e.e) : { x: size.current.w / 2, y: size.current.h / 2 });
+        addText({ label: 'Your text here', size: 28, font: 'Poppins', color: '#1a1a1a', bold: false, x: p.x, y: p.y });
       }
     });
     resetHistory();
@@ -339,25 +342,25 @@ export function useEditor() {
 
       // Apply vertical alignment snap (shifts target left/right to snap X)
       if (bestX && minDiffX <= SNAP_DISTANCE) {
-        target.set('left', target.left + bestX.shift);
+        target.set('left', target.left + bestX.shift / zoom);
         target.setCoords();
         activeLines.push({
           type: 'vertical',
-          x: bestX.lineX,
-          y1: bestX.y1,
-          y2: bestX.y2,
+          x: bestX.lineX / zoom,
+          y1: bestX.y1 / zoom,
+          y2: bestX.y2 / zoom,
         });
       }
 
       // Apply horizontal alignment snap (shifts target up/down to snap Y)
       if (bestY && minDiffY <= SNAP_DISTANCE) {
-        target.set('top', target.top + bestY.shift);
+        target.set('top', target.top + bestY.shift / zoom);
         target.setCoords();
         activeLines.push({
           type: 'horizontal',
-          y: bestY.lineY,
-          x1: bestY.x1,
-          x2: bestY.x2,
+          y: bestY.lineY / zoom,
+          x1: bestX.x1 ? bestX.x1 / zoom : (bestY.x1 / zoom),
+          x2: bestX.x2 ? bestX.x2 / zoom : (bestY.x2 / zoom),
         });
       }
 
@@ -454,7 +457,16 @@ export function useEditor() {
   const addText = (p = {}) => {
     const { w } = size.current;
     const o = makeText({ t: p.label || 'Add your text', w: Math.min(w * 0.6, 520), size: p.size || 24, font: p.font || 'Poppins', bold: p.bold, italic: p.italic, color: p.color, align: p.align, sp: p.sp });
-    addObj(o, true);
+    if (typeof p.x === 'number' && typeof p.y === 'number') {
+      const c = cvs.current;
+      o.set({ left: p.x, top: p.y });
+      o.setCoords();
+      c.add(o);
+      c.setActiveObject(o);
+      c.requestRenderAll();
+    } else {
+      addObj(o, true);
+    }
     o.enterEditing(); o.selectAll();
   };
 
