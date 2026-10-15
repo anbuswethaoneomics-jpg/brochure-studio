@@ -4060,6 +4060,924 @@ export function ngsSpaciousFlyer() {
   return s;
 }
 
+// Oneomics NGS Genome and Exome Flyer — 19th A4 Flyer (794 x 1123)
+export function ngsGenomeExomeFlyer() {
+  const s = [];
+
+  const C_INK = '#0F2A43';
+  const C_TEAL = '#0E8F8C';
+  const C_BLUE = '#2A6FB0';
+  const C_MUTED = '#52667A';
+  const C_PALE = '#F3F7FA';
+  const C_RULE = '#D5DEE6';
+  const C_TAG = '#2D4B86';
+  const C_RED = '#E0262A';
+  const C_CYAN = '#2E9BD6';
+  const C_GREEN = '#2E9E2E';
+
+  // 1. TOP TRI-COLOUR STRIPE (6px height at top: y = 0)
+  s.push(r(0, 0, 265, 6, C_RED));
+  s.push(r(265, 0, 265, 6, C_CYAN));
+  s.push(r(530, 0, 264, 6, C_GREEN));
+
+  // 2. LEFT SIDEBAR PANEL (x: 0, y: 0, w: 238, h: 1123, bg: #F3F7FA)
+  s.push(r(0, 0, 238, 1123, C_PALE));
+  s.push(r(238, 0, 1, 1123, C_RULE));
+
+  // Sidebar Branding (Logo + Tagline)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 22, y: 34, w: 146 });
+  s.push(t('Pioneer in Genomics Services', 22, 74, 194, 10.5, { bold: 1, color: C_TAG, font: 'Poppins' }));
+
+  // Fact 1: Exome size
+  s.push(t('EXOME SIZE', 22, 112, 194, 8.5, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+  s.push(t('~1%', 22, 126, 194, 21, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('of the genome (about 30 Mb) carries the coding regions.', 22, 154, 194, 9.6, { color: C_INK, font: 'Poppins', lh: 1.55 }));
+
+  // Fact 2: Platforms
+  s.push(t('PLATFORMS', 22, 206, 194, 8.5, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+  const platforms = [
+    { name: 'HiSeq X', y: 227 },
+    { name: 'NovaSeq 6000', y: 246 },
+    { name: 'NextSeq 500', y: 264 },
+    { name: 'MiSeq', y: 282 },
+    { name: 'PacBio RS II', y: 301 },
+    { name: 'PacBio Sequel', y: 320 },
+  ];
+  platforms.forEach((plat) => {
+    s.push(r(23, plat.y + 4, 4, 4, C_TEAL, { r: 1 }));
+    s.push(t(plat.name, 34, plat.y, 180, 9.6, { color: C_MUTED, font: 'Poppins' }));
+  });
+
+  // Fact 3: Capture kits
+  s.push(t('CAPTURE KITS', 22, 356, 194, 8.5, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+  const captureKits = [
+    { name: 'TruSeq Nano DNA Sample Prep Kit', y: 377 },
+    { name: 'SureSelect XT All Exon V5', y: 395 },
+    { name: 'SureSelect XT All Exon V6', y: 414 },
+    { name: 'SureSelect XT custom Tier 1', y: 433 },
+  ];
+  captureKits.forEach((kit) => {
+    s.push(r(23, kit.y + 4, 4, 4, C_TEAL, { r: 1 }));
+    s.push(t(kit.name, 34, kit.y, 180, 9.6, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // Sidebar Contact & Address (Bottom of sidebar at exact position y = 1006)
+  const sideContactY = 1006;
+  s.push(r(22, sideContactY, 194, 1, C_RULE));
+  s.push(t('sales@oneomics.in', 22, sideContactY + 14, 194, 9.8, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 22, sideContactY + 32, 194, 9.8, { color: C_MUTED, font: 'Poppins' }));
+  const sideAddr = 'F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India';
+  s.push(t(sideAddr, 22, sideContactY + 50, 194, 9.3, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+
+  // 3. MAIN CONTENT AREA (x: 276, w: 476)
+  const mainX = 276;
+  const mainW = 476;
+
+  // Kicker
+  s.push(t('NEXT GENERATION SEQUENCING', mainX, 39, mainW, 9, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+
+  // Main Heading
+  s.push(t('Whole genome and exome\nsequencing', mainX, 56, mainW, 29, { bold: 1, color: C_INK, font: 'Lora', lh: 1.15 }));
+
+  // Intro text
+  s.push(t('The entire genome is read and analysed to give the most detailed genetic variation information. Exome sequencing focuses on the coding regions, an economical route for clinical and disease research.', mainX, 134, mainW, 10.4, { color: C_MUTED, font: 'Poppins', lh: 1.7 }));
+  s.push(r(mainX, 203, mainW, 2, C_INK));
+
+  // Section 1: Whole genome sequencing
+  const sec1Y = 239;
+  s.push(t('Whole genome sequencing', mainX, sec1Y - 8, 205, 15, { bold: 1, color: C_TEAL, font: 'Lora' }));
+  s.push(r(mainX + 210, sec1Y, mainW - 210, 1, C_RULE));
+
+  // 2 Columns for Whole genome sequencing
+  const colW = 227;
+  const colGap = 22;
+  const col1X = mainX;
+  const col2X = mainX + colW + colGap; // 525
+
+  // Sec 1 - Col 1: De novo sequencing
+  s.push(t('De novo sequencing', col1X, 265, colW, 11.6, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(t('Assemble a genome without prior knowledge of the sequence, for microbes, humans, animals, plants and insects.', col1X, 282, colW, 10, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+
+  s.push(t('STANDARD ANALYSIS', col1X, 337, colW, 8.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(r(col1X + 1, 357 + 4, 4, 4, C_TEAL, { r: 1 }));
+  s.push(t('Genome assembly and annotation', col1X + 12, 357, colW - 12, 10.2, { color: C_MUTED, font: 'Poppins' }));
+  s.push(r(col1X + 1, 376 + 4, 4, 4, C_TEAL, { r: 1 }));
+  s.push(t('Consensus sequence assembled into contigs', col1X + 12, 376, colW - 12, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+
+  s.push(t('ADVANCED ANALYSIS', col1X, 413, colW, 8.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(r(col1X + 1, 433 + 4, 4, 4, C_TEAL, { r: 1 }));
+  s.push(t('Gene prediction and annotation', col1X + 12, 433, colW - 12, 10.2, { color: C_MUTED, font: 'Poppins' }));
+
+  // Sec 1 - Col 2: Re-sequencing
+  s.push(t('Re-sequencing', col2X, 265, colW, 11.6, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(t('Compare a sample against a reference sequence to find SNPs, CNVs, rearrangements and indels.', col2X, 282, colW, 10, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+
+  s.push(t('SERVICE OVERVIEW', col2X, 337, colW, 8.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  const reseqServices = [
+    { text: 'SNV and InDels', y: 357 },
+    { text: 'Structural variation', y: 376 },
+    { text: 'Copy number variation', y: 394 },
+    { text: 'Trio analysis', y: 414 },
+  ];
+  reseqServices.forEach((item) => {
+    s.push(r(col2X + 1, item.y + 4, 4, 4, C_TEAL, { r: 1 }));
+    s.push(t(item.text, col2X + 12, item.y, colW - 12, 10.2, { color: C_MUTED, font: 'Poppins' }));
+  });
+
+  s.push(t('STANDARD ANALYSIS', col2X, 435, colW, 8.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(r(col2X + 1, 455 + 4, 4, 4, C_TEAL, { r: 1 }));
+  s.push(t('Mapping statistics', col2X + 12, 455, colW - 12, 10.2, { color: C_MUTED, font: 'Poppins' }));
+  s.push(r(col2X + 1, 472 + 4, 4, 4, C_TEAL, { r: 1 }));
+  s.push(t('SNP and InDel calling against the reference (human, mouse, rat)', col2X + 12, 472, colW - 12, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+
+  // Section 2: Whole exome sequencing
+  const sec2Y = 535;
+  s.push(t('Whole exome sequencing', mainX, sec2Y - 8, 195, 15, { bold: 1, color: C_TEAL, font: 'Lora' }));
+  s.push(r(mainX + 200, sec2Y, mainW - 200, 1, C_RULE));
+
+  // Sec 2 - Col 1: Enrichment methods
+  s.push(t('Enrichment methods', col1X, 561, colW, 11.6, { bold: 1, color: C_INK, font: 'Poppins' }));
+  const enrichKits = [
+    { text: 'Agilent SureSelect Human All Exon Kit', y: 581 },
+    { text: 'Illumina Nextera or TruSeq Exome Enrichment Kit', y: 599 },
+    { text: 'Thermo Fisher Ion AmpliSeq Exome RDY Kit', y: 633 },
+  ];
+  enrichKits.forEach((kit) => {
+    s.push(r(col1X + 1, kit.y + 4, 4, 4, C_TEAL, { r: 1 }));
+    s.push(t(kit.text, col1X + 12, kit.y, colW - 12, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  s.push(t('SERVICE OVERVIEW', col1X, 655, colW, 8.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  const exomeServices = [
+    { text: 'SNV and InDels', y: 674 },
+    { text: 'Copy number variation', y: 694 },
+    { text: 'Trio analysis', y: 712 },
+  ];
+  exomeServices.forEach((item) => {
+    s.push(r(col1X + 1, item.y + 4, 4, 4, C_TEAL, { r: 1 }));
+    s.push(t(item.text, col1X + 12, item.y, colW - 12, 10.2, { color: C_MUTED, font: 'Poppins' }));
+  });
+
+  // Sec 2 - Col 2: Analysis
+  s.push(t('Analysis', col2X, 561, colW, 11.6, { bold: 1, color: C_INK, font: 'Poppins' }));
+  const exomeAnalysis = [
+    { text: 'Variant calling (SNPs and InDels) and annotation', y: 581 },
+    { text: 'CNV (copy number variation)', y: 616 },
+    { text: 'Various variant calling pipelines', y: 633 },
+    { text: 'Cancer, family and population analysis', y: 652 },
+  ];
+  exomeAnalysis.forEach((item) => {
+    s.push(r(col2X + 1, item.y + 4, 4, 4, C_TEAL, { r: 1 }));
+    s.push(t(item.text, col2X + 12, item.y, colW - 12, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+  s.push(t('Widely used for cancer and chronic disease genetic recognition.', col2X, 674, colW, 10, { color: C_MUTED, font: 'Poppins', lh: 1.5 }));
+
+  // Section 3: What you receive
+  const sec3Y = 758;
+  s.push(t('What you receive', mainX, sec3Y - 8, 140, 15, { bold: 1, color: C_TEAL, font: 'Lora' }));
+  s.push(r(mainX + 145, sec3Y, mainW - 145, 1, C_RULE));
+
+  // 3 Columns for What you receive
+  const col3W = 148;
+  const col3Gap = 16;
+  const c3Col1 = mainX;
+  const c3Col2 = mainX + col3W + col3Gap; // 440
+  const c3Col3 = mainX + (col3W + col3Gap) * 2; // 604
+
+  // C3 Col 1: Variant calling (top border 2px teal)
+  s.push(r(c3Col1, 778, col3W, 2, C_TEAL));
+  s.push(t('Variant calling', c3Col1, 786, col3W, 11.6, { bold: 1, color: C_INK, font: 'Poppins' }));
+  const varCalls = [
+    { text: 'Full variant lists for all samples with evidence', y: 814 },
+    { text: 'Filtered lists on any criteria', y: 848 },
+    { text: 'Low-coverage regions', y: 867 },
+  ];
+  varCalls.forEach((vc) => {
+    s.push(r(c3Col1 + 1, vc.y + 4, 4, 4, C_TEAL, { r: 1 }));
+    s.push(t(vc.text, c3Col1 + 12, vc.y, col3W - 12, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // C3 Col 2: Variant annotation (top border 2px blue)
+  s.push(r(c3Col2, 778, col3W, 2, C_BLUE));
+  s.push(t('Variant annotation', c3Col2, 786, col3W, 11.6, { bold: 1, color: C_INK, font: 'Poppins' }));
+  const varAnnots = [
+    { text: 'Functional and location annotation', y: 814 },
+    { text: 'Minor allele frequencies', y: 848 },
+    { text: 'Database identifiers', y: 867 },
+    { text: 'Pathogenicity predictions', y: 887 },
+  ];
+  varAnnots.forEach((va) => {
+    s.push(r(c3Col2 + 1, va.y + 4, 4, 4, C_TEAL, { r: 1 }));
+    s.push(t(va.text, c3Col2 + 12, va.y, col3W - 12, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // C3 Col 3: Genome assembly (top border 2px ink)
+  s.push(r(c3Col3, 778, col3W, 2, C_INK));
+  s.push(t('Genome assembly', c3Col3, 786, col3W, 11.6, { bold: 1, color: C_INK, font: 'Poppins' }));
+  const genomeAsm = [
+    { text: 'Assembled contigs in FASTA', y: 814 },
+    { text: 'Refined genome assembly', y: 848 },
+    { text: 'Quality estimation scores', y: 883 },
+  ];
+  genomeAsm.forEach((ga) => {
+    s.push(r(c3Col3 + 1, ga.y + 4, 4, 4, C_TEAL, { r: 1 }));
+    s.push(t(ga.text, c3Col3 + 12, ga.y, col3W - 12, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // Workflow steps (.flow)
+  const flowY = 921;
+  s.push(r(mainX, flowY, mainW, 2, C_INK));
+  const steps = [
+    { num: '1', title: 'Sample QC' },
+    { num: '2', title: 'Library\npreparation' },
+    { num: '3', title: 'Sequencing' },
+    { num: '4', title: 'Variant analysis' },
+    { num: '5', title: 'Report' },
+  ];
+  const stepW = mainW / 5; // 95.2px
+  steps.forEach((st, i) => {
+    const sx = mainX + i * stepW;
+    s.push(t(st.num, sx, flowY + 11, 30, 16, { bold: 1, color: C_TEAL, font: 'Lora' }));
+    s.push(t(st.title, sx, flowY + 31, stepW - 6, 10, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.3 }));
+  });
+
+  // Bottom CTA
+  const ctaY = 1067;
+  s.push(r(mainX, ctaY, mainW, 1, C_RULE));
+  s.push(t('Start your sequencing project', mainX, ctaY + 12, 280, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('Your Trusted Sequencing Partner', mainX + 260, ctaY + 15, mainW - 260, 9.5, { align: 'right', color: C_MUTED, font: 'Poppins' }));
+
+  // 4. BOTTOM TRI-COLOUR STRIPE (6px height at y = 1117 to 1123)
+  s.push(r(0, 1117, 265, 6, C_RED));
+  s.push(r(265, 1117, 265, 6, C_CYAN));
+  s.push(r(530, 1117, 264, 6, C_GREEN));
+
+  return s;
+}
+
+// Oneomics NGS RNA Sequencing Flyer — 20th A4 Flyer (794 x 1123)
+export function ngsRnaSequencingFlyer() {
+  const s = [];
+
+  const C_INK = '#0F2A43';
+  const C_PURPLE = '#6A1FA8';
+  const C_PURPLE_DARK = '#4A1578';
+  const C_PURPLE_BORDER = '#C9B3E0';
+  const C_BLUE = '#2A6FB0';
+  const C_BLUE_CYAN = '#2E9BD6';
+  const C_MUTED = '#52667A';
+  const C_PALE = '#F3F7FA';
+  const C_RULE = '#D5DEE6';
+  const C_TAG = '#2D4B86';
+  const C_RED = '#E0262A';
+  const C_GREEN = '#2E9E2E';
+
+  // 1. TOP TRI-COLOUR STRIPE (6px height at y = 0)
+  s.push(r(0, 0, 265, 6, C_RED));
+  s.push(r(265, 0, 265, 6, C_BLUE_CYAN));
+  s.push(r(530, 0, 264, 6, C_GREEN));
+
+  // 2. HEADER
+  // Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 48, y: 32, w: 146 });
+  s.push(t('Pioneer in Genomics Services', 48, 72, 220, 10.5, { bold: 1, color: C_TAG, font: 'Poppins' }));
+
+  // Pill on top right: RNA SEQUENCING
+  s.push(r(614, 46, 132, 26, '#ffffff', { r: 13, stroke: C_PURPLE, sw: 1.5 }));
+  s.push(t('RNA SEQUENCING', 614, 52, 132, 9, { bold: 1, color: C_PURPLE, align: 'center', font: 'Poppins', sp: 140 }));
+
+  // 3. HERO SECTION
+  s.push(t('RNA sequencing and transcriptomics', 48, 120, 620, 35, { bold: 1, color: C_INK, font: 'Lora', lh: 1.15 }));
+  s.push(r(48, 170, 56, 4, C_PURPLE, { r: 2 }));
+  s.push(t('Transcriptome sequencing is a fast and reliable route to genomic knowledge. We analyse mRNA expression to discover novel genes, SNPs and InDels, splice variants, chromosomal rearrangements and fusion genes.', 48, 186, 620, 11.2, { color: C_MUTED, font: 'Poppins', lh: 1.75 }));
+
+  // 4. CARDS (3 columns: Reference based, De novo based, Small RNA and single cell)
+  const cardW = 222;
+  const cardH = 190;
+  const cardGap = 16;
+  const cardsY = 392;
+
+  // Outer cards
+  // Card 1: Reference based
+  const cx1 = 48;
+  s.push(r(cx1, cardsY, cardW, cardH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(r(cx1, cardsY, cardW, 46, '#F3ECFA', { r: 8 }));
+  s.push(r(cx1, cardsY + 38, cardW, 8, '#F3ECFA'));
+  s.push(r(cx1, cardsY + 46, cardW, 1, '#E1D3F0'));
+  s.push(t('Reference based', cx1 + 14, cardsY + 10, cardW - 28, 14, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('Mapped to a known genome', cx1 + 14, cardsY + 29, cardW - 28, 8.8, { color: C_MUTED, font: 'Poppins' }));
+
+  // Card 1 Bullets
+  const c1Bullets = [
+    { text: 'Gene expression', by: 461, sqY: 465 },
+    { text: 'Differentially expressed genes\n(DEG)', by: 481, sqY: 485 },
+    { text: 'Splicing variants', by: 516, sqY: 520 },
+    { text: 'Gene fusions', by: 536, sqY: 540 },
+  ];
+  c1Bullets.forEach((b) => {
+    s.push(r(64, b.sqY, 5, 5, C_PURPLE, { r: 1 }));
+    s.push(t(b.text, 76, b.by, 180, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // Card 2: De novo based
+  const cx2 = 48 + cardW + cardGap; // 286
+  s.push(r(cx2, cardsY, cardW, cardH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(r(cx2, cardsY, cardW, 46, '#E8F1FA', { r: 8 }));
+  s.push(r(cx2, cardsY + 38, cardW, 8, '#E8F1FA'));
+  s.push(r(cx2, cardsY + 46, cardW, 1, '#CFE0F1'));
+  s.push(t('De novo based', cx2 + 14, cardsY + 10, cardW - 28, 14, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('No reference genome needed', cx2 + 14, cardsY + 29, cardW - 28, 8.8, { color: C_MUTED, font: 'Poppins' }));
+
+  // Card 2 Bullets
+  const c2Bullets = [
+    { text: 'Transcript assembly', by: 461, sqY: 465 },
+    { text: 'Gene expression', by: 481, sqY: 485 },
+    { text: 'Differentially expressed genes\n(DEG)', by: 501, sqY: 505 },
+    { text: 'BLAST, annotation and\nontology analysis', by: 536, sqY: 540 },
+  ];
+  c2Bullets.forEach((b) => {
+    s.push(r(302, b.sqY, 5, 5, C_PURPLE, { r: 1 }));
+    s.push(t(b.text, 314, b.by, 180, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // Card 3: Small RNA and single cell
+  const cx3 = 48 + (cardW + cardGap) * 2; // 524
+  s.push(r(cx3, cardsY, cardW, cardH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(r(cx3, cardsY, cardW, 46, '#EEF3F7', { r: 8 }));
+  s.push(r(cx3, cardsY + 38, cardW, 8, '#EEF3F7'));
+  s.push(r(cx3, cardsY + 46, cardW, 1, '#D5DEE6'));
+  s.push(t('Small RNA and single cell', cx3 + 14, cardsY + 10, cardW - 28, 14, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('miRNA, siRNA and non-coding RNA', cx3 + 14, cardsY + 29, cardW - 28, 8.8, { color: C_MUTED, font: 'Poppins' }));
+
+  // Card 3 Bullets
+  const c3Bullets = [
+    { text: 'Expression profiles and novel\nmiRNA', by: 461, sqY: 465 },
+    { text: 'Cell type signature', by: 497, sqY: 501 },
+    { text: 'Tumor heterogeneity and\nmicroenvironment', by: 516, sqY: 520 },
+    { text: 'Single cell immune profiling', by: 552, sqY: 556 },
+  ];
+  c3Bullets.forEach((b) => {
+    s.push(r(540, b.sqY, 5, 5, C_PURPLE, { r: 1 }));
+    s.push(t(b.text, 552, b.by, 180, 10.2, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 5. LIBRARY PREPARATION KITS
+  const sec1Y = 608;
+  s.push(t('Library preparation kits', 48, sec1Y - 6, 195, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(248, sec1Y + 3, 498, 1, C_RULE));
+
+  const kits = [
+    { name: 'TruSeq Stranded mRNA Sample Prep Kit', x: 48, w: 230 },
+    { name: 'TruSeq Stranded Total RNA Sample Prep Kit', x: 288, w: 252 },
+    { name: 'NEXTflex Small RNA-Seq Kit v3', x: 550, w: 196 },
+  ];
+  kits.forEach((k) => {
+    s.push(r(k.x, 636, k.w, 28, '#ffffff', { r: 6, stroke: C_PURPLE_BORDER, sw: 1 }));
+    s.push(t(k.name, k.x, 642, k.w, 10, { bold: 1, color: C_PURPLE_DARK, align: 'center', font: 'Poppins' }));
+  });
+
+  // 6. PROJECT WORKFLOW
+  const sec2Y = 690;
+  s.push(t('Project workflow', 48, sec2Y - 6, 140, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(190, sec2Y + 3, 556, 1, C_RULE));
+
+  // Gradient track line (from left padding 40px inside workflow to right padding 40px)
+  s.push(r(88, 737, 618, 2, C_PURPLE, { gradient: [C_PURPLE, C_BLUE_CYAN] }));
+
+  // 6 Workflow steps (item width: 106, step spacing: 118.4)
+  const wfSteps = [
+    { num: '1', title: 'Project initiation', itemX: 48 },
+    { num: '2', title: 'Data pre-processing', itemX: 166.4 },
+    { num: '3', title: 'Differential\nexpression analysis', itemX: 284.8 },
+    { num: '4', title: 'Sequence analyses', itemX: 403.2 },
+    { num: '5', title: 'Predictive modeling', itemX: 521.6 },
+    { num: '6', title: 'Reporting and\ndocumentation', itemX: 640 },
+  ];
+  wfSteps.forEach((st, idx) => {
+    const isBlue = idx >= 3;
+    const clr = isBlue ? C_BLUE : C_PURPLE;
+    const circleX = st.itemX + 37.5;
+    // Circle background and border
+    s.push(r(circleX, 722, 31, 31, '#ffffff', { r: 15.5, stroke: clr, sw: 2 }));
+    s.push(t(st.num, circleX, 728, 31, 12, { bold: 1, color: clr, align: 'center', font: 'Poppins' }));
+    s.push(t(st.title, st.itemX, 760, 106, 9.8, { bold: 1, color: C_INK, align: 'center', font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 7. BEYOND GENE EXPRESSION
+  const sec3Y = 814;
+  s.push(t('Beyond gene expression', 48, sec3Y - 6, 205, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(255, sec3Y + 3, 491, 1, C_RULE));
+
+  const colWidth = 219;
+  const colGapX = 20;
+
+  // Row 1 (y: 840 to 887, height 47px)
+  const r1Col1X = 48;
+  const r1Col2X = 48 + colWidth + colGapX; // 287
+  const r1Col3X = 48 + (colWidth + colGapX) * 2; // 527
+
+  // Row 1 Col 1: Alternative splicing and polyadenylation (2 lines)
+  s.push(t('✓', r1Col1X + 2, 856, 16, 11, { bold: 1, color: C_PURPLE, font: 'Poppins' }));
+  s.push(t('Alternative splicing and\npolyadenylation', r1Col1X + 20, 852, colWidth - 20, 10.2, { color: C_INK, font: 'Poppins', lh: 1.35 }));
+  s.push(r(r1Col1X, 887, colWidth, 1, C_RULE));
+
+  // Row 1 Col 2: Allele-specific expression
+  s.push(t('✓', r1Col2X + 2, 859, 16, 11, { bold: 1, color: C_PURPLE, font: 'Poppins' }));
+  s.push(t('Allele-specific expression', r1Col2X + 20, 859, colWidth - 20, 10.2, { color: C_INK, font: 'Poppins' }));
+  s.push(r(r1Col2X, 887, colWidth, 1, C_RULE));
+
+  // Row 1 Col 3: Long non-coding RNA expression
+  s.push(t('✓', r1Col3X + 2, 859, 16, 11, { bold: 1, color: C_PURPLE, font: 'Poppins' }));
+  s.push(t('Long non-coding RNA expression', r1Col3X + 20, 859, colWidth - 20, 10.2, { color: C_INK, font: 'Poppins' }));
+  s.push(r(r1Col3X, 887, colWidth, 1, C_RULE));
+
+  // Row 2 (y: 887 to 918, height 31px)
+  const r2Items = [
+    'Transposable element expression',
+    'Genetic variants',
+    'A-to-I RNA editing events',
+  ];
+  r2Items.forEach((text, cIdx) => {
+    const colX = 48 + cIdx * (colWidth + colGapX);
+    s.push(t('✓', colX + 2, 896, 16, 11, { bold: 1, color: C_PURPLE, font: 'Poppins' }));
+    s.push(t(text, colX + 20, 896, colWidth - 20, 10.2, { color: C_INK, font: 'Poppins' }));
+    s.push(r(colX, 918, colWidth, 1, C_RULE));
+  });
+
+  // Row 3 (y: 918 to 950, height 32px)
+  const r3Items = [
+    'TCR and antibody sequences',
+    'Fusion genes',
+    'Novel transcripts',
+  ];
+  r3Items.forEach((text, cIdx) => {
+    const colX = 48 + cIdx * (colWidth + colGapX);
+    s.push(t('✓', colX + 2, 928, 16, 11, { bold: 1, color: C_PURPLE, font: 'Poppins' }));
+    s.push(t(text, colX + 20, 928, colWidth - 20, 10.2, { color: C_INK, font: 'Poppins' }));
+    s.push(r(colX, 950, colWidth, 1, C_RULE));
+  });
+
+  // 8. FOOTER (y: 1025 to 1117, height 92px)
+  const footY = 1025;
+  const footH = 92;
+  s.push(r(0, footY, 794, footH, C_PALE));
+  s.push(r(0, footY, 794, 1, C_RULE));
+
+  // Footer left
+  s.push(t('Start your RNA-seq project', 48, 1052, 350, 17, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('Your Trusted Sequencing Partner', 48, 1076, 350, 10.5, { italic: 1, color: C_TAG, font: 'Lora' }));
+
+  // Footer right (vertically centered)
+  s.push(t('sales@oneomics.in', 450, 1041, 296, 10.5, { bold: 1, color: C_INK, align: 'right', font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 450, 1057, 296, 9.6, { color: C_MUTED, align: 'right', font: 'Poppins' }));
+  s.push(t('F12, Bharathidasan University Technology Park,', 450, 1073, 296, 9.6, { color: C_MUTED, align: 'right', font: 'Poppins' }));
+  s.push(t('Khajamalai Campus, Tiruchirapalli 620023', 450, 1089, 296, 9.6, { color: C_MUTED, align: 'right', font: 'Poppins' }));
+
+  // 9. BOTTOM TRI-COLOUR STRIPE (6px height at y = 1117 to 1123)
+  s.push(r(0, 1117, 265, 6, C_RED));
+  s.push(r(265, 1117, 265, 6, C_BLUE_CYAN));
+  s.push(r(530, 1117, 264, 6, C_GREEN));
+
+  return s;
+}
+
+// Oneomics NGS Metagenomics Flyer — 21st A4 Flyer (794 x 1123)
+export function ngsMetagenomicsFlyer() {
+  const s = [];
+
+  const C_INK = '#0F2A43';
+  const C_GREEN = '#1F7A4D';
+  const C_GREEN_DARK = '#14573A';
+  const C_GREEN_PALE = '#F1F8F4';
+  const C_GREEN_BORDER = '#D3E6DB';
+  const C_BLUE = '#2A6FB0';
+  const C_BLUE_DARK = '#1B4F85';
+  const C_TEAL = '#0E8F8C';
+  const C_MUTED = '#52667A';
+  const C_PALE = '#F3F7FA';
+  const C_RULE = '#D5DEE6';
+  const C_TAG = '#2D4B86';
+  const C_RED = '#E0262A';
+  const C_CYAN = '#2E9BD6';
+  const C_STRIPE_GREEN = '#2E9E2E';
+
+  // 1. TOP TRI-COLOUR STRIPE (6px height at y = 0)
+  s.push(r(0, 0, 265, 6, C_RED));
+  s.push(r(265, 0, 265, 6, C_CYAN));
+  s.push(r(530, 0, 264, 6, C_STRIPE_GREEN));
+
+  // 2. HEADER
+  // Logo & Tagline
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 48, y: 32, w: 146 });
+  s.push(t('Pioneer in Genomics Services', 48, 72, 220, 10.5, { bold: 1, color: C_TAG, font: 'Poppins' }));
+
+  // Header Right Contact
+  s.push(t('sales@oneomics.in', 494, 52, 252, 10, { bold: 1, color: C_INK, align: 'right', font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 494, 68, 252, 10, { color: C_MUTED, align: 'right', font: 'Poppins' }));
+
+  // 3. HERO BOX (x: 48, y: 115, w: 698, h: 194, bg: #F1F8F4, border: #D3E6DB)
+  s.push(r(48, 115, 698, 194, C_GREEN_PALE, { r: 10, stroke: C_GREEN_BORDER, sw: 1 }));
+
+  // Hero Left: Text
+  s.push(t('MICROBIOME RESEARCH', 72, 137, 374, 9, { bold: 1, color: C_GREEN, font: 'Poppins', sp: 140 }));
+  s.push(t('Metagenome sequencing', 72, 153, 374, 31, { bold: 1, color: C_INK, font: 'Lora', lh: 1.15 }));
+  const heroDesc = 'Profile complex microbial communities from soil, host and environmental samples. Metagenomics gives an unbiased view of which organisms are present, how abundant they are and what metabolic processes are possible.';
+  s.push(t(heroDesc, 72, 200, 374, 10.6, { color: C_MUTED, font: 'Poppins', lh: 1.7 }));
+
+  // Hero Right: Optional Image Area
+  s.push(r(472, 137, 250, 150, '#ffffff', { r: 5, stroke: C_GREEN_BORDER, sw: 1 }));
+
+  // 4. SEQUENCING METHODS (4 cards: 16S rDNA, Full-length 16S, 18S & ITS, Shotgun)
+  const sec1Y = 345;
+  s.push(t('Sequencing methods', 48, sec1Y - 5, 180, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(225, sec1Y + 5, 521, 1, C_RULE));
+
+  const methodCards = [
+    {
+      cat: 'AMPLICON',
+      title: '16S rDNA sequencing',
+      desc: 'MiSeq system, V3 to V4 regions or customised regions.',
+      topColor: C_GREEN,
+    },
+    {
+      cat: 'AMPLICON',
+      title: 'Full-length 16S rRNA',
+      desc: 'Long reads on PacBio RS II or Sequel for finer taxonomy.',
+      topColor: C_BLUE,
+    },
+    {
+      cat: 'AMPLICON',
+      title: '18S rDNA and ITS',
+      desc: 'Eukaryotic and fungal community profiling.',
+      topColor: C_TEAL,
+    },
+    {
+      cat: 'SHOTGUN',
+      title: 'Shotgun metagenomics',
+      desc: 'All genes in all species in a mixed sample: species present and their functions.',
+      topColor: C_INK,
+    },
+  ];
+
+  const mCardW = 165.5;
+  const mCardGap = 12;
+  const mCardH = 104;
+  const mCardY = 371;
+
+  methodCards.forEach((mc, i) => {
+    const cx = 48 + i * (mCardW + mCardGap);
+    s.push(r(cx, mCardY, mCardW, mCardH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+    s.push(r(cx, mCardY, mCardW, 8, '#ffffff'));
+    s.push(r(cx, mCardY, mCardW, 3, mc.topColor));
+
+    s.push(t(mc.cat, cx + 12, mCardY + 12, mCardW - 24, 8.5, { bold: 1, color: C_MUTED, font: 'Poppins', sp: 80 }));
+    s.push(t(mc.title, cx + 12, mCardY + 25, mCardW - 24, 12, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.3 }));
+    s.push(t(mc.desc, cx + 12, mCardY + 57, mCardW - 24, 9.5, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+  });
+
+  // 5. DATA ANALYSIS (2 Panels: Amplicon metagenome, Shotgun metagenome)
+  const sec2Y = 496;
+  s.push(t('Data analysis', 48, sec2Y - 5, 120, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(175, sec2Y + 5, 571, 1, C_RULE));
+
+  const pCardW = 340;
+  const pCardGap = 18;
+  const pCardH = 138;
+  const pCardY = 527;
+
+  // Panel 1: Amplicon metagenome
+  const p1X = 48;
+  s.push(r(p1X, pCardY, pCardW, pCardH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(t('Amplicon metagenome', p1X + 16, pCardY + 12, pCardW - 32, 11.5, { bold: 1, color: C_GREEN, font: 'Poppins' }));
+
+  const p1Bullets = [
+    'Community diversity analysis (OTU)',
+    'Probiotics analysis',
+    'Phylogenetic tree',
+    'Hierarchical taxonomy graph',
+    'Heatmap and PCA biplot',
+  ];
+  p1Bullets.forEach((text, idx) => {
+    const by = pCardY + 33 + idx * 20;
+    s.push(r(p1X + 16, by + 4, 5, 5, C_GREEN, { r: 1 }));
+    s.push(t(text, p1X + 28, by, pCardW - 44, 10.1, { color: C_MUTED, font: 'Poppins' }));
+  });
+
+  // Panel 2: Shotgun metagenome
+  const p2X = 48 + pCardW + pCardGap; // 406
+  s.push(r(p2X, pCardY, pCardW, pCardH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(t('Shotgun metagenome', p2X + 16, pCardY + 12, pCardW - 32, 11.5, { bold: 1, color: C_GREEN, font: 'Poppins' }));
+
+  const p2Bullets = [
+    'Assembly into metagenomic contigs',
+    'Gene prediction and annotation',
+    'Taxonomy analysis',
+    'SNP calling for strain diversity',
+    'Gene content coverage and functional diversity',
+  ];
+  p2Bullets.forEach((text, idx) => {
+    const by = pCardY + 33 + idx * 20;
+    s.push(r(p2X + 16, by + 4, 5, 5, C_GREEN, { r: 1 }));
+    s.push(t(text, p2X + 28, by, pCardW - 44, 10.1, { color: C_MUTED, font: 'Poppins' }));
+  });
+
+  // 6. WORKFLOW (6-Step Chevron Process)
+  const sec3Y = 690;
+  s.push(t('Workflow', 48, sec3Y - 5, 85, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(140, sec3Y + 5, 606, 1, C_RULE));
+
+  const chevSteps = [
+    { title: 'DNA extraction', bg: '#DDEFE5', color: '#14573A' },
+    { title: 'Fragmentation', bg: '#D0E8DC', color: '#14573A' },
+    { title: 'DNA sequencing', bg: '#D7E7F3', color: '#1B4F85' },
+    { title: 'Assembly', bg: '#C9DDEE', color: '#1B4F85' },
+    { title: 'Gene finding and\nannotation', bg: '#BBD3E9', color: '#0F2A43', twoLines: true },
+    { title: 'Phylogenetic\nbinning', bg: '#AFCAE4', color: '#0F2A43', twoLines: true },
+  ];
+
+  const chevY = 724;
+  const chevStepX = 114.8;
+
+  chevSteps.forEach((st, idx) => {
+    const cx = 48 + idx * chevStepX;
+    const pathD = idx === 0
+      ? 'M 0 0 L 110 0 L 124 27 L 110 54 L 0 54 Z'
+      : 'M 0 0 L 110 0 L 124 27 L 110 54 L 0 54 L 14 27 Z';
+
+    s.push({ k: 'path', d: pathD, x: cx, y: chevY, fill: st.bg });
+
+    const textX = idx === 0 ? cx + 6 : cx + 16;
+    const textW = idx === 0 ? 104 : 94;
+    const textY = st.twoLines ? chevY + 14 : chevY + 21;
+    s.push(t(st.title, textX, textY, textW, 9.6, { bold: 1, color: st.color, align: 'center', font: 'Poppins', lh: 1.25 }));
+  });
+
+  // 7. WHAT YOU RECEIVE (3 deliverables cards)
+  const sec4Y = 808;
+  s.push(t('What you receive', 48, sec4Y - 5, 150, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(205, sec4Y + 5, 541, 1, C_RULE));
+
+  const delivCards = [
+    'Quantitative characterisation of microbial diversity',
+    'Association of species or OTUs with host phenotype or environmental factors',
+    'Identified and predicted genes with custom annotations',
+  ];
+
+  const dCardW = 223.3;
+  const dCardGap = 14;
+  const dCardH = 74;
+  const dCardY = 838;
+
+  delivCards.forEach((text, idx) => {
+    const cx = 48 + idx * (dCardW + dCardGap);
+    s.push(r(cx, dCardY, dCardW, dCardH, C_PALE, { r: 6 }));
+    s.push(r(cx, dCardY, 3, dCardH, C_GREEN, { r: 1.5 }));
+    s.push(t(text, cx + 14, dCardY + 14, dCardW - 28, 10, { color: C_INK, font: 'Poppins', lh: 1.55 }));
+  });
+
+  // 8. FOOTER (y: 1025 to 1117, height 92px)
+  const footY = 1025;
+  const footH = 92;
+  s.push(r(0, footY, 794, footH, C_PALE));
+  s.push(r(0, footY, 794, 1, C_RULE));
+
+  // Footer left
+  s.push(t('Start your metagenomics project', 48, footY + 27, 350, 17, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('Your Trusted Sequencing Partner', 48, footY + 51, 350, 10.5, { italic: 1, color: C_TAG, font: 'Lora' }));
+
+  // Footer right
+  s.push(t('sales@oneomics.in', 450, footY + 20, 296, 10.5, { bold: 1, color: C_INK, align: 'right', font: 'Poppins' }));
+  s.push(t('F12, Bharathidasan University Technology Park,', 450, footY + 40, 296, 9.6, { color: C_MUTED, align: 'right', font: 'Poppins' }));
+  s.push(t('Khajamalai Campus, Tiruchirapalli 620023', 450, footY + 56, 296, 9.6, { color: C_MUTED, align: 'right', font: 'Poppins' }));
+
+  // 9. BOTTOM TRI-COLOUR STRIPE (6px height at y = 1117 to 1123)
+  s.push(r(0, 1117, 265, 6, C_RED));
+  s.push(r(265, 1117, 265, 6, C_CYAN));
+  s.push(r(530, 1117, 264, 6, C_STRIPE_GREEN));
+
+  return s;
+}
+
+// Oneomics NGS Long-Read Flyer — 22nd A4 Flyer (794 x 1123)
+export function ngsLongReadFlyer() {
+  const s = [];
+
+  const C_INK = '#0F2A43';
+  const C_BLUE = '#2A6FB0';
+  const C_TEAL = '#0E8F8C';
+  const C_MUTED = '#52667A';
+  const C_PALE = '#F3F7FA';
+  const C_RULE = '#D5DEE6';
+  const C_TAG = '#2D4B86';
+  const C_RED = '#E0262A';
+  const C_CYAN = '#2E9BD6';
+  const C_GREEN = '#2E9E2E';
+
+  // 1. TOP TRI-COLOUR STRIPE (6px height at y = 0)
+  s.push(r(0, 0, 265, 6, C_RED));
+  s.push(r(265, 0, 265, 6, C_CYAN));
+  s.push(r(530, 0, 264, 6, C_GREEN));
+
+  // 2. HEADER
+  // Logo & Tagline
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 48, y: 32, w: 146 });
+  s.push(t('Pioneer in Genomics Services', 48, 72, 220, 10.5, { bold: 1, color: C_TAG, font: 'Poppins' }));
+
+  // Header Right Contact
+  s.push(t('sales@oneomics.in', 494, 52, 252, 10, { bold: 1, color: C_INK, align: 'right', font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 494, 68, 252, 10, { color: C_MUTED, align: 'right', font: 'Poppins' }));
+
+  // 3. TITLE & LEAD (with 2px dark divider line at y = 232)
+  s.push(t('THIRD GENERATION SEQUENCING', 48, 112, 640, 9, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+  s.push(t('Long-read sequencing', 48, 127, 640, 33, { bold: 1, color: C_INK, font: 'Lora', lh: 1.15 }));
+  const leadText = 'Reads of thousands of bases resolve repeats, structural variants and full-length transcripts that short reads cannot. We run PacBio SMRT and Oxford Nanopore and switch between platforms as your research needs change.';
+  s.push(t(leadText, 48, 172, 640, 10.6, { color: C_MUTED, font: 'Poppins', lh: 1.7 }));
+  s.push(r(48, 232, 698, 2, C_INK));
+
+  // 4. DUO PANELS (PacBio SMRT & Oxford Nanopore)
+  const duoW = 339;
+  const duoGap = 20;
+  const duoH = 333;
+  const duoY = 252;
+
+  // Panel A: PacBio SMRT
+  const p1X = 48;
+  s.push(r(p1X, duoY, duoW, duoH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(r(p1X, duoY, duoW, 40, C_BLUE, { r: 8 }));
+  s.push(r(p1X, duoY + 32, duoW, 8, C_BLUE));
+  s.push(t('PacBio SMRT sequencing', p1X + 16, duoY + 11, duoW - 32, 15, { bold: 1, color: '#ffffff', font: 'Lora' }));
+
+  // Panel A Image Box Placeholder
+  s.push(r(p1X + 16, duoY + 52, duoW - 32, 92, '#ffffff', { r: 5, stroke: C_RULE, sw: 1 }));
+
+  // Panel A Paragraph
+  const p1Desc = 'Single Molecule Real-Time sequencing watches fluorescently tagged nucleotides being added to individual DNA molecules in zero-mode waveguides. Platforms: PacBio RS II and Sequel.';
+  s.push(t(p1Desc, p1X + 16, duoY + 154, duoW - 32, 9.9, { color: C_MUTED, font: 'Poppins', lh: 1.65 }));
+
+  // Panel A Advantages
+  s.push(t('ADVANTAGES', p1X + 16, duoY + 210, duoW - 32, 8.6, { bold: 1, color: C_INK, font: 'Poppins', sp: 80 }));
+  const p1Bullets = [
+    'Longest average read lengths',
+    'Highest consensus accuracy',
+    'Uniform coverage',
+    'Simultaneous epigenetic characterization',
+    'Single-molecule resolution',
+  ];
+  p1Bullets.forEach((item, idx) => {
+    const by = duoY + 226 + idx * 18;
+    s.push(r(p1X + 16, by + 4, 5, 5, C_BLUE, { r: 1 }));
+    s.push(t(item, p1X + 28, by, duoW - 44, 10, { color: C_MUTED, font: 'Poppins' }));
+  });
+
+  // Panel B: Oxford Nanopore
+  const p2X = 48 + duoW + duoGap; // 407
+  s.push(r(p2X, duoY, duoW, duoH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(r(p2X, duoY, duoW, 40, C_TEAL, { r: 8 }));
+  s.push(r(p2X, duoY + 32, duoW, 8, C_TEAL));
+  s.push(t('Oxford Nanopore sequencing', p2X + 16, duoY + 11, duoW - 32, 15, { bold: 1, color: '#ffffff', font: 'Lora' }));
+
+  // Panel B Image Box Placeholder
+  s.push(r(p2X + 16, duoY + 52, duoW - 32, 92, '#ffffff', { r: 5, stroke: C_RULE, sw: 1 }));
+
+  // Panel B Paragraph
+  const p2Desc = 'DNA or RNA passes through nanopores and changes in ionic current identify each base, so the native strand is read directly without optics or amplification. Devices: Flongle, MinION, GridION, PromethION, SmidgION.';
+  s.push(t(p2Desc, p2X + 16, duoY + 154, duoW - 32, 9.9, { color: C_MUTED, font: 'Poppins', lh: 1.65 }));
+
+  // Panel B Advantages
+  s.push(t('ADVANTAGES', p2X + 16, duoY + 210, duoW - 32, 8.6, { bold: 1, color: C_INK, font: 'Poppins', sp: 80 }));
+  const p2Bullets = [
+    'Ultra-long reads of several hundred kb',
+    'Direct DNA and RNA sequencing',
+    'Real-time data streaming',
+    'Works with genomic DNA, cDNA and RNA',
+    'Epigenetic information from native strands',
+  ];
+  p2Bullets.forEach((item, idx) => {
+    const by = duoY + 226 + idx * 18;
+    s.push(r(p2X + 16, by + 4, 5, 5, C_TEAL, { r: 1 }));
+    s.push(t(item, p2X + 28, by, duoW - 44, 10, { color: C_MUTED, font: 'Poppins' }));
+  });
+
+  // 5. AT A GLANCE (TABLE)
+  const sec1Y = 636;
+  s.push(t('At a glance', 48, sec1Y - 5, 120, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(155, sec1Y + 5, 591, 1, C_RULE));
+
+  // Table dimensions
+  const col1W = 126;
+  const col2W = 286;
+  const col3W = 286;
+  const thY = 659;
+  const thH = 27;
+
+  // Table Header
+  s.push(r(48, thY, col1W, thH, C_INK));
+  s.push(t('Feature', 60, thY + 7, col1W - 24, 9.4, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+
+  s.push(r(48 + col1W, thY, col2W, thH, C_BLUE));
+  s.push(t('PacBio SMRT', 48 + col1W + 12, thY + 7, col2W - 24, 9.4, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+
+  s.push(r(48 + col1W + col2W, thY, col3W, thH, C_TEAL));
+  s.push(t('Oxford Nanopore', 48 + col1W + col2W + 12, thY + 7, col3W - 24, 9.4, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+
+  // Table Rows (4 rows)
+  const rows = [
+    {
+      feat: 'Read length',
+      pac: 'About 2 kb on average, some reads over 20 kb',
+      ox: 'Several hundred kb for high molecular weight DNA',
+      bg: '#ffffff',
+    },
+    {
+      feat: 'Template',
+      pac: 'Single unamplified molecules',
+      ox: 'Native strand, no amplification',
+      bg: C_PALE,
+    },
+    {
+      feat: 'Signal',
+      pac: 'Fluorescence in zero-mode waveguides',
+      ox: 'Ionic current through a nanopore',
+      bg: '#ffffff',
+    },
+    {
+      feat: 'Best for',
+      pac: 'High-accuracy consensus, Iso-Seq, assembly',
+      ox: 'Ultra-long reads, real-time and on-demand runs',
+      bg: C_PALE,
+    },
+  ];
+
+  rows.forEach((row, idx) => {
+    const ry = 686 + idx * 29;
+    if (row.bg !== '#ffffff') {
+      s.push(r(48, ry, 698, 29, row.bg));
+    }
+    s.push(t(row.feat, 60, ry + 7, col1W - 24, 9.8, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(row.pac, 48 + col1W + 12, ry + 7, col2W - 24, 9.8, { color: C_MUTED, font: 'Poppins' }));
+    s.push(t(row.ox, 48 + col1W + col2W + 12, ry + 7, col3W - 24, 9.8, { color: C_MUTED, font: 'Poppins' }));
+    s.push(r(48, ry + 29, 698, 1, C_RULE));
+  });
+
+  // 6. APPLICATIONS (3 Cards)
+  const sec2Y = 824;
+  s.push(t('Applications', 48, sec2Y - 5, 120, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(170, sec2Y + 5, 576, 1, C_RULE));
+
+  const appCards = [
+    {
+      title: 'Genome finishing and de novo\nassembly',
+      desc: 'Genome ending, metagenomics and hybrid assembly with long and short reads. High-quality reads up to 20 kb.',
+      topColor: C_BLUE,
+    },
+    {
+      title: 'Whole human genome phasing',
+      desc: 'Resolves the haplotypes of two homologous chromosomes and processes over 94% of heterozygous SNPs and InDels in one assay.',
+      topColor: C_TEAL,
+    },
+    {
+      title: 'Pathogens and environment',
+      desc: 'Pathogen identification, food safety monitoring, metagenomic environments and antibiotic resistance characterisation.',
+      topColor: C_INK,
+    },
+  ];
+
+  const appW = 223.3;
+  const appGap = 14;
+  const appH = 108;
+  const appY = 852;
+
+  appCards.forEach((ac, idx) => {
+    const cx = 48 + idx * (appW + appGap);
+    s.push(r(cx, appY, appW, appH, C_PALE, { r: 6 }));
+    s.push(r(cx, appY, appW, 3, ac.topColor, { r: 1.5 }));
+    s.push(t(ac.title, cx + 14, appY + 12, appW - 28, 11, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.3 }));
+    s.push(t(ac.desc, cx + 14, appY + 44, appW - 28, 9.5, { color: C_MUTED, font: 'Poppins', lh: 1.6 }));
+  });
+
+  // 7. FOOTER (y: 1025 to 1117, height 92px)
+  const footY = 1025;
+  const footH = 92;
+  s.push(r(0, footY, 794, footH, C_PALE));
+  s.push(r(0, footY, 794, 1, C_RULE));
+
+  // Footer left
+  s.push(t('Start your long-read project', 48, footY + 27, 350, 17, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('Your Trusted Sequencing Partner', 48, footY + 51, 350, 10.5, { italic: 1, color: C_TAG, font: 'Lora' }));
+
+  // Footer right
+  s.push(t('sales@oneomics.in', 450, footY + 20, 296, 10.5, { bold: 1, color: C_INK, align: 'right', font: 'Poppins' }));
+  s.push(t('F12, Bharathidasan University Technology Park,', 450, footY + 40, 296, 9.6, { color: C_MUTED, align: 'right', font: 'Poppins' }));
+  s.push(t('Khajamalai Campus, Tiruchirapalli 620023', 450, footY + 56, 296, 9.6, { color: C_MUTED, align: 'right', font: 'Poppins' }));
+
+  // 8. BOTTOM TRI-COLOUR STRIPE (6px height at y = 1117 to 1123)
+  s.push(r(0, 1117, 265, 6, C_RED));
+  s.push(r(265, 1117, 265, 6, C_CYAN));
+  s.push(r(530, 1117, 264, 6, C_GREEN));
+
+  return s;
+}
+
 export function bifoldBrochure() {
   const s = [];
 
@@ -8397,6 +9315,62 @@ export const TEMPLATES = [
     specs: ngsSpaciousFlyer,
     pages: [ngsSpaciousFlyer],
     swatch: ['#0f2a43', '#0e8f8c', '#2a6fb0'],
+  },
+  {
+    id: 'ngs-genome-exome-flyer',
+    name: 'Oneomics NGS Genome & Exome Flyer',
+    subtitle: 'Whole Genome & Exome Sequencing Services',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/ngs_genome_exome_flyer.png',
+    specs: ngsGenomeExomeFlyer,
+    pages: [ngsGenomeExomeFlyer],
+    swatch: ['#0f2a43', '#0e8f8c', '#2a6fb0'],
+  },
+  {
+    id: 'ngs-rna-sequencing-flyer',
+    name: 'ONEOMICS NGS Template 2 - RNA Sequencing',
+    subtitle: 'RNA Sequencing and Transcriptomics (A4)',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/ngs_rna_sequencing_flyer.png',
+    specs: ngsRnaSequencingFlyer,
+    pages: [ngsRnaSequencingFlyer],
+    swatch: ['#0f2a43', '#6a1fa8', '#2a6fb0'],
+  },
+  {
+    id: 'ngs-metagenomics-flyer',
+    name: 'ONEOMICS NGS Template 3 - Metagenomics',
+    subtitle: 'Metagenome Sequencing Services (A4)',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/ngs_metagenomics_flyer.png',
+    specs: ngsMetagenomicsFlyer,
+    pages: [ngsMetagenomicsFlyer],
+    swatch: ['#0f2a43', '#1f7a4d', '#2a6fb0'],
+  },
+  {
+    id: 'ngs-long-read-flyer',
+    name: 'ONEOMICS NGS Template 4 - Long-read',
+    subtitle: 'Long-Read Sequencing Platforms & Comparison (A4)',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/ngs_long_read_flyer.png',
+    specs: ngsLongReadFlyer,
+    pages: [ngsLongReadFlyer],
+    swatch: ['#0f2a43', '#2a6fb0', '#0e8f8c'],
   },
   {
     id: 'bifold-genomics',
