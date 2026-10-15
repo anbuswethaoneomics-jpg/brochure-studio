@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ONEOMICS Bi-Fold Brochure (A4 landscape, 2 pages)</title>
+<meta name="viewport" content="width=1123">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0B3D62; --teal:#0A6078; --deep:#0B3B6B; --green:#1F9D62; --ink:#12324A; --muted:#556B7D; --tile:#F1F6FA; --rule:#D9E3EB; }
+  @page { size:1123px 794px; margin:0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { background:#DDE3E8; }
+  body { font-family:'Poppins','Segoe UI',Arial,sans-serif; color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .toolbar { width:1123px; margin:16px auto 0; display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:11.5px; color:var(--muted); }
+  .toolbar label { margin-right:12px; cursor:pointer; }
+  .toolbar button { font:600 12px 'Poppins',Arial,sans-serif; background:var(--navy); color:#fff; border:0; border-radius:6px; padding:8px 14px; cursor:pointer; }
+  .pg { position:relative; width:1123px; height:794px; margin:12px auto 18px; background:#fff; overflow:hidden; border-top:3px solid var(--green); page-break-after:always; break-after:page; }
+  .pg:last-of-type { page-break-after:auto; break-after:auto; }
+  @media screen { .pg { box-shadow:0 8px 28px rgba(11,61,98,.16); } }
+  @media print { html,body { background:#fff; } .toolbar,.lbl { display:none; } .pg { margin:0; box-shadow:none; } .fold { display:none !important; } }
+  .fold { position:absolute; left:561.5px; top:0; bottom:0; border-left:1.5px dashed #2BA98A; z-index:6; }
+  body.nofold .fold { display:none; }
+  .lbl { position:absolute; right:8px; top:6px; font-size:9px; color:#9AAAB8; z-index:7; }
+  .pl,.pr { position:absolute; top:0; bottom:0; width:561.5px; }
+  .pl { left:0; padding:34px 38px 0 38px; } .pr { left:561.5px; padding:34px 40px 0 36px; }
+  [contenteditable]:hover { background:rgba(10,96,120,.07); } [contenteditable] { outline:none; }
+  .logo svg { display:block; height:46px; width:auto; }
+  .logo.sm svg { height:46px; }
+  .tag { margin-top:6px; font-size:11px; font-weight:600; color:var(--navy); }
+  .foot { position:absolute; bottom:26px; font-size:9.3px; color:var(--muted); }
+  .foot b { color:var(--navy); font-weight:600; }
+  .topline { border-top:2px solid var(--navy); padding-top:12px; }
+  h2.h { font-size:15.5px; font-weight:700; color:var(--navy); letter-spacing:.2px; text-transform:uppercase; }
+  h3.s { font-size:10.5px; font-weight:700; color:var(--navy); letter-spacing:.4px; text-transform:uppercase; margin:22px 0 11px; }
+  p.t { font-size:9.4px; line-height:1.65; color:var(--muted); }
+  .cap { background:var(--tile); border-left:3px solid var(--teal); border-radius:0 6px 6px 0; padding:11px 14px 12px; margin-bottom:11px; }
+  .cap b { display:block; font-size:10.6px; font-weight:600; color:var(--navy); }
+  .cap span { display:block; margin-top:2px; font-size:8.8px; color:var(--muted); line-height:1.45; }
+  .tiles { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .tile { display:flex; align-items:center; gap:10px; padding:0 14px; height:62px; background:var(--tile); border:1px solid var(--rule); border-radius:6px; font-size:10.4px; font-weight:600; color:var(--navy); }
+  .cta { border-radius:7px; background:var(--teal); color:#fff; padding:15px 20px; }
+  .cta b { display:block; font-size:12.5px; font-weight:600; } .cta span { display:block; margin-top:4px; font-size:9px; opacity:.92; }
+  .deep { background:var(--deep); color:#fff; border-radius:8px; padding:20px 20px; }
+  .deep h4 { font-size:12px; font-weight:600; letter-spacing:.3px; text-transform:uppercase; }
+  .deep p { margin-top:9px; font-size:9px; line-height:1.65; opacity:.95; }
+  .btn { display:inline-block; margin-top:12px; background:var(--green); color:#fff; font-size:9.3px; font-weight:600; padding:7px 14px; border-radius:4px; }
+  .chips { display:flex; flex-wrap:wrap; gap:7px; }
+  .chip { font-size:9.2px; font-weight:500; padding:5px 12px; border-radius:999px; background:#fff; border:1.3px solid #9CC9D4; color:var(--teal); }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .box { border:1px solid var(--rule); border-top:3px solid var(--teal); border-radius:0 0 6px 6px; padding:10px 13px 11px; }
+  .box:nth-child(2) { border-top-color:var(--green); }
+  .box b { display:block; font-size:10.3px; font-weight:600; color:var(--navy); }
+  .box span { display:block; margin-top:3px; font-size:8.8px; line-height:1.55; color:var(--muted); }
+  .why { display:flex; gap:12px; margin-bottom:15px; align-items:flex-start; }
+  .why i { flex:none; width:26px; height:26px; border-radius:50%; background:var(--teal); color:#fff; font-style:normal; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; }
+  .why:nth-child(3) i { background:var(--navy); } .why:nth-child(4) i { background:var(--green); }
+  .why b { display:block; font-size:10.4px; font-weight:600; color:var(--navy); }
+  .why span { display:block; margin-top:2px; font-size:8.9px; line-height:1.55; color:var(--muted); }
+  .clin { background:#EAF5F3; border:1px solid #C5E3DC; border-radius:8px; padding:12px 16px 12px; }
+  .clin ul { list-style:none; margin-top:7px; }
+  .clin li { position:relative; padding-left:14px; font-size:9px; line-height:1.55; color:var(--ink); margin:4px 0; }
+  .clin li::before { content:""; position:absolute; left:2px; top:.5em; width:6px; height:6px; border-radius:1px; background:var(--green); }
+  .steps { display:flex; }
+  .st { flex:1; padding-top:8px; border-top:2px solid var(--navy); font-size:8.8px; font-weight:600; color:var(--navy); line-height:1.3; padding-right:6px; }
+  .st:nth-child(odd) { border-top-color:var(--teal); } .st span { display:block; font-size:13px; color:var(--green); margin-bottom:1px; }
+</style>
+</head>
+<body>
+<div class="toolbar"><span>Bi-fold: A4 landscape, 2 pages (outside and inside), each with 2 panels. Click any text to edit.</span><span><label><input type="checkbox" checked onchange="document.body.classList.toggle('nofold',!this.checked)"> Fold lines</label><button onclick="window.print()">Save as PDF</button></span></div>
+
+<section class="pg">
+  <div class="lbl">Page 1 of 2 (outside)</div><div class="fold"></div>
+  <div class="pl">
+    <div style="margin-top:10px"><div class="logo" style="margin-left:2px"><div style="width:206px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 371.0 100" role="img" aria-label="ONEOMICS"><rect x="4.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M54.50 95.5 L54.50 4.5 L84.50 95.5 L84.50 4.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><rect x="100.00" y="0.00" width="39.0" height="9.0" rx="1.2" fill="#E0262A"/><rect x="100.00" y="45.50" width="39.0" height="9.0" rx="1.2" fill="#2E9BD6"/><rect x="100.00" y="91.00" width="39.0" height="9.0" rx="1.2" fill="#2E9E2E"/><rect x="154.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M204.50 95.5 L204.50 4.5 L225.50 64.0 L246.50 4.5 L246.50 95.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M266.50 4.5 L266.50 95.5" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round"/><path d="M316.50 32.50 L316.50 19.50 A15.0 15.0 0 0 0 286.50 19.50 L286.50 80.50 A15.0 15.0 0 0 0 316.50 80.50 L316.50 67.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M366.50 19.50 A15.0 15.0 0 0 0 336.50 19.50 L336.50 27.50 C336.50 51.00 366.50 49.00 366.50 72.50 L366.50 80.50 A15.0 15.0 0 0 1 336.50 80.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="tag" contenteditable="true" spellcheck="false">Precision Genomics | Research Solutions</div></div>
+    <div style="margin:44px 0 0 118px;"><div style="font-size:25px;font-weight:700;line-height:1.28;color:#0B3D62;" contenteditable="true" spellcheck="false">DECODING<br>LIFE<br>EMPOWERING<br>TOMORROW</div></div>
+    <p class="t" style="margin-top:12px;font-size:9.6px;" contenteditable="true" spellcheck="false">End-to-end genomics and bioinformatics solutions for precision medicine, agriculture, and life science research.</p>
+    <div class="tiles" style="margin-top:24px">
+      <div class="tile"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#0A8A9A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.6c3 0 5 1.8 5 4.6"/></svg><span contenteditable="true" spellcheck="false">Human Genomics</span></div><div class="tile"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#0A8A9A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C3 10 9 4 20 4c0 11-6 17-15 15z"/><path d="M5 19c3-5 6-8 11-11"/></svg><span contenteditable="true" spellcheck="false">Plant Genetics</span></div>
+      <div class="tile"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#0A8A9A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="4" height="9" rx="1" transform="rotate(20 11 7)"/><path d="M6 20h12M8 20c0-4 2-6 5-6"/><path d="M16 11c2 1 3 3 3 5 0 2-1 4-3 4"/></svg><span contenteditable="true" spellcheck="false">Microbiome</span></div><div class="tile"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#0A8A9A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9V3"/><path d="M7.5 15h9"/></svg><span contenteditable="true" spellcheck="false">Diagnostics</span></div>
+    </div>
+    <div class="cta" style="margin-top:28px"><b contenteditable="true" spellcheck="false">Ready to begin your project?</b><span contenteditable="true" spellcheck="false">Partner with Oneomics for validated protocols and rapid turnaround.</span></div>
+    <div class="foot" style="left:0;right:0;text-align:center"><b>www.oneomics.in &nbsp;·&nbsp; +91 00000 00000</b></div>
+  </div>
+  <div class="pr">
+    <div class="topline" style="margin-top:2px"><h2 class="h" contenteditable="true" spellcheck="false">About Oneomics</h2><p class="t" style="margin-top:5px" contenteditable="true" spellcheck="false">Empowering cutting-edge research through advanced sequencing, custom bioinformatics pipelines, and high-quality collection kits.</p></div>
+    <h3 class="s" style="margin-top:22px">Our core capabilities</h3>
+    <div class="cap"><b contenteditable="true" spellcheck="false">Whole Exome &amp; Genome Sequencing</b><span contenteditable="true" spellcheck="false">Clinical-grade depth with comprehensive variant reporting</span></div>
+    <div class="cap"><b contenteditable="true" spellcheck="false">Microbiome &amp; Metagenomics</b><span contenteditable="true" spellcheck="false">16S and shotgun sequencing for human and soil flora</span></div>
+    <div class="cap"><b contenteditable="true" spellcheck="false">Transcriptomics &amp; RNA-Seq</b><span contenteditable="true" spellcheck="false">Gene expression profiling with low input sample protocols</span></div>
+    <div class="cap"><b contenteditable="true" spellcheck="false">Agricultural Genotyping</b><span contenteditable="true" spellcheck="false">GBS and marker validation for plant and livestock breeding</span></div>
+    <div class="deep" style="margin-top:22px;height:166px"><h4 contenteditable="true" spellcheck="false">Sample collection ecosystem</h4><p contenteditable="true" spellcheck="false">Discover ONESpit™, ONEasy™, and NucleoGUARD™ kits designed for ambient transport with zero cold-chain dependency.</p><span class="btn">Explore Kits →</span></div>
+    <div class="foot" style="left:36px">Website: www.oneomics.in &nbsp;|&nbsp; Email: info@oneomics.in</div>
+  </div>
+</section>
+
+<section class="pg">
+  <div class="lbl">Page 2 of 2 (inside)</div><div class="fold"></div>
+  <div class="pl">
+    <div class="topline" style="margin-top:2px"><h2 class="h" contenteditable="true" spellcheck="false">ONEOMICS Research &amp; Diagnostics</h2><p class="t" style="margin-top:6px" contenteditable="true" spellcheck="false">One laboratory and one bioinformatics team, from sample processing to analysed results, for life science research and clinical research.</p></div>
+    <h3 class="s">Sequencing services</h3>
+    <div class="cap"><b contenteditable="true" spellcheck="false">Whole Genome Sequencing</b><span contenteditable="true" spellcheck="false">De novo assembly and re-sequencing for microbes, humans, animals, plants and insects</span></div>
+    <div class="cap"><b contenteditable="true" spellcheck="false">Whole Exome Sequencing</b><span contenteditable="true" spellcheck="false">Coding-region capture with SNV, InDel, CNV and trio analysis</span></div>
+    <div class="cap"><b contenteditable="true" spellcheck="false">RNA &amp; Small RNA Sequencing</b><span contenteditable="true" spellcheck="false">Expression, splice variants, fusion genes, miRNA and single-cell profiling</span></div>
+    <div class="cap"><b contenteditable="true" spellcheck="false">Epigenome Sequencing</b><span contenteditable="true" spellcheck="false">WGBS, MeDIP, ChIP-seq and ATAC-seq for methylation and chromatin state</span></div>
+    <div class="cap"><b contenteditable="true" spellcheck="false">Metagenome &amp; Long-read Sequencing</b><span contenteditable="true" spellcheck="false">16S, 18S, ITS and shotgun methods, plus PacBio SMRT and Oxford Nanopore</span></div>
+    <h3 class="s" style="margin-top:22px">Genotyping and analysis</h3>
+    <div class="two">
+      <div class="box"><b contenteditable="true" spellcheck="false">SNP genotyping</b><span contenteditable="true" spellcheck="false">Microarray, GBS and dd-RAD for GWAS, linkage maps and breeding programmes</span></div>
+      <div class="box"><b contenteditable="true" spellcheck="false">Bioinformatics</b><span contenteditable="true" spellcheck="false">Variant calling, annotation, assembly and custom pipelines on your dataset</span></div>
+    </div>
+    <h3 class="s" style="margin-top:22px">Platforms</h3>
+    <div class="chips"><span class="chip">NovaSeq 6000</span><span class="chip">HiSeq X</span><span class="chip">NextSeq 500</span><span class="chip">MiSeq</span><span class="chip">PacBio Sequel</span><span class="chip">Oxford Nanopore</span></div>
+    <div class="foot" style="left:38px">Website: www.oneomics.in &nbsp;|&nbsp; Email: info@oneomics.in</div>
+  </div>
+  <div class="pr">
+    <div style="border-bottom:2px solid var(--navy);padding-bottom:8px;margin-top:6px"><div style="width:206px;margin-left:2px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 371.0 100" role="img" aria-label="ONEOMICS"><rect x="4.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M54.50 95.5 L54.50 4.5 L84.50 95.5 L84.50 4.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><rect x="100.00" y="0.00" width="39.0" height="9.0" rx="1.2" fill="#E0262A"/><rect x="100.00" y="45.50" width="39.0" height="9.0" rx="1.2" fill="#2E9BD6"/><rect x="100.00" y="91.00" width="39.0" height="9.0" rx="1.2" fill="#2E9E2E"/><rect x="154.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M204.50 95.5 L204.50 4.5 L225.50 64.0 L246.50 4.5 L246.50 95.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M266.50 4.5 L266.50 95.5" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round"/><path d="M316.50 32.50 L316.50 19.50 A15.0 15.0 0 0 0 286.50 19.50 L286.50 80.50 A15.0 15.0 0 0 0 316.50 80.50 L316.50 67.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M366.50 19.50 A15.0 15.0 0 0 0 336.50 19.50 L336.50 27.50 C336.50 51.00 366.50 49.00 366.50 72.50 L366.50 80.50 A15.0 15.0 0 0 1 336.50 80.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    <h3 class="s" style="margin-top:16px">Why Oneomics</h3>
+    <div class="why"><i>1</i><div><b contenteditable="true" spellcheck="false">Specialist team</b><span contenteditable="true" spellcheck="false">Bioinformaticians, data scientists, software developers and molecular biologists working as one team.</span></div></div>
+    <div class="why"><i>2</i><div><b contenteditable="true" spellcheck="false">Customised service</b><span contenteditable="true" spellcheck="false">Fully customisable for omics-intensive investigations, with pilot runs on your own dataset.</span></div></div>
+    <div class="why"><i>3</i><div><b contenteditable="true" spellcheck="false">Lab and analysis together</b><span contenteditable="true" spellcheck="false">Sample processing and data analysis in one place, with pipelines tailored to your needs.</span></div></div>
+    <h3 class="s" style="margin-top:22px">Diagnostics and clinical research</h3>
+    <div class="clin"><div style="font-size:9px;color:#556B7D;" contenteditable="true" spellcheck="false">Applications that move from discovery toward validation:</div>
+      <ul><li contenteditable="true" spellcheck="false">Exome sequencing for cancer and chronic disease genetic recognition</li><li contenteditable="true" spellcheck="false">SNP microarray for clinical testing, pharmacogenomics and biomarker validation</li><li contenteditable="true" spellcheck="false">Cell-free DNA biomarker discovery with sensitivity and specificity estimates</li></ul></div>
+    <h3 class="s" style="margin-top:22px">How a project runs</h3>
+    <div class="steps"><div class="st"><span>1</span>Sample QC</div><div class="st"><span>2</span>Library prep</div><div class="st"><span>3</span>Sequencing</div><div class="st"><span>4</span>Analysis</div><div class="st"><span>5</span>Report</div></div>
+    <div class="deep" style="margin-top:16px;padding:14px 18px"><h4 contenteditable="true" spellcheck="false">Contact us</h4><p contenteditable="true" spellcheck="false" style="margin-top:6px">Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India</p></div>
+    <div class="foot" style="left:0;right:0;text-align:center"><b>www.oneomics.in &nbsp;·&nbsp; +91 00000 00000</b></div>
+  </div>
+</section>
+</body>
+</html>
+

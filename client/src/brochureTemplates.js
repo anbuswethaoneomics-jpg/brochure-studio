@@ -4978,70 +4978,263 @@ export function ngsLongReadFlyer() {
   return s;
 }
 
+// Oneomics Bi-Fold Brochure — Page 1 (Outside, 1123 x 794)
 export function bifoldBrochure() {
   const s = [];
 
+  const C_NAVY = '#0B3D62';
+  const C_TEAL = '#0A6078';
+  const C_DEEP = '#0B3B6B';
+  const C_GREEN = '#1F9D62';
+  const C_MUTED = '#556B7D';
+  const C_TILE = '#F1F6FA';
+  const C_RULE = '#D9E3EB';
+
   // Top green stripe
-  s.push(r(0, 0, 1123, 4, '#1a9e5b'));
+  s.push(r(0, 0, 1123, 3, C_GREEN));
 
-  // Left panel (Inside cover / About, x: 0 to 561)
-  s.push(r(40, 40, 480, 2, '#005b76'));
-  s.push(t('ABOUT ONEOMICS', 40, 52, 480, 18, { bold: 1, color: '#004068', font: 'Montserrat' }));
-  s.push(t('Empowering cutting-edge research through advanced sequencing,\ncustom bioinformatics pipelines, and high-quality collection kits.', 40, 80, 480, 12, { color: '#556677', font: 'Figtree', lh: 1.4 }));
+  // Divider fold line
+  s.push(r(561, 0, 1, 794, '#2BA98A'));
 
-  s.push(t('OUR CORE CAPABILITIES', 40, 140, 480, 14, { bold: 1, color: '#005b76', font: 'Montserrat' }));
+  // ==========================================
+  // LEFT PANEL (Front Cover, x: 38 to 523.5)
+  // ==========================================
+  // Logo & Tagline
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 40, y: 34, w: 206 });
+  s.push(t('Precision Genomics | Research Solutions', 40, 88, 440, 11, { bold: 1, color: C_NAVY, font: 'Poppins' }));
 
-  const bifoldServices = [
-    { name: 'Whole Exome & Genome Sequencing', desc: 'Clinical-grade depth with comprehensive variant reporting', y: 170 },
-    { name: 'Microbiome & Metagenomics', desc: '16S and shotgun sequencing for human and soil flora', y: 240 },
-    { name: 'Transcriptomics & RNA-Seq', desc: 'Gene expression profiling with low input sample protocols', y: 310 },
-    { name: 'Agricultural Genotyping', desc: 'GBS and marker validation for plant and livestock breeding', y: 380 },
+  // Headline & Lead
+  s.push(t('DECODING\nLIFE\nEMPOWERING\nTOMORROW', 156, 140, 330, 25, { bold: 1, color: C_NAVY, font: 'Poppins', lh: 1.28 }));
+  s.push(t('End-to-end genomics and bioinformatics solutions for precision medicine, agriculture, and life science research.', 38, 288, 485.5, 9.6, { color: C_MUTED, font: 'Poppins', lh: 1.65 }));
+
+  // 4 Domain Tiles (2x2 grid)
+  const tileW = 236.75;
+  const tileH = 62;
+  const tileGap = 12;
+  const tX1 = 38;
+  const tX2 = 38 + tileW + tileGap; // 286.75
+  const tY1 = 340;
+  const tY2 = 414;
+
+  // Tile 1: Human Genomics
+  s.push(r(tX1, tY1, tileW, tileH, C_TILE, { r: 6, stroke: C_RULE, sw: 1 }));
+  s.push(ic('users', tX1 + 14, tY1 + 18, 26, '#0A8A9A'));
+  s.push(t('Human Genomics', tX1 + 50, tY1 + 22, tileW - 60, 10.4, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  // Tile 2: Plant Genetics
+  s.push(r(tX2, tY1, tileW, tileH, C_TILE, { r: 6, stroke: C_RULE, sw: 1 }));
+  s.push(ic('leaf', tX2 + 14, tY1 + 18, 26, '#0A8A9A'));
+  s.push(t('Plant Genetics', tX2 + 50, tY1 + 22, tileW - 60, 10.4, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  // Tile 3: Microbiome
+  s.push(r(tX1, tY2, tileW, tileH, C_TILE, { r: 6, stroke: C_RULE, sw: 1 }));
+  s.push(ic('microscope', tX1 + 14, tY2 + 18, 26, '#0A8A9A'));
+  s.push(t('Microbiome', tX1 + 50, tY2 + 22, tileW - 60, 10.4, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  // Tile 4: Diagnostics
+  s.push(r(tX2, tY2, tileW, tileH, C_TILE, { r: 6, stroke: C_RULE, sw: 1 }));
+  s.push(ic('flask', tX2 + 14, tY2 + 18, 26, '#0A8A9A'));
+  s.push(t('Diagnostics', tX2 + 50, tY2 + 22, tileW - 60, 10.4, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  // Ready to begin your project CTA Card
+  s.push(r(38, 498, 485.5, 66, C_TEAL, { r: 7 }));
+  s.push(t('Ready to begin your project?', 58, 509, 445.5, 12.5, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+  s.push(t('Partner with Oneomics for validated protocols and rapid turnaround.', 58, 533, 445.5, 9, { color: '#ffffff', font: 'Poppins' }));
+
+  // Footer Left
+  s.push(t('www.oneomics.in   ·   +91 00000 00000', 38, 754, 485.5, 9.3, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+
+  // ==========================================
+  // RIGHT PANEL (About / Capabilities, x: 598 to 1083.5)
+  // ==========================================
+  // Topline
+  s.push(r(598, 36, 485.5, 2, C_NAVY));
+  s.push(t('ABOUT ONEOMICS', 598, 48, 485.5, 15.5, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Empowering cutting-edge research through advanced sequencing, custom bioinformatics pipelines, and high-quality collection kits.', 598, 72, 485.5, 9.4, { color: C_MUTED, font: 'Poppins', lh: 1.65 }));
+
+  // Section: Our core capabilities
+  s.push(t('OUR CORE CAPABILITIES', 598, 126, 485.5, 10.5, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 40 }));
+
+  const bifoldCapabilities = [
+    { title: 'Whole Exome & Genome Sequencing', desc: 'Clinical-grade depth with comprehensive variant reporting', y: 154 },
+    { title: 'Microbiome & Metagenomics', desc: '16S and shotgun sequencing for human and soil flora', y: 219 },
+    { title: 'Transcriptomics & RNA-Seq', desc: 'Gene expression profiling with low input sample protocols', y: 284 },
+    { title: 'Agricultural Genotyping', desc: 'GBS and marker validation for plant and livestock breeding', y: 349 },
   ];
 
-  bifoldServices.forEach((srv) => {
-    s.push(r(40, srv.y, 480, 56, '#f3f8fc', { r: 8 }));
-    s.push(r(40, srv.y, 4, 56, '#005b76', { r: 2 }));
-    s.push(t(srv.name, 56, srv.y + 10, 450, 13, { bold: 1, color: '#004068', font: 'Montserrat' }));
-    s.push(t(srv.desc, 56, srv.y + 30, 450, 11, { color: '#556677', font: 'Figtree' }));
+  bifoldCapabilities.forEach((cap) => {
+    s.push(r(598, cap.y, 485.5, 53, C_TILE, { r: 6 }));
+    s.push(r(598, cap.y, 3, 53, C_TEAL, { r: 1.5 }));
+    s.push(t(cap.title, 612, cap.y + 9, 457.5, 10.6, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+    s.push(t(cap.desc, 612, cap.y + 27, 457.5, 8.8, { color: C_MUTED, font: 'Poppins' }));
   });
 
-  // Left panel bottom banner
-  s.push(r(40, 470, 480, 240, '#004068', { r: 12 }));
-  s.push(t('SAMPLE COLLECTION ECOSYSTEM', 60, 495, 440, 15, { bold: 1, color: '#ffffff', font: 'Montserrat' }));
-  s.push(t('Discover ONESpit™, ONEasy™, and NucleoGUARD™ kits designed for ambient transport with zero cold-chain dependency.', 60, 525, 440, 12, { color: '#d6efec', font: 'Figtree', lh: 1.4 }));
-  s.push(r(60, 580, 160, 36, '#1a9e5b', { r: 6 }));
-  s.push(t('Explore Kits →', 60, 590, 160, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+  // Sample Collection Ecosystem Card
+  s.push(r(598, 430, 485.5, 166, C_DEEP, { r: 8 }));
+  s.push(t('SAMPLE COLLECTION ECOSYSTEM', 618, 450, 445.5, 12, { bold: 1, color: '#ffffff', font: 'Poppins', sp: 30 }));
+  s.push(t('Discover ONESpit™, ONEasy™, and NucleoGUARD™ kits designed for ambient transport with zero cold-chain dependency.', 618, 476, 445.5, 9, { color: '#ffffff', font: 'Poppins', lh: 1.65 }));
+  s.push(r(618, 532, 115, 30, C_GREEN, { r: 4 }));
+  s.push(t('Explore Kits →', 618, 539, 115, 9.3, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
 
-  s.push(t('Website: www.oneomics.in   |   Email: info@oneomics.in', 40, 740, 480, 11.5, { color: '#556677', font: 'Poppins' }));
+  // Footer Right
+  s.push(t('Website: www.oneomics.in   |   Email: info@oneomics.in', 598, 754, 485.5, 9.3, { color: C_MUTED, font: 'Poppins' }));
 
-  // Right panel (Front Cover, x: 561 to 1123)
-  s.push(r(561, 0, 1, 794, '#e2e8f0')); // Fold line indicator
-  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 620, y: 50, w: 220 });
-  s.push(t('Precision Genomics | Research Solutions', 620, 115, 440, 12, { bold: 1, color: '#006837', font: 'Montserrat' }));
+  return s;
+}
 
-  s.push({ k: 'image', src: '/assets/dna_helix.png', x: 600, y: 160, w: 120 });
-  s.push(t('DECODING\nLIFE\nEMPOWERING\nTOMORROW', 740, 180, 320, 28, { bold: 1, color: '#004068', font: 'Montserrat', lh: 1.15 }));
-  s.push(t('End-to-end genomics and bioinformatics solutions for precision medicine, agriculture, and life science research.', 620, 320, 440, 13, { color: '#556677', font: 'Figtree', lh: 1.35 }));
+// Oneomics Bi-Fold Brochure — Page 2 (Inside, 1123 x 794)
+export function bifoldBrochurePage2() {
+  const s = [];
 
-  // 4 Domain badges
-  const bDomains = [
-    { icon: 'users', label: 'Human Genomics', x: 620, y: 400 },
-    { icon: 'leaf', label: 'Plant Genetics', x: 850, y: 400 },
-    { icon: 'microscope', label: 'Microbiome', x: 620, y: 490 },
-    { icon: 'flask', label: 'Diagnostics', x: 850, y: 490 },
+  const C_NAVY = '#0B3D62';
+  const C_TEAL = '#0A6078';
+  const C_DEEP = '#0B3B6B';
+  const C_GREEN = '#1F9D62';
+  const C_INK = '#12324A';
+  const C_MUTED = '#556B7D';
+  const C_TILE = '#F1F6FA';
+  const C_RULE = '#D9E3EB';
+
+  // Top green stripe
+  s.push(r(0, 0, 1123, 3, C_GREEN));
+
+  // Divider fold line
+  s.push(r(561, 0, 1, 794, '#2BA98A'));
+
+  // ==========================================
+  // LEFT PANEL (Inside Left, x: 38 to 523.5)
+  // ==========================================
+  // Topline
+  s.push(r(38, 36, 485.5, 2, C_NAVY));
+  s.push(t('ONEOMICS RESEARCH & DIAGNOSTICS', 38, 48, 485.5, 15.5, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('One laboratory and one bioinformatics team, from sample processing to analysed results, for life science research and clinical research.', 38, 72, 485.5, 9.4, { color: C_MUTED, font: 'Poppins', lh: 1.65 }));
+
+  // Section 1: Sequencing services
+  s.push(t('SEQUENCING SERVICES', 38, 126, 485.5, 10.5, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 40 }));
+
+  const seqServices = [
+    { title: 'Whole Genome Sequencing', desc: 'De novo assembly and re-sequencing for microbes, humans, animals, plants and insects', y: 154 },
+    { title: 'Whole Exome Sequencing', desc: 'Coding-region capture with SNV, InDel, CNV and trio analysis', y: 219 },
+    { title: 'RNA & Small RNA Sequencing', desc: 'Expression, splice variants, fusion genes, miRNA and single-cell profiling', y: 284 },
+    { title: 'Epigenome Sequencing', desc: 'WGBS, MeDIP, ChIP-seq and ATAC-seq for methylation and chromatin state', y: 349 },
+    { title: 'Metagenome & Long-read Sequencing', desc: '16S, 18S, ITS and shotgun methods, plus PacBio SMRT and Oxford Nanopore', y: 414 },
   ];
-  bDomains.forEach((d) => {
-    s.push(r(d.x, d.y, 210, 68, '#f3f8fc', { r: 8, stroke: '#d5e3ef', sw: 1 }));
-    s.push(ic(d.icon, d.x + 16, d.y + 16, 32, '#00838f'));
-    s.push(t(d.label, d.x + 60, d.y + 24, 140, 13, { bold: 1, color: '#004068', font: 'Montserrat' }));
+
+  seqServices.forEach((srv) => {
+    s.push(r(38, srv.y, 485.5, 53, C_TILE, { r: 6 }));
+    s.push(r(38, srv.y, 3, 53, C_TEAL, { r: 1.5 }));
+    s.push(t(srv.title, 52, srv.y + 9, 457.5, 10.6, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+    s.push(t(srv.desc, 52, srv.y + 27, 457.5, 8.8, { color: C_MUTED, font: 'Poppins' }));
   });
 
-  // Right panel bottom CTA
-  s.push(r(620, 610, 440, 80, '#005b76', { r: 10 }));
-  s.push(t('Ready to begin your project?', 640, 626, 400, 15, { bold: 1, color: '#ffffff', font: 'Montserrat' }));
-  s.push(t('Partner with Oneomics for validated protocols and rapid turnaround.', 640, 652, 400, 11.5, { color: '#d6efec', font: 'Figtree' }));
+  // Section 2: Genotyping and analysis
+  s.push(t('GENOTYPING AND ANALYSIS', 38, 490, 485.5, 10.5, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 40 }));
 
-  s.push(t('www.oneomics.in   ·   +91 00000 00000', 620, 740, 440, 12, { bold: 1, color: '#004068', align: 'center', font: 'Poppins' }));
+  const boxW = 237;
+  const boxH = 66;
+  const boxGap = 11.5;
+  const bX1 = 38;
+  const bX2 = 38 + boxW + boxGap; // 286.5
+  const bY = 516;
+
+  // Box 1: SNP genotyping
+  s.push(r(bX1, bY, boxW, boxH, '#ffffff', { r: 6, stroke: C_RULE, sw: 1 }));
+  s.push(r(bX1, bY, boxW, 3, C_TEAL, { r: 1.5 }));
+  s.push(t('SNP genotyping', bX1 + 13, bY + 10, boxW - 26, 10.3, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Microarray, GBS and dd-RAD for GWAS, linkage maps and breeding programmes', bX1 + 13, bY + 28, boxW - 26, 8.8, { color: C_MUTED, font: 'Poppins', lh: 1.45 }));
+
+  // Box 2: Bioinformatics
+  s.push(r(bX2, bY, boxW, boxH, '#ffffff', { r: 6, stroke: C_RULE, sw: 1 }));
+  s.push(r(bX2, bY, boxW, 3, C_GREEN, { r: 1.5 }));
+  s.push(t('Bioinformatics', bX2 + 13, bY + 10, boxW - 26, 10.3, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Variant calling, annotation, assembly and custom pipelines on your dataset', bX2 + 13, bY + 28, boxW - 26, 8.8, { color: C_MUTED, font: 'Poppins', lh: 1.45 }));
+
+  // Section 3: Platforms
+  s.push(t('PLATFORMS', 38, 604, 485.5, 10.5, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 40 }));
+
+  const chipsRow1 = [
+    { label: 'NovaSeq 6000', w: 98 },
+    { label: 'HiSeq X', w: 66 },
+    { label: 'NextSeq 500', w: 92 },
+    { label: 'MiSeq', w: 60 },
+    { label: 'PacBio Sequel', w: 106 },
+  ];
+
+  let curX = 38;
+  chipsRow1.forEach((ch) => {
+    s.push(r(curX, 628, ch.w, 26, '#ffffff', { r: 13, stroke: '#9CC9D4', sw: 1.3 }));
+    s.push(t(ch.label, curX, 633, ch.w, 9.2, { color: C_TEAL, align: 'center', font: 'Poppins', bold: 1 }));
+    curX += ch.w + 8;
+  });
+
+  // Row 2: Oxford Nanopore
+  s.push(r(38, 662, 114, 26, '#ffffff', { r: 13, stroke: '#9CC9D4', sw: 1.3 }));
+  s.push(t('Oxford Nanopore', 38, 667, 114, 9.2, { color: C_TEAL, align: 'center', font: 'Poppins', bold: 1 }));
+
+  // Footer Left
+  s.push(t('Website: www.oneomics.in   |   Email: info@oneomics.in', 38, 754, 485.5, 9.3, { color: C_MUTED, font: 'Poppins' }));
+
+  // ==========================================
+  // RIGHT PANEL (Inside Right, x: 598 to 1083.5)
+  // ==========================================
+  // Logo & Divider
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 598, y: 38, w: 206 });
+  s.push(r(598, 114, 485.5, 2, C_NAVY));
+
+  // Section 1: Why Oneomics
+  s.push(t('WHY ONEOMICS', 598, 132, 485.5, 10.5, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 40 }));
+
+  const whyItems = [
+    { num: '1', title: 'Specialist team', desc: 'Bioinformaticians, data scientists, software developers and molecular biologists working as one team.', color: C_NAVY, y: 158 },
+    { num: '2', title: 'Customised service', desc: 'Fully customisable for omics-intensive investigations, with pilot runs on your own dataset.', color: C_GREEN, y: 216 },
+    { num: '3', title: 'Lab and analysis together', desc: 'Sample processing and data analysis in one place, with pipelines tailored to your needs.', color: C_TEAL, y: 274 },
+  ];
+
+  whyItems.forEach((w) => {
+    s.push(c(598, w.y, 13, w.color));
+    s.push(t(w.num, 598, w.y + 4, 26, 11, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(w.title, 636, w.y, 447.5, 10.4, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+    s.push(t(w.desc, 636, w.y + 17, 447.5, 8.9, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+  });
+
+  // Section 2: Diagnostics and clinical research
+  s.push(t('DIAGNOSTICS AND CLINICAL RESEARCH', 598, 328, 485.5, 10.5, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 40 }));
+
+  s.push(r(598, 350, 485.5, 96, '#EAF5F3', { r: 8, stroke: '#C5E3DC', sw: 1 }));
+  s.push(t('Applications that move from discovery toward validation:', 614, 362, 453.5, 9, { color: C_MUTED, font: 'Poppins' }));
+
+  const clinBullets = [
+    { text: 'Exome sequencing for cancer and chronic disease genetic recognition', y: 382 },
+    { text: 'SNP microarray for clinical testing, pharmacogenomics and biomarker validation', y: 402 },
+    { text: 'Cell-free DNA biomarker discovery with sensitivity and specificity estimates', y: 422 },
+  ];
+
+  clinBullets.forEach((cb) => {
+    s.push(r(614, cb.y + 3, 6, 6, C_GREEN, { r: 1 }));
+    s.push(t(cb.text, 626, cb.y, 440, 9, { color: C_INK, font: 'Poppins' }));
+  });
+
+  // Section 3: How a project runs
+  s.push(t('HOW A PROJECT RUNS', 598, 462, 485.5, 10.5, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 40 }));
+
+  const stepList = ['Sample QC', 'Library prep', 'Sequencing', 'Analysis', 'Report'];
+  const stepW = 485.5 / 5; // 97.1
+
+  stepList.forEach((st, idx) => {
+    const sx = 598 + idx * stepW;
+    const sColor = idx % 2 === 0 ? C_TEAL : C_NAVY;
+    s.push(r(sx, 484, stepW - 6, 2, sColor));
+    s.push(t(String(idx + 1), sx, 490, stepW - 6, 13, { bold: 1, color: C_GREEN, font: 'Poppins' }));
+    s.push(t(st, sx, 508, stepW - 6, 8.8, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  });
+
+  // Contact Us Card
+  s.push(r(598, 540, 485.5, 88, C_DEEP, { r: 8 }));
+  s.push(t('CONTACT US', 616, 554, 450, 12, { bold: 1, color: '#ffffff', font: 'Poppins', sp: 30 }));
+  s.push(t('Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India', 616, 574, 450, 9, { color: '#ffffff', font: 'Poppins', lh: 1.65 }));
+
+  // Footer Right
+  s.push(t('www.oneomics.in   ·   +91 00000 00000', 598, 754, 485.5, 9.3, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
 
   return s;
 }
@@ -5051,20 +5244,1232 @@ export function bifoldBrochureEmpty(pageNum = 2) {
   const s = [];
 
   // Top green stripe
-  s.push(r(0, 0, 1123, 4, '#1a9e5b'));
+  s.push(r(0, 0, 1123, 3, '#1F9D62'));
 
   // Left panel (x: 0 to 561)
-  s.push(r(40, 40, 480, 2, '#005b76'));
-  s.push(t('ONEOMICS RESEARCH & DIAGNOSTICS', 40, 52, 480, 16, { bold: 1, color: '#004068', font: 'Montserrat' }));
-  s.push(t('Website: www.oneomics.in   |   Email: info@oneomics.in', 40, 740, 480, 11.5, { color: '#556677', font: 'Poppins' }));
+  s.push(r(38, 36, 485.5, 2, '#0B3D62'));
+  s.push(t('ONEOMICS RESEARCH & DIAGNOSTICS', 38, 48, 485.5, 15.5, { bold: 1, color: '#0B3D62', font: 'Poppins' }));
+  s.push(t('Website: www.oneomics.in   |   Email: info@oneomics.in', 38, 754, 485.5, 9.3, { color: '#556B7D', font: 'Poppins' }));
 
   // Divider fold line
-  s.push(r(561, 0, 1, 794, '#e2e8f0'));
+  s.push(r(561, 0, 1, 794, '#2BA98A'));
 
   // Right panel (x: 561 to 1123)
-  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 620, y: 50, w: 220 });
-  s.push(r(620, 110, 440, 2, '#1a9e5b'));
-  s.push(t('www.oneomics.in   ·   +91 00000 00000', 620, 740, 440, 12, { bold: 1, color: '#004068', align: 'center', font: 'Poppins' }));
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 598, y: 38, w: 206 });
+  s.push(r(598, 114, 485.5, 2, '#0B3D62'));
+  s.push(t('www.oneomics.in   ·   +91 00000 00000', 598, 754, 485.5, 9.3, { bold: 1, color: '#0B3D62', align: 'center', font: 'Poppins' }));
+
+  return s;
+}
+
+// ONEOMICS Bi-Fold Brochure 2 - Genotyping — Page 1 (Outside, 1123 x 794)
+export function bifoldGenotypingBrochure() {
+  const s = [];
+
+  const C_VIO = '#5B1F9E';
+  const C_VIO2 = '#8E44D6';
+  const C_LAV = '#F5EFFC';
+  const C_LAV2 = '#E9DEF7';
+  const C_SKY = '#2E9BD6';
+  const C_GREEN = '#2E9E2E';
+  const C_RED = '#E0262A';
+  const C_INK = '#241B35';
+  const C_MUTED = '#5E5873';
+
+  // 1. TOP TRI-COLOUR STRIPE (6px height at y = 0)
+  s.push(r(0, 0, 375, 6, C_RED));
+  s.push(r(375, 0, 374, 6, C_SKY));
+  s.push(r(749, 0, 374, 6, C_GREEN));
+
+  // Divider fold line
+  s.push(r(561, 0, 1, 794, '#B79BDD'));
+
+  // ==========================================
+  // LEFT PANEL (Back Panel, x: 0 to 561.5)
+  // ==========================================
+  const lX = 48;
+  const lW = 468;
+
+  // Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: lX, y: 44, w: 146 });
+
+  // Heading & Rule
+  s.push(t('A genomics partner built around\nyour data', lX, 104, lW, 28, { bold: 1, color: C_INK, font: 'Lora', lh: 1.15 }));
+  s.push(r(lX, 178, 52, 4, C_VIO, { r: 2 }));
+
+  // Lead text
+  const backLead = 'ONEOMICS is a privately owned genomics and bioinformatics company headquartered in Trichy, Tamil Nadu, India. Life sciences have become data-intensive, so we pair a sequencing laboratory with specialists who turn large biological data sets into answers.';
+  s.push(t(backLead, lX, 196, lW, 10, { color: C_MUTED, font: 'Poppins', lh: 1.75 }));
+
+  // Team items (3 items)
+  const teamItems = [
+    { title: 'Specialist team', desc: 'Bioinformaticians, data scientists, software developers and molecular biologists under one roof.', y: 290 },
+    { title: 'Fully customisable', desc: 'Services shaped around your species, your question and your timeline.', y: 342 },
+    { title: 'Open to everyone', desc: 'Researchers and businesses interested in omics technologies are welcome.', y: 394 },
+  ];
+
+  teamItems.forEach((item) => {
+    s.push(r(lX, item.y + 6, 6, 6, C_VIO2, { r: 1 }));
+    s.push(t(item.title, lX + 18, item.y, lW - 18, 10.6, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(item.desc, lX + 18, item.y + 18, lW - 18, 9.3, { color: C_MUTED, font: 'Poppins', lh: 1.6 }));
+  });
+
+  // Talk to us Card
+  const cY = 464;
+  const cH = 196;
+  s.push(r(lX, cY, lW, cH, C_LAV, { r: 10, stroke: C_LAV2, sw: 1 }));
+  s.push(t('Talk to us', lX + 20, cY + 16, lW - 40, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+
+  s.push(t('EMAIL', lX + 20, cY + 44, lW - 40, 8.4, { bold: 1, color: C_VIO, font: 'Poppins', sp: 100 }));
+  s.push(t('sales@oneomics.in', lX + 20, cY + 58, lW - 40, 9.6, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('WEBSITE', lX + 20, cY + 80, lW - 40, 8.4, { bold: 1, color: C_VIO, font: 'Poppins', sp: 100 }));
+  s.push(t('www.oneomics.in', lX + 20, cY + 94, lW - 40, 9.6, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('ADDRESS', lX + 20, cY + 116, lW - 40, 8.4, { bold: 1, color: C_VIO, font: 'Poppins', sp: 100 }));
+  s.push(t('Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India', lX + 20, cY + 130, lW - 40, 9.6, { color: C_INK, font: 'Poppins', lh: 1.5 }));
+
+  // Footer Left
+  s.push(t('Your Trusted Sequencing Partner', lX, 754, lW, 9.3, { color: C_MUTED, font: 'Poppins' }));
+
+  // ==========================================
+  // RIGHT PANEL (Front Cover, x: 561.5 to 1123)
+  // ==========================================
+  const rX = 608;
+  const rW = 468;
+
+  // Cover background tint
+  s.push(r(561.5, 6, 561.5, 726, C_LAV));
+
+  // Cover Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: rX, y: 40, w: 146 });
+
+  // Hexagons SVG illustration
+  s.push({ k: 'image', src: '/assets/hex_genotyping.svg', x: 603, y: 56, w: 560 });
+
+  // Title section
+  s.push(t('GENOTYPING AND POPULATION GENOMICS', rX, 530, rW, 9, { bold: 1, color: C_VIO2, font: 'Poppins', sp: 160 }));
+  s.push(t('From SNP discovery to', rX, 550, rW, 36, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('genomic selection', rX, 592, rW, 36, { bold: 1, color: C_VIO2, font: 'Lora' }));
+
+  const coverSub = 'Genotyping services for humans, animals, plants and microbes, from a handful of SNPs to millions.';
+  s.push(t(coverSub, rX, 646, 420, 11.4, { color: C_MUTED, font: 'Poppins', lh: 1.6 }));
+
+  // Bottom Purple Bar
+  s.push(r(561.5, 732, 561.5, 62, C_VIO));
+  s.push(t('Pioneer in Genomics Services', rX, 753, 240, 10.4, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 800, 752, 276, 12, { italic: 1, color: '#ffffff', align: 'right', font: 'Lora' }));
+
+  return s;
+}
+
+// ONEOMICS Bi-Fold Brochure 2 - Genotyping — Page 2 (Inside, 1123 x 794)
+export function bifoldGenotypingBrochurePage2() {
+  const s = [];
+
+  const C_VIO = '#5B1F9E';
+  const C_VIO2 = '#8E44D6';
+  const C_LAV = '#F5EFFC';
+  const C_LAV2 = '#E9DEF7';
+  const C_SKY = '#2E9BD6';
+  const C_GREEN = '#2E9E2E';
+  const C_RED = '#E0262A';
+  const C_INK = '#241B35';
+  const C_MUTED = '#5E5873';
+  const C_RULE = '#E3DAF0';
+
+  // 1. TOP TRI-COLOUR STRIPE (6px height at y = 0)
+  s.push(r(0, 0, 375, 6, C_RED));
+  s.push(r(375, 0, 374, 6, C_SKY));
+  s.push(r(749, 0, 374, 6, C_GREEN));
+
+  // Divider fold line
+  s.push(r(561, 0, 1, 794, '#B79BDD'));
+
+  // ==========================================
+  // LEFT PANEL (Inside Left, Technologies, x: 46 to 521.5)
+  // ==========================================
+  const lX = 46;
+  const lW = 475.5;
+
+  s.push(t('TECHNOLOGIES', lX, 42, lW, 9, { bold: 1, color: C_VIO2, font: 'Poppins', sp: 160 }));
+  s.push(t('Four ways to read genetic variation', lX, 58, lW, 25, { bold: 1, color: C_INK, font: 'Lora' }));
+
+  const techs = [
+    {
+      num: '01',
+      title: 'Genotyping by sequencing (GBS)',
+      desc: 'Restriction enzymes and barcoded adapters shrink the genome to a representative fraction. High SNP coverage in gene-rich regions at low cost, with no reference sequence needed.',
+      tags: ['Low cost', 'No fractionation', 'Large scale'],
+      y: 114,
+    },
+    {
+      num: '02',
+      title: 'dd-RAD sequencing',
+      desc: 'Type IIB enzymes cut fixed-size fragments, giving even sequencing depth and high reproducibility. Works with low DNA input and degraded DNA.',
+      tags: ['Flexible tag number', 'High marker density'],
+      y: 228,
+    },
+    {
+      num: '03',
+      title: 'SNP microarray',
+      desc: 'Custom, scalable Affymetrix and Illumina arrays with call rates above 99%. Measures SNPs and copy number variation at targeted or whole-genome scale.',
+      tags: ['High throughput', 'Clinical testing', 'Pharmacogenomics'],
+      y: 338,
+    },
+    {
+      num: '04',
+      title: 'Whole genome SNP genotyping',
+      desc: 'Microarray or high-throughput sequencing for genome-wide discovery and screening of SNP loci, supporting genome-wide association studies.',
+      tags: ['GWAS', 'Genome-wide discovery'],
+      y: 450,
+    },
+  ];
+
+  techs.forEach((tc) => {
+    s.push(r(lX, tc.y, lW, 1, C_RULE));
+    s.push(t(tc.num, lX, tc.y + 12, 48, 27, { bold: 1, color: C_VIO2, font: 'Lora' }));
+    s.push(t(tc.title, lX + 54, tc.y + 12, lW - 54, 14, { bold: 1, color: C_INK, font: 'Lora' }));
+    s.push(t(tc.desc, lX + 54, tc.y + 32, lW - 54, 9.4, { color: C_MUTED, font: 'Poppins', lh: 1.6 }));
+
+    let tagX = lX + 54;
+    const tagY = tc.y + 78;
+    tc.tags.forEach((tg) => {
+      const tagW = tg.length * 6.2 + 18;
+      s.push(r(tagX, tagY, tagW, 20, C_LAV, { r: 10, stroke: C_LAV2, sw: 1 }));
+      s.push(t(tg, tagX, tagY + 3, tagW, 8.4, { bold: 1, color: C_VIO, align: 'center', font: 'Poppins' }));
+      tagX += tagW + 6;
+    });
+  });
+
+  // Note Box at bottom of left panel
+  const noteY = 568;
+  s.push(r(lX, noteY, lW, 58, C_LAV, { r: 8 }));
+  s.push(r(lX, noteY, 4, 58, C_VIO2, { r: 2 }));
+  const noteText = 'High call rates and deep marker coverage: our protocols work across diploid and polyploid genomes, wild relatives and non-model organisms.';
+  s.push(t(noteText, lX + 16, noteY + 12, lW - 32, 9.4, { color: C_INK, font: 'Poppins', lh: 1.6 }));
+
+  // Footer Left
+  s.push(t('sales@oneomics.in   |   www.oneomics.in', lX, 754, lW, 9.3, { color: C_MUTED, font: 'Poppins' }));
+
+  // ==========================================
+  // RIGHT PANEL (Inside Right, Analysis, x: 602 to 1079)
+  // ==========================================
+  const rX = 602;
+  const rW = 477.5;
+
+  s.push(t('ANALYSIS AND DELIVERY', rX, 42, rW, 9, { bold: 1, color: C_VIO2, font: 'Poppins', sp: 160 }));
+  s.push(t('From raw reads to decisions', rX, 58, rW, 25, { bold: 1, color: C_INK, font: 'Lora' }));
+
+  // 6 Grid Cards (3 cols x 2 rows)
+  const gCards = [
+    { title: 'SNP identification', desc: 'Genotyping and annotation of every SNP locus', barColor: C_VIO2 },
+    { title: 'GWAS', desc: 'Link genetic variation to traits and complex disorders', barColor: C_SKY },
+    { title: 'Linkage maps', desc: 'Construction of genetic linkage maps', barColor: C_GREEN },
+    { title: 'Genomic selection', desc: 'Selection of genomics in breeding programmes', barColor: C_VIO2 },
+    { title: 'Population structure', desc: 'Diversity, evolution and genetic correlation', barColor: C_SKY },
+    { title: 'Quality control', desc: 'Raw data QC and statistical analysis', barColor: C_GREEN },
+  ];
+
+  const colW = (rW - 20) / 3;
+  const rowH = 68;
+
+  gCards.forEach((gc, idx) => {
+    const colIdx = idx % 3;
+    const rowIdx = Math.floor(idx / 3);
+    const gx = rX + colIdx * (colW + 10);
+    const gy = 100 + rowIdx * (rowH + 10);
+
+    s.push(r(gx, gy, colW, rowH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+    s.push(r(gx + 12, gy + 10, 22, 3, gc.barColor, { r: 1.5 }));
+    s.push(t(gc.title, gx + 12, gy + 18, colW - 24, 10.2, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(gc.desc, gx + 12, gy + 34, colW - 24, 8.6, { color: C_MUTED, font: 'Poppins', lh: 1.4 }));
+  });
+
+  // Table: Which method fits?
+  const tY = 270;
+  s.push(t('Which method fits?', rX, tY, rW, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+
+  const thY = tY + 28;
+  const col1W = 110;
+  const col2W = 185;
+  const col3W = 182.5;
+
+  s.push(t('METHOD', rX, thY, col1W, 8.6, { bold: 1, color: C_VIO, font: 'Poppins', sp: 60 }));
+  s.push(t('STRENGTH', rX + col1W, thY, col2W, 8.6, { bold: 1, color: C_VIO, font: 'Poppins', sp: 60 }));
+  s.push(t('TYPICAL USE', rX + col1W + col2W, thY, col3W, 8.6, { bold: 1, color: C_VIO, font: 'Poppins', sp: 60 }));
+  s.push(r(rX, thY + 16, rW, 2, C_VIO));
+
+  const tableRows = [
+    { m: 'GBS', s: 'Cost-effective, easy to scale', u: 'Plant breeding, genomic diversity' },
+    { m: 'dd-RAD', s: 'Reproducible, tolerates degraded DNA', u: 'Population genetics, QTL location' },
+    { m: 'SNP array', s: 'Highest call rates, fast turnaround', u: 'Biomarkers, breed discrimination' },
+    { m: 'Whole genome', s: 'Complete variant discovery', u: 'GWAS, novel marker discovery' },
+  ];
+
+  tableRows.forEach((row, idx) => {
+    const ry = thY + 22 + idx * 25;
+    s.push(t(row.m, rX, ry, col1W, 9.2, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(row.s, rX + col1W, ry, col2W, 9.2, { color: C_MUTED, font: 'Poppins' }));
+    s.push(t(row.u, rX + col1W + col2W, ry, col3W, 9.2, { color: C_MUTED, font: 'Poppins' }));
+    s.push(r(rX, ry + 20, rW, 1, C_RULE));
+  });
+
+  // Project workflow
+  const wfY = 460;
+  s.push(t('Project workflow', rX, wfY, rW, 15, { bold: 1, color: C_INK, font: 'Lora' }));
+
+  const stepList = [
+    { num: '1', label: 'DNA extraction', color: C_VIO2 },
+    { num: '2', label: 'Library construction', color: '#6F63D8' },
+    { num: '3', label: 'Sequencing', color: C_SKY },
+    { num: '4', label: 'SNP detection', color: '#2FA7A0' },
+    { num: '5', label: 'Analysis and report', color: C_GREEN },
+  ];
+
+  const sW = rW / 5;
+  const sTopY = wfY + 28;
+
+  stepList.forEach((st, idx) => {
+    const sx = rX + idx * sW;
+    s.push(r(sx, sTopY, sW - 6, 3, st.color));
+    s.push(t(st.num, sx, sTopY + 8, sW - 6, 15, { bold: 1, color: C_VIO, font: 'Lora' }));
+    s.push(t(st.label, sx, sTopY + 28, sW - 6, 8.8, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.3 }));
+  });
+
+  // Plan your genotyping project CTA card
+  const ctaY = 660;
+  const ctaH = 64;
+  s.push(r(rX, ctaY, rW, ctaH, C_VIO, { r: 10 }));
+  s.push(t('Plan your genotyping project', rX + 20, ctaY + 22, 260, 15, { bold: 1, color: '#ffffff', font: 'Lora' }));
+  s.push(t('sales@oneomics.in\nwww.oneomics.in', rX + 270, ctaY + 16, rW - 290, 9.4, { color: '#ffffff', align: 'right', font: 'Poppins', lh: 1.6 }));
+
+  return s;
+}
+
+// ==========================================
+// ONEOMICS Bi-Fold Brochure 3 - Long-Read Sequencing — Page 1 (Outside, 1123 x 794)
+// ==========================================
+export function bifoldLongReadBrochure() {
+  const s = [];
+
+  const C_NAVY = '#0B2545';
+  const C_BLUE = '#13538A';
+  const C_ORANGE = '#FF9F1C';
+  const C_CYAN1 = '#29B6D9';
+  const C_CYAN2 = '#5FD0EA';
+  const C_INK = '#1E2F44';
+  const C_MUTED = '#455A70';
+  const C_CARD_BG = '#EAF3FB';
+  const C_STRIPE_RED = '#E53935';
+  const C_STRIPE_BLUE = '#1E88E5';
+  const C_STRIPE_GREEN = '#43A047';
+
+  // 1. TOP TRI-COLOUR STRIPE (7px height at y = 0, per panel)
+  // Left Panel Stripe (0 to 561.5)
+  s.push(r(0, 0, 187.2, 7, C_STRIPE_RED));
+  s.push(r(187.2, 0, 187.2, 7, C_STRIPE_BLUE));
+  s.push(r(374.4, 0, 187.1, 7, C_STRIPE_GREEN));
+
+  // Right Panel Stripe (561.5 to 1123)
+  s.push(r(561.5, 0, 187.2, 7, C_STRIPE_RED));
+  s.push(r(748.7, 0, 187.2, 7, C_STRIPE_BLUE));
+  s.push(r(935.9, 0, 187.1, 7, C_STRIPE_GREEN));
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 794, '#D6E5F2'));
+
+  // ==========================================
+  // LEFT PANEL (Back Cover, x: 0 to 561.5)
+  // ==========================================
+  const lX = 44;
+  const lW = 473.5;
+
+  // Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: lX, y: 42, w: 150 });
+
+  // Kicker
+  s.push(t('ABOUT ONEOMICS', lX, 116, lW, 9, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 180 }));
+
+  // Main Heading & Orange Bar
+  s.push(t('A genomics partner built\naround your data', lX, 136, lW, 26, { bold: 1, color: C_NAVY, font: 'Georgia', lh: 1.2 }));
+  s.push(r(lX, 206, 44, 4, C_ORANGE, { r: 2 }));
+
+  // Paragraph
+  const bkLead = 'ONEOMICS is a privately owned company headquartered in Trichy, Tamil Nadu, India, focused on genomics cum bioinformatics. We pair sequencing with a diverse team of specialists who turn large biological data sets into answers.';
+  s.push(t(bkLead, lX, 224, 460, 11, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+
+  // 3 Points
+  const ptItems = [
+    { title: 'Specialist team', desc: 'Bioinformaticians, data scientists, software developers and molecular biologists.', y: 304 },
+    { title: 'Fully customizable', desc: 'Services shaped around your species, your question and your timeline.', y: 352 },
+    { title: 'Open to everyone', desc: 'Researchers and businesses interested in omics technologies are welcome.', y: 400 },
+  ];
+
+  ptItems.forEach((pt) => {
+    s.push(r(lX, pt.y + 5, 8, 8, C_BLUE, { r: 2 }));
+    s.push(t(pt.title, lX + 18, pt.y, lW - 18, 12, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+    s.push(t(pt.desc, lX + 18, pt.y + 18, lW - 18, 10.5, { color: '#5A6F84', font: 'Poppins' }));
+  });
+
+  // Talk to us Card
+  const cY = 534;
+  const cH = 190;
+  s.push(r(lX, cY, lW, cH, C_CARD_BG, { r: 14 }));
+  s.push(t('Talk to us', lX + 22, cY + 16, lW - 44, 18, { bold: 1, color: C_NAVY, font: 'Georgia' }));
+
+  s.push(t('EMAIL', lX + 22, cY + 46, lW - 44, 8.5, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+  s.push(t('sales@oneomics.in', lX + 22, cY + 60, lW - 44, 11, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('WEBSITE', lX + 22, cY + 84, lW - 44, 8.5, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+  s.push(t('www.oneomics.in', lX + 22, cY + 98, lW - 44, 11, { color: C_INK, font: 'Poppins' }));
+
+  s.push(t('ADDRESS', lX + 22, cY + 122, lW - 44, 8.5, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+  s.push(t('Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India', lX + 22, cY + 136, lW - 44, 10.2, { color: C_INK, font: 'Poppins', lh: 1.45 }));
+
+  // Bottom Tagline Left
+  s.push(t('Your Trusted Sequencing Partner', lX, 752, lW, 10, { color: '#6B7F93', font: 'Poppins' }));
+
+  // ==========================================
+  // RIGHT PANEL (Front Cover, x: 561.5 to 1123)
+  // ==========================================
+  const rX = 605.5;
+  const rW = 473.5;
+
+  // Navy background
+  s.push(r(561.5, 7, 561.5, 787, C_NAVY));
+
+  // White Card for Logo
+  s.push(r(rX, 42, 164, 56, '#FFFFFF', { r: 10 }));
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: rX + 14, y: 52, w: 136 });
+
+  // Long reads illustration (horizontal bars with rounded corners)
+  const reads = [
+    { left: 40, w: 300, top: 0, bg: C_CYAN1 },
+    { left: 120, w: 380, top: 26, bg: C_ORANGE },
+    { left: 20, w: 240, top: 52, bg: C_CYAN2 },
+    { left: 200, w: 330, top: 78, bg: '#FFFFFF' },
+    { left: 70, w: 430, top: 104, bg: C_CYAN1 },
+    { left: 10, w: 170, top: 130, bg: C_ORANGE },
+    { left: 150, w: 400, top: 156, bg: C_CYAN2 },
+    { left: 60, w: 280, top: 182, bg: '#FFFFFF' },
+    { left: 180, w: 360, top: 208, bg: C_CYAN1 },
+    { left: 30, w: 350, top: 234, bg: C_ORANGE },
+    { left: 110, w: 260, top: 260, bg: C_CYAN2 },
+    { left: 90, w: 440, top: 286, bg: '#FFFFFF' },
+  ];
+
+  reads.forEach((rd) => {
+    s.push(r(rX + rd.left, 150 + rd.top, rd.w, 8, rd.bg, { r: 4, o: 0.9 }));
+  });
+
+  // Main Cover Heading
+  s.push(t('See the whole genome', rX, 486, rW, 36, { bold: 1, color: '#FFFFFF', font: 'Georgia' }));
+  s.push(t('in ', rX, 530, 48, 36, { bold: 1, color: '#FFFFFF', font: 'Georgia' }));
+  s.push(t('long reads', rX + 46, 530, rW - 46, 36, { bold: 1, color: C_ORANGE, font: 'Georgia' }));
+
+  // Subtitle
+  const covSub = 'PacBio SMRT and Oxford Nanopore sequencing for genome finishing, de novo assembly and full-length transcripts.';
+  s.push(t(covSub, rX, 612, 440, 12.5, { color: '#CFE3F6', font: 'Poppins', lh: 1.5 }));
+
+  // Footer Banner
+  s.push(r(561.5, 742, 561.5, 52, C_ORANGE));
+  s.push(t('Pioneer in Genomics Services', rX, 759, 260, 11.5, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 920, 759, 159, 11.5, { bold: 1, color: C_NAVY, align: 'right', font: 'Poppins' }));
+
+  return s;
+}
+
+// ==========================================
+// ONEOMICS Bi-Fold Brochure 3 - Long-Read Sequencing — Page 2 (Inside, 1123 x 794)
+// ==========================================
+export function bifoldLongReadBrochurePage2() {
+  const s = [];
+
+  const C_NAVY = '#0B2545';
+  const C_BLUE = '#13538A';
+  const C_ORANGE = '#FF9F1C';
+  const C_INK = '#1E2F44';
+  const C_MUTED = '#455A70';
+  const C_STRIPE_RED = '#E53935';
+  const C_STRIPE_BLUE = '#1E88E5';
+  const C_STRIPE_GREEN = '#43A047';
+
+  // 1. TOP TRI-COLOUR STRIPE (7px height at y = 0, per panel)
+  s.push(r(0, 0, 187.2, 7, C_STRIPE_RED));
+  s.push(r(187.2, 0, 187.2, 7, C_STRIPE_BLUE));
+  s.push(r(374.4, 0, 187.1, 7, C_STRIPE_GREEN));
+
+  s.push(r(561.5, 0, 187.2, 7, C_STRIPE_RED));
+  s.push(r(748.7, 0, 187.2, 7, C_STRIPE_BLUE));
+  s.push(r(935.9, 0, 187.1, 7, C_STRIPE_GREEN));
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 794, '#D6E5F2'));
+
+  // ==========================================
+  // LEFT PANEL (Inside Left, x: 0 to 561.5)
+  // ==========================================
+  const lX = 44;
+  const lW = 473.5;
+
+  // Kicker
+  s.push(t('LONG-READ SEQUENCING', lX, 44, lW, 9, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 180 }));
+
+  // Headline
+  s.push(t('Finish genomes. Resolve variants.\nRead what short reads miss.', lX, 62, lW, 23, { bold: 1, color: C_NAVY, font: 'Georgia', lh: 1.2 }));
+
+  // Lead text
+  const inLead = 'Researchers still face challenges in finishing genomes, characterizing variants and recognizing the role of key biological markers. In many areas of research, accurate read lengths of 1,000 base pairs or longer in a single sequencing reaction are important. ONEOMICS long-read systems let you switch easily between platforms and applications as your research needs change.';
+  s.push(t(inLead, lX, 134, lW, 11.2, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+
+  // Platforms section
+  s.push(t('PLATFORMS', lX, 230, lW, 11, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+
+  const platforms = [
+    { name: 'PacBio RS II', x: 44, w: 96 },
+    { name: 'PacBio Sequel', x: 148, w: 108 },
+    { name: 'Oxford Nanopore', x: 264, w: 126 },
+  ];
+
+  platforms.forEach((p) => {
+    s.push(r(p.x, 250, p.w, 24, '#EAF3FB', { r: 12 }));
+    s.push(t(p.name, p.x, 254, p.w, 10.5, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  });
+
+  // Applications section
+  s.push(t('APPLICATIONS', lX, 292, lW, 11, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+
+  // Card 1: Genome finishing & de novo assembly
+  s.push(r(lX, 314, lW, 96, '#F3F8FC', { r: 12 }));
+  s.push(t('Genome finishing & de novo assembly', lX + 14, 326, lW - 28, 12, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  s.push(c(lX + 18, 355, 3.5, C_ORANGE));
+  s.push(t('Genome finishing, metagenomics, de novo assembly, meta-assembly with long & short reads', lX + 30, 348, lW - 44, 10.6, { color: '#33475C', font: 'Poppins' }));
+
+  s.push(c(lX + 18, 381, 3.5, C_ORANGE));
+  s.push(t('High-quality reads of up to 20 kb', lX + 30, 374, lW - 44, 10.6, { color: '#33475C', font: 'Poppins' }));
+
+  // Card 2: Whole human genome phasing
+  s.push(r(lX, 422, lW, 120, '#F3F8FC', { r: 12 }));
+  s.push(t('Whole human genome phasing', lX + 14, 434, lW - 28, 12, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  s.push(c(lX + 18, 463, 3.5, C_ORANGE));
+  s.push(t('Explores the distinct haplotype quality of two homologous chromosomes', lX + 30, 456, lW - 44, 10.6, { color: '#33475C', font: 'Poppins' }));
+
+  s.push(c(lX + 18, 489, 3.5, C_ORANGE));
+  s.push(t('One assay to process over 94 per cent of heterozygous SNPs and InDels', lX + 30, 482, lW - 44, 10.6, { color: '#33475C', font: 'Poppins' }));
+
+  s.push(c(lX + 18, 515, 3.5, C_ORANGE));
+  s.push(t('Easy push-button analysis within one day', lX + 30, 508, lW - 44, 10.6, { color: '#33475C', font: 'Poppins' }));
+
+  // Page 2 indicator
+  s.push(t('2', lX, 762, 20, 9.5, { color: '#8A9BAD', font: 'Poppins' }));
+
+  // ==========================================
+  // RIGHT PANEL (Inside Right, x: 561.5 to 1123)
+  // ==========================================
+  const rX = 605.5;
+  const rW = 473.5;
+
+  // Block 1: PacBio SMRT sequencing
+  s.push(r(rX, 44, rW, 266, '#FFFFFF', { r: 14, stroke: '#D6E5F2', sw: 1 }));
+  s.push(t('PacBio ', rX + 16, 58, 62, 14, { bold: 1, color: C_NAVY, font: 'Georgia' }));
+  s.push(t('SMRT ', rX + 74, 58, 52, 14, { bold: 1, color: C_ORANGE, font: 'Georgia' }));
+  s.push(t('sequencing', rX + 124, 58, 200, 14, { bold: 1, color: C_NAVY, font: 'Georgia' }));
+
+  const pacBioDesc = 'Single-molecule real-time sequencing that covers complex or repetitive regions in a single continuous read, and can also show where methylated bases exist.';
+  s.push(t(pacBioDesc, rX + 16, 82, rW - 32, 10.5, { color: C_MUTED, font: 'Poppins', lh: 1.45 }));
+
+  // Block 1 Columns: ADVANTAGES & OUR SERVICES
+  s.push(t('ADVANTAGES', rX + 16, 126, 200, 9, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+  const pacAdvantages = [
+    'Longest average read lengths',
+    'Highest consensus accuracy',
+    'Uniform coverage',
+    'Simultaneous epigenetic characterization',
+    'Single-molecule resolution',
+    'Rapid and affordable',
+  ];
+  pacAdvantages.forEach((adv, i) => {
+    const ay = 144 + i * 20;
+    s.push(c(rX + 20, ay + 6, 3, C_ORANGE));
+    s.push(t(adv, rX + 30, ay, 195, 10.2, { color: '#33475C', font: 'Poppins' }));
+  });
+
+  s.push(t('OUR SERVICES', rX + 240, 126, 200, 9, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+  const pacServices = [
+    'Long-read metagenomic sequencing',
+    'Bacterial & fungal whole genome de novo',
+    'Full-length transcripts (Iso-Seq)',
+    'Human genome SMRT sequencing',
+    'Full-length 16S/18S/ITS rRNA',
+  ];
+  pacServices.forEach((srv, i) => {
+    const sy = 144 + i * 20;
+    s.push(c(rX + 244, sy + 6, 3, C_ORANGE));
+    s.push(t(srv, rX + 254, sy, 205, 10.2, { color: '#33475C', font: 'Poppins' }));
+  });
+
+  // Block 2: Oxford Nanopore sequencing
+  s.push(r(rX, 326, rW, 310, '#FFFFFF', { r: 14, stroke: '#D6E5F2', sw: 1 }));
+  s.push(t('Oxford ', rX + 16, 340, 60, 14, { bold: 1, color: C_NAVY, font: 'Georgia' }));
+  s.push(t('Nanopore ', rX + 72, 340, 78, 14, { bold: 1, color: C_ORANGE, font: 'Georgia' }));
+  s.push(t('sequencing', rX + 148, 340, 200, 14, { bold: 1, color: C_NAVY, font: 'Georgia' }));
+
+  const ontDesc = 'Compatible with genomic DNA, amplified DNA, cDNA and RNA, with applications from pathogen identification and food-safety monitoring to antibiotic resistance characterisation.';
+  s.push(t(ontDesc, rX + 16, 364, rW - 32, 10.5, { color: C_MUTED, font: 'Poppins', lh: 1.45 }));
+
+  // Block 2 Columns: ADVANTAGES & DEVICES
+  s.push(t('ADVANTAGES', rX + 16, 412, 200, 9, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+  const ontAdvantages = [
+    'Ultra-long reads of several hundred kb from HMW-DNA',
+    'Native strand sequenced directly, without optics or amplification',
+    'Direct DNA/RNA sequencing with epigenetic information',
+    'Real-time data streaming',
+  ];
+  ontAdvantages.forEach((adv, i) => {
+    const ay = 430 + i * 28;
+    s.push(c(rX + 20, ay + 6, 3, C_ORANGE));
+    s.push(t(adv, rX + 30, ay, 200, 10.2, { color: '#33475C', font: 'Poppins', lh: 1.35 }));
+  });
+
+  s.push(t('DEVICES', rX + 240, 412, 200, 9, { bold: 1, color: C_BLUE, font: 'Poppins', sp: 140 }));
+  const ontDevices = [
+    { name: 'Flongle', x: rX + 240, y: 432, w: 60 },
+    { name: 'MinION', x: rX + 306, y: 432, w: 58 },
+    { name: 'GridION', x: rX + 370, y: 432, w: 62 },
+    { name: 'PromethION', x: rX + 240, y: 462, w: 84 },
+    { name: 'SmidgION', x: rX + 330, y: 462, w: 76 },
+  ];
+  ontDevices.forEach((dev) => {
+    s.push(r(dev.x, dev.y, dev.w, 22, '#EAF3FB', { r: 11 }));
+    s.push(t(dev.name, dev.x, dev.y + 4, dev.w, 10, { bold: 1, color: C_NAVY, align: 'center', font: 'Poppins' }));
+  });
+
+  // CTA Card
+  s.push(r(rX, 672, rW, 56, C_NAVY, { r: 12 }));
+  s.push(t('Start your long-read project', rX + 18, 680, 290, 14, { bold: 1, color: C_ORANGE, font: 'Georgia' }));
+  s.push(t('Tell us your species, sample and question.', rX + 18, 702, 290, 10.5, { color: '#CFE3F6', font: 'Poppins' }));
+  s.push(t('sales@oneomics.in', rX + 310, 692, 145, 11, { bold: 1, color: '#FFFFFF', align: 'right', font: 'Poppins' }));
+
+  // Page 3 indicator
+  s.push(t('3', 1065, 762, 20, 9.5, { color: '#8A9BAD', font: 'Poppins' }));
+
+  return s;
+}
+
+// ==========================================
+// ONEOMICS Bi-Fold Brochure 4 - Metagenome Sequencing — Page 1 (Outside, 1123 x 794)
+// ==========================================
+export function bifoldMetagenomeBrochure() {
+  const s = [];
+
+  const C_TEAL = '#0F3D3A';
+  const C_GOLD = '#B08D57';
+  const C_INK = '#26373A';
+  const C_MUTED = '#4A5B5D';
+  const C_MUTED2 = '#5A6B6D';
+  const C_RULE = '#D9D2C3';
+  const C_RULE_LIGHT = '#E4DED0';
+  const C_BG = '#FAF8F3';
+  const C_STRIPE_RED = '#E53935';
+  const C_STRIPE_BLUE = '#1E88E5';
+  const C_STRIPE_GREEN = '#43A047';
+
+  // Overall Background
+  s.push(r(0, 0, 1123, 794, C_BG));
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 788, C_RULE_LIGHT));
+
+  // ==========================================
+  // LEFT PANEL (Back Cover, x: 0 to 561.5)
+  // ==========================================
+  const lX = 50;
+  const lW = 461.5;
+
+  // Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: lX, y: 48, w: 140 });
+
+  // Kicker
+  s.push(t('ABOUT ONEOMICS', lX, 120, lW, 8.6, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 180 }));
+
+  // Main Heading & Gold Bar
+  s.push(t('A genomics partner built\naround your data', lX, 138, 420, 27, { color: C_TEAL, font: 'Georgia', lh: 1.2 }));
+  s.push(r(lX, 212, 38, 2, C_GOLD));
+
+  // Paragraph
+  const bkLead = 'ONEOMICS is a privately owned company headquartered in Trichy, Tamil Nadu, India, focused on genomics cum bioinformatics. We combine a sequencing laboratory with a team of bioinformaticians, data scientists, software developers and molecular biologists.';
+  s.push(t(bkLead, lX, 228, lW, 11.2, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+
+  // Why Items (3 items with separators)
+  const whyItems = [
+    { title: 'Specialist team', desc: 'Detailed knowledge of genomics and omics data analysis.', y: 312 },
+    { title: 'Fully customizable', desc: 'Services shaped around your species, question and timeline.', y: 348 },
+    { title: 'Open to everyone', desc: 'Researchers and businesses interested in omics technologies.', y: 384 },
+  ];
+
+  whyItems.forEach((item) => {
+    s.push(t(item.title, lX, item.y, 140, 13, { color: C_TEAL, font: 'Georgia' }));
+    s.push(t(item.desc, lX + 145, item.y + 1, lW - 145, 10.8, { color: C_MUTED2, font: 'Poppins' }));
+    s.push(r(lX, item.y + 26, lW, 1, C_RULE_LIGHT));
+  });
+
+  // Talk to us Section
+  const ctY = 565;
+  s.push(t('Talk to us', lX, ctY, lW, 19, { color: C_TEAL, font: 'Georgia' }));
+
+  // Rows with borders
+  // Row 1: EMAIL
+  s.push(r(lX, ctY + 31, lW, 1, C_RULE_LIGHT));
+  s.push(t('EMAIL', lX, ctY + 39, 90, 8.6, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 160 }));
+  s.push(t('sales@oneomics.in', lX + 95, ctY + 38, lW - 95, 10.8, { color: C_INK, font: 'Poppins' }));
+
+  // Row 2: WEBSITE
+  s.push(r(lX, ctY + 61, lW, 1, C_RULE_LIGHT));
+  s.push(t('WEBSITE', lX, ctY + 69, 90, 8.6, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 160 }));
+  s.push(t('www.oneomics.in', lX + 95, ctY + 68, lW - 95, 10.8, { color: C_INK, font: 'Poppins' }));
+
+  // Row 3: ADDRESS
+  s.push(r(lX, ctY + 91, lW, 1, C_RULE_LIGHT));
+  s.push(t('ADDRESS', lX, ctY + 99, 90, 8.6, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 160 }));
+  s.push(t('Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India', lX + 95, ctY + 98, lW - 95, 10.2, { color: C_INK, font: 'Poppins', lh: 1.45 }));
+
+  // Bottom Tagline Left
+  s.push(t('Your Trusted Sequencing Partner', lX, 752, lW, 9.5, { italic: 1, color: '#7A8A8C', font: 'Poppins' }));
+
+  // Bottom Tri-colour stripe (Left Panel)
+  s.push(r(0, 788, 187.2, 6, C_STRIPE_RED));
+  s.push(r(187.2, 788, 187.2, 6, C_STRIPE_BLUE));
+  s.push(r(374.4, 788, 187.1, 6, C_STRIPE_GREEN));
+
+  // ==========================================
+  // RIGHT PANEL (Front Cover, x: 561.5 to 1123)
+  // ==========================================
+  const rX = 611.5;
+  const rW = 461.5;
+
+  // Front cover background & left border
+  s.push(r(561.5, 0, 561.5, 788, '#FAF8F3'));
+
+  // Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: rX, y: 48, w: 140 });
+
+  // 10 Microbial colony circles (dots)
+  const dots = [
+    { x: 601.5, y: 120, w: 150, h: 150, r: 75 },
+    { x: 711.5, y: 210, w: 70, h: 70, r: 35 },
+    { x: 821.5, y: 130, w: 110, h: 110, r: 55 },
+    { x: 891.5, y: 260, w: 200, h: 200, r: 100 },
+    { x: 621.5, y: 290, w: 90, h: 90, r: 45 },
+    { x: 771.5, y: 340, w: 50, h: 50, r: 25 },
+    { x: 941.5, y: 150, w: 60, h: 60, r: 30 },
+    { x: 681.5, y: 420, w: 120, h: 120, r: 60 },
+    { x: 861.5, y: 470, w: 80, h: 80, r: 40 },
+    { x: 1001.5, y: 420, w: 110, h: 110, r: 55 },
+  ];
+
+  dots.forEach((d) => {
+    s.push(r(d.x, d.y, d.w, d.h, 'rgba(15,61,58,0.045)', { r: d.r, stroke: 'rgba(176,141,87,0.6)', sw: 1 }));
+  });
+
+  // Kicker
+  s.push(t('METAGENOME SEQUENCING', rX, 520, rW, 8.6, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 180 }));
+
+  // Main Cover Heading
+  s.push(t('Understand the microbial world,', rX, 542, 480, 27, { color: C_TEAL, font: 'Georgia' }));
+  s.push(t('one community at a time', rX, 574, 480, 27, { italic: 1, color: C_GOLD, font: 'Georgia' }));
+
+  // Subtitle
+  const covSub = 'Amplicon and shotgun metagenomics, from sample collection to community analysis.';
+  s.push(t(covSub, rX, 622, 430, 11.5, { color: C_MUTED, font: 'Poppins', lh: 1.45 }));
+
+  // Footer
+  s.push(r(rX, 742, rW, 1, C_RULE));
+  s.push(t('PIONEER IN GENOMICS SERVICES', rX, 752, 260, 9.5, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 150 }));
+  s.push(t('WWW.ONEOMICS.IN', 861.5, 752, 211.5, 9.5, { bold: 1, color: C_GOLD, align: 'right', font: 'Poppins', sp: 150 }));
+
+  // Bottom Tri-colour stripe (Right Panel)
+  s.push(r(561.5, 788, 187.2, 6, C_STRIPE_RED));
+  s.push(r(748.7, 788, 187.2, 6, C_STRIPE_BLUE));
+  s.push(r(935.9, 788, 187.1, 6, C_STRIPE_GREEN));
+
+  return s;
+}
+
+// ==========================================
+// ONEOMICS Bi-Fold Brochure 4 - Metagenome Sequencing — Page 2 (Inside, 1123 x 794)
+// ==========================================
+export function bifoldMetagenomeBrochurePage2() {
+  const s = [];
+
+  const C_TEAL = '#0F3D3A';
+  const C_GOLD = '#B08D57';
+  const C_INK = '#26373A';
+  const C_MUTED = '#4A5B5D';
+  const C_MUTED2 = '#5A6B6D';
+  const C_RULE = '#D9D2C3';
+  const C_RULE_LIGHT = '#E4DED0';
+  const C_BG = '#FAF8F3';
+  const C_CTA_BG = '#EFE9DA';
+  const C_STRIPE_RED = '#E53935';
+  const C_STRIPE_BLUE = '#1E88E5';
+  const C_STRIPE_GREEN = '#43A047';
+
+  // Overall Background
+  s.push(r(0, 0, 1123, 794, C_BG));
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 788, C_RULE_LIGHT));
+
+  // ==========================================
+  // LEFT PANEL (Inside Left, x: 0 to 561.5)
+  // ==========================================
+  const lX = 50;
+  const lW = 461.5;
+
+  // Kicker
+  s.push(t('METAGENOME SEQUENCING', lX, 48, lW, 8.6, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 180 }));
+
+  // Headline
+  s.push(t('Profile complex microbial\ncommunities', lX, 66, lW, 25, { color: C_TEAL, font: 'Georgia', lh: 1.2 }));
+
+  // Lead text
+  const inLead = 'Characterize microbial communities from environmental, clinical, agricultural and biological samples. Choose the marker, region and platform that fit your question.';
+  s.push(t(inLead, lX, 132, lW, 11, { color: C_MUTED, font: 'Poppins', lh: 1.5 }));
+
+  // Divider Rule
+  s.push(r(lX, 182, lW, 1, C_RULE));
+
+  // 7 Services
+  const services = [
+    { num: '01', title: '16S rRNA V3–V4 Sequencing', desc: 'Targeted bacterial and archaeal community profiling.', y: 194 },
+    { num: '02', title: 'Full-Length 16S V1–V9 Sequencing', desc: 'Long-read full-length 16S profiling for enhanced taxonomic resolution.', y: 250 },
+    { num: '03', title: 'ITS Sequencing', desc: 'Fungal community profiling and diversity analysis.', y: 306 },
+    { num: '04', title: '18S rRNA Sequencing', desc: 'Eukaryotic microbial community characterization.', y: 362 },
+    { num: '05', title: 'Shotgun Metagenome Sequencing', desc: 'Comprehensive profiling of microbial composition and functional genes.', y: 418 },
+    { num: '06', title: 'Custom Amplicon Sequencing', desc: 'Targeted sequencing of user-defined genomic regions.', y: 474 },
+    { num: '07', title: 'Meta-Barcoding', desc: 'High-throughput species identification and biodiversity assessment from complex samples.', y: 530 },
+  ];
+
+  services.forEach((srv) => {
+    s.push(t(srv.num, lX, srv.y, 44, 21, { color: C_GOLD, font: 'Georgia', lh: 1.1 }));
+    s.push(t(srv.title, lX + 48, srv.y, lW - 48, 12, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+    s.push(t(srv.desc, lX + 48, srv.y + 18, lW - 48, 10.6, { color: C_MUTED2, font: 'Poppins' }));
+    s.push(r(lX, srv.y + 46, lW, 1, C_RULE_LIGHT));
+  });
+
+  // Page 2 indicator
+  s.push(t('2', lX, 762, 20, 9, { color: '#9AA8A9', font: 'Poppins' }));
+
+  // Bottom Tri-colour stripe (Left Panel)
+  s.push(r(0, 788, 187.2, 6, C_STRIPE_RED));
+  s.push(r(187.2, 788, 187.2, 6, C_STRIPE_BLUE));
+  s.push(r(374.4, 788, 187.1, 6, C_STRIPE_GREEN));
+
+  // ==========================================
+  // RIGHT PANEL (Inside Right, x: 561.5 to 1123)
+  // ==========================================
+  const rX = 611.5;
+  const rW = 461.5;
+
+  // Shotgun metagenomics section
+  s.push(t('Shotgun metagenomics', rX, 48, rW, 16, { color: C_TEAL, font: 'Georgia' }));
+  const sgLead = 'A comprehensive method of sampling all the genes in all the species present in a mixed sample. It evaluates microbial diversity and species abundance under different conditions, and shows both which species are present and what metabolic processes are possible.';
+  s.push(t(sgLead, rX, 72, rW, 10.8, { color: C_MUTED, font: 'Poppins', lh: 1.5 }));
+
+  s.push(r(rX, 134, rW, 1, C_RULE));
+
+  // Workflow section
+  s.push(t('A complete workflow, sample to insight', rX, 146, rW, 16, { color: C_TEAL, font: 'Georgia' }));
+
+  const flowSteps = [
+    { num: '01 COLLECT', main: 'SoilGUARD™', sub: 'ONEasy™', x: rX },
+    { num: '02 EXTRACT', main: 'ONEMag™', sub: 'Soil / Universal DNA', x: rX + 92.3 },
+    { num: '03 LIBRARY', main: 'ONENext™', sub: '16S V3–V4, V1–V9', x: rX + 184.6 },
+    { num: '04 SEQUENCE', main: 'Illumina', sub: 'PacBio, Nanopore', x: rX + 276.9 },
+    { num: '05 ANALYSE', main: 'Bioinformatics', sub: 'Report', x: rX + 369.2 },
+  ];
+
+  flowSteps.forEach((st) => {
+    s.push(r(st.x, 172, 84, 2, C_GOLD));
+    s.push(t(st.num, st.x, 178, 88, 8, { bold: 1, color: C_GOLD, font: 'Poppins', sp: 140 }));
+    s.push(t(st.main, st.x, 192, 88, 10.8, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+    s.push(t(st.sub, st.x, 208, 88, 9.5, { color: C_MUTED, font: 'Poppins', lh: 1.3 }));
+  });
+
+  s.push(r(rX, 238, rW, 1, C_RULE));
+
+  // Data analysis section
+  s.push(t('Data analysis you receive', rX, 250, rW, 16, { color: C_TEAL, font: 'Georgia' }));
+
+  // Two columns: Amplicon & Shotgun
+  const colW = 215;
+  const colGap = 31.5;
+
+  // Column 1: Amplicon
+  s.push(t('AMPLICON', rX, 276, colW, 8.6, { bold: 1, color: C_TEAL, font: 'Poppins', sp: 160 }));
+  s.push(r(rX, 290, colW, 1, C_RULE));
+
+  const ampBullets = [
+    'Community diversity analysis (OTU)',
+    'Probiotics analysis',
+    'Phylogenetic tree',
+    'Hierarchical taxonomy graph',
+    'Heatmap and PCA biplot',
+  ];
+  ampBullets.forEach((b, i) => {
+    const by = 300 + i * 22;
+    s.push(r(rX + 2, by + 4, 5, 5, C_GOLD));
+    s.push(t(b, rX + 14, by, colW - 14, 10.4, { color: '#33474A', font: 'Poppins' }));
+  });
+
+  // Column 2: Shotgun
+  const col2X = rX + colW + colGap;
+  s.push(t('SHOTGUN', col2X, 276, colW, 8.6, { bold: 1, color: C_TEAL, font: 'Poppins', sp: 160 }));
+  s.push(r(col2X, 290, colW, 1, C_RULE));
+
+  const sgBullets = [
+    'Standard data analysis',
+    'Assembly',
+    'Gene prediction & annotation',
+    'Taxonomy analysis',
+  ];
+  sgBullets.forEach((b, i) => {
+    const by = 300 + i * 22;
+    s.push(r(col2X + 2, by + 4, 5, 5, C_GOLD));
+    s.push(t(b, col2X + 14, by, colW - 14, 10.4, { color: '#33474A', font: 'Poppins' }));
+  });
+
+  // Deliverables section
+  s.push(t('DELIVERABLES', rX, 428, rW, 8.6, { bold: 1, color: C_TEAL, font: 'Poppins', sp: 160 }));
+  s.push(r(rX, 442, rW, 1, C_RULE));
+
+  const delivs = [
+    'Quantitative characterization of microbial diversity',
+    'Association of species/OTU with host phenotype or environmental factors',
+    'Identified and predicted genes with custom annotations',
+  ];
+  delivs.forEach((d, i) => {
+    const dy = 452 + i * 24;
+    s.push(r(rX + 2, dy + 4, 5, 5, C_GOLD));
+    s.push(t(d, rX + 14, dy, rW - 14, 10.4, { color: '#33474A', font: 'Poppins' }));
+  });
+
+  // CTA Card
+  s.push(r(rX, 668, rW, 58, C_CTA_BG));
+  s.push(r(rX, 668, 4, 58, C_GOLD));
+  s.push(t('Plan your metagenome project', rX + 18, 678, 280, 15, { color: C_TEAL, font: 'Georgia' }));
+  s.push(t('Share your sample type and question with our team.', rX + 18, 700, 280, 10.5, { color: C_MUTED, font: 'Poppins' }));
+  s.push(t('sales@oneomics.in', 920, 690, 140, 11, { bold: 1, color: C_TEAL, align: 'right', font: 'Poppins' }));
+
+  // Page 3 indicator
+  s.push(t('3', 1060, 762, 20, 9, { color: '#9AA8A9', font: 'Poppins' }));
+
+  // Bottom Tri-colour stripe (Right Panel)
+  s.push(r(561.5, 788, 187.2, 6, C_STRIPE_RED));
+  s.push(r(748.7, 788, 187.2, 6, C_STRIPE_BLUE));
+  s.push(r(935.9, 788, 187.1, 6, C_STRIPE_GREEN));
+
+  return s;
+}
+
+// ==========================================
+// ONEOMICS Bi-Fold Brochure 5 - RNA Sequencing — Page 1 (Outside, 1123 x 794)
+// ==========================================
+export function bifoldRnaSeqBrochure() {
+  const s = [];
+
+  const C_NAVY = '#1D3A6B';
+  const C_ORANGE = '#E4572E';
+  const C_INK = '#2B3648';
+  const C_MUTED = '#4A5568';
+  const C_MUTED2 = '#5B6779';
+  const C_RULE = '#DFE6F0';
+  const C_RULE_LIGHT = '#E1E8F1';
+  const C_CARD_BG = '#F4F7FB';
+  const C_STRIPE_RED = '#E53935';
+  const C_STRIPE_BLUE = '#1E88E5';
+  const C_STRIPE_GREEN = '#43A047';
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 788, C_RULE_LIGHT));
+
+  // ==========================================
+  // LEFT PANEL (Back Cover, x: 0 to 561.5)
+  // ==========================================
+  const lX = 50;
+  const lW = 461.5;
+
+  // Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: lX, y: 46, w: 140 });
+
+  // Kicker
+  s.push(t('ABOUT ONEOMICS', lX, 116, lW, 8.8, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 180 }));
+
+  // Headline & Accent Bar
+  s.push(t('A genomics partner built\naround your data', lX, 134, 430, 25, { bold: 1, color: C_NAVY, font: 'Poppins', lh: 1.22 }));
+  s.push(r(lX, 204, 42, 3, C_ORANGE));
+
+  // Lead Text
+  const bkLead = 'ONEOMICS is a privately owned company headquartered in Trichy, Tamil Nadu, India, focused on genomics cum bioinformatics. We combine a sequencing laboratory with a team of bioinformaticians, data scientists, software developers and molecular biologists.';
+  s.push(t(bkLead, lX, 222, lW, 11.2, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+
+  // Points (3 items)
+  const pts = [
+    { title: 'Specialist team', desc: 'Detailed knowledge of genomics and omics data analysis.', y: 308 },
+    { title: 'Fully customizable', desc: 'Services shaped around your species, question and timeline.', y: 344 },
+    { title: 'Open to everyone', desc: 'Researchers and businesses interested in omics technologies.', y: 380 },
+  ];
+
+  pts.forEach((pt) => {
+    s.push(r(lX, pt.y, lW, 1, C_RULE_LIGHT));
+    s.push(t(pt.title, lX, pt.y + 9, 140, 12, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+    s.push(t(pt.desc, lX + 145, pt.y + 10, lW - 145, 10.8, { color: C_MUTED2, font: 'Poppins' }));
+  });
+
+  // Talk to us Card
+  const cY = 554;
+  const cH = 186;
+  s.push(r(lX, cY, lW, cH, C_CARD_BG, { r: 10 }));
+  s.push(t('Talk to us', lX + 20, cY + 16, lW - 40, 15, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  // Row 1: EMAIL
+  s.push(r(lX + 20, cY + 44, lW - 40, 1, C_RULE));
+  s.push(t('EMAIL', lX + 20, cY + 52, 78, 8.6, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 160 }));
+  s.push(t('sales@oneomics.in', lX + 102, cY + 51, lW - 122, 10.8, { color: C_INK, font: 'Poppins' }));
+
+  // Row 2: WEBSITE
+  s.push(r(lX + 20, cY + 72, lW - 40, 1, C_RULE));
+  s.push(t('WEBSITE', lX + 20, cY + 80, 78, 8.6, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 160 }));
+  s.push(t('www.oneomics.in', lX + 102, cY + 79, lW - 122, 10.8, { color: C_INK, font: 'Poppins' }));
+
+  // Row 3: ADDRESS
+  s.push(r(lX + 20, cY + 100, lW - 40, 1, C_RULE));
+  s.push(t('ADDRESS', lX + 20, cY + 108, 78, 8.6, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 160 }));
+  s.push(t('Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India', lX + 102, cY + 107, lW - 122, 10.2, { color: C_INK, font: 'Poppins', lh: 1.45 }));
+
+  // Tagline
+  s.push(t('Your Trusted Sequencing Partner', lX, 754, lW, 9.5, { color: '#7A8799', font: 'Poppins' }));
+
+  // Bottom Stripe (Left)
+  s.push(r(0, 788, 187.2, 6, C_STRIPE_RED));
+  s.push(r(187.2, 788, 187.2, 6, C_STRIPE_BLUE));
+  s.push(r(374.4, 788, 187.1, 6, C_STRIPE_GREEN));
+
+  // ==========================================
+  // RIGHT PANEL (Front Cover, x: 561.5 to 1123)
+  // ==========================================
+  const rX = 611.5;
+  const rW = 461.5;
+
+  // Background gradient tint
+  s.push(r(561.5, 0, 561.5, 360, '#EEF3FA', { o: 0.6 }));
+
+  // Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: rX, y: 46, w: 140 });
+
+  // NOTE: Per user instruction, the heatmap box grid is omitted to leave this space blank.
+
+  // Kicker
+  s.push(t('RNA SEQUENCING', rX, 470, rW, 8.8, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 180 }));
+
+  // Headline
+  s.push(t('From transcripts to', rX, 492, rW, 35, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('insight', rX, 534, rW, 35, { bold: 1, color: C_ORANGE, font: 'Poppins' }));
+
+  // Subtitle
+  const covSub = 'Transcriptome and small RNA sequencing with complete bioinformatics analysis.';
+  s.push(t(covSub, rX, 586, 440, 12, { color: C_MUTED, font: 'Poppins', lh: 1.45 }));
+
+  // Footer
+  s.push(r(rX, 742, rW, 1, '#D5DEEB'));
+  s.push(t('PIONEER IN GENOMICS SERVICES', rX, 752, 260, 9.4, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 150 }));
+  s.push(t('WWW.ONEOMICS.IN', 861.5, 752, 211.5, 9.4, { bold: 1, color: C_NAVY, align: 'right', font: 'Poppins', sp: 150 }));
+
+  // Bottom Stripe (Right)
+  s.push(r(561.5, 788, 187.2, 6, C_STRIPE_RED));
+  s.push(r(748.7, 788, 187.2, 6, C_STRIPE_BLUE));
+  s.push(r(935.9, 788, 187.1, 6, C_STRIPE_GREEN));
+
+  return s;
+}
+
+// ==========================================
+// ONEOMICS Bi-Fold Brochure 5 - RNA Sequencing — Page 2 (Inside, 1123 x 794)
+// ==========================================
+export function bifoldRnaSeqBrochurePage2() {
+  const s = [];
+
+  const C_NAVY = '#1D3A6B';
+  const C_ORANGE = '#E4572E';
+  const C_BLUE = '#3B6FB6';
+  const C_MUTED = '#4A5568';
+  const C_MUTED2 = '#5B6779';
+  const C_RULE = '#E1E8F1';
+  const C_RULE2 = '#D5DEEB';
+  const C_STRIPE_RED = '#E53935';
+  const C_STRIPE_BLUE = '#1E88E5';
+  const C_STRIPE_GREEN = '#43A047';
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 788, C_RULE));
+
+  // ==========================================
+  // LEFT PANEL (Inside Left, x: 0 to 561.5)
+  // ==========================================
+  const lX = 50;
+  const lW = 461.5;
+
+  // Kicker
+  s.push(t('RNA SEQUENCING', lX, 46, lW, 8.8, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 180 }));
+
+  // Headline
+  s.push(t('See which genes are active, and\nwhen', lX, 64, 430, 23, { bold: 1, color: C_NAVY, font: 'Poppins', lh: 1.22 }));
+
+  // Lead Text
+  const inLead = 'Transcriptome sequencing with next generation sequencing is a fast and reliable tool for genomic knowledge identification. ONEOMICS provides complete analysis of mRNA transcript expression, from novel genes and splice variants to fusion genes.';
+  s.push(t(inLead, lX, 130, lW, 11, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+
+  // 7 Services with badge pills
+  const services = [
+    { num: '01', title: 'Whole Transcriptome (mRNA + lncRNA)', desc: 'Comprehensive profiling of mRNA and lncRNA transcripts.', y: 200 },
+    { num: '02', title: 'mRNA Sequencing', desc: 'Genome-wide gene expression profiling and differential expression analysis.', y: 254 },
+    { num: '03', title: 'Small RNA Sequencing', desc: 'Characterization of miRNA, siRNA, piRNA and other small regulatory RNAs.', y: 308 },
+    { num: '04', title: 'Metatranscriptome Sequencing', desc: 'Functional profiling of actively expressed genes within microbial communities.', y: 362 },
+    { num: '05', title: 'Dual RNA Sequencing', desc: 'Simultaneous profiling of host and pathogen/organism transcriptomes.', y: 416 },
+    { num: '06', title: 'Single-Cell RNA Sequencing', desc: 'High-resolution transcriptomic profiling at the individual cell level.', y: 470 },
+    { num: '07', title: 'Isoform Sequencing (RNA)', desc: 'Full-length transcript and isoform characterization for alternative splicing and transcript structure analysis.', y: 524 },
+  ];
+
+  services.forEach((srv) => {
+    s.push(r(lX, srv.y, lW, 1, C_RULE));
+    s.push(r(lX, srv.y + 8, 32, 22, C_NAVY, { r: 5 }));
+    s.push(t(srv.num, lX, srv.y + 11, 32, 10, { bold: 1, color: '#FFFFFF', align: 'center', font: 'Poppins' }));
+    s.push(t(srv.title, lX + 44, srv.y + 8, lW - 44, 11.6, { bold: 1, color: '#1A2433', font: 'Poppins' }));
+    s.push(t(srv.desc, lX + 44, srv.y + 26, lW - 44, 10.4, { color: C_MUTED2, font: 'Poppins' }));
+  });
+
+  // Page 2 indicator
+  s.push(t('2', lX, 762, 20, 9, { color: '#8A97A8', font: 'Poppins' }));
+
+  // Bottom Stripe (Left)
+  s.push(r(0, 788, 187.2, 6, C_STRIPE_RED));
+  s.push(r(187.2, 788, 187.2, 6, C_STRIPE_BLUE));
+  s.push(r(374.4, 788, 187.1, 6, C_STRIPE_GREEN));
+
+  // ==========================================
+  // RIGHT PANEL (Inside Right, x: 561.5 to 1123)
+  // ==========================================
+  const rX = 611.5;
+  const rW = 461.5;
+
+  // Background tint
+  s.push(r(561.5, 0, 561.5, 788, '#F4F7FB'));
+
+  // Section 1: From sample to report
+  s.push(t('From sample to report', rX, 46, rW, 13, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  // 5 Workflow Cards
+  const flowSteps = [
+    { num: '01 STABILIZE', main: 'NucleoGUARD™', sub: 'RNAguard™', x: rX },
+    { num: '02 EXTRACT', main: 'ONEMag™', sub: 'Soil / Plant RNA', x: rX + 93.5 },
+    { num: '03 LIBRARY', main: 'TruSeq Stranded', sub: 'mRNA, Total RNA', x: rX + 187 },
+    { num: '04 SEQUENCE', main: 'Illumina', sub: 'NGS platforms', x: rX + 280.5 },
+    { num: '05 ANALYSE', main: 'Bioinformatics', sub: 'Report', x: rX + 374 },
+  ];
+
+  flowSteps.forEach((st) => {
+    s.push(r(st.x, 68, 87.5, 86, '#FFFFFF', { r: 6, stroke: '#DFE6F0', sw: 1 }));
+    s.push(r(st.x, 68, 87.5, 3, C_ORANGE, { r: 2 }));
+    s.push(t(st.num, st.x + 6, 75, 75.5, 7.8, { bold: 1, color: C_ORANGE, font: 'Poppins', sp: 140 }));
+    s.push(t(st.main, st.x + 6, 89, 75.5, 10.4, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+    s.push(t(st.sub, st.x + 6, 105, 75.5, 9.6, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // Section 2: Analysis you receive
+  s.push(t('Analysis you receive', rX, 178, rW, 13, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  const colW = 220;
+  const colGap = 21.5;
+
+  // Col 1: Reference based
+  s.push(t('REFERENCE BASED', rX, 202, colW, 8.6, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 160 }));
+  s.push(r(rX, 215, colW, 1, C_RULE2));
+
+  const refBullets = [
+    'Gene expression',
+    'Differentially expressed genes (DEG)',
+    'Splicing variants',
+    'Gene fusions',
+  ];
+  refBullets.forEach((b, i) => {
+    const by = 224 + i * 22;
+    s.push(c(rX + 4, by + 5, 3, C_BLUE));
+    s.push(t(b, rX + 16, by, colW - 16, 10.5, { color: '#33415A', font: 'Poppins' }));
+  });
+
+  // Col 2: De novo based
+  const col2X = rX + colW + colGap;
+  s.push(t('DE NOVO BASED', col2X, 202, colW, 8.6, { bold: 1, color: C_NAVY, font: 'Poppins', sp: 160 }));
+  s.push(r(col2X, 215, colW, 1, C_RULE2));
+
+  const deNovoBullets = [
+    'Transcript assembly',
+    'Gene expression',
+    'Differentially expressed genes (DEG)',
+    'Gene annotation & ontology analysis',
+  ];
+  deNovoBullets.forEach((b, i) => {
+    const by = 224 + i * 22;
+    s.push(c(col2X + 4, by + 5, 3, C_BLUE));
+    s.push(t(b, col2X + 16, by, colW - 16, 10.5, { color: '#33415A', font: 'Poppins' }));
+  });
+
+  // Section 3: Beyond gene expression
+  s.push(t('Beyond gene expression', rX, 332, rW, 13, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+
+  const beyond1 = [
+    'Alternative splicing and polyadenylation',
+    'Allele-specific expression',
+    'Long non-coding RNA expression',
+    'Transposable element expression',
+    'Genetic variants',
+  ];
+  beyond1.forEach((b, i) => {
+    const by = 354 + i * 22;
+    s.push(c(rX + 4, by + 5, 3, C_BLUE));
+    s.push(t(b, rX + 16, by, colW - 16, 10.5, { color: '#33415A', font: 'Poppins' }));
+  });
+
+  const beyond2 = [
+    'Post-transcriptional A-to-I editing',
+    'TCR and antibody sequences',
+    'Fusion genes',
+    'Novel transcripts',
+    'Novel and differentially expressed miRNA',
+  ];
+  beyond2.forEach((b, i) => {
+    const by = 354 + i * 22;
+    s.push(c(col2X + 4, by + 5, 3, C_BLUE));
+    s.push(t(b, col2X + 16, by, colW - 16, 10.5, { color: '#33415A', font: 'Poppins' }));
+  });
+
+  // Section 4: CTA Card
+  s.push(r(rX, 674, rW, 56, '#E8F0FA', { r: 4 }));
+  s.push(r(rX, 674, 4, 56, C_ORANGE));
+  s.push(t('Plan your RNA-seq project', rX + 18, 684, 280, 14, { bold: 1, color: C_NAVY, font: 'Poppins' }));
+  s.push(t('Share your sample type and question with our team.', rX + 18, 704, 280, 10.4, { color: C_MUTED, font: 'Poppins' }));
+  s.push(t('sales@oneomics.in', 920, 694, 140, 11, { bold: 1, color: C_NAVY, align: 'right', font: 'Poppins' }));
+
+  // Page 3 indicator
+  s.push(t('3', 1060, 762, 20, 9, { color: '#8A97A8', font: 'Poppins' }));
+
+  // Bottom Stripe (Right)
+  s.push(r(561.5, 788, 187.2, 6, C_STRIPE_RED));
+  s.push(r(748.7, 788, 187.2, 6, C_STRIPE_BLUE));
+  s.push(r(935.9, 788, 187.1, 6, C_STRIPE_GREEN));
 
   return s;
 }
@@ -9384,8 +10789,68 @@ export const TEMPLATES = [
     preview: '/assets/previews/bifold_brochure.png',
     specs: bifoldBrochure,
     emptySpecs: bifoldBrochureEmpty,
-    pages: [bifoldBrochure, bifoldBrochureEmpty],
-    swatch: ['#005b76', '#004068', '#1a9e5b'],
+    pages: [bifoldBrochure, bifoldBrochurePage2],
+    swatch: ['#0B3D62', '#0A6078', '#1F9D62'],
+  },
+  {
+    id: 'bifold-genotyping',
+    name: 'ONEOMICS Bi-Fold Brochure 2 - Genotyping',
+    subtitle: 'From SNP discovery to genomic selection (2 Panels)',
+    category: 'bifold',
+    w: 1123,
+    h: 794,
+    folds: 2,
+    bg: '#ffffff',
+    preview: '/assets/previews/bifold_genotyping_brochure.png',
+    specs: bifoldGenotypingBrochure,
+    emptySpecs: bifoldBrochureEmpty,
+    pages: [bifoldGenotypingBrochure, bifoldGenotypingBrochurePage2],
+    swatch: ['#5B1F9E', '#8E44D6', '#2E9BD6'],
+  },
+  {
+    id: 'bifold-longread',
+    name: 'ONEOMICS Bi-Fold Brochure 3 - Long-Read',
+    subtitle: 'See the whole genome in long reads (2 Panels)',
+    category: 'bifold',
+    w: 1123,
+    h: 794,
+    folds: 2,
+    bg: '#ffffff',
+    preview: '/assets/previews/bifold_longread_brochure.png',
+    specs: bifoldLongReadBrochure,
+    emptySpecs: bifoldBrochureEmpty,
+    pages: [bifoldLongReadBrochure, bifoldLongReadBrochurePage2],
+    swatch: ['#0b2545', '#ff9f1c', '#29b6d9'],
+  },
+  {
+    id: 'bifold-metagenome',
+    name: 'ONEOMICS Bi-Fold Brochure 4 - Metagenome',
+    subtitle: 'Understand the microbial world (2 Panels)',
+    category: 'bifold',
+    w: 1123,
+    h: 794,
+    folds: 2,
+    bg: '#faf8f3',
+    preview: '/assets/previews/bifold_metagenome_brochure.png',
+    specs: bifoldMetagenomeBrochure,
+    emptySpecs: bifoldBrochureEmpty,
+    pages: [bifoldMetagenomeBrochure, bifoldMetagenomeBrochurePage2],
+    swatch: ['#0f3d3a', '#b08d57', '#faf8f3'],
+  },
+  {
+    id: 'bifold-rnaseq',
+    name: 'ONEOMICS Bi-Fold Brochure 5 - RNA-Seq',
+    subtitle: 'From transcripts to insight (2 Panels)',
+    category: 'bifold',
+    w: 1123,
+    h: 794,
+    folds: 2,
+    bg: '#ffffff',
+    preview: '/assets/previews/bifold_rnaseq_brochure.png',
+    specs: bifoldRnaSeqBrochure,
+    emptySpecs: bifoldBrochureEmpty,
+    pages: [bifoldRnaSeqBrochure, bifoldRnaSeqBrochurePage2],
+    swatch: ['#1d3a6b', '#e4572e', '#3b6fb6'],
   },
   {
     id: 'onam',
