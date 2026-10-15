@@ -3944,65 +3944,73 @@ export function ngsSpaciousFlyer() {
   const C_PALE = '#f3f7fa';
   const C_RULE = '#d5dee6';
   const C_TAG = '#2d4b86';
+  const C_RED = '#e0262a';
+  const C_CYAN = '#2e9bd6';
+  const C_GREEN = '#2e9e2e';
 
-  // 1. TOP HEADER (Standard Oneomics Logo + Tagline + Contact Right)
-  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 48, y: 34, w: 155 });
-  s.push(t('Pioneer in Genomics Services', 48, 78, 240, 10.5, { bold: 1, color: C_TAG, font: 'Poppins' }));
-  s.push(t('sales@oneomics.in', 510, 48, 236, 10.5, { align: 'right', bold: 1, color: C_INK, font: 'Poppins' }));
-  s.push(t('www.oneomics.in', 510, 68, 236, 10.5, { align: 'right', color: C_MUTED, font: 'Poppins' }));
+  // 1. TOP TRI-COLOUR STRIPE (6px height at top: y = 0)
+  s.push(r(0, 0, 265, 6, C_RED));
+  s.push(r(265, 0, 265, 6, C_CYAN));
+  s.push(r(530, 0, 264, 6, C_GREEN));
 
-  // 2. MAIN TITLE SECTION
-  s.push(t('Next generation sequencing services', 48, 116, 698, 33, { bold: 1, color: C_INK, font: 'Lora', lh: 1.15 }));
-  s.push(t('Reliable sequencing and expert data analysis for researchers and businesses in the life sciences, covering microbes, humans, animals, plants and insects.', 48, 162, 610, 11.5, { color: C_MUTED, font: 'Poppins', lh: 1.65 }));
-  s.push(r(48, 217, 698, 2, C_INK));
+  // 2. TOP HEADER (Standard Oneomics Logo + Tagline + Contact Right)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 48, y: 32, w: 152 });
+  s.push(t('Pioneer in Genomics Services', 48, 74, 240, 10.5, { bold: 1, color: C_TAG, font: 'Poppins' }));
+  s.push(t('sales@oneomics.in', 510, 52, 236, 10.5, { align: 'right', bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 510, 72, 236, 10.5, { align: 'right', color: C_MUTED, font: 'Poppins' }));
 
-  // 3. OUR SERVICES SECTION HEADER
-  s.push(t('Our services', 48, 246, 115, 16, { bold: 1, color: C_INK, font: 'Lora' }));
-  s.push(r(152, 256, 594, 1, C_RULE));
+  // 3. MAIN TITLE SECTION
+  s.push(t('Next generation sequencing services', 48, 114, 698, 33, { bold: 1, color: C_INK, font: 'Lora', lh: 1.15 }));
+  s.push(t('Reliable sequencing and expert data analysis for researchers and businesses in the life sciences, covering microbes, humans, animals, plants and insects.', 48, 160, 610, 11.5, { color: C_MUTED, font: 'Poppins', lh: 1.65 }));
+  s.push(r(48, 214, 698, 2, C_INK));
 
-  // 4. GRID OF 8 SERVICES (2 columns x 4 rows with spacious room for optional image)
+  // 4. OUR SERVICES SECTION HEADER
+  s.push(t('Our services', 48, 242, 115, 16, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(152, 252, 594, 1, C_RULE));
+
+  // 5. GRID OF 8 SERVICES (2 columns x 4 rows)
   const servicesCol1 = [
-    { title: 'Whole genome sequencing', desc: 'De novo assembly and re-sequencing to find variation across the entire genome of microbes, humans, animals, plants and insects.', bar: C_TEAL, y: 284 },
-    { title: 'RNA and small RNA sequencing', desc: 'Measure gene expression, discover novel transcripts and splice variants, and profile miRNA and single cells.', bar: C_BLUE, y: 400 },
-    { title: 'Metagenome sequencing', desc: 'Profile microbial communities from soil, host and environmental samples with 16S, 18S, ITS and shotgun methods.', bar: C_TEAL, y: 516 },
-    { title: 'Genotyping', desc: 'SNP microarray, GBS and dd-RAD for GWAS, linkage maps, population studies and breeding programmes.', bar: C_BLUE, y: 632 },
+    { title: 'Whole genome sequencing', desc: 'De novo assembly and re-sequencing to find variation across the entire genome of microbes, humans, animals, plants and insects.', bar: C_TEAL, y: 280 },
+    { title: 'RNA and small RNA sequencing', desc: 'Measure gene expression, discover novel transcripts and splice variants, and profile miRNA and single cells.', bar: C_BLUE, y: 396 },
+    { title: 'Metagenome sequencing', desc: 'Profile microbial communities from soil, host and environmental samples with 16S, 18S, ITS and shotgun methods.', bar: C_TEAL, y: 512 },
+    { title: 'Genotyping', desc: 'SNP microarray, GBS and dd-RAD for GWAS, linkage maps, population studies and breeding programmes.', bar: C_BLUE, y: 628 },
   ];
 
   const servicesCol2 = [
-    { title: 'Whole exome sequencing', desc: 'Focused sequencing of coding regions with SNV, InDel, CNV and trio analysis for clinical and disease research.', bar: C_BLUE, y: 284 },
-    { title: 'Epigenome sequencing', desc: 'WGBS, MeDIP, ChIP-seq and ATAC-seq to study DNA methylation, binding sites and chromatin state.', bar: C_TEAL, y: 400 },
-    { title: 'Long-read sequencing', desc: 'PacBio SMRT and Oxford Nanopore reads for genome finishing, structural variants and full-length transcripts.', bar: C_BLUE, y: 516 },
-    { title: 'Bioinformatics analysis', desc: 'Variant calling, annotation, assembly and custom pipelines run on your own dataset.', bar: C_TEAL, y: 632 },
+    { title: 'Whole exome sequencing', desc: 'Focused sequencing of coding regions with SNV, InDel, CNV and trio analysis for clinical and disease research.', bar: C_BLUE, y: 280 },
+    { title: 'Epigenome sequencing', desc: 'WGBS, MeDIP, ChIP-seq and ATAC-seq to study DNA methylation, binding sites and chromatin state.', bar: C_TEAL, y: 396 },
+    { title: 'Long-read sequencing', desc: 'PacBio SMRT and Oxford Nanopore reads for genome finishing, structural variants and full-length transcripts.', bar: C_BLUE, y: 512 },
+    { title: 'Bioinformatics analysis', desc: 'Variant calling, annotation, assembly and custom pipelines run on your own dataset.', bar: C_TEAL, y: 628 },
   ];
 
   servicesCol1.forEach((srv, i) => {
     s.push(r(48, srv.y, 3, 16, srv.bar));
-    s.push(t(srv.title, 58, srv.y - 2, 205, 12.2, { bold: 1, color: C_INK, font: 'Poppins' }));
-    s.push(t(srv.desc, 58, srv.y + 20, 190, 10, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+    s.push(t(srv.title, 58, srv.y - 2, 240, 12.2, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(srv.desc, 58, srv.y + 20, 240, 9.9, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
     if (i < servicesCol1.length - 1) {
-      s.push(r(48, srv.y + 106, 332, 1, C_RULE));
+      s.push(r(48, srv.y + 104, 332, 1, C_RULE));
     }
   });
 
   servicesCol2.forEach((srv, i) => {
     s.push(r(414, srv.y, 3, 16, srv.bar));
-    s.push(t(srv.title, 424, srv.y - 2, 205, 12.2, { bold: 1, color: C_INK, font: 'Poppins' }));
-    s.push(t(srv.desc, 424, srv.y + 20, 190, 10, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+    s.push(t(srv.title, 424, srv.y - 2, 240, 12.2, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(srv.desc, 424, srv.y + 20, 240, 9.9, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
     if (i < servicesCol2.length - 1) {
-      s.push(r(414, srv.y + 106, 332, 1, C_RULE));
+      s.push(r(414, srv.y + 104, 332, 1, C_RULE));
     }
   });
 
-  // 5. SEQUENCING PLATFORMS TABLE
-  const tableY = 766;
+  // 6. SEQUENCING PLATFORMS TABLE
+  const tableY = 754;
   s.push(t('Sequencing platforms', 48, tableY, 195, 16, { bold: 1, color: C_INK, font: 'Lora' }));
   s.push(r(235, tableY + 10, 511, 1, C_RULE));
 
   // Table header
-  s.push(r(48, tableY + 26, 698, 26, C_INK));
-  s.push(t('Platform', 60, tableY + 31, 210, 10, { bold: 1, color: '#ffffff', font: 'Poppins' }));
-  s.push(t('Read type', 285, tableY + 31, 140, 10, { bold: 1, color: '#ffffff', font: 'Poppins' }));
-  s.push(t('Output per run', 455, tableY + 31, 280, 10, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+  s.push(r(48, tableY + 24, 698, 26, C_INK));
+  s.push(t('Platform', 60, tableY + 29, 210, 9.5, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+  s.push(t('Read type', 285, tableY + 29, 140, 9.5, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+  s.push(t('Output per run', 455, tableY + 29, 280, 9.5, { bold: 1, color: '#ffffff', font: 'Poppins' }));
 
   const tableRows = [
     { name: 'MiSeq', type: 'Short read', out: '15 Gb', bg: '#ffffff' },
@@ -4014,34 +4022,40 @@ export function ngsSpaciousFlyer() {
   ];
 
   tableRows.forEach((row, i) => {
-    const ry = tableY + 52 + i * 25;
+    const ry = tableY + 50 + i * 24;
     if (row.bg !== '#ffffff') {
-      s.push(r(48, ry, 698, 25, row.bg));
+      s.push(r(48, ry, 698, 24, row.bg));
     }
-    s.push(t(row.name, 60, ry + 5, 210, 10, { bold: 1, color: C_INK, font: 'Poppins' }));
-    s.push(t(row.type, 285, ry + 5, 140, 10, { color: C_MUTED, font: 'Poppins' }));
-    s.push(t(row.out, 455, ry + 5, 280, 10, { color: C_MUTED, font: 'Poppins' }));
-    s.push(r(48, ry + 25, 698, 1, C_RULE));
+    s.push(t(row.name, 60, ry + 4, 210, 9.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(row.type, 285, ry + 4, 140, 9.5, { color: C_MUTED, font: 'Poppins' }));
+    s.push(t(row.out, 455, ry + 4, 280, 9.5, { color: C_MUTED, font: 'Poppins' }));
+    s.push(r(48, ry + 24, 698, 1, C_RULE));
   });
 
-  // 6. FOOTER (Edge-to-edge pale banner, NO bottom stripe)
-  const footY = 995;
-  s.push(r(0, footY, 794, 128, C_PALE));
+  // 7. FOOTER (Edge-to-edge pale banner)
+  const footY = 976;
+  const footH = 1117 - footY; // 141px
+  s.push(r(0, footY, 794, footH, C_PALE));
   s.push(r(0, footY, 794, 1, C_RULE));
 
-  // Footer left
-  s.push(t('Start your sequencing project', 48, footY + 28, 220, 16.5, { bold: 1, color: C_INK, font: 'Lora' }));
-  s.push(t('Your Trusted Sequencing Partner', 48, footY + 58, 220, 11, { italic: 1, color: C_TAG, font: 'Lora' }));
+  // Footer left: Heading + Tagline with plenty of vertical spacing
+  s.push(t('Start your sequencing\nproject', 48, footY + 24, 215, 16.5, { bold: 1, color: C_INK, font: 'Lora', lh: 1.25 }));
+  s.push(t('Your Trusted Sequencing Partner', 48, footY + 74, 215, 10.5, { italic: 1, color: C_TAG, font: 'Lora' }));
 
-  // Footer middle
-  s.push(t('Contact', 280, footY + 24, 130, 9.5, { bold: 1, color: C_TEAL, font: 'Poppins' }));
-  s.push(t('sales@oneomics.in', 280, footY + 44, 130, 10.2, { color: C_INK, font: 'Poppins' }));
-  s.push(t('www.oneomics.in', 280, footY + 62, 130, 10.2, { color: C_MUTED, font: 'Poppins' }));
+  // Footer middle: Contact
+  s.push(t('Contact', 280, footY + 24, 130, 9, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+  s.push(t('sales@oneomics.in', 280, footY + 44, 130, 10, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 280, footY + 64, 130, 10, { color: C_MUTED, font: 'Poppins' }));
 
-  // Footer right
-  s.push(t('Address', 435, footY + 24, 308, 9.5, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+  // Footer right: Address
+  s.push(t('Address', 435, footY + 24, 310, 9, { bold: 1, color: C_TEAL, font: 'Poppins' }));
   const footAddr = 'Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India';
-  s.push(t(footAddr, 435, footY + 44, 308, 10, { color: C_INK, font: 'Poppins', lh: 1.55 }));
+  s.push(t(footAddr, 435, footY + 44, 310, 9.8, { color: C_INK, font: 'Poppins', lh: 1.6 }));
+
+  // 8. BOTTOM TRI-COLOUR STRIPE (6px height at y = 1117 to 1123)
+  s.push(r(0, 1117, 265, 6, C_RED));
+  s.push(r(265, 1117, 265, 6, C_CYAN));
+  s.push(r(530, 1117, 264, 6, C_GREEN));
 
   return s;
 }

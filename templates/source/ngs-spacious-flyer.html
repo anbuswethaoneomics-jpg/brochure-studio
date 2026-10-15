@@ -7,13 +7,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink:#0F2A43; --teal:#0E8F8C; --blue:#2A6FB0; --muted:#52667A; --pale:#F3F7FA; --rule:#D5DEE6; --tag:#2D4B86; }
+  :root { --ink:#0F2A43; --teal:#0E8F8C; --blue:#2A6FB0; --muted:#52667A; --pale:#F3F7FA; --rule:#D5DEE6; --red:#E0262A; --green:#2E9E2E; --tag:#2D4B86; }
   @page { size:794px 1123px; margin:0; }
   * { box-sizing:border-box; margin:0; padding:0; }
   html,body { background:#E4E9EE; }
   body { font-family:'Poppins','Segoe UI',Arial,sans-serif; color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 
   .page { position:relative; width:794px; height:1123px; margin:12px auto 24px; background:#fff; overflow:hidden; display:flex; flex-direction:column; padding:0 48px; }
+
+  .stripe { position:absolute; left:0; right:0; height:6px; display:flex; z-index:5; }
+  .stripe i { flex:1; display:block; }
+  .stripe i:nth-child(1){background:var(--red)} .stripe i:nth-child(2){background:#2E9BD6} .stripe i:nth-child(3){background:var(--green)}
+  .stripe.top { top:0; } .stripe.bot { bottom:0; }
 
   header { margin-top:32px; display:flex; justify-content:space-between; align-items:flex-end; flex:none; }
   .brand img { display:block; height:34px; width:auto; }
@@ -42,7 +47,7 @@
   tbody tr:nth-child(even) td { background:var(--pale); }
   th:nth-child(1){width:34%} th:nth-child(2){width:24%}
 
-  footer { margin:auto -48px 0; flex:none; height:98px; background:var(--pale); border-top:1px solid var(--rule); padding:0 48px; display:grid; grid-template-columns:1.1fr .75fr 1.6fr; gap:24px; align-items:center; }
+  footer { margin:auto -48px 6px; flex:none; height:98px; background:var(--pale); border-top:1px solid var(--rule); padding:0 48px; display:grid; grid-template-columns:1.1fr .75fr 1.6fr; gap:24px; align-items:center; }
   footer h2 { font-family:'Lora',Georgia,serif; font-weight:600; font-size:16.5px; line-height:1.25; color:var(--ink); outline:none; }
   footer .it { font-family:'Lora',Georgia,serif; font-style:italic; font-size:10.5px; color:var(--tag); margin-top:5px; }
   footer .lbl { display:block; font-weight:600; font-size:9px; color:var(--teal); margin-bottom:2px; }
@@ -52,6 +57,7 @@
 </head>
 <body>
 <div class="page" id="page">
+  <div class="stripe top"><i></i><i></i><i></i></div>
   <header>
     <div class="brand">
       <img src="/assets/oneomics_logo.png" alt="ONEOMICS" style="height:34px;width:auto;">
@@ -103,7 +109,7 @@
     <div><p><span class="lbl">Contact</span>sales@oneomics.in<br><span class="m">www.oneomics.in</span></p></div>
     <div><p><span class="lbl">Address</span>Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India</p></div>
   </footer>
+  <div class="stripe bot"><i></i><i></i><i></i></div>
 </div>
 </body>
 </html>
-
