@@ -6474,6 +6474,322 @@ export function bifoldRnaSeqBrochurePage2() {
   return s;
 }
 
+// ONEOMICS Bi-Fold Brochure 6 - Metagenomics & Microbiome — Page 1 (Outside)
+export function bifoldMicrobiomeBrochure() {
+  const s = [];
+
+  const C_G = '#1F6B4F';
+  const C_G2 = '#3E9B73';
+  const C_MINT = '#E8F4EE';
+  const C_CREAM = '#FBF8F1';
+  const C_AMBER = '#E8A317';
+  const C_INK = '#1B2B26';
+  const C_MUTED = '#52625B';
+  const C_BORDER = '#C3DCCF';
+  const C_RED = '#E0262A';
+  const C_SKY = '#2E9BD6';
+  const C_GREEN = '#2E9E2E';
+
+  // Overall Background
+  s.push(r(0, 0, 1123, 794, C_CREAM));
+
+  // Left panel (Back cover) background
+  s.push(r(0, 0, 561.5, 794, C_MINT));
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 794, '#8CCBA8'));
+
+  // Left edge vertical signature tri-colour stripe (6px width)
+  s.push(r(0, 0, 6, 264.67, C_RED));
+  s.push(r(0, 264.67, 6, 264.67, C_SKY));
+  s.push(r(0, 529.34, 6, 264.66, C_GREEN));
+
+  // ==========================================
+  // LEFT PANEL (Back Cover, x: 0 to 561.5)
+  // ==========================================
+  const lX = 50;
+  const lW = 465.5;
+
+  // Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: lX, y: 46, w: 140 });
+
+  // Kicker
+  s.push(t('ABOUT US', lX, 114, lW, 9, { bold: 1, color: C_G2, font: 'Poppins', sp: 180 }));
+
+  // Main Heading & Amber Rule
+  s.push(t('One team, from sample to species', lX, 134, 440, 27, { bold: 1, color: C_INK, font: 'Lora', lh: 1.16 }));
+  s.push(r(lX, 204, 46, 4, C_AMBER, { r: 2 }));
+
+  // Lead Paragraph
+  const bkLead = 'ONEOMICS is a genomics and bioinformatics company headquartered in Trichy, Tamil Nadu. We pair a sequencing laboratory with bioinformaticians, data scientists and molecular biologists to turn complex microbial data into clear answers.';
+  s.push(t(bkLead, lX, 222, lW, 10, { color: C_MUTED, font: 'Poppins', lh: 1.75 }));
+
+  // Samples we work with
+  s.push(t('Samples we work with', lX, 308, lW, 14, { bold: 1, color: C_INK, font: 'Lora' }));
+
+  const sampleItems = [
+    { title: 'Soil', desc: 'Microbial diversity of ecological niches and agricultural soils.', dotColor: C_G2, y: 332 },
+    { title: 'Host-associated samples', desc: 'Communities living in and on a host organism.', dotColor: C_AMBER, y: 386 },
+    { title: 'Environmental samples', desc: 'Mixed samples from the wider environment.', dotColor: C_G, y: 440 },
+  ];
+
+  sampleItems.forEach((item) => {
+    s.push(r(lX, item.y, lW, 1, C_BORDER));
+    s.push(c(lX + 5.5, item.y + 13.5, 5.5, item.dotColor));
+    s.push(t(item.title, lX + 22, item.y + 6, lW - 22, 10.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(item.desc, lX + 22, item.y + 23, lW - 22, 9.2, { color: C_MUTED, font: 'Poppins', lh: 1.6 }));
+  });
+
+  // Contact Card
+  const cY = 524;
+  const cH = 196;
+  s.push(r(lX, cY, lW, cH, '#ffffff', { r: 10, stroke: C_BORDER, sw: 1 }));
+  s.push(t('Start a conversation', lX + 20, cY + 16, lW - 40, 14.5, { bold: 1, color: C_INK, font: 'Lora' }));
+
+  // Row 1: EMAIL
+  s.push(t('EMAIL', lX + 20, cY + 44, lW - 40, 8.3, { bold: 1, color: C_G2, font: 'Poppins', sp: 100 }));
+  s.push(t('sales@oneomics.in', lX + 20, cY + 58, lW - 40, 9.5, { color: C_INK, font: 'Poppins' }));
+
+  // Row 2: WEBSITE
+  s.push(t('WEBSITE', lX + 20, cY + 80, lW - 40, 8.3, { bold: 1, color: C_G2, font: 'Poppins', sp: 100 }));
+  s.push(t('www.oneomics.in', lX + 20, cY + 94, lW - 40, 9.5, { color: C_INK, font: 'Poppins' }));
+
+  // Row 3: ADDRESS
+  s.push(t('ADDRESS', lX + 20, cY + 116, lW - 40, 8.3, { bold: 1, color: C_G2, font: 'Poppins', sp: 100 }));
+  s.push(t('Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India', lX + 20, cY + 130, lW - 40, 9.5, { color: C_INK, font: 'Poppins', lh: 1.65 }));
+
+  // Tagline Left
+  s.push(t('Your Trusted Sequencing Partner', lX, 756, lW, 9.3, { color: C_MUTED, font: 'Poppins' }));
+
+  // ==========================================
+  // RIGHT PANEL (Front Cover, x: 561.5 to 1123)
+  // ==========================================
+  const rX = 607.5;
+  const rW = 465.5;
+
+  // Front Cover Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: rX, y: 42, w: 140 });
+
+  // Kicker
+  s.push(t('METAGENOMICS AND MICROBIOME', rX, 122, rW, 9, { bold: 1, color: C_G2, font: 'Poppins', sp: 180 }));
+
+  // Headline ("microbes" highlighted in amber italic)
+  s.push(t('Meet the', rX, 142, 170, 38, { bold: 1, color: C_G, font: 'Lora' }));
+  s.push(t('microbes', rX + 172, 142, 200, 38, { bold: 1, italic: 1, color: C_AMBER, font: 'Lora' }));
+  s.push(t('behind your sample', rX, 188, 430, 38, { bold: 1, color: C_G, font: 'Lora' }));
+
+  // Subtitle
+  const coverSub = 'Metagenome sequencing and analysis that shows which organisms are present, how abundant they are and what they can do.';
+  s.push(t(coverSub, rX, 240, 410, 11.2, { color: C_MUTED, font: 'Poppins', lh: 1.7 }));
+
+  // NOTE: Marked bubble cluster is removed as requested by the user, leaving a clean cream background.
+
+  // Bottom Floating Pill
+  const pillW = 280;
+  const pillH = 36;
+  s.push(r(rX, 726, pillW, pillH, '#ffffff', { r: 18, stroke: '#CFE6DB', sw: 1 }));
+  s.push(t('Pioneer in Genomics Services  ·  www.oneomics.in', rX, 735, pillW, 10, { bold: 1, color: C_G, align: 'center', font: 'Poppins' }));
+
+  return s;
+}
+
+// ONEOMICS Bi-Fold Brochure 6 - Metagenomics & Microbiome — Page 2 (Inside)
+export function bifoldMicrobiomeBrochurePage2() {
+  const s = [];
+
+  const C_G = '#1F6B4F';
+  const C_G2 = '#3E9B73';
+  const C_MINT = '#E8F4EE';
+  const C_CREAM = '#FBF8F1';
+  const C_AMBER = '#E8A317';
+  const C_AMBER_LIGHT = '#F2C96B';
+  const C_INK = '#1B2B26';
+  const C_MUTED = '#52625B';
+  const C_RULE = '#DDE7E0';
+  const C_RED = '#E0262A';
+  const C_SKY = '#2E9BD6';
+  const C_GREEN = '#2E9E2E';
+
+  // Overall Background
+  s.push(r(0, 0, 1123, 794, C_CREAM));
+
+  // Left vertical signature tri-colour stripe (6px width)
+  s.push(r(0, 0, 6, 264.67, C_RED));
+  s.push(r(0, 264.67, 6, 264.67, C_SKY));
+  s.push(r(0, 529.34, 6, 264.66, C_GREEN));
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 794, '#8CCBA8'));
+
+  // ==========================================
+  // INSIDE LEFT PANEL (x: 0 to 561.5)
+  // ==========================================
+  const lX = 48;
+  const lW = 465.5;
+
+  // Kicker & Headline
+  s.push(t('CHOOSE YOUR METHOD', lX, 42, lW, 9, { bold: 1, color: C_G2, font: 'Poppins', sp: 180 }));
+  s.push(t('Start with the question you want answered', lX, 60, lW, 24, { bold: 1, color: C_INK, font: 'Lora', lh: 1.2 }));
+
+  // Q&A Row 1
+  const cardW = lW - 165;
+  const r1Y = 110;
+  s.push(t('Who is in my sample?', lX, r1Y + 36, 128, 13, { italic: 1, color: C_G, font: 'Lora', lh: 1.35 }));
+  s.push(c(lX + 144, r1Y + 46, 11, C_AMBER));
+  s.push(t('›', lX + 138, r1Y + 35, 12, 16, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+  s.push(r(lX + 165, r1Y, cardW, 130, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(r(lX + 165, r1Y, 4, 130, C_G2, { r: 2 }));
+  s.push(t('Amplicon sequencing', lX + 180, r1Y + 10, cardW - 25, 11, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(t('16S rDNA on the MiSeq (V3 to V4 or customised regions), plus 18S rDNA and ITS. Accurate detection of the diversity of micro-organisms in an environment.', lX + 180, r1Y + 28, cardW - 25, 9, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+  s.push(r(lX + 180, r1Y + 100, 142, 18, C_MINT, { r: 9 }));
+  s.push(t('DIVERSITY AND ABUNDANCE', lX + 180, r1Y + 103, 142, 7.8, { bold: 1, color: C_G, align: 'center', font: 'Poppins', sp: 40 }));
+
+  // Q&A Row 2
+  const r2Y = 260;
+  s.push(r(lX, r2Y - 10, lW, 1, C_RULE));
+  s.push(t('Can I read the whole marker gene?', lX, r2Y + 26, 128, 13, { italic: 1, color: C_G, font: 'Lora', lh: 1.35 }));
+  s.push(c(lX + 144, r2Y + 36, 11, C_AMBER));
+  s.push(t('›', lX + 138, r2Y + 25, 12, 16, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+  s.push(r(lX + 165, r2Y, cardW, 96, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(r(lX + 165, r2Y, 4, 96, C_AMBER, { r: 2 }));
+  s.push(t('Full-length 16S rRNA', lX + 180, r2Y + 10, cardW - 25, 11, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(t('Long reads of the complete 16S gene on PacBio RS II or Sequel.', lX + 180, r2Y + 28, cardW - 25, 9, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+  s.push(r(lX + 180, r2Y + 68, 86, 18, C_MINT, { r: 9 }));
+  s.push(t('LONG READS', lX + 180, r2Y + 71, 86, 7.8, { bold: 1, color: C_G, align: 'center', font: 'Poppins', sp: 40 }));
+
+  // Q&A Row 3
+  const r3Y = 385;
+  s.push(r(lX, r3Y - 10, lW, 1, C_RULE));
+  s.push(t('What can these microbes do, and which strains?', lX, r3Y + 36, 128, 13, { italic: 1, color: C_G, font: 'Lora', lh: 1.35 }));
+  s.push(c(lX + 144, r3Y + 46, 11, C_AMBER));
+  s.push(t('›', lX + 138, r3Y + 35, 12, 16, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+  s.push(r(lX + 165, r3Y, cardW, 140, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(r(lX + 165, r3Y, 4, 140, C_G, { r: 2 }));
+  s.push(t('Shotgun metagenomics', lX + 180, r3Y + 10, cardW - 25, 11, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(t('Samples all the genes in all the species present. Shows which species are there and which metabolic processes are possible, with SNP barcodes for strain diversity.', lX + 180, r3Y + 28, cardW - 25, 9, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+  s.push(r(lX + 180, r3Y + 108, 136, 18, C_MINT, { r: 9 }));
+  s.push(t('FUNCTION AND STRAINS', lX + 180, r3Y + 111, 136, 7.8, { bold: 1, color: C_G, align: 'center', font: 'Poppins', sp: 40 }));
+
+  // Green Note Card
+  const noteY = 555;
+  s.push(r(lX, noteY, lW, 68, C_G, { r: 10 }));
+  s.push(t('Multi-sample projects:', lX + 18, noteY + 14, 150, 9.8, { bold: 1, color: C_AMBER_LIGHT, font: 'Poppins' }));
+  s.push(t('we compare and correlate the relative abundance of each taxon with host phenotype or environmental factors.', lX + 18, noteY + 32, lW - 36, 9.8, { color: '#ffffff', font: 'Poppins', lh: 1.6 }));
+
+  // Inside Left Footer
+  s.push(t('sales@oneomics.in   |   www.oneomics.in', lX, 756, lW, 9.3, { color: C_MUTED, font: 'Poppins' }));
+
+  // ==========================================
+  // INSIDE RIGHT PANEL (x: 561.5 to 1123)
+  // ==========================================
+  const rX = 601.5;
+  const rW = 477.5;
+
+  // Kicker & Headline
+  s.push(t('WHAT YOU RECEIVE', rX, 42, rW, 9, { bold: 1, color: C_G2, font: 'Poppins', sp: 180 }));
+  s.push(t('Results you can act on', rX, 60, rW, 24, { bold: 1, color: C_INK, font: 'Lora', lh: 1.2 }));
+
+  // 3 Deliverables
+  const dY = 96;
+  const deliverables = [
+    { text: 'Quantitative characterisation of microbial diversity', y: dY },
+    { text: 'Association of species or OTUs with host phenotype or environmental factors', y: dY + 36 },
+    { text: 'Identified and predicted genes with custom annotations', y: dY + 72 },
+  ];
+
+  deliverables.forEach((item) => {
+    s.push(r(rX, item.y, rW, 1, C_RULE));
+    s.push(c(rX + 10, item.y + 17, 10, C_AMBER));
+    s.push(t('✓', rX + 4, item.y + 8, 12, 12, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(item.text, rX + 28, item.y + 10, rW - 28, 10.2, { color: C_INK, font: 'Poppins' }));
+  });
+
+  // Two Analysis Cards
+  const twoY = 216;
+  const colW = 232;
+  const colGap = 13.5;
+
+  // Card 1: Amplicon analysis
+  s.push(r(rX, twoY, colW, 138, C_MINT, { r: 10 }));
+  s.push(t('Amplicon analysis', rX + 15, twoY + 12, colW - 30, 13, { bold: 1, color: C_G, font: 'Lora' }));
+  const ampList = [
+    'Community diversity (OTU)',
+    'Probiotics analysis',
+    'Phylogenetic tree',
+    'Hierarchical taxonomy graph',
+    'Heatmap and PCA biplot',
+  ];
+  ampList.forEach((li, i) => {
+    const ly = twoY + 35 + i * 19;
+    s.push(c(rX + 18, ly + 6, 3, C_G2));
+    s.push(t(li, rX + 26, ly, colW - 40, 9.2, { color: C_INK, font: 'Poppins' }));
+  });
+
+  // Card 2: Shotgun analysis
+  const col2X = rX + colW + colGap;
+  s.push(r(col2X, twoY, colW, 138, C_MINT, { r: 10 }));
+  s.push(t('Shotgun analysis', col2X + 15, twoY + 12, colW - 30, 13, { bold: 1, color: C_G, font: 'Lora' }));
+  const shotList = [
+    'Assembly into contigs',
+    'Gene prediction and annotation',
+    'Taxonomy analysis',
+    'SNP calling for strains',
+    'Gene content coverage',
+  ];
+  shotList.forEach((li, i) => {
+    const ly = twoY + 35 + i * 19;
+    s.push(c(col2X + 18, ly + 6, 3, C_G2));
+    s.push(t(li, col2X + 26, ly, colW - 40, 9.2, { color: C_INK, font: 'Poppins' }));
+  });
+
+  // How a project runs (Chain of 7 steps)
+  s.push(t('How a project runs', rX, 372, rW, 14, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(r(rX + 14, 412, rW - 28, 1.5, '#8CCBA8'));
+
+  const chainSteps = [
+    { num: '1', label: 'DNA extraction', color: C_G2, r: 13 },
+    { num: '2', label: 'Fragmentation', color: C_G, r: 14 },
+    { num: '3', label: 'DNA sequencing', color: C_G2, r: 15.5 },
+    { num: '4', label: 'Assembly', color: C_AMBER, r: 17 },
+    { num: '5', label: 'Gene finding', color: C_G, r: 15.5 },
+    { num: '6', label: 'Phylogenetic binning', color: C_G2, r: 14 },
+    { num: '7', label: 'Metabolic reconstruction', color: C_AMBER, r: 13 },
+  ];
+
+  const stepSpacing = (rW - 60) / 6;
+  chainSteps.forEach((st, i) => {
+    const cx = rX + 30 + i * stepSpacing;
+    s.push(c(cx, 412, st.r, st.color));
+    s.push(t(st.num, cx - 10, 412 - 7, 20, 11, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(st.label, cx - 34, 434, 68, 8.3, { bold: 1, color: C_INK, align: 'center', font: 'Poppins', lh: 1.25 }));
+  });
+
+  // Where it is used (2x2 grid)
+  s.push(t('Where it is used', rX, 486, rW, 14, { bold: 1, color: C_INK, font: 'Lora' }));
+  const useBoxes = [
+    { title: 'Soil and environment', desc: 'Microbial diversity of ecological niches', border: C_AMBER, x: rX, y: 512 },
+    { title: 'Host microbiome', desc: 'Links to host phenotype', border: C_G2, x: col2X, y: 512 },
+    { title: 'Probiotics', desc: 'Dedicated probiotics analysis', border: C_G, x: rX, y: 568 },
+    { title: 'Strain comparison', desc: 'Derived vs parental strains', border: C_SKY, x: col2X, y: 568 },
+  ];
+
+  useBoxes.forEach((bx) => {
+    s.push(r(bx.x, bx.y, colW, 48, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+    s.push(r(bx.x, bx.y, 4, 48, bx.border, { r: 2 }));
+    s.push(t(bx.title, bx.x + 13, bx.y + 6, colW - 20, 10, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(bx.desc, bx.x + 13, bx.y + 22, colW - 20, 8.7, { color: C_MUTED, font: 'Poppins' }));
+  });
+
+  // CTA Banner
+  const ctaY = 660;
+  const ctaH = 64;
+  s.push(r(rX, ctaY, rW, ctaH, C_G, { r: 10 }));
+  s.push(t('Plan your metagenomics project', rX + 20, ctaY + 22, 270, 15, { bold: 1, color: '#ffffff', font: 'Lora' }));
+  s.push(t('sales@oneomics.in\nwww.oneomics.in', rX + 295, ctaY + 16, rW - 315, 9.4, { color: '#ffffff', align: 'right', font: 'Poppins', lh: 1.6 }));
+
+  return s;
+}
+
 // Trifold Brochure — Generic Empty Template
 export function trifoldEmpty(pageNum = 2) {
   const s = [];
@@ -10851,6 +11167,21 @@ export const TEMPLATES = [
     emptySpecs: bifoldBrochureEmpty,
     pages: [bifoldRnaSeqBrochure, bifoldRnaSeqBrochurePage2],
     swatch: ['#1d3a6b', '#e4572e', '#3b6fb6'],
+  },
+  {
+    id: 'bifold-microbiome',
+    name: 'ONEOMICS Bi-Fold Brochure 6 - Microbiome',
+    subtitle: 'Meet the microbes behind your sample (2 Panels)',
+    category: 'bifold',
+    w: 1123,
+    h: 794,
+    folds: 2,
+    bg: '#FBF8F1',
+    preview: '/assets/previews/bifold_microbiome_brochure.png',
+    specs: bifoldMicrobiomeBrochure,
+    emptySpecs: bifoldBrochureEmpty,
+    pages: [bifoldMicrobiomeBrochure, bifoldMicrobiomeBrochurePage2],
+    swatch: ['#1F6B4F', '#E8A317', '#E8F4EE'],
   },
   {
     id: 'onam',
