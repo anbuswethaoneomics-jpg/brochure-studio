@@ -15,6 +15,7 @@ export function useEditor() {
   const hist = useRef({ stack: [], i: -1 });
   const size = useRef({ w: 1123, h: 794, z: 1, folds: 3 });
   const guideLinesRef = useRef([]);
+  const dragCacheRef = useRef(null);
   const openCropRef = useRef(null);
   const [sel, setSel] = useState(null);
   const [flags, setFlags] = useState({ canUndo: false, canRedo: false });
@@ -269,8 +270,81 @@ export function useEditor() {
       if (!target || !c) return;
 
       const zoom = c.getZoom() || 1;
-      const SNAP_DISTANCE = 6 / zoom;
+      const SNAP_DISTANCE = 6 / zoom; // ~6 screen pixels in canvas scene coordinates
 
+      // 1. Build or retrieve stationary targets cache once at drag start (eliminates 40,000+ matrix multiplications)
+      if (!dragCacheRef.current || dragCacheRef.current.target !== target) {
+        const W = size.current.w;
+        const H = size.current.h;
+        const folds = Number(size.current.folds) || 0;
+
+        const targetChildren = (target instanceof ActiveSelection || target instanceof Group)
+          ? new Set(target.getObjects())
+          : null;
+
+        const items = [];
+        const allObjects = c.getObjects();
+
+        for (let i = 0; i < allObjects.length; i++) {
+          const obj = allObjects[i];
+          if (obj === target || !obj.visible || obj.isGuideline) continue;
+          if (targetChildren && targetChildren.has(obj)) continue;
+
+          const b = obj.getBoundingRect();
+          // Exclude canvas-wide background rectangles (wallpaper / full bleed cards)
+          if (b.width >= W * 0.92 && b.height >= H * 0.92) continue;
+          // Exclude microscopic noise elements
+          if (b.width < 4 || b.height < 4) continue;
+
+          items.push({
+            left: b.left,
+            centerX: b.left + b.width / 2,
+            right: b.left + b.width,
+            top: b.top,
+            centerY: b.top + b.height / 2,
+            bottom: b.top + b.height,
+            isCanvasCenter: false,
+            isFoldLine: false,
+          });
+        }
+
+        // Canvas center reference lines (horizontal center & vertical center)
+        items.push({
+          left: W / 2,
+          centerX: W / 2,
+          right: W / 2,
+          top: H / 2,
+          centerY: H / 2,
+          bottom: H / 2,
+          isCanvasCenter: true,
+          isFoldLine: false,
+        });
+
+        // Brochure fold reference lines (e.g. bi-fold, tri-fold panel boundaries)
+        if (folds >= 2 && folds <= 6) {
+          for (let f = 1; f < folds; f++) {
+            const foldX = (W * f) / folds;
+            items.push({
+              left: foldX,
+              centerX: foldX,
+              right: foldX,
+              top: 0,
+              centerY: H / 2,
+              bottom: H,
+              isCanvasCenter: false,
+              isFoldLine: true,
+            });
+          }
+        }
+
+        dragCacheRef.current = { target, items };
+      }
+
+      const items = dragCacheRef.current.items;
+      const W = size.current.w;
+      const H = size.current.h;
+
+      // Only compute bounding rect for the actively moving target
       const tRect = target.getBoundingRect();
       const tLeft = tRect.left;
       const tTop = tRect.top;
@@ -281,78 +355,59 @@ export function useEditor() {
       const tRight = tLeft + tWidth;
       const tBottom = tTop + tHeight;
 
-      const W = size.current.w;
-      const H = size.current.h;
-
-      // Only snap against other real design elements (text, images, shapes, cards)
-      // Exclude target itself, invisible elements, guidelines, and full-canvas background rects
-      const eligible = c.getObjects().filter((obj) => {
-        if (obj === target || !obj.visible || obj.isGuideline) return false;
-        const b = obj.getBoundingRect();
-        if (b.width >= W * 0.92 && b.height >= H * 0.92) return false;
-        if (b.width < 4 || b.height < 4) return false;
-        return true;
-      });
-
-      // Find the single closest horizontal match (aligning Y coords so texts are in a straight line)
+      // Single closest horizontal match (aligning Y coordinates -> horizontal guideline)
       let bestY = null;
       let minDiffY = SNAP_DISTANCE;
 
-      for (const obj of eligible) {
-        const oRect = obj.getBoundingRect();
-        const oTop = oRect.top;
-        const oCenterY = oTop + oRect.height / 2;
-        const oBottom = oTop + oRect.height;
-        const oLeft = oRect.left;
-        const oRight = oLeft + oRect.width;
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (item.isFoldLine) continue; // Fold lines are vertical only
 
         const yPairs = [
-          { tVal: tTop, oVal: oTop },
-          { tVal: tCenterY, oVal: oCenterY },
-          { tVal: tBottom, oVal: oBottom },
+          { tVal: tTop, oVal: item.top },
+          { tVal: tCenterY, oVal: item.centerY },
+          { tVal: tBottom, oVal: item.bottom },
         ];
 
-        for (const p of yPairs) {
-          const diff = Math.abs(p.tVal - p.oVal);
+        for (let p = 0; p < 3; p++) {
+          const pair = yPairs[p];
+          const diff = Math.abs(pair.tVal - pair.oVal);
           if (diff <= minDiffY) {
             minDiffY = diff;
+            const isCenter = item.isCanvasCenter;
             bestY = {
-              shift: p.oVal - p.tVal,
-              lineY: p.oVal,
-              x1: Math.min(tLeft, oLeft) - 8,
-              x2: Math.max(tRight, oRight) + 8,
+              shift: pair.oVal - pair.tVal,
+              lineY: pair.oVal,
+              x1: isCenter ? 0 : Math.min(tLeft, item.left) - 10,
+              x2: isCenter ? W : Math.max(tRight, item.right) + 10,
             };
           }
         }
       }
 
-      // Find the single closest vertical match (aligning X coords so texts are vertically aligned)
+      // Single closest vertical match (aligning X coordinates -> vertical guideline)
       let bestX = null;
       let minDiffX = SNAP_DISTANCE;
 
-      for (const obj of eligible) {
-        const oRect = obj.getBoundingRect();
-        const oLeft = oRect.left;
-        const oCenterX = oLeft + oRect.width / 2;
-        const oRight = oLeft + oRect.width;
-        const oTop = oRect.top;
-        const oBottom = oTop + oRect.height;
-
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
         const xPairs = [
-          { tVal: tLeft, oVal: oLeft },
-          { tVal: tCenterX, oVal: oCenterX },
-          { tVal: tRight, oVal: oRight },
+          { tVal: tLeft, oVal: item.left },
+          { tVal: tCenterX, oVal: item.centerX },
+          { tVal: tRight, oVal: item.right },
         ];
 
-        for (const p of xPairs) {
-          const diff = Math.abs(p.tVal - p.oVal);
+        for (let p = 0; p < 3; p++) {
+          const pair = xPairs[p];
+          const diff = Math.abs(pair.tVal - pair.oVal);
           if (diff <= minDiffX) {
             minDiffX = diff;
+            const isFullHeight = item.isCanvasCenter || item.isFoldLine;
             bestX = {
-              shift: p.oVal - p.tVal,
-              lineX: p.oVal,
-              y1: Math.min(tTop, oTop) - 8,
-              y2: Math.max(tBottom, oBottom) + 8,
+              shift: pair.oVal - pair.tVal,
+              lineX: pair.oVal,
+              y1: isFullHeight ? 0 : Math.min(tTop, item.top) - 10,
+              y2: isFullHeight ? H : Math.max(tBottom, item.bottom) + 10,
             };
           }
         }
@@ -360,35 +415,36 @@ export function useEditor() {
 
       const activeLines = [];
 
-      // Apply vertical alignment snap (shifts target left/right to snap X)
+      // Apply vertical snap (shift X)
       if (bestX && minDiffX <= SNAP_DISTANCE) {
-        target.set('left', target.left + bestX.shift / zoom);
+        target.set('left', target.left + bestX.shift);
         target.setCoords();
         activeLines.push({
           type: 'vertical',
-          x: bestX.lineX / zoom,
-          y1: bestX.y1 / zoom,
-          y2: bestX.y2 / zoom,
+          x: bestX.lineX,
+          y1: bestX.y1,
+          y2: bestX.y2,
         });
       }
 
-      // Apply horizontal alignment snap (shifts target up/down to snap Y)
+      // Apply horizontal snap (shift Y)
       if (bestY && minDiffY <= SNAP_DISTANCE) {
-        target.set('top', target.top + bestY.shift / zoom);
+        target.set('top', target.top + bestY.shift);
         target.setCoords();
         activeLines.push({
           type: 'horizontal',
-          y: bestY.lineY / zoom,
-          x1: bestX.x1 ? bestX.x1 / zoom : (bestY.x1 / zoom),
-          x2: bestX.x2 ? bestX.x2 / zoom : (bestY.x2 / zoom),
+          y: bestY.lineY,
+          x1: bestY.x1,
+          x2: bestY.x2,
         });
       }
 
       guideLinesRef.current = activeLines;
-      c.requestRenderAll();
+      // Do not call c.requestRenderAll() here: Fabric's internal drag loop already executes render on each frame
     };
 
     const clearGuides = () => {
+      dragCacheRef.current = null;
       if (guideLinesRef.current && guideLinesRef.current.length > 0) {
         guideLinesRef.current = [];
         c.requestRenderAll();
@@ -416,7 +472,8 @@ export function useEditor() {
       ctx.strokeStyle = '#e11d48'; // Canva / Figma vibrant magenta guideline
       ctx.setLineDash([4 / z, 3 / z]);
 
-      for (const line of lines) {
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
         ctx.beginPath();
         if (line.type === 'vertical') {
           ctx.moveTo(line.x, line.y1);
@@ -458,7 +515,12 @@ export function useEditor() {
       }
     };
     window.addEventListener('keydown', onKey);
-    return () => { window.removeEventListener('keydown', onKey); c.dispose(); };
+    window.addEventListener('mouseup', clearGuides);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('mouseup', clearGuides);
+      c.dispose();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
