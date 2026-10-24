@@ -1,4 +1,5 @@
 import { StaticCanvas } from 'fabric';
+import { jsPDF } from 'jspdf';
 import { getDesign } from './api.js';
 
 /**
@@ -197,7 +198,6 @@ export async function mergeDesignsToPDF(selectedDesigns, onProgress, options = {
     });
   }
 
-  const { jsPDF } = await import('jspdf');
   let pdf = null;
 
   for (let idx = 0; idx < allRenderedPages.length; idx++) {

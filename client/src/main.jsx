@@ -9,6 +9,12 @@ import App from './StudioAppMain.jsx';
 import './styles.css';
 import './gallery.css';
 
+// Gracefully handle Vite bundle chunk hash changes after new deployments
+window.addEventListener('vite:preloadError', (event) => {
+  console.warn('New version detected or chunk load failed, reloading...', event);
+  window.location.reload();
+});
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);

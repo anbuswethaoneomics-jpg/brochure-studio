@@ -8,6 +8,7 @@ import { loadFonts } from './fonts.js';
 import { TEMPLATES } from './templates.js';
 import { buildSpec } from './objects.js';
 import { listDesigns, getDesign, saveDesign, deleteDesign } from './api.js';
+import { jsPDF } from 'jspdf';
 
 const download = (href, name) => {
   const a = document.createElement('a');
@@ -350,7 +351,6 @@ export default function App() {
     try {
       const all = currentPages();
       const urls = await ed.renderPages(all, 2);
-      const { jsPDF } = await import('jspdf');
       const { width: w, height: h } = design;
       const pdf = new jsPDF({ orientation: w >= h ? 'landscape' : 'portrait', unit: 'px', format: [w, h], hotfixes: ['px_scaling'] });
       urls.forEach((u, i) => { if (i) pdf.addPage([w, h], w >= h ? 'landscape' : 'portrait'); pdf.addImage(u, 'PNG', 0, 0, w, h); });

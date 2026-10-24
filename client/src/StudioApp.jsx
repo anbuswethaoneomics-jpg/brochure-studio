@@ -9,6 +9,7 @@ import { TEMPLATES } from './brochureTemplates.js';
 import { makeImageTextEditable } from './ocrEditable.js';
 import { listDesigns, getDesign, saveDesign, deleteDesign } from './api.js';
 import ImageCropModal from './components/ImageCropModal.jsx';
+import { jsPDF } from 'jspdf';
 
 const download = (href, name) => {
   const a = document.createElement('a');
@@ -462,7 +463,6 @@ export default function StudioApp() {
     try {
       const all = currentPages();
       const urls = await ed.renderPages(all, 2);
-      const { jsPDF } = await import('jspdf');
       const { width: w, height: h } = design;
       const pdf = new jsPDF({
         orientation: w >= h ? 'landscape' : 'portrait',

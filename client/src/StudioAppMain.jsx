@@ -11,6 +11,7 @@ import { listDesigns, getDesign, saveDesign, deleteDesign } from './api.js';
 import ImageCropModal from './components/ImageCropModal.jsx';
 import { getCleanHtmlUrl } from './cleanHtmlMap.js';
 import { isPageEmptyTemplate } from './mergePdfUtils.js';
+import { jsPDF } from 'jspdf';
 
 const download = (href, name) => {
   const a = document.createElement('a');
@@ -520,7 +521,6 @@ export default function StudioApp() {
     setBusy(true);
     try {
       const u = ed.render(2);
-      const { jsPDF } = await import('jspdf');
       const { width: w, height: h } = design;
       const pdf = new jsPDF({
         orientation: w >= h ? 'landscape' : 'portrait',
@@ -543,7 +543,6 @@ export default function StudioApp() {
       // Automatically skip empty placeholder pages (keep page 1 and any page with actual content)
       const contentPages = all.filter((p, i) => i === 0 || !isPageEmptyTemplate(p));
       const urls = await ed.renderPages(contentPages, 2);
-      const { jsPDF } = await import('jspdf');
       const { width: w, height: h } = design;
       const pdf = new jsPDF({
         orientation: w >= h ? 'landscape' : 'portrait',

@@ -8,6 +8,7 @@ import { PRESETS } from './presets.js';
 import { loadFonts } from './fonts.js';
 import { TEMPLATES } from './templates.js';
 import { listDesigns, getDesign, saveDesign, deleteDesign } from './api.js';
+import { jsPDF } from 'jspdf';
 
 const download = (href, name) => {
   const a = document.createElement('a');
@@ -309,7 +310,6 @@ export default function App() {
   const exportPDF = async () => {
     setMenu(false); setBusy(true);
     try {
-      const { jsPDF } = await import('jspdf');
       const orientation = design.width >= design.height ? 'l' : 'p';
       const doc = new jsPDF({ orientation, unit: 'px', format: [design.width, design.height] });
       const pagesData = currentPages();
