@@ -69,7 +69,10 @@ export function getCleanHtmlUrl(design) {
     return '/product-one-pagers.html';
   }
 
-  // 4. NGS A4 Flyers (6 templates)
+  // 4. NGS A4 Flyers
+  if (tid.includes('wes') || name.includes('whole exome') || tid.includes('ngs-wes')) {
+    return '/ngs-wes-flyer.html';
+  }
   if (tid.includes('ngs-genome-exome') || (name.includes('genome') && name.includes('exome'))) {
     return '/ngs-genome-exome-flyer.html';
   }

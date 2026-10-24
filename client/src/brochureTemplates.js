@@ -4978,6 +4978,159 @@ export function ngsLongReadFlyer() {
   return s;
 }
 
+// ONEOMICS Whole Exome Sequencing (WES) Flyer (A4, 794 x 1123)
+export function ngsWesFlyer() {
+  const s = [];
+
+  const C_INK = '#16294a';
+  const C_TEAL = '#1f7a8c';
+  const C_BLUE = '#2f5d9e';
+  const C_MUTED = '#4b5b72';
+  const C_DARK_MUTED = '#3a4a60';
+  const C_LIGHT_MUTED = '#6b7d96';
+  const C_PALE_BG = '#f2f6fb';
+  const C_CARD_BG = '#f7f9fc';
+  const C_BORDER = '#dbe3ee';
+  const C_RULE = '#cdd8e6';
+  const C_RED = '#e53935';
+  const C_CYAN = '#1e88e5';
+  const C_GREEN = '#43a047';
+
+  // 1. TOP BAR (Height 60px)
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 44, y: 15, w: 140 });
+  s.push(t('NEXT GENERATION SEQUENCING', 450, 24, 300, 9.5, { bold: 1, color: C_LIGHT_MUTED, font: 'Poppins', align: 'right' }));
+  s.push(r(0, 60, 794, 1, C_BORDER));
+
+  // 2. HEADER BANNER (y: 61 to 175)
+  s.push(r(0, 61, 794, 114, C_PALE_BG));
+  s.push(r(0, 172, 794, 3, C_TEAL));
+  s.push(t('GENOMICS SERVICE', 44, 75, 706, 9.5, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+  s.push(t('Whole Exome Sequencing (WES)', 44, 94, 706, 29, { bold: 1, color: C_INK, font: 'Lora' }));
+  s.push(t('Comprehensive Analysis of Protein-Coding Regions of the Genome', 44, 142, 706, 13.5, { color: '#3d5170', font: 'Poppins' }));
+
+  // Helper for Section Headers
+  const makeSecHeader = (title, y) => {
+    s.push(r(44, y + 3, 8, 8, C_TEAL));
+    s.push(t(title, 58, y, 692, 11, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(r(44, y + 20, 706, 1, C_RULE));
+  };
+
+  // 3. OVERVIEW
+  makeSecHeader('OVERVIEW', 188);
+  s.push(t(
+    'Whole Exome Sequencing (WES) is an advanced Next-Generation Sequencing (NGS) technology that targets and sequences the protein-coding regions of the genome, collectively known as the exome. Although these regions represent approximately 1–2% of the human genome, they contain a substantial proportion of known disease-associated genetic variants. WES provides a cost-effective approach to identifying genetic variations associated with rare diseases, inherited disorders, and a wide range of clinically relevant phenotypes.',
+    44, 218, 706, 10.4, { color: C_DARK_MUTED, font: 'Poppins', lh: 1.55 }
+  ));
+  s.push(t(
+    'ONEOMICS offers comprehensive WES services combining high-throughput sequencing, robust bioinformatics analysis, and variant interpretation to support clinical research, disease investigation, and genomic discovery.',
+    44, 290, 706, 10.4, { color: C_DARK_MUTED, font: 'Poppins', lh: 1.55 }
+  ));
+
+  // 4. KEY FEATURES (6 cards, 2 columns, border-left: 3px solid #1f7a8c)
+  makeSecHeader('KEY FEATURES', 342);
+  const col1X = 44;
+  const col2X = 402;
+  const cardW = 348;
+  const cardH = 50;
+
+  const keyFeatures = [
+    { title: 'Targeted Exome Enrichment', desc: 'Selective enrichment and sequencing of protein-coding regions.' },
+    { title: 'High-Throughput Sequencing', desc: 'Comprehensive sequencing of targeted exonic regions using advanced NGS platforms.' },
+    { title: 'Variant Detection', desc: 'Identification of single nucleotide variants (SNVs) and small insertions and deletions (InDels).' },
+    { title: 'Copy Number Variation Analysis', desc: 'Detection of selected exon-level and larger copy number changes, subject to assay design and analytical validation.' },
+    { title: 'Bioinformatics Analysis', desc: 'Read alignment, variant calling, annotation, and prioritization of potentially significant variants.' },
+    { title: 'Phenotype-Driven Interpretation', desc: 'Prioritization of candidate variants based on clinical features and genotype–phenotype associations.' },
+  ];
+
+  keyFeatures.forEach((kf, idx) => {
+    const col = idx % 2 === 0 ? col1X : col2X;
+    const row = Math.floor(idx / 2);
+    const cardY = 370 + row * 56;
+    s.push(r(col, cardY, cardW, cardH, C_CARD_BG, { r: 4, stroke: C_BORDER, sw: 1 }));
+    s.push(r(col, cardY, 3, cardH, C_TEAL, { r: 1 }));
+    s.push(t(kf.title, col + 12, cardY + 6, cardW - 20, 10.8, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(kf.desc, col + 12, cardY + 23, cardW - 20, 9.6, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 5. APPLICATIONS (6 cards, 2 columns, border-left: 3px solid #2f5d9e)
+  makeSecHeader('APPLICATIONS', 552);
+  const applications = [
+    { title: 'Rare Disease Research', desc: 'Investigate the genetic basis of undiagnosed and inherited disorders.' },
+    { title: 'Clinical and Diagnostic Genomics', desc: 'Support the identification and interpretation of disease-associated variants in appropriate clinical settings.' },
+    { title: 'Hereditary Disease Studies', desc: 'Analyze genetic variations associated with Mendelian disorders and familial conditions.' },
+    { title: 'Cancer Genomics Research', desc: 'Investigate selected germline variants relevant to inherited cancer predisposition.' },
+    { title: 'Population and Genetic Research', desc: 'Explore genetic diversity, genotype–phenotype relationships, and disease-associated variants.' },
+    { title: 'Precision Medicine', desc: 'Generate genomic insights to support research into individualized disease risk and treatment response.' },
+  ];
+
+  applications.forEach((app, idx) => {
+    const col = idx % 2 === 0 ? col1X : col2X;
+    const row = Math.floor(idx / 2);
+    const cardY = 580 + row * 56;
+    s.push(r(col, cardY, cardW, cardH, C_CARD_BG, { r: 4, stroke: C_BORDER, sw: 1 }));
+    s.push(r(col, cardY, 3, cardH, C_BLUE, { r: 1 }));
+    s.push(t(app.title, col + 12, cardY + 6, cardW - 20, 10.8, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(app.desc, col + 12, cardY + 23, cardW - 20, 9.6, { color: C_MUTED, font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 6. WES WORKFLOW (8 steps)
+  makeSecHeader('WES WORKFLOW', 762);
+  s.push(r(88, 802, 618, 2, C_RULE));
+  const steps = [
+    'Sample Collection',
+    'DNA Extraction',
+    'DNA Quality Assessment',
+    'Exome Library Preparation & Target Enrichment',
+    'NGS Sequencing',
+    'Bioinformatics Analysis',
+    'Variant Annotation & Interpretation',
+    'Data Delivery',
+  ];
+  const stepW = 706 / 8;
+  steps.forEach((stepName, i) => {
+    const stepCenterX = 44 + i * stepW + stepW / 2;
+    const circleX = stepCenterX - 12.5;
+    const circleY = 790;
+    s.push(r(circleX - 2, circleY - 2, 29, 29, '#ffffff', { r: 15 }));
+    s.push(r(circleX, circleY, 25, 25, C_INK, { r: 13 }));
+    s.push(t(String(i + 1), circleX, circleY + 4, 25, 11, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+    s.push(t(stepName, stepCenterX - 42, 824, 84, 8.8, { bold: 1, color: '#33445c', align: 'center', font: 'Poppins', lh: 1.3 }));
+  });
+
+  // 7. DELIVERABLES (2 columns with checkmarks)
+  makeSecHeader('DELIVERABLES', 884);
+  const deliverables = [
+    { text: 'Raw sequencing data in FASTQ format', col: 0, row: 0 },
+    { text: 'Quality control and sequencing metrics', col: 1, row: 0 },
+    { text: 'Aligned sequencing reads in BAM/CRAM format, as agreed', col: 0, row: 1 },
+    { text: 'Variant files in VCF format', col: 1, row: 1 },
+    { text: 'Variant annotation and prioritization results', col: 0, row: 2 },
+    { text: 'Comprehensive analysis report, according to the selected service package', col: 1, row: 2 },
+  ];
+  deliverables.forEach((item) => {
+    const dX = item.col === 0 ? 44 : 410;
+    const dY = 912 + item.row * 24;
+    s.push(t('✓', dX, dY - 1, 14, 11, { bold: 1, color: C_TEAL, font: 'Poppins' }));
+    s.push(t(item.text, dX + 18, dY, 322, 10, { color: '#33445c', font: 'Poppins', lh: 1.35 }));
+  });
+
+  // 8. FOOTER BAR
+  const footY = 1046;
+  s.push(r(0, footY, 794, 70, C_INK));
+  s.push(t('Talk to our genomics team', 44, footY + 14, 320, 15, { bold: 1, color: '#ffffff', font: 'Lora' }));
+  s.push(t('Your Trusted Sequencing Partner', 44, footY + 40, 320, 10, { color: '#b9c7dc', font: 'Poppins' }));
+
+  s.push(t('EMAIL  sales@oneomics.in      WEB  www.oneomics.in', 410, footY + 12, 340, 9.8, { color: '#dfe8f5', align: 'right', font: 'Poppins' }));
+  s.push(t('ADDRESS  F12, Bharathidasan University Technology Park, Khajamalai Campus,\nTiruchirapalli, Tamil Nadu 620023, India', 364, footY + 30, 386, 9.2, { color: '#dfe8f5', align: 'right', font: 'Poppins', lh: 1.45 }));
+
+  // 9. BOTTOM TRI-COLOUR STRIPE (7px)
+  s.push(r(0, 1116, 265, 7, C_RED));
+  s.push(r(265, 1116, 265, 7, C_CYAN));
+  s.push(r(530, 1116, 264, 7, C_GREEN));
+
+  return s;
+}
+
 // Oneomics Bi-Fold Brochure — Page 1 (Outside, 1123 x 794)
 export function bifoldBrochure() {
   const s = [];
@@ -11461,6 +11614,20 @@ export const TEMPLATES = [
     specs: ngsLongReadFlyer,
     pages: [ngsLongReadFlyer],
     swatch: ['#0f2a43', '#2a6fb0', '#0e8f8c'],
+  },
+  {
+    id: 'ngs-wes-flyer',
+    name: 'ONEOMICS Whole Exome Sequencing (WES) Flyer',
+    subtitle: 'Comprehensive Analysis of Protein-Coding Regions (A4)',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/ngs_wes_flyer.png',
+    specs: ngsWesFlyer,
+    pages: [ngsWesFlyer],
+    swatch: ['#16294a', '#1f7a8c', '#2f5d9e'],
   },
   {
     id: 'bifold-genomics',
