@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ONEOMICS NGS Template 3 - Metagenomics (A4, 794 x 1123)</title>
+<meta name="viewport" content="width=794">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#0F2A43; --muted:#52667A; --pale:#F3F7FA; --rule:#D5DEE6; --red:#E0262A; --green:#2E9E2E; --tag:#2D4B86; }
+  @page { size:794px 1123px; margin:0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { background:#E4E9EE; }
+  body { font-family:'Poppins','Segoe UI',Arial,sans-serif; color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .toolbar { width:794px; margin:16px auto 0; display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:11.5px; color:var(--muted); }
+  .toolbar button { flex:none; font:600 12px 'Poppins',Arial,sans-serif; background:var(--ink); color:#fff; border:0; border-radius:6px; padding:8px 14px; cursor:pointer; }
+  .page { position:relative; width:794px; height:1123px; margin:12px auto 24px; background:#fff; overflow:hidden; }
+  @media screen { .page { box-shadow:0 8px 28px rgba(15,42,67,.16); } }
+  @media print { html,body { background:#fff; } .toolbar { display:none; } .page { margin:0; box-shadow:none; } .rm { display:none !important; } [contenteditable]:hover { background:none !important; } .imgbox:not(.filled) { border-color:transparent !important; } .imgbox:not(.filled) .hint { display:none; } }
+  .stripe { position:absolute; left:0; right:0; height:6px; display:flex; z-index:5; }
+  .stripe i { flex:1; display:block; }
+  .stripe i:nth-child(1){background:var(--red)} .stripe i:nth-child(2){background:#2E9BD6} .stripe i:nth-child(3){background:var(--green)}
+  .stripe.top { top:0; } .stripe.bot { bottom:0; }
+  .logo svg { display:block; height:34px; width:auto; }
+  .tagline { margin-top:6px; font-size:10.5px; font-weight:500; color:var(--tag); }
+  .imgbox { position:relative; display:flex; align-items:center; justify-content:center; border:1px dashed #C3D1DE; border-radius:5px; background:center/cover no-repeat; cursor:pointer; overflow:hidden; }
+  .imgbox input { display:none; }
+  .imgbox .hint { font:500 9.5px 'Poppins',Arial,sans-serif; color:#8FA6BA; }
+  .imgbox:hover { border-color:#2A6FB0; } .imgbox:hover .hint { color:#2A6FB0; }
+  .imgbox.filled { border:1px solid var(--rule); } .imgbox.filled .hint { display:none; }
+  .rm { display:none; position:absolute; top:5px; right:5px; font:600 9px 'Poppins',Arial,sans-serif; background:rgba(15,42,67,.85); color:#fff; border:0; border-radius:4px; padding:3px 7px; cursor:pointer; }
+  .imgbox.filled:hover .rm { display:block; }
+  [contenteditable]:hover { background:rgba(14,143,140,.07); }
+  [contenteditable] { outline:none; }
+  ul.bul { list-style:none; }
+  ul.bul li { position:relative; padding-left:12px; font-size:9.6px; line-height:1.55; color:var(--muted); margin:2px 0; }
+  ul.bul li::before { content:""; position:absolute; left:1px; top:.55em; width:5px; height:5px; border-radius:1px; background:var(--accent,#0E8F8C); }
+  .serif { font-family:'Lora',Georgia,serif; }
+
+  .page { padding:0 48px; display:flex; flex-direction:column; --accent:#1F7A4D; }
+  header { margin-top:32px; display:flex; justify-content:space-between; align-items:flex-end; }
+  .hr { text-align:right; font-size:10px; line-height:1.6; color:var(--muted); } .hr b { color:var(--ink); font-weight:600; }
+  .hero { margin-top:26px; display:grid; grid-template-columns:1fr 250px; gap:26px; align-items:stretch; padding:22px 24px; background:#F1F8F4; border:1px solid #D3E6DB; border-radius:10px; }
+  .hero .k { font-size:9px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#1F7A4D; }
+  .hero h1 { font-family:'Lora',Georgia,serif; font-weight:600; font-size:31px; line-height:1.15; margin-top:8px; }
+  .hero p { margin-top:10px; font-size:10.6px; line-height:1.7; color:var(--muted); }
+  .hero .imgbox { height:100%; min-height:150px; background-color:#fff; }
+  h2.sec { font-family:'Lora',Georgia,serif; font-weight:600; font-size:15px; margin:30px 0 11px; display:flex; align-items:center; gap:10px; }
+  h2.sec::after { content:""; flex:1; height:1px; background:var(--rule); }
+  .methods { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .m { border:1px solid var(--rule); border-top:3px solid #1F7A4D; border-radius:0 0 8px 8px; padding:12px 12px 13px; background:#fff; }
+  .m:nth-child(2) { border-top-color:#2A6FB0; } .m:nth-child(3) { border-top-color:#0E8F8C; } .m:nth-child(4) { border-top-color:#0F2A43; }
+  .m .c { font-size:8.5px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:var(--muted); }
+  .m h3 { font-size:12px; font-weight:600; margin-top:3px; line-height:1.3; }
+  .m p { margin-top:5px; font-size:9.5px; line-height:1.55; color:var(--muted); }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .panel { border:1px solid var(--rule); border-radius:8px; padding:12px 16px 12px; }
+  .panel h4 { font-size:11.5px; font-weight:600; color:#1F7A4D; margin-bottom:4px; }
+  .panel ul.bul li { font-size:10.1px; margin:3px 0; }
+  .chev { display:flex; }
+  .chev div { flex:1; height:54px; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 18px 0 22px; margin-right:-9px; font-size:9.6px; font-weight:600; line-height:1.25; clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%); }
+  .chev div:first-child { clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%); padding-left:12px; }
+  .chev div:nth-child(1) { background:#DDEFE5; color:#14573A; } .chev div:nth-child(2) { background:#D0E8DC; color:#14573A; }
+  .chev div:nth-child(3) { background:#D7E7F3; color:#1B4F85; } .chev div:nth-child(4) { background:#C9DDEE; color:#1B4F85; }
+  .chev div:nth-child(5) { background:#BBD3E9; color:#0F2A43; } .chev div:nth-child(6) { background:#AFCAE4; color:#0F2A43; }
+  .deliv { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .deliv div { padding:14px 14px; background:var(--pale); border-left:3px solid #1F7A4D; border-radius:0 6px 6px 0; font-size:10px; line-height:1.55; color:var(--ink); }
+  footer { margin:auto -48px 6px; height:92px; background:var(--pale); border-top:1px solid var(--rule); padding:0 48px; display:flex; justify-content:space-between; align-items:center; }
+  footer h2 { font-family:'Lora',Georgia,serif; font-weight:600; font-size:17px; }
+  footer .it { font-family:'Lora',Georgia,serif; font-style:italic; font-size:10.5px; color:var(--tag); margin-top:4px; }
+  footer .r { text-align:right; font-size:9.6px; line-height:1.6; color:var(--muted); } footer .r b { color:var(--ink); font-weight:600; font-size:10.5px; }
+</style>
+</head>
+<body>
+<div class="toolbar"><span>Click any text to edit. Dashed boxes are optional image areas: click one to add a picture. Empty boxes stay blank in the PDF.</span><button onclick="window.print()">Save as PDF</button></div>
+<div class="page" id="page">
+  <div class="stripe top"><i></i><i></i><i></i></div>
+
+  <header><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 371.0 100" role="img" aria-label="ONEOMICS"><rect x="4.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M54.50 95.5 L54.50 4.5 L84.50 95.5 L84.50 4.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><rect x="100.00" y="0.00" width="39.0" height="9.0" rx="1.2" fill="#E0262A"/><rect x="100.00" y="45.50" width="39.0" height="9.0" rx="1.2" fill="#2E9BD6"/><rect x="100.00" y="91.00" width="39.0" height="9.0" rx="1.2" fill="#2E9E2E"/><rect x="154.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M204.50 95.5 L204.50 4.5 L225.50 64.0 L246.50 4.5 L246.50 95.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M266.50 4.5 L266.50 95.5" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round"/><path d="M316.50 32.50 L316.50 19.50 A15.0 15.0 0 0 0 286.50 19.50 L286.50 80.50 A15.0 15.0 0 0 0 316.50 80.50 L316.50 67.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M366.50 19.50 A15.0 15.0 0 0 0 336.50 19.50 L336.50 27.50 C336.50 51.00 366.50 49.00 366.50 72.50 L366.50 80.50 A15.0 15.0 0 0 1 336.50 80.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tagline">Pioneer in Genomics Services</div></div><div class="hr"><b>sales@oneomics.in</b><br>www.oneomics.in</div></header>
+  <section class="hero">
+    <div><div class="k">Microbiome research</div><h1 contenteditable="true" spellcheck="false">Metagenome sequencing</h1><p contenteditable="true" spellcheck="false">Profile complex microbial communities from soil, host and environmental samples. Metagenomics gives an unbiased view of which organisms are present, how abundant they are and what metabolic processes are possible.</p></div>
+    <label class="imgbox" style=""><input type="file" accept="image/*"><span class="hint">+ Add image (optional)</span><button type="button" class="rm">Remove</button></label>
+  </section>
+
+  <h2 class="sec">Sequencing methods</h2>
+  <div class="methods">
+    <div class="m"><div class="c">Amplicon</div><h3 contenteditable="true" spellcheck="false">16S rDNA sequencing</h3><p contenteditable="true" spellcheck="false">MiSeq system, V3 to V4 regions or customised regions.</p></div>
+    <div class="m"><div class="c">Amplicon</div><h3 contenteditable="true" spellcheck="false">Full-length 16S rRNA</h3><p contenteditable="true" spellcheck="false">Long reads on PacBio RS II or Sequel for finer taxonomy.</p></div>
+    <div class="m"><div class="c">Amplicon</div><h3 contenteditable="true" spellcheck="false">18S rDNA and ITS</h3><p contenteditable="true" spellcheck="false">Eukaryotic and fungal community profiling.</p></div>
+    <div class="m"><div class="c">Shotgun</div><h3 contenteditable="true" spellcheck="false">Shotgun metagenomics</h3><p contenteditable="true" spellcheck="false">All genes in all species in a mixed sample: species present and their functions.</p></div>
+  </div>
+
+  <h2 class="sec">Data analysis</h2>
+  <div class="two">
+    <div class="panel"><h4>Amplicon metagenome</h4><ul class="bul"><li contenteditable="true" spellcheck="false">Community diversity analysis (OTU)</li><li contenteditable="true" spellcheck="false">Probiotics analysis</li><li contenteditable="true" spellcheck="false">Phylogenetic tree</li><li contenteditable="true" spellcheck="false">Hierarchical taxonomy graph</li><li contenteditable="true" spellcheck="false">Heatmap and PCA biplot</li></ul></div>
+    <div class="panel"><h4>Shotgun metagenome</h4><ul class="bul"><li contenteditable="true" spellcheck="false">Assembly into metagenomic contigs</li><li contenteditable="true" spellcheck="false">Gene prediction and annotation</li><li contenteditable="true" spellcheck="false">Taxonomy analysis</li><li contenteditable="true" spellcheck="false">SNP calling for strain diversity</li><li contenteditable="true" spellcheck="false">Gene content coverage and functional diversity</li></ul></div>
+  </div>
+
+  <h2 class="sec">Workflow</h2>
+  <div class="chev"><div>DNA extraction</div><div>Fragmentation</div><div>DNA sequencing</div><div>Assembly</div><div>Gene finding and annotation</div><div>Phylogenetic binning</div></div>
+
+  <h2 class="sec">What you receive</h2>
+  <div class="deliv">
+    <div><span contenteditable="true" spellcheck="false">Quantitative characterisation of microbial diversity</span></div>
+    <div><span contenteditable="true" spellcheck="false">Association of species or OTUs with host phenotype or environmental factors</span></div>
+    <div><span contenteditable="true" spellcheck="false">Identified and predicted genes with custom annotations</span></div>
+  </div>
+
+  <footer><div><h2 contenteditable="true" spellcheck="false">Start your metagenomics project</h2><div class="it">Your Trusted Sequencing Partner</div></div><div class="r"><b>sales@oneomics.in</b><br>F12, Bharathidasan University Technology Park,<br>Khajamalai Campus, Tiruchirapalli 620023</div></footer>
+
+  <div class="stripe bot"><i></i><i></i><i></i></div>
+</div>
+<script>
+(function(){
+  document.querySelectorAll('.imgbox').forEach(function(b){
+    var inp = b.querySelector('input');
+    inp.addEventListener('change', function(e){
+      var f = e.target.files[0];
+      if (!f || f.type.indexOf('image/') !== 0) return;
+      var r = new FileReader();
+      r.onload = function(ev){ b.style.backgroundImage = 'url(' + ev.target.result + ')'; b.classList.add('filled'); };
+      r.readAsDataURL(f);
+    });
+    b.addEventListener('dragover', function(e){ e.preventDefault(); });
+    b.addEventListener('drop', function(e){ e.preventDefault(); inp.files = e.dataTransfer.files; inp.dispatchEvent(new Event('change')); });
+    b.querySelector('.rm').addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      b.style.backgroundImage = ''; b.classList.remove('filled'); inp.value = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>
+

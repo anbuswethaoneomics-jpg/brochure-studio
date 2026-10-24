@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ONEOMICS NGS Template 1 - Genome and Exome (A4, 794 x 1123)</title>
+<meta name="viewport" content="width=794">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#0F2A43; --muted:#52667A; --pale:#F3F7FA; --rule:#D5DEE6; --red:#E0262A; --green:#2E9E2E; --tag:#2D4B86; }
+  @page { size:794px 1123px; margin:0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { background:#E4E9EE; }
+  body { font-family:'Poppins','Segoe UI',Arial,sans-serif; color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .toolbar { width:794px; margin:16px auto 0; display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:11.5px; color:var(--muted); }
+  .toolbar button { flex:none; font:600 12px 'Poppins',Arial,sans-serif; background:var(--ink); color:#fff; border:0; border-radius:6px; padding:8px 14px; cursor:pointer; }
+  .page { position:relative; width:794px; height:1123px; margin:12px auto 24px; background:#fff; overflow:hidden; }
+  @media screen { .page { box-shadow:0 8px 28px rgba(15,42,67,.16); } }
+  @media print { html,body { background:#fff; } .toolbar { display:none; } .page { margin:0; box-shadow:none; } }
+  .stripe { position:absolute; left:0; right:0; height:6px; display:flex; z-index:5; }
+  .stripe i { flex:1; display:block; }
+  .stripe i:nth-child(1){background:var(--red)} .stripe i:nth-child(2){background:#2E9BD6} .stripe i:nth-child(3){background:var(--green)}
+  .stripe.top { top:0; } .stripe.bot { bottom:0; }
+  .logo img { display:block; height:34px; width:auto; }
+  .tagline { margin-top:6px; font-size:10.5px; font-weight:500; color:var(--tag); }
+  [contenteditable]:hover { background:rgba(14,143,140,.07); }
+  [contenteditable] { outline:none; }
+  ul.bul { list-style:none; }
+  ul.bul li { position:relative; padding-left:12px; font-size:9.6px; line-height:1.55; color:var(--muted); margin:2px 0; }
+  ul.bul li::before { content:""; position:absolute; left:1px; top:.55em; width:5px; height:5px; border-radius:1px; background:var(--accent,#0E8F8C); }
+  .serif { font-family:'Lora',Georgia,serif; }
+
+  .side { position:absolute; left:0; top:0; bottom:0; width:238px; background:#F3F7FA; border-right:1px solid var(--rule); padding:34px 22px 30px; display:flex; flex-direction:column; gap:22px; --accent:#0E8F8C; }
+  .side .lab { font-size:8.5px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#0E8F8C; margin-bottom:4px; }
+  .side .fact p { font-size:9.6px; line-height:1.55; color:var(--ink); }
+  .side .fact .big { font-family:'Lora',Georgia,serif; font-weight:600; font-size:21px; color:var(--ink); line-height:1.1; }
+  .side .contact { margin-top:auto; font-size:9.3px; line-height:1.6; color:var(--muted); border-top:1px solid var(--rule); padding-top:12px; }
+  .side .contact b { color:var(--ink); font-weight:600; }
+  .main { position:absolute; left:238px; right:0; top:0; bottom:0; padding:36px 42px 0 38px; --accent:#0E8F8C; }
+  .kicker { font-size:9px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#0E8F8C; }
+  .main h1 { font-family:'Lora',Georgia,serif; font-weight:600; font-size:29px; line-height:1.15; margin-top:8px; }
+  .main .intro { margin-top:10px; font-size:10.4px; line-height:1.7; color:var(--muted); padding-bottom:16px; border-bottom:2px solid var(--ink); }
+  h2.sec { font-family:'Lora',Georgia,serif; font-weight:600; font-size:15px; color:#0E8F8C; margin:24px 0 10px; display:flex; align-items:center; gap:10px; }
+  h2.sec::after { content:""; flex:1; height:1px; background:var(--rule); }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .two h4, .three h4 { font-size:11.6px; font-weight:600; margin-bottom:3px; }
+  .two p, .three p { font-size:10px; line-height:1.6; color:var(--muted); }
+  .two .sub, .three .sub { font-size:8.5px; font-weight:600; letter-spacing:.5px; text-transform:uppercase; color:var(--ink); margin:9px 0 1px; }
+  .three { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .three > div { padding-top:8px; border-top:2px solid #0E8F8C; }
+  .three > div:nth-child(2) { border-top-color:#2A6FB0; } .three > div:nth-child(3) { border-top-color:#0F2A43; }
+  .main ul.bul li { font-size:10.2px; margin:3px 0; }
+  .side ul.bul li { font-size:10px; margin:3px 0; }
+  .flow { display:flex; margin-top:22px; border-top:2px solid var(--ink); }
+  .flow div { flex:1; padding:9px 6px 0 0; font-size:10px; font-weight:600; }
+  .flow div span { display:block; font-family:'Lora',Georgia,serif; font-size:16px; color:#0E8F8C; font-weight:600; }
+  .cta { position:absolute; left:38px; right:42px; bottom:24px; padding-top:12px; border-top:1px solid var(--rule); display:flex; justify-content:space-between; align-items:baseline; }
+  .cta h3 { font-family:'Lora',Georgia,serif; font-weight:600; font-size:15px; }
+  .cta span { font-size:9.5px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="toolbar"><span>Click any text to edit.</span><button onclick="window.print()">Save as PDF</button></div>
+<div class="page" id="page">
+  <div class="stripe top"><i></i><i></i><i></i></div>
+
+  <aside class="side">
+    <div>
+      <div class="logo"><img src="/assets/oneomics_logo.png" alt="ONEOMICS" style="height:34px;width:auto;"></div>
+      <div class="tagline">Pioneer in Genomics Services</div>
+    </div>
+    <div class="fact">
+      <div class="lab">Exome size</div>
+      <div class="big">~1%</div>
+      <p>of the genome (about 30 Mb) carries the coding regions.</p>
+    </div>
+    <div class="fact">
+      <div class="lab">Platforms</div>
+      <ul class="bul">
+        <li contenteditable="true" spellcheck="false">HiSeq X</li>
+        <li contenteditable="true" spellcheck="false">NovaSeq 6000</li>
+        <li contenteditable="true" spellcheck="false">NextSeq 500</li>
+        <li contenteditable="true" spellcheck="false">MiSeq</li>
+        <li contenteditable="true" spellcheck="false">PacBio RS II</li>
+        <li contenteditable="true" spellcheck="false">PacBio Sequel</li>
+      </ul>
+    </div>
+    <div class="fact">
+      <div class="lab">Capture kits</div>
+      <ul class="bul">
+        <li contenteditable="true" spellcheck="false">TruSeq Nano DNA Sample Prep Kit</li>
+        <li contenteditable="true" spellcheck="false">SureSelect XT All Exon V5</li>
+        <li contenteditable="true" spellcheck="false">SureSelect XT All Exon V6</li>
+        <li contenteditable="true" spellcheck="false">SureSelect XT custom Tier 1</li>
+      </ul>
+    </div>
+    <div class="contact">
+      <b>sales@oneomics.in</b><br>
+      www.oneomics.in<br>
+      F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India
+    </div>
+  </aside>
+  <section class="main">
+    <div class="kicker">Next generation sequencing</div>
+    <h1 contenteditable="true" spellcheck="false">Whole genome and exome sequencing</h1>
+    <p class="intro" contenteditable="true" spellcheck="false">The entire genome is read and analysed to give the most detailed genetic variation information. Exome sequencing focuses on the coding regions, an economical route for clinical and disease research.</p>
+
+    <h2 class="sec">Whole genome sequencing</h2>
+    <div class="two">
+      <div>
+        <h4 contenteditable="true" spellcheck="false">De novo sequencing</h4>
+        <p contenteditable="true" spellcheck="false">Assemble a genome without prior knowledge of the sequence, for microbes, humans, animals, plants and insects.</p>
+        <div class="sub">Standard analysis</div>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">Genome assembly and annotation</li>
+          <li contenteditable="true" spellcheck="false">Consensus sequence assembled into contigs</li>
+        </ul>
+        <div class="sub">Advanced analysis</div>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">Gene prediction and annotation</li>
+        </ul>
+      </div>
+      <div>
+        <h4 contenteditable="true" spellcheck="false">Re-sequencing</h4>
+        <p contenteditable="true" spellcheck="false">Compare a sample against a reference sequence to find SNPs, CNVs, rearrangements and indels.</p>
+        <div class="sub">Service overview</div>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">SNV and InDels</li>
+          <li contenteditable="true" spellcheck="false">Structural variation</li>
+          <li contenteditable="true" spellcheck="false">Copy number variation</li>
+          <li contenteditable="true" spellcheck="false">Trio analysis</li>
+        </ul>
+        <div class="sub">Standard analysis</div>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">Mapping statistics</li>
+          <li contenteditable="true" spellcheck="false">SNP and InDel calling against the reference (human, mouse, rat)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="sec">Whole exome sequencing</h2>
+    <div class="two">
+      <div>
+        <h4 contenteditable="true" spellcheck="false">Enrichment methods</h4>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">Agilent SureSelect Human All Exon Kit</li>
+          <li contenteditable="true" spellcheck="false">Illumina Nextera or TruSeq Exome Enrichment Kit</li>
+          <li contenteditable="true" spellcheck="false">Thermo Fisher Ion AmpliSeq Exome RDY Kit</li>
+        </ul>
+        <div class="sub">Service overview</div>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">SNV and InDels</li>
+          <li contenteditable="true" spellcheck="false">Copy number variation</li>
+          <li contenteditable="true" spellcheck="false">Trio analysis</li>
+        </ul>
+      </div>
+      <div>
+        <h4 contenteditable="true" spellcheck="false">Analysis</h4>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">Variant calling (SNPs and InDels) and annotation</li>
+          <li contenteditable="true" spellcheck="false">CNV (copy number variation)</li>
+          <li contenteditable="true" spellcheck="false">Various variant calling pipelines</li>
+          <li contenteditable="true" spellcheck="false">Cancer, family and population analysis</li>
+        </ul>
+        <p style="margin-top:6px" contenteditable="true" spellcheck="false">Widely used for cancer and chronic disease genetic recognition.</p>
+      </div>
+    </div>
+
+    <h2 class="sec">What you receive</h2>
+    <div class="three">
+      <div>
+        <h4 contenteditable="true" spellcheck="false">Variant calling</h4>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">Full variant lists for all samples with evidence</li>
+          <li contenteditable="true" spellcheck="false">Filtered lists on any criteria</li>
+          <li contenteditable="true" spellcheck="false">Low-coverage regions</li>
+        </ul>
+      </div>
+      <div>
+        <h4 contenteditable="true" spellcheck="false">Variant annotation</h4>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">Functional and location annotation</li>
+          <li contenteditable="true" spellcheck="false">Minor allele frequencies</li>
+          <li contenteditable="true" spellcheck="false">Database identifiers</li>
+          <li contenteditable="true" spellcheck="false">Pathogenicity predictions</li>
+        </ul>
+      </div>
+      <div>
+        <h4 contenteditable="true" spellcheck="false">Genome assembly</h4>
+        <ul class="bul">
+          <li contenteditable="true" spellcheck="false">Assembled contigs in FASTA</li>
+          <li contenteditable="true" spellcheck="false">Refined genome assembly</li>
+          <li contenteditable="true" spellcheck="false">Quality estimation scores</li>
+        </ul>
+      </div>
+    </div>
+    <div class="flow">
+      <div><span>1</span>Sample QC</div>
+      <div><span>2</span>Library preparation</div>
+      <div><span>3</span>Sequencing</div>
+      <div><span>4</span>Variant analysis</div>
+      <div><span>5</span>Report</div>
+    </div>
+    <div class="cta">
+      <h3 contenteditable="true" spellcheck="false">Start your sequencing project</h3>
+      <span>Your Trusted Sequencing Partner</span>
+    </div>
+  </section>
+
+  <div class="stripe bot"><i></i><i></i><i></i></div>
+</div>
+</body>
+</html>
+

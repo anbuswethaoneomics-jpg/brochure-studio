@@ -69,17 +69,63 @@ async function renderPageData(pageData, defaultWidth, defaultHeight, fallbackThu
 }
 
 /**
+ * Checks whether a canvas page JSON is an empty/unfilled layout template
+ * (i.e. contains background layout shapes or header tags but zero meaningful body content).
+ */
+export function isPageEmptyTemplate(pageData) {
+  if (!pageData) return true;
+  let obj = pageData;
+  if (typeof obj === 'string') {
+    try {
+      obj = JSON.parse(obj);
+    } catch {
+      return false;
+    }
+  }
+  if (!obj || !Array.isArray(obj.objects)) return false;
+
+  const objects = obj.objects;
+  if (objects.length === 0) return true;
+
+  // Calculate total body text characters (excluding standard brand header/footer)
+  let bodyTextChars = 0;
+  for (const o of objects) {
+    if (o.type === 'textbox' || o.type === 'i-text' || o.type === 'text') {
+      const text = String(o.text || '').trim();
+      const lower = text.toLowerCase();
+      // Skip brand header / kicker / footer contacts
+      if (
+        lower === 'oneomics' ||
+        lower.includes('product profile') ||
+        lower.includes('collect & stabilize') ||
+        lower.includes('www.oneomics.in') ||
+        lower.includes('sales@oneomics.in') ||
+        lower.includes('info@oneomics.in')
+      ) {
+        continue;
+      }
+      bodyTextChars += text.length;
+    }
+  }
+
+  // If page has fewer than 25 body characters, it is an unfilled/empty layout template!
+  return bodyTextChars < 25;
+}
+
+/**
  * Merges multiple selected designs from the gallery into a single multi-page PDF.
  *
  * @param {Array} selectedDesigns - Array of design objects from gallery
  * @param {Function} [onProgress] - Callback (progressObj) => void
+ * @param {Object} [options] - Optional settings ({ skipEmptyPages: boolean })
  * @returns {Promise<{ pageCount: number, filename: string }>}
  */
-export async function mergeDesignsToPDF(selectedDesigns, onProgress) {
+export async function mergeDesignsToPDF(selectedDesigns, onProgress, options = {}) {
   if (!Array.isArray(selectedDesigns) || selectedDesigns.length === 0) {
     throw new Error('Please select at least one design from the gallery.');
   }
 
+  const skipEmptyPages = options.skipEmptyPages !== false;
   const allRenderedPages = [];
 
   for (let i = 0; i < selectedDesigns.length; i++) {
@@ -112,6 +158,12 @@ export async function mergeDesignsToPDF(selectedDesigns, onProgress) {
     }
 
     for (let pIdx = 0; pIdx < pages.length; pIdx++) {
+      // Automatically skip empty placeholder pages (e.g. Page 2 added as empty template in old code)
+      if (skipEmptyPages && pIdx > 0 && isPageEmptyTemplate(pages[pIdx])) {
+        console.log(`Skipped empty placeholder template (Page ${pIdx + 1}) in "${d.name}"`);
+        continue;
+      }
+
       if (onProgress) {
         onProgress({
           currentDesignIndex: i + 1,

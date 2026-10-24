@@ -9,6 +9,8 @@ import { TEMPLATES, createEmptyTemplateFromCanvas } from './brochureTemplates.js
 import { makeImageTextEditable } from './ocrEditable.js';
 import { listDesigns, getDesign, saveDesign, deleteDesign } from './api.js';
 import ImageCropModal from './components/ImageCropModal.jsx';
+import { getCleanHtmlUrl } from './cleanHtmlMap.js';
+import { isPageEmptyTemplate } from './mergePdfUtils.js';
 
 const download = (href, name) => {
   const a = document.createElement('a');
@@ -513,12 +515,34 @@ export default function StudioApp() {
     setMenu(false);
     download(ed.render(2), `${fileName(design.name)}-page-${pageIdx + 1}.png`);
   };
+  const exportPDFCurrentPage = async () => {
+    setMenu(false);
+    setBusy(true);
+    try {
+      const u = ed.render(2);
+      const { jsPDF } = await import('jspdf');
+      const { width: w, height: h } = design;
+      const pdf = new jsPDF({
+        orientation: w >= h ? 'landscape' : 'portrait',
+        unit: 'px',
+        format: [w, h],
+        hotfixes: ['px_scaling'],
+      });
+      pdf.addImage(u, 'PNG', 0, 0, w, h);
+      pdf.save(`${fileName(design.name)}-page-${pageIdx + 1}.pdf`);
+    } catch (e) {
+      notify(`Export failed: ${e.message}`);
+    }
+    setBusy(false);
+  };
   const exportPDF = async () => {
     setMenu(false);
     setBusy(true);
     try {
       const all = currentPages();
-      const urls = await ed.renderPages(all, 2);
+      // Automatically skip empty placeholder pages (keep page 1 and any page with actual content)
+      const contentPages = all.filter((p, i) => i === 0 || !isPageEmptyTemplate(p));
+      const urls = await ed.renderPages(contentPages, 2);
       const { jsPDF } = await import('jspdf');
       const { width: w, height: h } = design;
       const pdf = new jsPDF({
@@ -590,6 +614,9 @@ export default function StudioApp() {
               <button role="menuitem" onClick={exportPNG}>
                 PNG image (this page)
               </button>
+              <button role="menuitem" onClick={exportPDFCurrentPage}>
+                PDF (this page)
+              </button>
               <button role="menuitem" onClick={exportPDF}>
                 PDF (all pages)
               </button>
@@ -600,7 +627,8 @@ export default function StudioApp() {
                 role="menuitem"
                 onClick={() => {
                   setMenu(false);
-                  window.open('/brochure-insight.html', '_blank');
+                  const cleanUrl = getCleanHtmlUrl(design);
+                  window.open(cleanUrl, '_blank');
                 }}
               >
                 Clean HTML Print View
@@ -678,6 +706,43 @@ export default function StudioApp() {
               <button className="chip add" onClick={deletePage} disabled={pages.length === 1}>
                 <Ico name="trash" size={14} /> Delete
               </button>
+              {pages.length > 1 && pageIdx > 0 && isPageEmptyTemplate(pages[pageIdx]) && (
+                <button
+                  className="btn small"
+                  style={{
+                    background: '#fee2e2',
+                    color: '#b91c1c',
+                    border: '1px solid #f87171',
+                    fontWeight: 600,
+                    borderRadius: 6,
+                    padding: '4px 10px',
+                    marginLeft: 6,
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                  onClick={async () => {
+                    const next = currentPages();
+                    next.splice(pageIdx, 1);
+                    const targetIdx = Math.max(0, pageIdx - 1);
+                    setPages(next);
+                    setPageIdx(targetIdx);
+                    await ed.loadPage(next[targetIdx]);
+                    if (design.id) {
+                      const thumbnail = ed.render(Math.min(1, 240 / design.width), 'jpeg');
+                      await saveDesign({ ...design, pages: next, thumbnail });
+                      window.dispatchEvent(new CustomEvent('design-saved'));
+                      notify('✅ Empty template page deleted and design updated!');
+                    } else {
+                      notify('✅ Empty page deleted!');
+                    }
+                  }}
+                  title="This page is an unfilled empty template. Click to delete it and update your design."
+                >
+                  <Ico name="trash" size={13} /> Remove Empty Page {pageIdx + 1}
+                </button>
+              )}
             </div>
             <div className="grow" />
             {design.folds > 1 && (

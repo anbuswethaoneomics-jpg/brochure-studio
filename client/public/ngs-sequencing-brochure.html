@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oneomics – NGS Sequencing Brochure</title>
+
+  <style>
+    /* ---------- Design tokens ---------- */
+    :root {
+      --navy:   #12354a;
+      --teal:   #1a7f8e;
+      --light:  #f2f6f8;
+      --line:   #d9e3e8;
+      --text:   #2b3f4a;
+      --muted:  #62767f;
+      --red:    #e53935;
+      --blue:   #1e88e5;
+      --green:  #43a047;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* A4 at 96 dpi = 794 x 1123 px */
+    @page { size: 794px 1123px; margin: 0; }
+
+    html, body { background: #dfe6ea; }
+
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      color: var(--text);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      position: relative;
+      width: 794px;
+      height: 1123px;
+      margin: 20px auto;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .15);
+    }
+
+    @media print {
+      html, body { background: none; }
+      .page { margin: 0; box-shadow: none; }
+    }
+
+    /* ---------- Header band ---------- */
+    .top {
+      height: 330px;
+      padding: 40px 56px 0;
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      line-height: 1;
+      color: #fff;
+    }
+    .logo .e {
+      display: inline-block;
+      position: relative;
+      width: .62em;
+      height: .74em;
+      margin: 0 .04em;
+    }
+    .logo .e i { position: absolute; left: 0; width: 100%; height: .17em; }
+    .logo .e i:nth-child(1) { top: 0;      background: var(--red); }
+    .logo .e i:nth-child(2) { top: .285em; background: var(--blue); }
+    .logo .e i:nth-child(3) { top: .57em;  background: var(--green); }
+
+    .top-row span { font-size: 13px; color: #a9c3d0; }
+
+    .top h1 {
+      margin-top: 62px;
+      font-size: 46px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.6px;
+    }
+
+    .top p {
+      max-width: 470px;
+      margin-top: 16px;
+      font-size: 16px;
+      line-height: 1.55;
+      color: #c9dbe4;
+    }
+
+    /* Tri-colour accent line under the header */
+    .accent { display: flex; height: 6px; }
+    .accent i { flex: 1; }
+    .accent i:nth-child(1) { background: var(--red); }
+    .accent i:nth-child(2) { background: var(--blue); }
+    .accent i:nth-child(3) { background: var(--green); }
+
+    /* ---------- Body ---------- */
+    .body { padding: 38px 56px 0; }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* Services: 2 columns x 3 rows */
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 40px;
+    }
+
+    .service {
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .service h3 { font-size: 16px; font-weight: 700; color: var(--teal); }
+    .service p  { margin-top: 5px; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+
+    /* Why us */
+    .why {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 36px;
+      padding: 26px 28px;
+      background: var(--light);
+      border-radius: 6px;
+    }
+    .why h3 { font-size: 15px; font-weight: 700; color: var(--navy); }
+    .why p  { margin-top: 5px; font-size: 13px; line-height: 1.55; color: var(--muted); }
+
+    .platforms {
+      margin-top: 26px;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+    .platforms b { color: var(--navy); }
+
+    /* ---------- Footer ---------- */
+    footer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 124px;
+      padding: 30px 56px 0;
+      display: flex;
+      justify-content: space-between;
+      background: var(--navy);
+      color: #fff;
+    }
+
+    footer .logo { font-size: 24px; }
+    footer .tag  { margin-top: 8px; font-size: 12.5px; color: #a9c3d0; }
+
+    .contact {
+      font-size: 13px;
+      line-height: 1.7;
+      text-align: right;
+      color: #dbe8ee;
+    }
+    .contact b { color: #fff; font-weight: 600; }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- ========== Header ========== -->
+    <div class="top">
+      <div class="top-row">
+        <div class="logo">ON<span class="e"><i></i><i></i><i></i></span>OMICS</div>
+        <span>Pioneer in Genomics Services</span>
+      </div>
+
+      <h1>Next Generation<br>Sequencing</h1>
+      <p>Reliable sequencing and expert data analysis for researchers and businesses in the life sciences.</p>
+    </div>
+    <div class="accent"><i></i><i></i><i></i></div>
+
+    <!-- ========== Body ========== -->
+    <div class="body">
+      <h2>Our services</h2>
+
+      <div class="services">
+        <div class="service">
+          <h3>Whole Genome Sequencing</h3>
+          <p>De novo assembly and resequencing to find genetic variation across the entire genome.</p>
+        </div>
+        <div class="service">
+          <h3>Exome Sequencing</h3>
+          <p>Focused sequencing of coding regions for clinical and disease research.</p>
+        </div>
+        <div class="service">
+          <h3>RNA Sequencing</h3>
+          <p>Measure gene expression and discover new transcripts and splice variants.</p>
+        </div>
+        <div class="service">
+          <h3>Epigenome Sequencing</h3>
+          <p>Study DNA methylation and chromatin state to understand gene regulation.</p>
+        </div>
+        <div class="service">
+          <h3>Metagenome Sequencing</h3>
+          <p>Profile microbial communities from soil, host and environmental samples.</p>
+        </div>
+        <div class="service">
+          <h3>Long Read Sequencing</h3>
+          <p>PacBio and Nanopore reads for complex, repetitive regions and full-length transcripts.</p>
+        </div>
+      </div>
+
+      <div class="why">
+        <div>
+          <h3>Expert team</h3>
+          <p>Bioinformaticians, data scientists and molecular biologists working together.</p>
+        </div>
+        <div>
+          <h3>Custom analysis</h3>
+          <p>Pipelines tailored to your research question and your data.</p>
+        </div>
+        <div>
+          <h3>Clear results</h3>
+          <p>Annotated, report-ready outputs you can use in your publication.</p>
+        </div>
+      </div>
+
+      <p class="platforms">
+        <b>Platforms:</b> Illumina HiSeq X, NovaSeq 6000, NextSeq 500, MiSeq &nbsp;|&nbsp;
+        PacBio RS II, Sequel &nbsp;|&nbsp; Oxford Nanopore
+      </p>
+    </div>
+
+    <!-- ========== Footer ========== -->
+    <footer>
+      <div>
+        <div class="logo">ON<span class="e"><i></i><i></i><i></i></span>OMICS</div>
+        <div class="tag">Your Trusted Sequencing Partner</div>
+      </div>
+
+      <div class="contact">
+        <b>Oneomics Private Limited</b><br>
+        F12, Bharathidasan University Technology Park,<br>
+        Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India<br>
+        www.oneomics.in &nbsp;|&nbsp; sales@oneomics.in
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
+
