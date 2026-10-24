@@ -70,6 +70,9 @@ export function getCleanHtmlUrl(design) {
   }
 
   // 4. NGS A4 Flyers
+  if (tid.includes('gbs') || name.includes('genotyping by sequencing') || tid.includes('ngs-gbs')) {
+    return '/ngs-gbs-flyer.html';
+  }
   if (tid.includes('wes') || name.includes('whole exome') || tid.includes('ngs-wes')) {
     return '/ngs-wes-flyer.html';
   }

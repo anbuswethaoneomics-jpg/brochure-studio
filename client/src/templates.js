@@ -5131,6 +5131,166 @@ export function ngsWesFlyer() {
   return s;
 }
 
+// ONEOMICS Genotyping by Sequencing (GBS) Flyer (A4, 794 x 1123)
+export function ngsGbsFlyer() {
+  const s = [];
+
+  const C_WINE = '#7a1f3d';
+  const C_GOLD = '#b8893b';
+  const C_INK = '#2f2a2c';
+  const C_BODY = '#4a4146';
+  const C_MUTED = '#6a5f64';
+  const C_SUBTITLE = '#5a4f53';
+  const C_META = '#8c8084';
+  const C_BORDER = '#ddd4d6';
+  const C_DIVIDER = '#eee7e8';
+  const C_RULE = '#d9ced0';
+  const C_SIDE_BG = '#f6f2ee';
+  const C_RED = '#e53935';
+  const C_CYAN = '#1e88e5';
+  const C_GREEN = '#43a047';
+
+  // 1. TOP COLOR BAR
+  s.push(r(0, 0, 794, 8, C_WINE));
+
+  // 2. BRAND HEADER
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: 48, y: 24, w: 140 });
+  s.push(t('GENOTYPING SERVICES', 446, 35, 300, 9.5, { bold: 1, color: C_META, font: 'Poppins', align: 'right' }));
+
+  // 3. TITLE HEADER
+  s.push(t('REDUCED-REPRESENTATION SEQUENCING', 48, 80, 698, 9.5, { bold: 1, color: C_GOLD, font: 'Poppins' }));
+  s.push(t('Genotyping by Sequencing (GBS)', 48, 98, 698, 34, { bold: 1, color: C_WINE, font: 'Lora' }));
+  s.push(t('Cost-effective SNP discovery and genotyping at scale', 48, 146, 698, 13.5, { color: C_SUBTITLE, font: 'Poppins' }));
+  s.push(r(48, 174, 698, 1, C_BORDER));
+
+  // 4. MAIN COLUMN (x: 48, w: 430)
+  const mainX = 48;
+  const mainW = 430;
+
+  // Overview
+  s.push(t('OVERVIEW', mainX, 194, mainW, 11, { bold: 1, color: C_WINE, font: 'Poppins' }));
+  s.push(r(mainX, 214, mainW, 1, C_RULE));
+  s.push(t(
+    'Genotyping by Sequencing (GBS) is one of the reduced-representation genome sequencing techniques, and a tool for discovering single nucleotide polymorphisms (SNPs) to conduct genotyping trials. By using restriction enzymes to cleave the DNA combined with DNA-barcoded adapters, GBS greatly reduces the genome size.',
+    mainX, 224, mainW, 10.6, { color: C_BODY, font: 'Poppins', lh: 1.55 }
+  ));
+  s.push(t(
+    'GBS can provide high SNP coverage in gene-rich regions of the genome in a highly cost-effective manner, by selecting suitable restriction enzymes and increasing the number of tags in the assay. The sequenced portion of the genome within a population is highly consistent, as restriction sites are typically conserved across organisms.',
+    mainX, 314, mainW, 10.6, { color: C_BODY, font: 'Poppins', lh: 1.55 }
+  ));
+  s.push(t(
+    'The method is easy, quick, accurate, highly reproducible and rapid due to the simultaneous detection of SNPs and genotypes, and can reach important genome regions that are inaccessible to capture sequencing approaches.',
+    mainX, 416, mainW, 10.6, { color: C_BODY, font: 'Poppins', lh: 1.55 }
+  ));
+
+  // Key Features and Advantages
+  s.push(t('KEY FEATURES AND ADVANTAGES', mainX, 492, mainW, 11, { bold: 1, color: C_WINE, font: 'Poppins' }));
+  s.push(r(mainX, 512, mainW, 1, C_RULE));
+
+  const features = [
+    { num: '01', title: 'Lower cost', desc: 'High SNP coverage in a highly cost-effective manner.' },
+    { num: '02', title: 'Reduced sample handling', desc: 'Fewer manual steps from sample to sequencing library.' },
+    { num: '03', title: 'Few PCR and purification steps', desc: 'Simpler, faster library preparation.' },
+    { num: '04', title: 'No DNA size fractionation', desc: 'No fractionation of the samples is required.' },
+    { num: '05', title: 'No reference sequence limits', desc: 'Suitable where a reference genome is limited or unavailable.' },
+    { num: '06', title: 'Efficient barcoding system', desc: 'DNA-barcoded adapters for multiplexed samples.' },
+    { num: '07', title: 'Simultaneous marker discovery and genotyping', desc: 'SNPs and genotypes are detected in the same assay.' },
+    { num: '08', title: 'Easy to scale up', desc: 'Built for large-scale studies.' },
+  ];
+
+  features.forEach((feat, idx) => {
+    const fY = 524 + idx * 52;
+    s.push(t(feat.num, mainX, fY + 2, 28, 15, { bold: 1, color: C_GOLD, font: 'Lora' }));
+    s.push(t(feat.title, mainX + 32, fY + 1, mainW - 32, 11.4, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(feat.desc, mainX + 32, fY + 20, mainW - 32, 10.3, { color: C_MUTED, font: 'Poppins' }));
+    s.push(r(mainX, fY + 46, mainW, 1, C_DIVIDER));
+  });
+
+  // 5. SIDEBAR COLUMN (x: 502, w: 244, h: 810)
+  const sideX = 502;
+  const sideW = 244;
+  const inX = sideX + 18;
+  const inW = sideW - 36;
+
+  s.push(r(sideX, 194, sideW, 810, C_SIDE_BG, { r: 6 }));
+
+  // Sidebar: At a glance
+  s.push(t('AT A GLANCE', inX, 212, inW, 9.5, { bold: 1, color: C_WINE, font: 'Poppins' }));
+  s.push(r(inX, 229, inW, 1, C_RULE));
+  s.push(t('METHOD', inX, 238, inW, 8.4, { bold: 1, color: C_META, font: 'Poppins' }));
+  s.push(t('Reduced-representation genome sequencing', inX, 252, inW, 10.4, { color: '#41383c', font: 'Poppins', lh: 1.35 }));
+
+  s.push(t('APPROACH', inX, 290, inW, 8.4, { bold: 1, color: C_META, font: 'Poppins' }));
+  s.push(t('Restriction enzyme digestion with DNA-barcoded adapters', inX, 304, inW, 10.4, { color: '#41383c', font: 'Poppins', lh: 1.35 }));
+
+  s.push(t('OUTPUT', inX, 354, inW, 8.4, { bold: 1, color: C_META, font: 'Poppins' }));
+  s.push(t('SNP discovery and genotypes', inX, 368, inW, 10.4, { color: '#41383c', font: 'Poppins' }));
+
+  // Sidebar: Applications
+  s.push(t('APPLICATIONS', inX, 412, inW, 9.5, { bold: 1, color: C_WINE, font: 'Poppins' }));
+  s.push(r(inX, 429, inW, 1, C_RULE));
+
+  const apps = [
+    { text: 'Genome-wide association studies (GWAS)', y: 440 },
+    { text: 'Study of genomic diversity', y: 476 },
+    { text: 'Analysis of genetic correlation', y: 504 },
+    { text: 'Discovery of molecular markers', y: 532 },
+    { text: 'Genomic selection in large-scale plant breeding programmes', y: 560 },
+  ];
+  apps.forEach((app) => {
+    s.push(t('◆', inX, app.y + 2, 12, 7.5, { color: C_GOLD }));
+    s.push(t(app.text, inX + 13, app.y, inW - 13, 10.4, { color: '#41383c', font: 'Poppins', lh: 1.35 }));
+  });
+
+  // Sidebar: Bioinformatics analysis
+  s.push(t('BIOINFORMATICS ANALYSIS', inX, 626, inW, 9.5, { bold: 1, color: C_WINE, font: 'Poppins' }));
+  s.push(r(inX, 643, inW, 1, C_RULE));
+
+  const bio = [
+    { text: 'SNP identification', y: 654 },
+    { text: 'GWAS', y: 678 },
+    { text: 'Linkage map construction', y: 702 },
+    { text: 'Genomic selection', y: 726 },
+    { text: 'Population structure analysis', y: 750 },
+  ];
+  bio.forEach((b) => {
+    s.push(t('◆', inX, b.y + 2, 12, 7.5, { color: C_GOLD }));
+    s.push(t(b.text, inX + 13, b.y, inW - 13, 10.4, { color: '#41383c', font: 'Poppins' }));
+  });
+
+  // Sidebar: Also available
+  s.push(t('ALSO AVAILABLE', inX, 786, inW, 9.5, { bold: 1, color: C_WINE, font: 'Poppins' }));
+  s.push(r(inX, 803, inW, 1, C_RULE));
+
+  const also = [
+    { text: 'dd-RAD sequencing', y: 814 },
+    { text: 'SNP microarray', y: 838 },
+    { text: 'Whole genome SNP genotyping', y: 862 },
+  ];
+  also.forEach((a) => {
+    s.push(t('◆', inX, a.y + 2, 12, 7.5, { color: C_GOLD }));
+    s.push(t(a.text, inX + 13, a.y, inW - 13, 10.4, { color: '#41383c', font: 'Poppins' }));
+  });
+
+  // 6. FOOTER
+  const footY = 1042;
+  s.push(r(0, footY, 794, 74, C_SIDE_BG));
+  s.push(r(0, footY, 794, 2, C_WINE));
+
+  s.push(t('Start your genotyping project', 48, footY + 16, 320, 15, { bold: 1, color: C_WINE, font: 'Lora' }));
+  s.push(t('Your Trusted Sequencing Partner', 48, footY + 42, 320, 10, { color: C_MUTED, font: 'Poppins' }));
+
+  s.push(t('EMAIL  sales@oneomics.in      WEB  www.oneomics.in', 410, footY + 14, 336, 9.8, { color: '#3a3135', align: 'right', font: 'Poppins' }));
+  s.push(t('ADDRESS  F12, Bharathidasan University Technology Park, Khajamalai Campus,\nTiruchirapalli, Tamil Nadu 620023, India', 360, footY + 32, 386, 9.2, { color: '#3a3135', align: 'right', font: 'Poppins', lh: 1.45 }));
+
+  // 7. BOTTOM TRI-COLOUR STRIPE (7px)
+  s.push(r(0, 1116, 265, 7, C_RED));
+  s.push(r(265, 1116, 265, 7, C_CYAN));
+  s.push(r(530, 1116, 264, 7, C_GREEN));
+
+  return s;
+}
+
 // Oneomics Bi-Fold Brochure — Page 1 (Outside, 1123 x 794)
 export function bifoldBrochure() {
   const s = [];
@@ -11628,6 +11788,20 @@ export const TEMPLATES = [
     specs: ngsWesFlyer,
     pages: [ngsWesFlyer],
     swatch: ['#16294a', '#1f7a8c', '#2f5d9e'],
+  },
+  {
+    id: 'ngs-gbs-flyer',
+    name: 'ONEOMICS Genotyping by Sequencing (GBS) Flyer',
+    subtitle: 'Cost-effective SNP discovery and genotyping at scale (A4)',
+    category: 'a4-flyer',
+    w: 794,
+    h: 1123,
+    folds: 0,
+    bg: '#ffffff',
+    preview: '/assets/previews/ngs_gbs_flyer.png',
+    specs: ngsGbsFlyer,
+    pages: [ngsGbsFlyer],
+    swatch: ['#7a1f3d', '#b8893b', '#2f2a2c'],
   },
   {
     id: 'bifold-genomics',
