@@ -147,8 +147,21 @@ app.get('/api/designs/:id', (req, res) => {
 app.post('/api/designs', (req, res) => {
   const data = clean(req.body);
   if (!data) return res.status(400).json({ error: 'Design needs at least one page' });
-  const row = { id: crypto.randomUUID(), createdAt: Date.now(), updatedAt: Date.now(), ...data };
-  writeAll([...readAll(), row]);
+  const id = (typeof req.body?.id === 'string' && req.body.id.trim()) ? req.body.id.trim() : crypto.randomUUID();
+  const rows = readAll();
+  const existingIdx = rows.findIndex((d) => d.id === id);
+  const row = {
+    id,
+    createdAt: existingIdx >= 0 ? (rows[existingIdx].createdAt || Date.now()) : Date.now(),
+    updatedAt: Date.now(),
+    ...data,
+  };
+  if (existingIdx >= 0) {
+    rows[existingIdx] = row;
+    writeAll(rows);
+  } else {
+    writeAll([...rows, row]);
+  }
   res.status(201).json({ id: row.id, updatedAt: row.updatedAt });
 });
 

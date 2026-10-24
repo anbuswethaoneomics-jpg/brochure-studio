@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ONEOMICS Bi-Fold Brochure 4 - Epigenomics (A4 landscape, 2 pages)</title>
+<meta name="viewport" content="width=1123">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --b:#1B4F9C; --b2:#2E9BD6; --ice:#EAF3FB; --ice2:#D3E5F5; --coral:#E0262A; --ink:#14233B; --muted:#53647A; --rule:#DCE6F1; --red:#E0262A; --green:#2E9E2E; }
+  @page { size:1123px 794px; margin:0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { background:#E0E6EE; }
+  body { font-family:'Poppins','Segoe UI',Arial,sans-serif; color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .toolbar { width:1123px; margin:16px auto 0; display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:11.5px; color:var(--muted); }
+  .toolbar label { margin-right:12px; cursor:pointer; }
+  .toolbar button { font:600 12px 'Poppins',Arial,sans-serif; background:var(--b); color:#fff; border:0; border-radius:6px; padding:8px 14px; cursor:pointer; }
+  .pg { position:relative; width:1123px; height:794px; margin:12px auto 18px; background:#fff; overflow:hidden; page-break-after:always; break-after:page; }
+  .pg:last-of-type { page-break-after:auto; break-after:auto; }
+  @media screen { .pg { box-shadow:0 8px 28px rgba(20,50,100,.16); } }
+  @media print { html,body { background:#fff; } .toolbar,.lbl { display:none; } .pg { margin:0; box-shadow:none; } .fold { display:none !important; } }
+  .fold { position:absolute; left:561.5px; top:0; bottom:0; border-left:1.5px dashed #8DB4E2; z-index:6; }
+  body.nofold .fold { display:none; }
+  .lbl { position:absolute; right:8px; top:8px; font-size:9px; color:#9AA8BC; z-index:7; }
+  .pl,.pr { position:absolute; top:0; bottom:0; width:561.5px; }
+  .pl { left:0; } .pr { left:561.5px; }
+  [contenteditable]:hover { background:rgba(46,155,214,.10); } [contenteditable] { outline:none; }
+  .logo svg { display:block; height:34px; width:auto; }
+  .tb { position:absolute; left:0; right:0; bottom:0; height:6px; display:flex; z-index:5; }
+  .tb i { flex:1; } .tb i:nth-child(1){background:var(--red)} .tb i:nth-child(2){background:var(--b2)} .tb i:nth-child(3){background:var(--green)}
+  .kick { font-size:9px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:var(--b2); }
+  h1,h2,h3 { font-weight:700; color:var(--ink); letter-spacing:-.3px; }
+  p.t { font-size:10px; line-height:1.75; color:var(--muted); }
+  .foot { position:absolute; bottom:24px; font-size:9.3px; color:var(--muted); }
+
+  /* outside back */
+  .back { padding:44px 48px 0 52px; background:#fff; }
+  .back::before { content:""; position:absolute; left:0; top:0; bottom:0; width:14px; background:linear-gradient(180deg,var(--b),var(--b2)); }
+  .back h2 { font-size:27px; line-height:1.15; margin-top:8px; }
+  .venn { display:flex; justify-content:center; margin-top:14px; }
+  .cap { text-align:center; font-size:9.4px; line-height:1.6; color:var(--muted); margin:6px 20px 0; }
+  .contact { position:absolute; left:52px; right:48px; bottom:62px; background:var(--ice); border-radius:10px; padding:16px 20px; }
+  .contact h3 { font-size:14.5px; margin-bottom:6px; }
+  .contact .row { font-size:9.5px; line-height:1.65; } .contact .row b { display:block; margin-top:6px; font-size:8.3px; letter-spacing:1px; text-transform:uppercase; color:var(--b2); font-weight:700; }
+
+  /* cover */
+  .cover { background:#fff; }
+  .cover .tint { position:absolute; left:0; right:0; bottom:0; height:520px; background:var(--ice); clip-path:polygon(0 22%, 100% 0, 100% 100%, 0 100%); }
+  .cover .brand { position:absolute; left:46px; top:42px; }
+  .cover .head { position:absolute; left:46px; right:40px; top:120px; }
+  .cover h1 { font-size:41px; line-height:1.05; margin-top:12px; font-weight:800; letter-spacing:-1px; color:var(--b); }
+  .cover h1 em { font-style:normal; color:var(--coral); }
+  .cover .sub { margin-top:14px; font-size:11.2px; line-height:1.7; color:var(--muted); max-width:400px; }
+  .cover .art { position:absolute; left:0; bottom:42px; }
+  .cover .bar { position:absolute; left:0; right:0; bottom:6px; height:40px; background:var(--b); color:#fff; display:flex; align-items:center; justify-content:space-between; padding:0 46px; font-size:10px; font-weight:500; }
+
+  /* inside */
+  .in-l { padding:42px 38px 0 46px; } .in-r { padding:42px 46px 0 40px; }
+  .in-l h2, .in-r h2 { font-size:23px; line-height:1.18; margin-top:7px; }
+  .meth { margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .mc { border:1px solid var(--rule); border-top:4px solid var(--b); border-radius:0 0 10px 10px; padding:12px 14px 13px; background:#fff; }
+  .mc:nth-child(2) { border-top-color:var(--b2); } .mc:nth-child(3) { border-top-color:#6A1FA8; } .mc:nth-child(4) { border-top-color:var(--coral); }
+  .mc .code { display:inline-block; font-size:8.4px; font-weight:700; letter-spacing:.6px; padding:2px 8px; border-radius:4px; background:var(--ice); color:var(--b); margin-bottom:6px; }
+  .mc h3 { font-size:12.4px; line-height:1.25; } .mc p { margin-top:4px; font-size:9px; line-height:1.62; color:var(--muted); }
+  h3.s { font-size:13.5px; margin:24px 0 11px; }
+  .chips { display:flex; flex-wrap:wrap; gap:7px; }
+  .chip { font-size:9.2px; font-weight:500; padding:5px 12px; border-radius:999px; background:#fff; border:1.4px solid var(--b2); color:var(--b); }
+  .steps { display:flex; gap:0; }
+  .st { flex:1; padding:10px 12px 11px; font-size:9.2px; font-weight:600; line-height:1.35; color:var(--b); clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%); margin-right:-6px; background:var(--ice2); }
+  .st:first-child { clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%); } .st:nth-child(2) { background:#BCD7F0; } .st:nth-child(3) { background:#A3C8EA; }
+  .st span { display:block; font-size:8px; font-weight:500; color:var(--muted); text-transform:uppercase; letter-spacing:.7px; padding-left:8px; }
+  .st b { display:block; padding-left:8px; font-weight:600; }
+  table { width:100%; border-collapse:collapse; margin-top:14px; font-size:9.3px; }
+  th { text-align:left; font-size:8.5px; letter-spacing:.7px; text-transform:uppercase; color:#fff; background:var(--b); padding:7px 11px; }
+  td { padding:9px 11px; border-bottom:1px solid var(--rule); vertical-align:top; line-height:1.55; color:var(--muted); }
+  td:first-child { color:var(--ink); font-weight:600; width:30%; }
+  tbody tr:nth-child(even) td { background:var(--ice); }
+  .tiers { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .tier { background:var(--ice); border-radius:10px; padding:12px 15px 13px; }
+  .tier h3 { font-size:12.4px; color:var(--b); margin-bottom:5px; }
+  .tier ul { list-style:none; } .tier li { position:relative; padding-left:12px; font-size:9.2px; line-height:1.55; margin:3px 0; color:var(--ink); }
+  .tier li::before { content:""; position:absolute; left:0; top:.5em; width:6px; height:6px; border-radius:50%; background:var(--b2); }
+  .tier.adv li::before { background:var(--coral); }
+  .link { margin-top:16px; border-left:4px solid var(--coral); background:#fff; border-top:1px solid var(--rule); border-right:1px solid var(--rule); border-bottom:1px solid var(--rule); border-radius:0 10px 10px 0; padding:12px 16px; }
+  .link b { display:block; font-size:11.5px; font-weight:700; margin-bottom:3px; } .link span { display:block; font-size:9.3px; line-height:1.65; color:var(--muted); }
+  .cta { position:absolute; left:40px; right:46px; bottom:44px; background:var(--b); color:#fff; border-radius:10px; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; }
+  .cta b { font-size:14.5px; font-weight:700; } .cta span { font-size:9.4px; text-align:right; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="toolbar"><span>Bi-fold 4: A4 landscape, 2 pages (outside and inside), 2 panels each. Click any text to edit.</span><span><label><input type="checkbox" checked onchange="document.body.classList.toggle('nofold',!this.checked)"> Fold lines</label><button onclick="window.print()">Save as PDF</button></span></div>
+
+<section class="pg">
+  <div class="tb"></div><div class="lbl">Page 1 of 2 (outside: back, front cover)</div><div class="fold"></div>
+  <div class="pl back">
+    <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 371.0 100" role="img" aria-label="ONEOMICS"><rect x="4.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M54.50 95.5 L54.50 4.5 L84.50 95.5 L84.50 4.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><rect x="100.00" y="0.00" width="39.0" height="9.0" rx="1.2" fill="#E0262A"/><rect x="100.00" y="45.50" width="39.0" height="9.0" rx="1.2" fill="#2E9BD6"/><rect x="100.00" y="91.00" width="39.0" height="9.0" rx="1.2" fill="#2E9E2E"/><rect x="154.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M204.50 95.5 L204.50 4.5 L225.50 64.0 L246.50 4.5 L246.50 95.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M266.50 4.5 L266.50 95.5" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round"/><path d="M316.50 32.50 L316.50 19.50 A15.0 15.0 0 0 0 286.50 19.50 L286.50 80.50 A15.0 15.0 0 0 0 316.50 80.50 L316.50 67.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M366.50 19.50 A15.0 15.0 0 0 0 336.50 19.50 L336.50 27.50 C336.50 51.00 366.50 49.00 366.50 72.50 L366.50 80.50 A15.0 15.0 0 0 1 336.50 80.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="kick" style="margin-top:32px">Why epigenomics</div>
+    <h2 contenteditable="true" spellcheck="false">Genes are read through layers of regulation</h2>
+    <p class="t" style="margin-top:12px" contenteditable="true" spellcheck="false">Methylation is one of the main mechanisms controlling gene expression in chromosomal DNA. To describe base methylation is to understand gene regulation. Linking DNA, chromatin and RNA data shows which events matter.</p>
+    <div class="venn"><svg viewBox="0 0 300 250" width="300" height="250" xmlns="http://www.w3.org/2000/svg" font-family="Poppins,Arial,sans-serif">
+<circle cx="150" cy="82" r="72" fill="#6A1FA8" opacity=".78"/>
+<circle cx="102" cy="162" r="72" fill="#2E9BD6" opacity=".78"/>
+<circle cx="198" cy="162" r="72" fill="#E0407A" opacity=".78"/>
+<text x="150" y="58" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">DNA</text>
+<text x="80" y="192" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">Chromatin</text>
+<text x="230" y="190" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">RNA</text>
+</svg></div>
+    <p class="cap" contenteditable="true" spellcheck="false">DNA, chromatin and RNA: one integrated view</p>
+    <div class="contact"><h3 contenteditable="true" spellcheck="false">Talk to our team</h3><div class="row"><b>Email</b>sales@oneomics.in<b>Website</b>www.oneomics.in<b>Address</b>Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India</div></div>
+    <div class="foot" style="left:52px">Your Trusted Sequencing Partner</div>
+  </div>
+  <div class="pr cover">
+    <div class="tint"></div>
+    <div class="brand logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 371.0 100" role="img" aria-label="ONEOMICS"><rect x="4.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M54.50 95.5 L54.50 4.5 L84.50 95.5 L84.50 4.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><rect x="100.00" y="0.00" width="39.0" height="9.0" rx="1.2" fill="#E0262A"/><rect x="100.00" y="45.50" width="39.0" height="9.0" rx="1.2" fill="#2E9BD6"/><rect x="100.00" y="91.00" width="39.0" height="9.0" rx="1.2" fill="#2E9E2E"/><rect x="154.50" y="4.50" width="30" height="91.00" rx="15.0" ry="15.0" fill="none" stroke="#0B0B0B" stroke-width="9.0"/><path d="M204.50 95.5 L204.50 4.5 L225.50 64.0 L246.50 4.5 L246.50 95.5" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M266.50 4.5 L266.50 95.5" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round"/><path d="M316.50 32.50 L316.50 19.50 A15.0 15.0 0 0 0 286.50 19.50 L286.50 80.50 A15.0 15.0 0 0 0 316.50 80.50 L316.50 67.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/><path d="M366.50 19.50 A15.0 15.0 0 0 0 336.50 19.50 L336.50 27.50 C336.50 51.00 366.50 49.00 366.50 72.50 L366.50 80.50 A15.0 15.0 0 0 1 336.50 80.50" fill="none" stroke="#0B0B0B" stroke-width="9.0" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="head"><div class="kick">Epigenome sequencing</div>
+      <h1 contenteditable="true" spellcheck="false">Beyond the sequence: <em>epigenomics</em></h1>
+      <p class="sub" contenteditable="true" spellcheck="false">Methylation, histone and chromatin profiling with analysis that links regulation back to gene expression.</p></div>
+    <div class="art"><svg viewBox="0 0 561 460" width="561" height="460" xmlns="http://www.w3.org/2000/svg"><path d="M-30,240.2 L-26,240.5 L-22,240.8 L-18,241.0 L-14,241.2 L-10,241.2 L-6,241.3 L-2,241.2 L2,241.1 L6,240.9 L10,240.7 L14,240.4 L18,240.0 L22,239.6 L26,239.1 L30,238.6 L34,238.0 L38,237.4 L42,236.7 L46,236.0 L50,235.3 L54,234.4 L58,233.6 L62,232.7 L66,231.8 L70,230.9 L74,229.9 L78,228.9 L82,227.9 L86,226.8 L90,225.8 L94,224.7 L98,223.6 L102,222.5 L106,221.4 L110,220.4 L114,219.3 L118,218.2 L122,217.1 L126,216.0 L130,215.0 L134,214.0 L138,213.0 L142,212.0 L146,211.0 L150,210.1 L154,209.2 L158,208.3 L162,207.5 L166,206.7 L170,206.0 L174,205.3 L178,204.6 L182,204.0 L186,203.4 L190,203.0 L194,202.5 L198,202.1 L202,201.8 L206,201.5 L210,201.3 L214,201.2 L218,201.1 L222,201.1 L226,201.1 L230,201.2 L234,201.4 L238,201.7 L242,202.0 L246,202.3 L250,202.8 L254,203.3 L258,203.9 L262,204.5 L266,205.2 L270,206.0 L274,206.8 L278,207.7 L282,208.7 L286,209.7 L290,210.7 L294,211.9 L298,213.0 L302,214.3 L306,215.5 L310,216.9 L314,218.2 L318,219.7 L322,221.1 L326,222.6 L330,224.1 L334,225.7 L338,227.3 L342,228.9 L346,230.6 L350,232.2 L354,233.9 L358,235.6 L362,237.3 L366,239.0 L370,240.8 L374,242.5 L378,244.2 L382,246.0 L386,247.7 L390,249.4 L394,251.1 L398,252.8 L402,254.4 L406,256.1 L410,257.7 L414,259.3 L418,260.9 L422,262.4 L426,263.9 L430,265.3 L434,266.8 L438,268.1 L442,269.5 L446,270.7 L450,272.0 L454,273.2 L458,274.3 L462,275.3 L466,276.4 L470,277.3 L474,278.2 L478,279.0 L482,279.8 L486,280.5 L490,281.2 L494,281.7 L498,282.2 L502,282.7 L506,283.1 L510,283.4 L514,283.6 L518,283.8 L522,283.9 L526,284.0 L530,284.0 L534,283.9 L538,283.7 L542,283.5 L546,283.3 L550,282.9 L554,282.6 L558,282.1 L562,281.6 L566,281.1 L570,280.5 L574,279.8 L578,279.1 L582,278.4 L586,277.6 L590,276.8 L594,275.9 L598,275.0" fill="none" stroke="#9CB8E0" stroke-width="3" stroke-linecap="round"/><circle cx="10" cy="240.7" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="10" cy="240.7" r="6.3" fill="#2E9BD6" opacity=".18"/><circle cx="68" cy="231.3" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="68" cy="231.3" r="6.3" fill="#2E9BD6" opacity=".18"/><circle cx="126" cy="216.0" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="126" cy="216.0" r="6.3" fill="#2E9BD6" opacity=".18"/><line x1="126" y1="201.0" x2="126" y2="187.0" stroke="#E0262A" stroke-width="2"/><circle cx="126" cy="182.0" r="5.5" fill="#E0262A"/><circle cx="184" cy="203.7" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="184" cy="203.7" r="6.3" fill="#2E9BD6" opacity=".18"/><circle cx="242" cy="202.0" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="242" cy="202.0" r="6.3" fill="#2E9BD6" opacity=".18"/><circle cx="300" cy="213.6" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="300" cy="213.6" r="6.3" fill="#2E9BD6" opacity=".18"/><line x1="300" y1="198.6" x2="300" y2="184.6" stroke="#E0262A" stroke-width="2"/><circle cx="300" cy="179.6" r="5.5" fill="#E0262A"/><circle cx="358" cy="235.6" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="358" cy="235.6" r="6.3" fill="#2E9BD6" opacity=".18"/><circle cx="416" cy="260.1" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="416" cy="260.1" r="6.3" fill="#2E9BD6" opacity=".18"/><circle cx="474" cy="278.2" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="474" cy="278.2" r="6.3" fill="#2E9BD6" opacity=".18"/><line x1="474" y1="263.2" x2="474" y2="249.2" stroke="#E0262A" stroke-width="2"/><circle cx="474" cy="244.2" r="5.5" fill="#E0262A"/><circle cx="532" cy="283.9" r="15" fill="#fff" stroke="#2E9BD6" stroke-width="3.5"/><circle cx="532" cy="283.9" r="6.3" fill="#2E9BD6" opacity=".18"/><path d="M-30,319.4 L-26,318.6 L-22,317.8 L-18,317.0 L-14,316.2 L-10,315.4 L-6,314.6 L-2,313.9 L2,313.2 L6,312.5 L10,311.8 L14,311.1 L18,310.5 L22,309.9 L26,309.3 L30,308.8 L34,308.3 L38,307.9 L42,307.4 L46,307.1 L50,306.7 L54,306.4 L58,306.2 L62,306.0 L66,305.8 L70,305.7 L74,305.7 L78,305.7 L82,305.7 L86,305.8 L90,306.0 L94,306.2 L98,306.5 L102,306.8 L106,307.1 L110,307.5 L114,308.0 L118,308.5 L122,309.1 L126,309.7 L130,310.4 L134,311.2 L138,311.9 L142,312.8 L146,313.6 L150,314.5 L154,315.5 L158,316.5 L162,317.6 L166,318.6 L170,319.8 L174,320.9 L178,322.1 L182,323.4 L186,324.6 L190,325.9 L194,327.2 L198,328.6 L202,329.9 L206,331.3 L210,332.7 L214,334.1 L218,335.5 L222,337.0 L226,338.4 L230,339.9 L234,341.3 L238,342.7 L242,344.2 L246,345.6 L250,347.1 L254,348.5 L258,349.9 L262,351.3 L266,352.7 L270,354.0 L274,355.4 L278,356.7 L282,358.0 L286,359.2 L290,360.5 L294,361.7 L298,362.8 L302,364.0 L306,365.1 L310,366.1 L314,367.1 L318,368.1 L322,369.0 L326,369.9 L330,370.7 L334,371.5 L338,372.2 L342,372.9 L346,373.5 L350,374.1 L354,374.6 L358,375.1 L362,375.5 L366,375.9 L370,376.2 L374,376.5 L378,376.7 L382,376.8 L386,376.9 L390,377.0 L394,377.0 L398,376.9 L402,376.8 L406,376.7 L410,376.5 L414,376.2 L418,375.9 L422,375.6 L426,375.2 L430,374.8 L434,374.4 L438,373.9 L442,373.3 L446,372.8 L450,372.2 L454,371.6 L458,370.9 L462,370.2 L466,369.5 L470,368.8 L474,368.0 L478,367.3 L482,366.5 L486,365.7 L490,364.9 L494,364.1 L498,363.3 L502,362.5 L506,361.7 L510,360.9 L514,360.1 L518,359.3 L522,358.5 L526,357.8 L530,357.0 L534,356.3 L538,355.5 L542,354.9 L546,354.2 L550,353.5 L554,352.9 L558,352.3 L562,351.8 L566,351.3 L570,350.8 L574,350.4 L578,350.0 L582,349.6 L586,349.3 L590,349.0 L594,348.8 L598,348.6" fill="none" stroke="#9CB8E0" stroke-width="3" stroke-linecap="round"/><circle cx="10" cy="311.8" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="10" cy="311.8" r="6.3" fill="#1B4F9C" opacity=".18"/><line x1="10" y1="296.8" x2="10" y2="282.8" stroke="#E0262A" stroke-width="2"/><circle cx="10" cy="277.8" r="5.5" fill="#E0262A"/><circle cx="68" cy="305.8" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="68" cy="305.8" r="6.3" fill="#1B4F9C" opacity=".18"/><circle cx="126" cy="309.7" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="126" cy="309.7" r="6.3" fill="#1B4F9C" opacity=".18"/><circle cx="184" cy="324.0" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="184" cy="324.0" r="6.3" fill="#1B4F9C" opacity=".18"/><line x1="184" y1="309.0" x2="184" y2="295.0" stroke="#E0262A" stroke-width="2"/><circle cx="184" cy="290.0" r="5.5" fill="#E0262A"/><circle cx="242" cy="344.2" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="242" cy="344.2" r="6.3" fill="#1B4F9C" opacity=".18"/><circle cx="300" cy="363.4" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="300" cy="363.4" r="6.3" fill="#1B4F9C" opacity=".18"/><circle cx="358" cy="375.1" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="358" cy="375.1" r="6.3" fill="#1B4F9C" opacity=".18"/><circle cx="416" cy="376.1" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="416" cy="376.1" r="6.3" fill="#1B4F9C" opacity=".18"/><line x1="416" y1="361.1" x2="416" y2="347.1" stroke="#E0262A" stroke-width="2"/><circle cx="416" cy="342.1" r="5.5" fill="#E0262A"/><circle cx="474" cy="368.0" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="474" cy="368.0" r="6.3" fill="#1B4F9C" opacity=".18"/><circle cx="532" cy="356.6" r="15" fill="#fff" stroke="#1B4F9C" stroke-width="3.5"/><circle cx="532" cy="356.6" r="6.3" fill="#1B4F9C" opacity=".18"/></svg></div>
+    <div class="bar"><span>Pioneer in Genomics Services</span><span>www.oneomics.in</span></div>
+  </div>
+</section>
+
+<section class="pg">
+  <div class="tb"></div><div class="lbl">Page 2 of 2 (inside)</div><div class="fold"></div>
+  <div class="pl in-l">
+    <div class="kick">Methods</div>
+    <h2 contenteditable="true" spellcheck="false">Four ways to map the epigenome</h2>
+    <div class="meth">
+      <div class="mc"><span class="code">WGBS · RRBS · MeDIP</span><h3 contenteditable="true" spellcheck="false">DNA methylation</h3><p contenteditable="true" spellcheck="false">Convert unmethylated cytosines with bisulfite, or pull down methylated DNA. Methylation is quantified across the target regions, such as CpG islands.</p></div>
+      <div class="mc"><span class="code">ChIP-seq</span><h3 contenteditable="true" spellcheck="false">DNA binding sites</h3><p contenteditable="true" spellcheck="false">Immunoprecipitation with sequencing finds where proteins bind across the genome, with peaks annotated by position, read count, p-value and motif.</p></div>
+      <div class="mc"><span class="code">HISTONE CHIP-SEQ</span><h3 contenteditable="true" spellcheck="false">Chromatin state</h3><p contenteditable="true" spellcheck="false">Antibodies against histone modifications reveal promoters, active and inactive enhancers and actively transcribed genes.</p></div>
+      <div class="mc"><span class="code">ATAC-seq</span><h3 contenteditable="true" spellcheck="false">Open chromatin</h3><p contenteditable="true" spellcheck="false">Traces genome segments that are not densely packed, which are linked to active regions of gene expression or regulation.</p></div>
+    </div>
+    <h3 class="s">Library preparation</h3>
+    <div class="steps"><div class="st"><span>Step 1</span><b>Template preparation</b></div><div class="st"><span>Step 2</span><b>Library synthesis</b></div><div class="st"><span>Step 3</span><b>Library amplification</b></div></div>
+    <h3 class="s">Sequencing platforms</h3>
+    <div class="chips"><span class="chip">HiSeq X</span><span class="chip">HiSeq 2500 / 4000</span><span class="chip">NovaSeq 6000</span><span class="chip">MiSeq</span></div>
+    <h3 class="s">Every ChIP-seq peak list includes</h3>
+    <div class="chips"><span class="chip">Genomic position</span><span class="chip">Number of reads</span><span class="chip">p-values</span><span class="chip">Distance to TSS</span><span class="chip">Exon, intron or UTR</span><span class="chip">Binding motif</span></div>
+    <div class="foot" style="left:46px">sales@oneomics.in &nbsp;|&nbsp; www.oneomics.in</div>
+  </div>
+  <div class="pr in-r">
+    <div class="kick">Analysis and deliverables</div>
+    <h2 contenteditable="true" spellcheck="false">What you get, by method</h2>
+    <table>
+      <thead><tr><th>Method</th><th>Deliverables</th></tr></thead>
+      <tbody>
+        <tr><td>DNA methylation</td><td>Methylation quantified for all CpG islands, functional annotation of differentially methylated islands, individual methylated cytosines (BS and RRBS-seq)</td></tr>
+        <tr><td>ChIP-seq binding sites</td><td>Statistically significant binding locations, functional annotation of loci, comparison of binding events between samples</td></tr>
+        <tr><td>Chromatin state</td><td>Annotated binding locations and interpretation of chromatin state from combinations of histone modifications</td></tr>
+        <tr><td>ATAC-seq</td><td>Loci of open chromatin, differentially open chromatin between samples, functional annotation</td></tr>
+      </tbody>
+    </table>
+    <h3 class="s">Data analysis tiers</h3>
+    <div class="tiers">
+      <div class="tier"><h3>Standard</h3><ul><li>Universal methylation profiles</li><li>Specific methylation profiles</li><li>CpG islands</li><li>Differentially methylated regions (DMRs)</li></ul></div>
+      <div class="tier adv"><h3>Advanced</h3><ul><li>DMR-associated genes</li><li>Gene set analysis</li><li>Comparative analysis</li><li>Motif discovery and expression integration</li></ul></div>
+    </div>
+    <div class="link"><b>Linked back to expression</b><span contenteditable="true" spellcheck="false">Methylated regions are annotated with overlapping promoters and enhancers, and linked to expression data to classify functional methylation events in your experiment.</span></div>
+    <div class="cta"><b contenteditable="true" spellcheck="false">Plan your epigenomics project</b><span contenteditable="true" spellcheck="false">sales@oneomics.in<br>www.oneomics.in</span></div>
+  </div>
+</section>
+</body>
+</html>

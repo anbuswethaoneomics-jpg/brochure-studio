@@ -187,6 +187,7 @@ function lsSaveFullDesign(item) {
       height: item.height,
       folds: item.folds,
       pages: item.pages,
+      thumbnail: typeof item.thumbnail === 'string' ? item.thumbnail : '',
       templateId: item.templateId || null,
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
@@ -241,23 +242,12 @@ export const listDesigns = async () => {
     }
   });
 
-  // 2. Fallback to localStorage meta & full designs if missing
+  // 2. Fallback to localStorage meta if missing (only if it has valid data)
   lsGetMeta().forEach((m) => {
-    if (m && m.id && !localMap.has(m.id)) localMap.set(m.id, m);
-  });
-  lsGetFullDesigns().forEach((f) => {
-    if (f && f.id && !localMap.has(f.id)) {
-      localMap.set(f.id, {
-        id: f.id,
-        name: f.name || 'Untitled design',
-        width: f.width,
-        height: f.height,
-        folds: f.folds,
-        pageCount: Array.isArray(f.pages) ? f.pages.length : 1,
-        thumbnail: '',
-        templateId: f.templateId || null,
-        createdAt: f.createdAt || Date.now(),
-        updatedAt: f.updatedAt || Date.now(),
+    if (m && m.id && !localMap.has(m.id)) {
+      localMap.set(m.id, {
+        ...m,
+        thumbnail: m.thumbnail || '',
       });
     }
   });
@@ -269,10 +259,45 @@ export const listDesigns = async () => {
       if (d && d.id) {
         const existing = localMap.get(d.id);
         if (!existing || (d.updatedAt || 0) >= (existing.updatedAt || 0)) {
-          localMap.set(d.id, d);
+          localMap.set(d.id, {
+            ...d,
+            thumbnail: d.thumbnail || (existing?.thumbnail || ''),
+          });
         }
       }
     });
+  }
+
+  // 4. Fill thumbnails from templates if available
+  localMap.forEach((item) => {
+    if (!item.thumbnail) {
+      const matchingTpl = TEMPLATES.find((t) => t.id === item.templateId || t.name === item.name);
+      if (matchingTpl?.preview) {
+        item.thumbnail = matchingTpl.preview;
+      }
+    }
+  });
+
+  // 5. Clean up any empty ghost duplicates (entries with no thumbnail or temp IDs where a real version exists)
+  const itemsWithThumbs = new Map();
+  for (const item of localMap.values()) {
+    if (item.thumbnail) {
+      itemsWithThumbs.set(item.name, item.id);
+    }
+  }
+
+  for (const [id, item] of Array.from(localMap.entries())) {
+    // If an item has no thumbnail and another item with the same name exists with a thumbnail,
+    // or if this is an orphaned temporary 'design_' record that duplicates a UUID item:
+    const isDuplicate = itemsWithThumbs.has(item.name) && itemsWithThumbs.get(item.name) !== id;
+    if (!item.thumbnail || (id.startsWith('design_') && isDuplicate)) {
+      if (isDuplicate || !item.thumbnail) {
+        localMap.delete(id);
+        idbDelete(id).catch(() => {});
+        lsDeleteMeta(id);
+        lsDeleteFullDesign(id);
+      }
+    }
   }
 
   return Array.from(localMap.values()).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
@@ -327,7 +352,7 @@ export const getDesign = async (id) => {
 };
 
 export const saveDesign = async (d) => {
-  const id = d.id || ('design_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8));
+  const id = d.id || (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : ('design_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8)));
   const record = {
     id,
     name: String(d.name || 'Untitled design').slice(0, 120),

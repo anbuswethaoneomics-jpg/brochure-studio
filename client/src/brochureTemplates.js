@@ -6790,6 +6790,375 @@ export function bifoldMicrobiomeBrochurePage2() {
   return s;
 }
 
+// ONEOMICS Bi-Fold Brochure 7 - Epigenomics — Page 1 (Outside)
+export function bifoldEpigenomicsBrochure() {
+  const s = [];
+
+  const C_B = '#1B4F9C';
+  const C_B2 = '#2E9BD6';
+  const C_ICE = '#EAF3FB';
+  const C_CORAL = '#E0262A';
+  const C_INK = '#14233B';
+  const C_MUTED = '#53647A';
+  const C_RED = '#E0262A';
+  const C_GREEN = '#2E9E2E';
+
+  // Overall Background
+  s.push(r(0, 0, 1123, 794, '#FFFFFF'));
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 788, '#8DB4E2'));
+
+  // Bottom 3-colour stripe (6px height spanning 1123 width)
+  s.push(r(0, 788, 374.33, 6, C_RED));
+  s.push(r(374.33, 788, 374.33, 6, C_B2));
+  s.push(r(748.66, 788, 374.34, 6, C_GREEN));
+
+  // ==========================================
+  // LEFT PANEL (Back Cover, x: 0 to 561.5)
+  // ==========================================
+  const lX = 52;
+  const lW = 461.5;
+
+  // Left vertical accent gradient bar (14px width)
+  s.push(r(0, 0, 14, 788, C_B));
+
+  // Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: lX, y: 44, w: 140 });
+
+  // Kicker
+  s.push(t('WHY EPIGENOMICS', lX, 112, lW, 9, { bold: 1, color: C_B2, font: 'Poppins', sp: 180 }));
+
+  // Main Heading
+  s.push(t('Genes are read through layers of regulation', lX, 132, 440, 27, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.15 }));
+
+  // Paragraph Text
+  const bkLead = 'Methylation is one of the main mechanisms controlling gene expression in chromosomal DNA. To describe base methylation is to understand gene regulation. Linking DNA, chromatin and RNA data shows which events matter.';
+  s.push(t(bkLead, lX, 204, lW, 10, { color: C_MUTED, font: 'Poppins', lh: 1.75 }));
+
+  // 3-Circle Venn Diagram (centered horizontally around x = 280.75)
+  // DNA (Top Purple), Chromatin (Left Blue), RNA (Right Pink)
+  const vX = 131;
+  const vY = 280;
+  // Circle 1: DNA (Top)
+  s.push(c(vX + 150, vY + 82, 72, '#6A1FA8', { opacity: 0.8 }));
+  s.push(t('DNA', vX + 100, vY + 72, 100, 17, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+
+  // Circle 2: Chromatin (Left)
+  s.push(c(vX + 102, vY + 162, 72, C_B2, { opacity: 0.8 }));
+  s.push(t('Chromatin', vX + 42, vY + 156, 120, 13, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+
+  // Circle 3: RNA (Right)
+  s.push(c(vX + 198, vY + 162, 72, '#E0407A', { opacity: 0.8 }));
+  s.push(t('RNA', vX + 148, vY + 152, 100, 17, { bold: 1, color: '#ffffff', align: 'center', font: 'Poppins' }));
+
+  // Caption below Venn
+  s.push(t('DNA, chromatin and RNA: one integrated view', lX, 526, lW, 9.4, { color: C_MUTED, align: 'center', font: 'Poppins' }));
+
+  // Talk to our team Card
+  const cY = 556;
+  const cH = 176;
+  s.push(r(lX, cY, lW, cH, C_ICE, { r: 10 }));
+  s.push(t('Talk to our team', lX + 20, cY + 16, lW - 40, 14.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+
+  // Row 1: EMAIL
+  s.push(t('EMAIL', lX + 20, cY + 44, lW - 40, 8.3, { bold: 1, color: C_B2, font: 'Poppins', sp: 100 }));
+  s.push(t('sales@oneomics.in', lX + 20, cY + 58, lW - 40, 9.5, { color: C_INK, font: 'Poppins' }));
+
+  // Row 2: WEBSITE
+  s.push(t('WEBSITE', lX + 20, cY + 80, lW - 40, 8.3, { bold: 1, color: C_B2, font: 'Poppins', sp: 100 }));
+  s.push(t('www.oneomics.in', lX + 20, cY + 94, lW - 40, 9.5, { color: C_INK, font: 'Poppins' }));
+
+  // Row 3: ADDRESS
+  s.push(t('ADDRESS', lX + 20, cY + 116, lW - 40, 8.3, { bold: 1, color: C_B2, font: 'Poppins', sp: 100 }));
+  s.push(t('Oneomics Private Limited, F12, Bharathidasan University Technology Park, Khajamalai Campus, Tiruchirapalli, Tamil Nadu 620023, India', lX + 20, cY + 130, lW - 40, 9.5, { color: C_INK, font: 'Poppins', lh: 1.65 }));
+
+  // Tagline Left
+  s.push(t('Your Trusted Sequencing Partner', lX, 756, lW, 9.3, { color: C_MUTED, font: 'Poppins' }));
+
+  // ==========================================
+  // RIGHT PANEL (Front Cover, x: 561.5 to 1123)
+  // ==========================================
+  const rX = 607.5;
+  const rW = 465.5;
+
+  // Ice-blue diagonal tint polygon on bottom right
+  s.push(r(561.5, 388, 561.5, 360, C_ICE));
+
+  // Front Cover Logo
+  s.push({ k: 'image', src: '/assets/oneomics_logo.png', x: rX, y: 42, w: 140 });
+
+  // Kicker
+  s.push(t('EPIGENOME SEQUENCING', rX, 120, rW, 9, { bold: 1, color: C_B2, font: 'Poppins', sp: 180 }));
+
+  // Headline
+  s.push(t('Beyond the sequence:', rX, 142, 420, 39, { bold: 1, color: C_B, font: 'Poppins', lh: 1.05 }));
+  s.push(t('epigenomics', rX, 186, 420, 39, { bold: 1, color: C_CORAL, font: 'Poppins' }));
+
+  // Subtitle
+  const coverSub = 'Methylation, histone and chromatin profiling with analysis that links regulation back to gene expression.';
+  s.push(t(coverSub, rX, 238, 410, 11.2, { color: C_MUTED, font: 'Poppins', lh: 1.7 }));
+
+  // NOTE: Strand 1 is removed as marked by the user.
+  // We render Strand 2 (middle) and Strand 3 (bottom):
+
+  // Strand 2: Beads and lollipops (y base ≈ 490 to 570)
+  const strand2Beads = [
+    { x: 572, y: 533 },
+    { x: 630, y: 523 },
+    { x: 688, y: 508, popY: 474 }, // Lollipop
+    { x: 746, y: 496 },
+    { x: 804, y: 494 },
+    { x: 862, y: 506, popY: 472 }, // Lollipop
+    { x: 920, y: 528 },
+    { x: 978, y: 552 },
+    { x: 1036, y: 570, popY: 536 }, // Lollipop
+    { x: 1094, y: 576 },
+  ];
+
+  // Connecting line for Strand 2
+  s.push(r(572, 530, 520, 3, '#9CB8E0', { r: 1.5 }));
+
+  strand2Beads.forEach((b) => {
+    if (b.popY) {
+      s.push(r(b.x - 1, b.popY, 2, b.y - b.popY, C_CORAL));
+      s.push(c(b.x, b.popY, 5.5, C_CORAL));
+    }
+    s.push(c(b.x, b.y, 14, '#ffffff', { stroke: C_B2, sw: 3.5 }));
+    s.push(c(b.x, b.y, 6, C_B2, { opacity: 0.2 }));
+  });
+
+  // Strand 3: Beads and lollipops (y base ≈ 600 to 670)
+  const strand3Beads = [
+    { x: 572, y: 604, popY: 570 }, // Lollipop
+    { x: 630, y: 598 },
+    { x: 688, y: 602 },
+    { x: 746, y: 616, popY: 582 }, // Lollipop
+    { x: 804, y: 636 },
+    { x: 862, y: 655 },
+    { x: 920, y: 667 },
+    { x: 978, y: 668, popY: 634 }, // Lollipop
+    { x: 1036, y: 660 },
+    { x: 1094, y: 648 },
+  ];
+
+  // Connecting line for Strand 3
+  s.push(r(572, 634, 520, 3, '#9CB8E0', { r: 1.5 }));
+
+  strand3Beads.forEach((b) => {
+    if (b.popY) {
+      s.push(r(b.x - 1, b.popY, 2, b.y - b.popY, C_CORAL));
+      s.push(c(b.x, b.popY, 5.5, C_CORAL));
+    }
+    s.push(c(b.x, b.y, 14, '#ffffff', { stroke: C_B, sw: 3.5 }));
+    s.push(c(b.x, b.y, 6, C_B, { opacity: 0.2 }));
+  });
+
+  // Bottom Navy Bar (Page 1 Cover)
+  s.push(r(561.5, 748, 561.5, 40, C_B));
+  s.push(t('Pioneer in Genomics Services', rX, 760, 240, 10, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+  s.push(t('www.oneomics.in', 920, 760, 150, 10, { bold: 1, color: '#ffffff', align: 'right', font: 'Poppins' }));
+
+  return s;
+}
+
+// ONEOMICS Bi-Fold Brochure 7 - Epigenomics — Page 2 (Inside)
+export function bifoldEpigenomicsBrochurePage2() {
+  const s = [];
+
+  const C_B = '#1B4F9C';
+  const C_B2 = '#2E9BD6';
+  const C_ICE = '#EAF3FB';
+  const C_CORAL = '#E0262A';
+  const C_INK = '#14233B';
+  const C_MUTED = '#53647A';
+  const C_RULE = '#DCE6F1';
+  const C_RED = '#E0262A';
+  const C_GREEN = '#2E9E2E';
+
+  // Overall Background
+  s.push(r(0, 0, 1123, 794, '#FFFFFF'));
+
+  // Center fold divider line
+  s.push(r(561, 0, 1, 788, '#8DB4E2'));
+
+  // Bottom 3-colour stripe (6px height spanning 1123 width)
+  s.push(r(0, 788, 374.33, 6, C_RED));
+  s.push(r(374.33, 788, 374.33, 6, C_B2));
+  s.push(r(748.66, 788, 374.34, 6, C_GREEN));
+
+  // ==========================================
+  // INSIDE LEFT PANEL (x: 0 to 561.5)
+  // ==========================================
+  const lX = 46;
+  const lW = 475.5;
+
+  // Kicker & Headline
+  s.push(t('METHODS', lX, 42, lW, 9, { bold: 1, color: C_B2, font: 'Poppins', sp: 180 }));
+  s.push(t('Four ways to map the epigenome', lX, 60, lW, 23, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.18 }));
+
+  // 2x2 Grid of Method Cards
+  const mY = 104;
+  const colW = 230;
+  const colGap = 15.5;
+  const cardH = 124;
+
+  const methods = [
+    { code: 'WGBS · RRBS · MeDIP', title: 'DNA methylation', desc: 'Convert unmethylated cytosines with bisulfite, or pull down methylated DNA. Methylation is quantified across the target regions, such as CpG islands.', border: C_B, x: lX, y: mY },
+    { code: 'ChIP-seq', title: 'DNA binding sites', desc: 'Immunoprecipitation with sequencing finds where proteins bind across the genome, with peaks annotated by position, read count, p-value and motif.', border: C_B2, x: lX + colW + colGap, y: mY },
+    { code: 'HISTONE CHIP-SEQ', title: 'Chromatin state', desc: 'Antibodies against histone modifications reveal promoters, active and inactive enhancers and actively transcribed genes.', border: '#6A1FA8', x: lX, y: mY + cardH + 12 },
+    { code: 'ATAC-seq', title: 'Open chromatin', desc: 'Traces genome segments that are not densely packed, which are linked to active regions of gene expression or regulation.', border: C_CORAL, x: lX + colW + colGap, y: mY + cardH + 12 },
+  ];
+
+  methods.forEach((m) => {
+    s.push(r(m.x, m.y, colW, cardH, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+    s.push(r(m.x, m.y, colW, 4, m.border, { r: 2 }));
+    s.push(r(m.x + 12, m.y + 12, 115, 18, C_ICE, { r: 4 }));
+    s.push(t(m.code, m.x + 16, m.y + 15, 107, 8.4, { bold: 1, color: C_B, font: 'Poppins', sp: 40 }));
+    s.push(t(m.title, m.x + 12, m.y + 36, colW - 24, 12.4, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(m.desc, m.x + 12, m.y + 54, colW - 24, 9, { color: C_MUTED, font: 'Poppins', lh: 1.6 }));
+  });
+
+  // Library preparation steps
+  const lpY = 372;
+  s.push(t('Library preparation', lX, lpY, lW, 13.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+
+  const stepW = (lW - 16) / 3;
+  const prepSteps = [
+    { step: 'STEP 1', label: 'Template preparation', bg: C_ICE },
+    { step: 'STEP 2', label: 'Library synthesis', bg: '#BCD7F0' },
+    { step: 'STEP 3', label: 'Library amplification', bg: '#A3C8EA' },
+  ];
+
+  prepSteps.forEach((st, i) => {
+    const sx = lX + i * (stepW + 8);
+    s.push(r(sx, lpY + 22, stepW, 46, st.bg, { r: 6 }));
+    s.push(t(st.step, sx + 10, lpY + 28, stepW - 20, 8, { bold: 1, color: C_MUTED, font: 'Poppins', sp: 60 }));
+    s.push(t(st.label, sx + 10, lpY + 42, stepW - 20, 9.2, { bold: 1, color: C_B, font: 'Poppins' }));
+  });
+
+  // Sequencing platforms
+  const spY = 464;
+  s.push(t('Sequencing platforms', lX, spY, lW, 13.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  const platforms = ['HiSeq X', 'HiSeq 2500 / 4000', 'NovaSeq 6000', 'MiSeq'];
+  let curX = lX;
+  platforms.forEach((p) => {
+    const pw = p.length * 7.5 + 26;
+    s.push(r(curX, spY + 22, pw, 28, '#ffffff', { r: 14, stroke: C_B2, sw: 1.4 }));
+    s.push(t(p, curX, spY + 28, pw, 9.2, { bold: 1, color: C_B, align: 'center', font: 'Poppins' }));
+    curX += pw + 8;
+  });
+
+  // Every ChIP-seq peak list includes
+  const pkY = 544;
+  s.push(t('Every ChIP-seq peak list includes', lX, pkY, lW, 13.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  const peakItems = [
+    { text: 'Genomic position', x: lX, y: pkY + 22, w: 124 },
+    { text: 'Number of reads', x: lX + 132, y: pkY + 22, w: 116 },
+    { text: 'p-values', x: lX + 256, y: pkY + 22, w: 76 },
+    { text: 'Distance to TSS', x: lX + 340, y: pkY + 22, w: 110 },
+    { text: 'Exon, intron or UTR', x: lX, y: pkY + 58, w: 136 },
+    { text: 'Binding motif', x: lX + 144, y: pkY + 58, w: 104 },
+  ];
+  peakItems.forEach((pi) => {
+    s.push(r(pi.x, pi.y, pi.w, 28, '#ffffff', { r: 14, stroke: C_B2, sw: 1.4 }));
+    s.push(t(pi.text, pi.x, pi.y + 6, pi.w, 9.2, { bold: 1, color: C_B, align: 'center', font: 'Poppins' }));
+  });
+
+  // Inside Left Footer
+  s.push(t('sales@oneomics.in   |   www.oneomics.in', lX, 756, lW, 9.3, { color: C_MUTED, font: 'Poppins' }));
+
+  // ==========================================
+  // INSIDE RIGHT PANEL (x: 561.5 to 1123)
+  // ==========================================
+  const rX = 601.5;
+  const rW = 475.5;
+
+  // Kicker & Headline
+  s.push(t('ANALYSIS AND DELIVERABLES', rX, 42, rW, 9, { bold: 1, color: C_B2, font: 'Poppins', sp: 180 }));
+  s.push(t('What you get, by method', rX, 60, rW, 23, { bold: 1, color: C_INK, font: 'Poppins', lh: 1.18 }));
+
+  // Table
+  const tblY = 104;
+  const col1W = 140;
+  const col2W = rW - col1W;
+
+  // Table Header
+  s.push(r(rX, tblY, rW, 28, C_B, { r: 4 }));
+  s.push(t('METHOD', rX + 10, tblY + 7, col1W - 20, 8.5, { bold: 1, color: '#ffffff', font: 'Poppins', sp: 60 }));
+  s.push(t('DELIVERABLES', rX + col1W + 10, tblY + 7, col2W - 20, 8.5, { bold: 1, color: '#ffffff', font: 'Poppins', sp: 60 }));
+
+  const rows = [
+    { method: 'DNA methylation', deliv: 'Methylation quantified for all CpG islands, functional annotation of differentially methylated islands, individual methylated cytosines (BS and RRBS-seq)', h: 58 },
+    { method: 'ChIP-seq binding sites', deliv: 'Statistically significant binding locations, functional annotation of loci, comparison of binding events between samples', h: 48, bg: C_ICE },
+    { method: 'Chromatin state', deliv: 'Annotated binding locations and interpretation of chromatin state from combinations of histone modifications', h: 48 },
+    { method: 'ATAC-seq', deliv: 'Loci of open chromatin, differentially open chromatin between samples, functional annotation', h: 44, bg: C_ICE },
+  ];
+
+  let curTblY = tblY + 28;
+  rows.forEach((rw) => {
+    if (rw.bg) {
+      s.push(r(rX, curTblY, rW, rw.h, rw.bg));
+    }
+    s.push(r(rX, curTblY + rw.h - 1, rW, 1, C_RULE));
+    s.push(t(rw.method, rX + 10, curTblY + 8, col1W - 20, 9.3, { bold: 1, color: C_INK, font: 'Poppins' }));
+    s.push(t(rw.deliv, rX + col1W + 10, curTblY + 8, col2W - 20, 9.3, { color: C_MUTED, font: 'Poppins', lh: 1.55 }));
+    curTblY += rw.h;
+  });
+
+  // Data analysis tiers
+  const tierY = 356;
+  s.push(t('Data analysis tiers', rX, tierY, rW, 13.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+
+  const tColW = (rW - 12) / 2;
+  // Tier 1: Standard
+  s.push(r(rX, tierY + 22, tColW, 142, C_ICE, { r: 10 }));
+  s.push(t('Standard', rX + 15, tierY + 32, tColW - 30, 12.4, { bold: 1, color: C_B, font: 'Poppins' }));
+  const stdItems = [
+    'Universal methylation profiles',
+    'Specific methylation profiles',
+    'CpG islands',
+    'Differentially methylated regions (DMRs)',
+  ];
+  stdItems.forEach((it, i) => {
+    const iy = tierY + 54 + i * 22;
+    s.push(c(rX + 20, iy + 6, 3, C_B2));
+    s.push(t(it, rX + 28, iy, tColW - 40, 9.2, { color: C_INK, font: 'Poppins' }));
+  });
+
+  // Tier 2: Advanced
+  const t2X = rX + tColW + 12;
+  s.push(r(t2X, tierY + 22, tColW, 142, C_ICE, { r: 10 }));
+  s.push(t('Advanced', t2X + 15, tierY + 32, tColW - 30, 12.4, { bold: 1, color: C_B, font: 'Poppins' }));
+  const advItems = [
+    'DMR-associated genes',
+    'Gene set analysis',
+    'Comparative analysis',
+    'Motif discovery and expression integration',
+  ];
+  advItems.forEach((it, i) => {
+    const iy = tierY + 54 + i * 22;
+    s.push(c(t2X + 20, iy + 6, 3, C_CORAL));
+    s.push(t(it, t2X + 28, iy, tColW - 40, 9.2, { color: C_INK, font: 'Poppins' }));
+  });
+
+  // Linked back to expression card
+  const linkY = 538;
+  s.push(r(rX, linkY, rW, 76, '#ffffff', { r: 8, stroke: C_RULE, sw: 1 }));
+  s.push(r(rX, linkY, 4, 76, C_CORAL, { r: 2 }));
+  s.push(t('Linked back to expression', rX + 16, linkY + 12, rW - 32, 11.5, { bold: 1, color: C_INK, font: 'Poppins' }));
+  s.push(t('Methylated regions are annotated with overlapping promoters and enhancers, and linked to expression data to classify functional methylation events in your experiment.', rX + 16, linkY + 30, rW - 32, 9.3, { color: C_MUTED, font: 'Poppins', lh: 1.65 }));
+
+  // CTA Banner
+  const ctaY = 660;
+  const ctaH = 64;
+  s.push(r(rX, ctaY, rW, ctaH, C_B, { r: 10 }));
+  s.push(t('Plan your epigenomics project', rX + 20, ctaY + 22, 270, 14.5, { bold: 1, color: '#ffffff', font: 'Poppins' }));
+  s.push(t('sales@oneomics.in\nwww.oneomics.in', rX + 295, ctaY + 16, rW - 315, 9.4, { color: '#ffffff', align: 'right', font: 'Poppins', lh: 1.6 }));
+
+  return s;
+}
+
 // Trifold Brochure — Generic Empty Template
 export function trifoldEmpty(pageNum = 2) {
   const s = [];
@@ -11182,6 +11551,21 @@ export const TEMPLATES = [
     emptySpecs: bifoldBrochureEmpty,
     pages: [bifoldMicrobiomeBrochure, bifoldMicrobiomeBrochurePage2],
     swatch: ['#1F6B4F', '#E8A317', '#E8F4EE'],
+  },
+  {
+    id: 'bifold-epigenomics',
+    name: 'ONEOMICS Bi-Fold Brochure 7 - Epigenomics',
+    subtitle: 'Beyond the sequence: epigenomics (2 Panels)',
+    category: 'bifold',
+    w: 1123,
+    h: 794,
+    folds: 2,
+    bg: '#ffffff',
+    preview: '/assets/previews/bifold_epigenomics_brochure.png',
+    specs: bifoldEpigenomicsBrochure,
+    emptySpecs: bifoldBrochureEmpty,
+    pages: [bifoldEpigenomicsBrochure, bifoldEpigenomicsBrochurePage2],
+    swatch: ['#1B4F9C', '#2E9BD6', '#EAF3FB'],
   },
   {
     id: 'onam',

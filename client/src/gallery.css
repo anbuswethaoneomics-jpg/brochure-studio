@@ -101,6 +101,120 @@
   color: #dc2626;
 }
 
+/* Gallery Merge / Multi-Selection Mode */
+.gallery-card.selected-for-merge {
+  border-color: var(--accent, #0b5d4b);
+  box-shadow: 0 0 0 2px var(--accent, #0b5d4b), 0 4px 14px rgba(11, 93, 75, 0.18);
+  background: #f0fdf9;
+}
+
+.gallery-select-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid var(--line, #cbd5e1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mute, #64748b);
+  z-index: 3;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.gallery-card.selected-for-merge .gallery-select-badge {
+  background: var(--accent, #0b5d4b);
+  border-color: var(--accent, #0b5d4b);
+  color: #ffffff;
+}
+
+.gallery-select-badge.selected {
+  background: var(--accent, #0b5d4b);
+  border-color: var(--accent, #0b5d4b);
+  color: #ffffff;
+}
+
+.gallery-drag-hint {
+  font-size: 11px;
+  color: var(--accent, #0b5d4b);
+  background: #f0fdf9;
+  border: 1px dashed #a7f3d0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  user-select: none;
+}
+
+.gallery-drag-grip {
+  color: var(--accent, #0b5d4b);
+  font-size: 14px;
+  line-height: 1;
+  user-select: none;
+  opacity: 0.7;
+}
+
+/* Dragging & Reorder Visual States */
+.gallery-card.is-dragging {
+  opacity: 0.35;
+  border: 2px dashed var(--accent, #0b5d4b) !important;
+  transform: scale(0.98);
+}
+
+.gallery-card.drag-over-before {
+  border-top: 3px solid var(--accent, #0b5d4b) !important;
+  box-shadow: 0 -4px 12px rgba(11, 93, 75, 0.28);
+}
+
+.gallery-card.drag-over-after {
+  border-bottom: 3px solid var(--accent, #0b5d4b) !important;
+  box-shadow: 0 4px 12px rgba(11, 93, 75, 0.28);
+}
+
+.gallery-thumb-wrap img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.gallery-merge-toolbar {
+  background: #f8fafc;
+  border: 1.5px solid var(--accent, #0b5d4b);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gallery-merge-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.gallery-merge-progress {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  font-size: 11.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 /* Uploads Tab Images */
 .upload-card {
   position: relative;
