@@ -6,6 +6,7 @@ import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
 import App from './StudioAppMain.jsx';
+import ErpAuthGuard from './components/ErpAuthGuard.jsx';
 import './styles.css';
 import './gallery.css';
 
@@ -47,6 +48,8 @@ class ErrorBoundary extends React.Component {
 
 createRoot(document.getElementById('root')).render(
   <ErrorBoundary>
-    <App />
+    <ErpAuthGuard>
+      <App />
+    </ErpAuthGuard>
   </ErrorBoundary>
 );
