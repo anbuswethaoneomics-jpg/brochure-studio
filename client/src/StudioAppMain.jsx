@@ -583,7 +583,7 @@ export default function StudioApp() {
 
   if (showCanvaBuilder) {
     return (
-      <Suspense fallback={<div style={{ padding: 40, textAlign: 'center', fontFamily: 'Poppins, sans-serif' }}>Loading Canva Builder...</div>}>
+      <Suspense fallback={<div style={{ padding: 40, textAlign: 'center', fontFamily: 'Poppins, sans-serif' }}>Loading Design Studio...</div>}>
         <BrochureEditor
           onBack={() => {
             setShowCanvaBuilder(false);
@@ -609,9 +609,9 @@ export default function StudioApp() {
         <button
           className="btn"
           onClick={() => setShowCanvaBuilder(true)}
-          title="Open Canva Builder"
+          title="Open Design Studio"
         >
-          <Ico name="shapes" /> Canva Builder
+          <Ico name="shapes" /> Design Studio
         </button>
         <input
           ref={fileInputRef}

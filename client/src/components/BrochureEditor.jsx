@@ -180,7 +180,7 @@ export default function BrochureEditor({ onBack }) {
             fontSize: '13px',
           }}
         >
-          Canva Builder
+          Design Studio
         </div>
         <div className="grow" />
         <div className="menu-wrap">
