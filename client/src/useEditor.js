@@ -488,7 +488,10 @@ export function useEditor() {
     });
 
     const onKey = (e) => {
+      if (document.querySelector('.polotno-container')) return;
       if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
+      if (e.target.isContentEditable || e.target.closest?.('[contenteditable="true"]')) return;
+      if (e.target.closest?.('.polotno-container') || e.target.closest?.('.polotno-app')) return;
       const o = c.getActiveObject();
       if (o && o.isEditing) return;
       const mod = e.ctrlKey || e.metaKey;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { useEditor } from './useEditor.js';
 import Sidebar from './components/StudioSidebar.jsx';
 import PropsBar from './components/StudioPropsBar.jsx';
@@ -12,6 +12,8 @@ import ImageCropModal from './components/ImageCropModal.jsx';
 import { getCleanHtmlUrl } from './cleanHtmlMap.js';
 import { isPageEmptyTemplate } from './mergePdfUtils.js';
 import { jsPDF } from 'jspdf';
+
+const BrochureEditor = lazy(() => import('./components/BrochureEditor.jsx'));
 
 const download = (href, name) => {
   const a = document.createElement('a');
@@ -39,6 +41,13 @@ export default function StudioApp() {
   const [busy, setBusy] = useState(false);
   const [menu, setMenu] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [showCanvaBuilder, setShowCanvaBuilder] = useState(() => {
+    return (
+      typeof window !== 'undefined' &&
+      (window.location.pathname.startsWith('/brochure') ||
+        new URLSearchParams(window.location.search).get('editor') === 'canva')
+    );
+  });
 
   const notify = (m) => {
     setToast(m);
@@ -56,6 +65,7 @@ export default function StudioApp() {
     };
 
     const handleKeyDown = (e) => {
+      if (document.querySelector('.polotno-container')) return;
       if (isEditingText()) return;
       if (e.code === 'Space' && !e.repeat) {
         e.preventDefault();
@@ -571,6 +581,21 @@ export default function StudioApp() {
     URL.revokeObjectURL(url);
   };
 
+  if (showCanvaBuilder) {
+    return (
+      <Suspense fallback={<div style={{ padding: 40, textAlign: 'center', fontFamily: 'Poppins, sans-serif' }}>Loading Canva Builder...</div>}>
+        <BrochureEditor
+          onBack={() => {
+            setShowCanvaBuilder(false);
+            if (window.location.pathname.startsWith('/brochure')) {
+              window.history.pushState({}, '', '/');
+            }
+          }}
+        />
+      </Suspense>
+    );
+  }
+
   return (
     <div className="app">
       <header className="top">
@@ -580,6 +605,13 @@ export default function StudioApp() {
         </button>
         <button className="btn" onClick={triggerOpenFile} title="Open file from computer">
           <Ico name="folder" /> Open
+        </button>
+        <button
+          className="btn"
+          onClick={() => setShowCanvaBuilder(true)}
+          title="Open Canva Builder"
+        >
+          <Ico name="shapes" /> Canva Builder
         </button>
         <input
           ref={fileInputRef}
